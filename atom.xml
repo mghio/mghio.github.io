@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.mghio.cn/"/>
-  <updated>2019-09-22T07:23:12.626Z</updated>
+  <updated>2019-09-22T13:35:50.085Z</updated>
   <id>http://www.mghio.cn/</id>
   
   <author>
@@ -17,13 +17,13 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>Hello World</title>
-    <link href="http://www.mghio.cn/2019/09/21/hello-world/"/>
-    <id>http://www.mghio.cn/2019/09/21/hello-world/</id>
-    <published>2019-09-21T13:40:56.000Z</published>
-    <updated>2019-09-22T07:23:12.626Z</updated>
+    <title>hello world</title>
+    <link href="http://www.mghio.cn/2019/09/22/hello-world/"/>
+    <id>http://www.mghio.cn/2019/09/22/hello-world/</id>
+    <published>2019-09-22T12:52:43.000Z</published>
+    <updated>2019-09-22T13:35:50.085Z</updated>
     
-    <content type="html"><![CDATA[<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HelloWorld</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">      System.out.println(<span class="string">"Hello World ~~~"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
+    <content type="html"><![CDATA[<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HelloWorld</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">      System.out.println(<span class="string">"Hello World ~~~"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
     
     <summary type="html">
     
@@ -35,6 +35,10 @@
     </summary>
     
     
+      <category term="Java" scheme="http://www.mghio.cn/categories/Java/"/>
+    
+    
+      <category term="Java" scheme="http://www.mghio.cn/tags/Java/"/>
     
   </entry>
   
