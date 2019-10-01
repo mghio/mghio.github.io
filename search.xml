@@ -2,13 +2,7 @@
 <search>
   <entry>
     <title><![CDATA[hello world]]></title>
-    <url>%2F2019%2F09%2F22%2Fhello-world%2F</url>
+    <url>%2Fpost%2Fb1d4025b.html</url>
     <content type="text"><![CDATA[1234567public class HelloWorld &#123; public static void main(String[] args) &#123; System.out.println("Hello World ~~~"); &#125; &#125;]]></content>
-      <categories>
-        <category>Java</category>
-      </categories>
-      <tags>
-        <tag>Java</tag>
-      </tags>
   </entry>
 </search>

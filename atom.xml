@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://www.mghio.cn/"/>
-  <updated>2019-09-22T13:35:50.085Z</updated>
+  <updated>2019-10-01T15:25:03.844Z</updated>
   <id>https://www.mghio.cn/</id>
   
   <author>
@@ -18,10 +18,10 @@
   
   <entry>
     <title>hello world</title>
-    <link href="https://www.mghio.cn/2019/09/22/hello-world/"/>
-    <id>https://www.mghio.cn/2019/09/22/hello-world/</id>
-    <published>2019-09-22T12:52:43.000Z</published>
-    <updated>2019-09-22T13:35:50.085Z</updated>
+    <link href="https://www.mghio.cn/post/b1d4025b.html"/>
+    <id>https://www.mghio.cn/post/b1d4025b.html</id>
+    <published>2019-10-01T15:24:11.000Z</published>
+    <updated>2019-10-01T15:25:03.844Z</updated>
     
     <content type="html"><![CDATA[<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HelloWorld</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">      System.out.println(<span class="string">"Hello World ~~~"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
     
@@ -35,10 +35,6 @@
     </summary>
     
     
-      <category term="Java" scheme="https://www.mghio.cn/categories/Java/"/>
-    
-    
-      <category term="Java" scheme="https://www.mghio.cn/tags/Java/"/>
     
   </entry>
   
