@@ -5,9 +5,9 @@
   <subtitle>JAVA 搬运工 &amp; 终身学习者。</subtitle>
   <link href="/atom.xml" rel="self"/>
   
-  <link href="http://www.mghio.cn/"/>
+  <link href="https://www.mghio.cn/"/>
   <updated>2019-09-22T13:35:50.085Z</updated>
-  <id>http://www.mghio.cn/</id>
+  <id>https://www.mghio.cn/</id>
   
   <author>
     <name>mghio</name>
@@ -18,8 +18,8 @@
   
   <entry>
     <title>hello world</title>
-    <link href="http://www.mghio.cn/2019/09/22/hello-world/"/>
-    <id>http://www.mghio.cn/2019/09/22/hello-world/</id>
+    <link href="https://www.mghio.cn/2019/09/22/hello-world/"/>
+    <id>https://www.mghio.cn/2019/09/22/hello-world/</id>
     <published>2019-09-22T12:52:43.000Z</published>
     <updated>2019-09-22T13:35:50.085Z</updated>
     
@@ -35,10 +35,10 @@
     </summary>
     
     
-      <category term="Java" scheme="http://www.mghio.cn/categories/Java/"/>
+      <category term="Java" scheme="https://www.mghio.cn/categories/Java/"/>
     
     
-      <category term="Java" scheme="http://www.mghio.cn/tags/Java/"/>
+      <category term="Java" scheme="https://www.mghio.cn/tags/Java/"/>
     
   </entry>
   
