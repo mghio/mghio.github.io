@@ -77,7 +77,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT">
+  <meta name="keywords" content="Java, 原理,">
 
 
 
@@ -90,17 +90,31 @@
 
 
 
-<meta name="description" content="JAVA 搬运工&amp;终身学习者。">
-<meta name="keywords" content="JAVA">
-<meta property="og:type" content="website">
-<meta property="og:title" content="mghio&#39;s blog">
-<meta property="og:url" content="https://www.mghio.cn/categories/Java/JVM/index.html">
+<meta name="description" content="1.1 前言做过 java 开发的朋友们相信都很熟悉 HashMap 这个类，它是一个基于 hashing 原理用于存储 Key-Value 键值对的集合，其中的每一个键也叫做 Entry，这些键分别存储在一个数组当中，系统会根据 hash 方法来计算出 Key-Value 的存储位置，可以通过 key 快速存取 value。HashMap 基于 hashing 原理，当我们将一个键值对（Key-">
+<meta name="keywords" content="Java, 原理">
+<meta property="og:type" content="article">
+<meta property="og:title" content="深挖 HashMap">
+<meta property="og:url" content="https://www.mghio.cn/post/99ea2970.html">
 <meta property="og:site_name" content="mghio&#39;s blog">
-<meta property="og:description" content="JAVA 搬运工&amp;终身学习者。">
+<meta property="og:description" content="1.1 前言做过 java 开发的朋友们相信都很熟悉 HashMap 这个类，它是一个基于 hashing 原理用于存储 Key-Value 键值对的集合，其中的每一个键也叫做 Entry，这些键分别存储在一个数组当中，系统会根据 hash 方法来计算出 Key-Value 的存储位置，可以通过 key 快速存取 value。HashMap 基于 hashing 原理，当我们将一个键值对（Key-">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://i.loli.net/2019/11/14/MArIFaUlDchbvVG.png">
+<meta property="og:image" content="https://i.loli.net/2019/11/16/mCWoVrOeBY4zsuE.png">
+<meta property="og:image" content="https://i.loli.net/2019/11/16/LHIDGjecq5Ak8oQ.png">
+<meta property="og:image" content="https://i.loli.net/2019/11/16/oOt6wEuycSBDUjx.png">
+<meta property="og:image" content="https://i.loli.net/2019/11/16/BFRgw85KzCMNsqy.png">
+<meta property="og:image" content="https://i.loli.net/2019/11/16/g7DqVIRf9sz1wK4.png">
+<meta property="og:image" content="https://i.loli.net/2019/11/16/BK2QEp5dxLCfhkA.png">
+<meta property="og:image" content="https://i.loli.net/2019/11/16/WX9BlOhDjfaZypn.png">
+<meta property="og:image" content="https://i.loli.net/2019/11/16/m2MgTlSfuIowHF7.png">
+<meta property="og:image" content="https://i.loli.net/2019/11/16/ZYl6Hnf7cSxsJdk.png">
+<meta property="og:image" content="https://i.loli.net/2019/11/16/7hgSZaOXxyMbuj8.png">
+<meta property="og:image" content="https://i.loli.net/2019/11/16/EQ2aWPbKxYryDn8.png">
+<meta property="og:updated_time" content="2019-11-16T09:06:26.019Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="mghio&#39;s blog">
-<meta name="twitter:description" content="JAVA 搬运工&amp;终身学习者。">
+<meta name="twitter:title" content="深挖 HashMap">
+<meta name="twitter:description" content="1.1 前言做过 java 开发的朋友们相信都很熟悉 HashMap 这个类，它是一个基于 hashing 原理用于存储 Key-Value 键值对的集合，其中的每一个键也叫做 Entry，这些键分别存储在一个数组当中，系统会根据 hash 方法来计算出 Key-Value 的存储位置，可以通过 key 快速存取 value。HashMap 基于 hashing 原理，当我们将一个键值对（Key-">
+<meta name="twitter:image" content="https://i.loli.net/2019/11/14/MArIFaUlDchbvVG.png">
 
 
 
@@ -130,13 +144,13 @@
 
 
 
-  <link rel="canonical" href="https://www.mghio.cn/categories/Java/JVM/">
+  <link rel="canonical" href="https://www.mghio.cn/post/99ea2970.html">
 
 
 
 
 
-  <title>分类: JVM | mghio's blog</title>
+  <title>深挖 HashMap | mghio's blog</title>
   
 
 
@@ -155,7 +169,7 @@
     
   
 
-  <div class="container sidebar-position-left ">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -291,53 +305,341 @@
           <div id="content" class="content">
             
 
-  
-  
-  
-  <div class="post-block category">
+  <div id="posts" class="posts-expand">
+    
 
-    <div id="posts" class="posts-collapse">
-      <div class="collection-title">
-        <h2>JVM<small>分类</small>
-        </h2>
-      </div>
+  
 
-      
-        
+  
+  
+  
 
   <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://www.mghio.cn/post/99ea2970.html">
 
-      <h3 class="post-title">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="mghio">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/blog_avator.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="mghio's blog">
+    </span>
+
+    
+      <header class="post-header">
+
         
-            <a class="post-title-link" href="/post/8a061473.html" itemprop="url">
-              
-                <span itemprop="name">Java 运行时数据区域</span>
-              
-            </a>
         
-      </h3>
+          <h2 class="post-title" itemprop="name headline">深挖 HashMap</h2>
+        
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-10-26T22:10:10+08:00" content="2019-10-26">
-          10-26
-        </time>
-      </div>
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-11-14T21:23:23+08:00">
+                2019-11-14
+              </time>
+            
 
-    </header>
-  </article>
+            
 
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/原理/" itemprop="url" rel="index">
+                    <span itemprop="name">原理</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/post/99ea2970.html#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/post/99ea2970.html" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/post/99ea2970.html" class="leancloud_visitors" data-flag-title="深挖 HashMap">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  2.6k 字
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  9 分钟
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h4 id="1-1-前言"><a href="#1-1-前言" class="headerlink" title="1.1 前言"></a>1.1 前言</h4><p>做过 java 开发的朋友们相信都很熟悉 HashMap 这个类，它是一个基于 hashing 原理用于存储 Key-Value 键值对的集合，其中的每一个键也叫做 <code>Entry</code>，这些键分别存储在一个数组当中，系统会根据 <code>hash</code> 方法来计算出 Key-Value 的存储位置，可以通过 key 快速存取 value。<br>HashMap 基于 hashing 原理，当我们将一个键值对（Key-Value） 传入 <code>put</code> 方法时，它将调用这个 key 的  <code>hashcode</code> 方法计算出 key 的 hashcode 值，然后根据这个 hashcode 值来定位其存放数组的位置来存储对象（HashMap 使用链表来解决碰撞问题，当其发生碰撞了，对象将会存储在链表的下一个节点中，在链表的每个节点中存储 <code>Entry</code> 对象，在 JDK 1.8+ 中，当链表的节点个数超过一定值时会转为红黑树来进行存储），当通过 <code>get</code> 方法传入一个 key 来获取其对应的值时，也是先通过 key 的 <code>hashcode</code> 方法来定位其存储在数组的位置，然后通过键对象的 <code>eqauls</code> 方法找到对应的 value 值。接下来让我们看看其内部的一些实现细节。（<code>PS：以下代码分析都是基于 JDK 1.8</code>）</p>
+<h4 id="1-2-为什么容量始终是-2-的整数次幂"><a href="#1-2-为什么容量始终是-2-的整数次幂" class="headerlink" title="1.2 为什么容量始终是 2 的整数次幂"></a>1.2 为什么容量始终是 2 的整数次幂</h4><p>因为获取 key 在数组中对应的下标是通过 key 的哈希值与数组的长度减一进行与运算来确定的（<code>tab[(n - 1) &amp; hash]</code>）。当数组的长度 n 为 2 的整数次幂，这样进行 n - 1 运算后，之前为 1 的位后面全是 1 ，这样就能保证 <code>(n - 1) &amp; hash</code> 后相应位的值既可能是 1 又可能是 0 ，这完全取决于 key 的哈希值，这样就能保证散列的均匀，同时与运算（位运算）效率高。如果数组的长度 n 不是 2 的整数次幂，会造成更多的 hash 冲突。HashMap 提供了如下四个重载的构造方法来满足不同的使用场景：</p>
+<ol>
+<li>无参构造：<code>HashMap()</code>，使用该方法表示全部使用 HashMap 的默认配置参数</li>
+<li>指定容量初始值构造：<code>HashMap(int initialCapacity)</code>，在初始化 HashMap 时指定其容量大小</li>
+<li>指定容量初始值和扩容因子构造：<code>HashMap(int initialCapacity, float loadFactor)</code>，使用自定义初始化容量和扩容因子</li>
+<li>通过 <code>Map</code> 来构造 HashMap：<code>HashMap(Map&lt;? extends K, ? extends V&gt; m)</code>，使用默认的扩容因子，其容量大小有传入的 <code>Map</code> 大小来决定<a id="more"></a>
+前三个构造方法最终都是调用第三个即自定义容量初始值和扩容因子构造 <code>HashMap(int initialCapacity, float loadFactor)</code>，其源码实现如下<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">HashMap</span><span class="params">(<span class="keyword">int</span> initialCapacity, <span class="keyword">float</span> loadFactor)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (initialCapacity &lt; <span class="number">0</span>)</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(<span class="string">"Illegal initial capacity: "</span> +</span><br><span class="line">                                            initialCapacity);</span><br><span class="line">    <span class="keyword">if</span> (initialCapacity &gt; MAXIMUM_CAPACITY)</span><br><span class="line">        initialCapacity = MAXIMUM_CAPACITY;</span><br><span class="line">    <span class="keyword">if</span> (loadFactor &lt;= <span class="number">0</span> || Float.isNaN(loadFactor))</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(<span class="string">"Illegal load factor: "</span> +</span><br><span class="line">                                            loadFactor);</span><br><span class="line">    <span class="keyword">this</span>.loadFactor = loadFactor;</span><br><span class="line">    <span class="keyword">this</span>.threshold = tableSizeFor(initialCapacity);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<p>从源码实现可以看出，如果我们传入的初始容量值大于 <code>MAXIMUM_CAPACITY</code> 时，就设置容量为 <code>MAXIMUM_CAPACITY</code>，其值如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">  * The maximum capacity, used if a higher value is implicitly specified</span></span><br><span class="line"><span class="comment">  * by either of the constructors with arguments.</span></span><br><span class="line"><span class="comment">  * MUST be a power of two &lt;= 1&lt;&lt;30.</span></span><br><span class="line"><span class="comment">  */</span></span><br><span class="line"><span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> MAXIMUM_CAPACITY = <span class="number">1</span> &lt;&lt; <span class="number">30</span>;</span><br></pre></td></tr></table></figure>
+
+<p>也就是容量的最大值为 2 的 30 次方（<code>1 &lt;&lt; 30</code>）。我们知道，HashMap 的容量始终是 2 的整数次幂，不管我们传入的初始容量是什么，它都会使用最接近这个值并且是 2 的整数次幂作为 HashMap 的初始容量，这一步处理是通过 <code>tableSizeFor</code> 方法来实现的，我们看看它的源码：</p>
+<p><img src="https://i.loli.net/2019/11/14/MArIFaUlDchbvVG.png" alt="hashmap-tableSizeFor.png"></p>
+<p>通过方法的注释我们也可以知道（<code>英语对于从事技术开发的人太重要了~~~</code>），此方法的返回值始终是 2 的整数次幂，它是如何做到的呢？接下来我们通过一个例子一步一步来看，假设我们传入的初始容量大小 <code>cap</code> 的值 <code>cap</code> 为 15。</p>
+<p><strong>第 ① 步</strong>：将 <code>cap - 1</code> 后，<code>n</code> 的值为 14（15 - 1）。 </p>
+<p><strong>第 ② 步</strong>：将 <code>n</code> 的值先右移 1 位后与 <code>n</code> 进行 <code>或运算</code>（两者都为 0 结果为 0，其它情况都为 1），下面是具体的计算过程：</p>
+<p><img src="https://i.loli.net/2019/11/16/mCWoVrOeBY4zsuE.png" alt="hashmap-tableSizeFor-2.png"></p>
+<p><strong>第 ③ 步</strong>：将 <code>n</code> 的值先右移 2 位后与 <code>n</code> 进行 <code>或运算</code>（两者都为 0 结果为 0，其它情况都为 1），下面是具体的计算过程：</p>
+<p><img src="https://i.loli.net/2019/11/16/LHIDGjecq5Ak8oQ.png" alt="hashmap-tableSizeFor-3.png"></p>
+<p><strong>第 ④ 步</strong>：将 <code>n</code> 的值先右移 4 位后与 <code>n</code> 进行 <code>或运算</code>（两者都为 0 结果为 0，其它情况都为 1），下面是具体的计算过程：</p>
+<p><img src="https://i.loli.net/2019/11/16/oOt6wEuycSBDUjx.png" alt="hashmap-tableSizeFor-4.png"></p>
+<p><strong>第 ⑤ 步</strong>：将 <code>n</code> 的值先右移 8 位后与 <code>n</code> 进行 <code>或运算</code>（两者都为 0 结果为 0，其它情况都为 1），下面是具体的计算过程：</p>
+<p><img src="https://i.loli.net/2019/11/16/BFRgw85KzCMNsqy.png" alt="hashmap-tableSizeFor-5.png"></p>
+<p><strong>第 ⑥ 步</strong>：将 <code>n</code> 的值先右移 16 位后与 <code>n</code> 进行 <code>或运算</code>（两者都为 0 结果为 0，其它情况都为 1），下面是具体的计算过程：</p>
+<p><img src="https://i.loli.net/2019/11/16/g7DqVIRf9sz1wK4.png" alt="hashmap-tableSizeFor-6.png"></p>
+<p>最后如果 <code>n</code> 的值小于 <code>0</code>，则返回 1，如果大于最大值 <code>MAXIMUM_CAPACITY</code> 则返回 <code>MAXIMUM_CAPACITY</code>，否则返回 <code>n + 1</code>。 现在 n 为 15，所以返回 n + 1（16），而 16 正好是 2 的 4 次幂。有的朋友可能会问，刚刚上文假设的初始容量大小 <code>cap</code> 是 15，本来就不是 2 的整数次幂，如果我传入初始容量的就是 2 的整数次幂那会怎么样呢？现在假设传的初始容量大小为 32（2 的 5 次方）看看结果是什么。</p>
+<p><strong>第 ① 步</strong>：将 <code>cap - 1</code> 后，<code>n</code> 的值为 31（32 - 1）。 </p>
+<p><strong>第 ② 步</strong>：将 <code>n</code> 的值先右移 1 位后与 <code>n</code> 进行 <code>或运算</code>（两者都为 0 结果为 0，其它情况都为 1），下面是具体的计算过程：</p>
+<p><img src="https://i.loli.net/2019/11/16/BK2QEp5dxLCfhkA.png" alt="hashmap-tableSizeFor-even-1.png"></p>
+<p><strong>第 ③ 步</strong>：将 <code>n</code> 的值先右移 2 位后与 <code>n</code> 进行 <code>或运算</code>（两者都为 0 结果为 0，其它情况都为 1），下面是具体的计算过程：</p>
+<p><img src="https://i.loli.net/2019/11/16/WX9BlOhDjfaZypn.png" alt="hashmap-tableSizeFor-even-2.png"></p>
+<p><strong>第 ④ 步</strong>：将 <code>n</code> 的值先右移 4 位后与 <code>n</code> 进行 <code>或运算</code>（两者都为 0 结果为 0，其它情况都为 1），下面是具体的计算过程：</p>
+<p><img src="https://i.loli.net/2019/11/16/m2MgTlSfuIowHF7.png" alt="hashmap-tableSizeFor-even-4.png"></p>
+<p><strong>第 ⑤ 步</strong>：将 <code>n</code> 的值先右移 8 位后与 <code>n</code> 进行 <code>或运算</code>（两者都为 0 结果为 0，其它情况都为 1），下面是具体的计算过程：</p>
+<p><img src="https://i.loli.net/2019/11/16/ZYl6Hnf7cSxsJdk.png" alt="hashmap-tableSizeFor-even-5.png"></p>
+<p><strong>第 ⑥ 步</strong>：将 <code>n</code> 的值先右移 16 位后与 <code>n</code> 进行 <code>或运算</code>（两者都为 0 结果为 0，其它情况都为 1），下面是具体的计算过程：</p>
+<p><img src="https://i.loli.net/2019/11/16/7hgSZaOXxyMbuj8.png" alt="hashmap-tableSizeFor-even-6.png"></p>
+<p>经过以上 6 步计算后得出 n 的值为 31，大于 0 小于 <code>MAXIMUM_CAPACITY</code> 返回 <code>n + 1</code>，所以经过计算后的初始容量大小为 32。稍微总结一下，我们可以得出：如果我们传入的初始容量大小不是 2 的整数次幂，那么经过计算后的初始容量大小为大于我们传入初始容量值的最小值并且是 2 的整数次幂。细心的朋友会发现，为什么第一步要进行 <code>cap - 1</code> 的操作呢？那是因为，如果不进行 - 1 运算的话，当我们传入的初始容量大小为 2 的整数次幂的时候，通过以上步骤计算出来的结果值为传入值的 2 倍。假设我们传入的初始容量大小为 32，此时没有第 ① 步（<code>cap - 1</code>）的操作，那么依次通过以上 ②、③、④、⑤、⑥ 后为 <code>63</code>，最后再进行 <code>n + 1</code> 操作，结果为 <code>64</code> 是 传入值 32 的 2 倍，显然和预期结果（<code>32</code>）不符。这个计算初始容量的算法还是很巧妙的，先进行了 -1 的操作，保证传入初始容量值为 2 的整数次幂的时候，返回传入的原始值。 </p>
+<h4 id="1-3-hash-方法是如何实现的"><a href="#1-3-hash-方法是如何实现的" class="headerlink" title="1.3 hash 方法是如何实现的"></a>1.3 hash 方法是如何实现的</h4><p>不管是通过 <code>get</code> 方法获取 key 对应的 Value 值或者通过 <code>put</code> 方法存储 Key-Value 键值对时，都会先根据 key 的哈希值定位到数组的位置，我们看看 HashMap 里的 <code>hash</code> 方法是如何实现的，源码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> <span class="title">hash</span><span class="params">(Object key)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> h;</span><br><span class="line">    <span class="keyword">return</span> (key == <span class="keyword">null</span>) ? <span class="number">0</span> : (h = key.hashCode()) ^ (h &gt;&gt;&gt; <span class="number">16</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>当 key 为 <code>null</code> 时，返回 0，否则进行 <code>h = key.hashCode()) ^ (h &gt;&gt;&gt; 16</code> 运算，先调用 key 的 <code>hashCode</code> 方法获取 key 的哈希值，然后与 key 的哈希值右移 16 位后的值进行异或运算（相同为 0，不同为 1，简称 <code>同假异真</code>），为什么获取 key 的哈希值还要再进行异或运算，直接返回 key 的哈希值好像也没什么问题，如果没有后面的异或运算，直接返回哈希值，我们假设数组的长度为 16，现在要往 HashMap 存入的三个键值对的 key 的哈希值分别为 32831、33554495、2097215，根据 hash 方法返回值定位到数组的位置（<code>(n - 1) &amp; hash</code>），以上三个值和 15（16 - 1）进行 <code>&amp; 运算（都为 1 才为 1，其它情况都为 0）</code> 如下：</p>
+<p><img src="https://i.loli.net/2019/11/16/EQ2aWPbKxYryDn8.png" alt="hashmap-hashcode-2.png"></p>
+<p>可以发现以上三个哈希值都定位的数组下标为 15 的位置上。所以 <code>hash</code> 如果方法没有后面与哈希值右移 16 位后的值进行异或运算的话，当数组长度比较小时很容易造成 <code>哈希碰撞</code>，即多个 key（不同的哈希值）都会定位到数组上的同一个位置，也就是说会放入到同一个链表或者红黑树中，因为此时 key 的哈希值只有低位的才会参与运算，显然和我们的预期不符合。可见 <code>hash</code> 方法将 key 的哈希值与其右移 16 位后进行异或运算能减少哈希碰撞的次数，把高位和低位都参与了运算，提高了分散性。</p>
+<h4 id="1-4-总结"><a href="#1-4-总结" class="headerlink" title="1.4 总结"></a>1.4 总结</h4><p>HashMap 其实还有很多值得我们深入研究的点，看懂了上面两个方法后，不得不佩服作者的代码设计能力，JDK 中有很多优秀源码都值得我们好好品味，看代码的时候一定要多看几遍多问几个为什么，特别是经典的源代码，然后将这些思想运用到我们的实际工作中。</p>
 
       
     </div>
+    
+    
+    
 
+    
+      <div>
+          <div>  <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-smile-o"></i>感谢您的阅读-------------</div>  </div>
+      </div>
+    
+
+    
+      <div>
+        <div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="/images/wechat_subscriber.jpg" alt="mghio wechat" style="width: 200px; max-width: 100%;">
+    <div>微信公众号「mghio」</div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>请我吃🍗</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.jpg" alt="mghio 微信打赏">
+        <p>微信打赏</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.jpg" alt="mghio 支付宝打赏">
+        <p>支付宝打赏</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    mghio  |  微信公众号「mghio」
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://www.mghio.cn/post/99ea2970.html" title="深挖 HashMap">https://www.mghio.cn/post/99ea2970.html</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Java-原理/" rel="tag"># Java, 原理</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/post/ee27c07f.html" rel="next" title="同步工具类">
+                <i class="fa fa-chevron-left"></i> 同步工具类
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
+  </article>
 
-  
 
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -345,6 +647,13 @@
 
 
           
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
 
         </div>
         
@@ -365,8 +674,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -451,6 +769,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-1-前言"><span class="nav-number">1.</span> <span class="nav-text">1.1 前言</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-2-为什么容量始终是-2-的整数次幂"><span class="nav-number">2.</span> <span class="nav-text">1.2 为什么容量始终是 2 的整数次幂</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-3-hash-方法是如何实现的"><span class="nav-number">3.</span> <span class="nav-text">1.3 hash 方法是如何实现的</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-4-总结"><span class="nav-number">4.</span> <span class="nav-text">1.4 总结</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -608,6 +942,10 @@
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 
