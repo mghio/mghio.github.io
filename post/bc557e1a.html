@@ -77,7 +77,7 @@
 
 
 
-  <meta name="keywords" content="Java,JVM,">
+  <meta name="keywords" content="Java,">
 
 
 
@@ -90,20 +90,21 @@
 
 
 
-<meta name="description" content="1.1 为什么要进行内存区域划分JVM规范 规定，JVM 在执行 Java 程序的过程中会把它所管理的内存划分为若干个不同的数据区域。这些区域都有各自的用途。以及创建和销毁的时间，有的区域随着虚拟机进程的启动就存在了，而有些区域则依赖用户线程的启动和结束而建立和销毁。JVM 规范对 JVM 定义了运行时统一的内存划分规范，统一了标准，类似于 JDBC 规范一样。JVM 也有许多厂商的不同产品。比如">
-<meta name="keywords" content="Java,JVM">
+<meta name="description" content="线程池简介线程池就是首先创建一些线程，把这些线程的集合称为线程池。使用线程池可以很好的提高性能，线程池在运行之初就会创建一定数量的空闲线程，我们将一个任务提交给线程池，线程池就会使用一个空闲的线程来执行这个任务，该任务执行完后，该线程不会死亡，而是再次变成空闲状态返回线程池，等待下一个任务的到来。在线程池编程模式下，我们把要执行的任务提交给整个线程池，而不是提交给某个线程，线程池拿到提交的任务后，">
+<meta name="keywords" content="Java">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Java 运行时数据区域">
-<meta property="og:url" content="https://www.mghio.cn/post/8a061473.html">
+<meta property="og:title" content="Java 线程池（一）">
+<meta property="og:url" content="https://www.mghio.cn/post/bc557e1a.html">
 <meta property="og:site_name" content="mghio&#39;s blog">
-<meta property="og:description" content="1.1 为什么要进行内存区域划分JVM规范 规定，JVM 在执行 Java 程序的过程中会把它所管理的内存划分为若干个不同的数据区域。这些区域都有各自的用途。以及创建和销毁的时间，有的区域随着虚拟机进程的启动就存在了，而有些区域则依赖用户线程的启动和结束而建立和销毁。JVM 规范对 JVM 定义了运行时统一的内存划分规范，统一了标准，类似于 JDBC 规范一样。JVM 也有许多厂商的不同产品。比如">
+<meta property="og:description" content="线程池简介线程池就是首先创建一些线程，把这些线程的集合称为线程池。使用线程池可以很好的提高性能，线程池在运行之初就会创建一定数量的空闲线程，我们将一个任务提交给线程池，线程池就会使用一个空闲的线程来执行这个任务，该任务执行完后，该线程不会死亡，而是再次变成空闲状态返回线程池，等待下一个任务的到来。在线程池编程模式下，我们把要执行的任务提交给整个线程池，而不是提交给某个线程，线程池拿到提交的任务后，">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https://i.loli.net/2019/10/27/2TGhQutDpMkinlo.png">
-<meta property="og:updated_time" content="2019-10-27T14:06:36.833Z">
+<meta property="og:image" content="https://i.loli.net/2019/11/23/RwvDlzJU23GfjdZ.png">
+<meta property="og:image" content="https://i.loli.net/2019/11/23/1rzqtsmXv3g5O24.png">
+<meta property="og:updated_time" content="2019-11-23T16:59:00.566Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Java 运行时数据区域">
-<meta name="twitter:description" content="1.1 为什么要进行内存区域划分JVM规范 规定，JVM 在执行 Java 程序的过程中会把它所管理的内存划分为若干个不同的数据区域。这些区域都有各自的用途。以及创建和销毁的时间，有的区域随着虚拟机进程的启动就存在了，而有些区域则依赖用户线程的启动和结束而建立和销毁。JVM 规范对 JVM 定义了运行时统一的内存划分规范，统一了标准，类似于 JDBC 规范一样。JVM 也有许多厂商的不同产品。比如">
-<meta name="twitter:image" content="https://i.loli.net/2019/10/27/2TGhQutDpMkinlo.png">
+<meta name="twitter:title" content="Java 线程池（一）">
+<meta name="twitter:description" content="线程池简介线程池就是首先创建一些线程，把这些线程的集合称为线程池。使用线程池可以很好的提高性能，线程池在运行之初就会创建一定数量的空闲线程，我们将一个任务提交给线程池，线程池就会使用一个空闲的线程来执行这个任务，该任务执行完后，该线程不会死亡，而是再次变成空闲状态返回线程池，等待下一个任务的到来。在线程池编程模式下，我们把要执行的任务提交给整个线程池，而不是提交给某个线程，线程池拿到提交的任务后，">
+<meta name="twitter:image" content="https://i.loli.net/2019/11/23/RwvDlzJU23GfjdZ.png">
 
 
 
@@ -133,13 +134,13 @@
 
 
 
-  <link rel="canonical" href="https://www.mghio.cn/post/8a061473.html">
+  <link rel="canonical" href="https://www.mghio.cn/post/bc557e1a.html">
 
 
 
 
 
-  <title>Java 运行时数据区域 | mghio's blog</title>
+  <title>Java 线程池（一） | mghio's blog</title>
   
 
 
@@ -308,7 +309,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://www.mghio.cn/post/8a061473.html">
+    <link itemprop="mainEntityOfPage" href="https://www.mghio.cn/post/bc557e1a.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="mghio">
@@ -325,7 +326,7 @@
 
         
         
-          <h2 class="post-title" itemprop="name headline">Java 运行时数据区域</h2>
+          <h2 class="post-title" itemprop="name headline">Java 线程池（一）</h2>
         
 
         <div class="post-meta">
@@ -337,8 +338,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-10-26T22:10:10+08:00">
-                2019-10-26
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-11-23T18:35:30+08:00">
+                2019-11-23
               </time>
             
 
@@ -371,8 +372,8 @@
                 
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Java/JVM/" itemprop="url" rel="index">
-                    <span itemprop="name">JVM</span>
+                  <a href="/categories/Java/线程池/" itemprop="url" rel="index">
+                    <span itemprop="name">线程池</span>
                   </a>
                 </span>
 
@@ -389,8 +390,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/post/8a061473.html#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/post/8a061473.html" itemprop="commentCount"></span>
+                <a href="/post/bc557e1a.html#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/post/bc557e1a.html" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -398,7 +399,7 @@
 
           
           
-             <span id="/post/8a061473.html" class="leancloud_visitors" data-flag-title="Java 运行时数据区域">
+             <span id="/post/bc557e1a.html" class="leancloud_visitors" data-flag-title="Java 线程池（一）">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -423,7 +424,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  4.9k 字
+                  4k 字
                 </span>
               
 
@@ -439,7 +440,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  17 分钟
+                  14 分钟
                 </span>
               
             </div>
@@ -462,140 +463,116 @@
       
 
       
-        <h4 id="1-1-为什么要进行内存区域划分"><a href="#1-1-为什么要进行内存区域划分" class="headerlink" title="1.1 为什么要进行内存区域划分"></a>1.1 为什么要进行内存区域划分</h4><p><a href="https://docs.oracle.com/javase/specs/jvms/se8/html/" target="_blank" rel="noopener">JVM规范</a> 规定，JVM 在执行 Java 程序的过程中会把它所管理的内存划分为若干个不同的数据区域。这些区域都有各自的用途。以及创建和销毁的时间，有的区域随着虚拟机进程的启动就存在了，而有些区域则依赖用户线程的启动和结束而建立和销毁。JVM 规范对 JVM 定义了运行时统一的内存划分规范，统一了标准，类似于 JDBC 规范一样。JVM 也有许多厂商的不同产品。比如下面的这些：</p>
+        <h4 id="线程池简介"><a href="#线程池简介" class="headerlink" title="线程池简介"></a>线程池简介</h4><p>线程池就是首先创建一些线程，把这些线程的集合称为线程池。使用线程池可以很好的提高性能，线程池在运行之初就会创建一定数量的空闲线程，我们将一个任务提交给线程池，线程池就会使用一个空闲的线程来执行这个任务，该任务执行完后，该线程不会死亡，<code>而是再次变成空闲状态返回线程池，等待下一个任务的到来</code>。<br>在线程池编程模式下，我们把要执行的任务提交给整个线程池，而不是提交给某个线程，线程池拿到提交的任务后，会在内部寻找是否还有空闲的线程，如果有，就将这个任务提交给某个空闲的线程，一个线程同一时刻只能执行一个任务，但是我们可以向线程池提交多个任务。合理使用线程池有以下几个优点：<br>① <strong>降低资源消耗</strong> 多线程运行期间，系统不断的启动和关闭新线程，成本高，会过度消耗系统资源，通过<code>重用</code>存在的线程，减少对象创建、消亡的开销。<br>② <strong>降提高响应速度</strong> 降当有任务到达时，任务可以不需要等待线程的创建，可以直接从线程池中取出空闲的线程来执行任务。<br>③ <strong>降方便线程管理</strong> 降线程对计算机来说是很稀缺的资源，如果让他无限制的创建，它不仅消耗系统的资源，还会降低系统的稳定性，我们使用线程池后可以统一进行分配和监控。<br>谈到线程池就会想到<code>池化</code>技术，最核心的思想就<code>是把宝贵的资源放到一个池子中</code>，每次要使用都从池子里面取，用完只有又放回池子让别人用。那么它在 Java 中是如何实现的呢？</p>
+<h4 id="Java-四种线程池"><a href="#Java-四种线程池" class="headerlink" title="Java 四种线程池"></a>Java 四种线程池</h4><p>在 Java 中 Executors 工具类给我们提供了四种不同使用场景的线程池，分别为：</p>
+<ol>
+<li><code>newSingleThreadExecutor</code> 只有一条线程来执行任务，适用于有顺序的任务的应用场景。如果这个唯一的线程因为异常结束，那么会有一个新的线程来替代它，它可以保证任务按照指定顺序（FIFO，LIFO）串行执行，它还有一个可以指定线程工厂（<code>ThreadFactory</code>）的重载方法，可以指定线程的创建行为</li>
+<li><code>newFixedThreadPool</code> 定长的线程池，有核心线程，核心线程的即为最大的线程数量，没有非核心线程。每次提交一个任务就创建一个线程，直到达到线程池的最大大小。线程池一旦达到最大值就会保持不变，如果当中的某个线程因为异常而结束，那么线程池会新建一个线程加入到线程池中。它还可以控制线程的最大并发数，超出的线程会在阻塞队列（<code>LinkedBlockingQueue</code>）中等待，同时它也有一个可以指定线程工厂（<code>ThreadFactory</code>）的重载方法，可以指定线程的创建行为。</li>
+<li><code>newCachedThreadPool</code> 创建一个可缓存线程池，最大的线程个数为 <code>2^31 - 1（Integer.MAX_VALUE）</code>，可以认为是无限大，若无可回收，则新建线程，如果线程池的大小超出了处理任务所需要的线程，那么就会回收部分空闲（60s 不执行任务）的线程。</li>
+<li><code>newScheduledThreadPool</code> 周期性执行任务的线程池，按照某种特定的计划执行线程中的任务，有核心线程，但也有非核心线程，非核心线程的大小也为无限大。适用于执行周期性的任务。</li>
+</ol>
+<a id="more"></a>
+<h4 id="Java-线程池参数详解"><a href="#Java-线程池参数详解" class="headerlink" title="Java 线程池参数详解"></a>Java 线程池参数详解</h4><p>上文说到的 Executors 工具类提供的四种适用于不同场景的线程池，通过查看源码发现最终都是调用 <code>ThreadPoolExecutor</code> 类来实现的，我们接下来深入了解这个类一些成员变量的具体含义。首先是<code>ctl</code>，其声明如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">final</span> AtomicInteger ctl = <span class="keyword">new</span> AtomicInteger(ctlOf(RUNNING, <span class="number">0</span>));</span><br></pre></td></tr></table></figure>
+
+<p>通过源码的注释得知，这个成员变量 <code>ctl</code> 主要用于<code>存储线程池的工作状态已经线程池正在运行的线程数</code>。很显然，要在一个整型变量中存储两部分数据，只能将其一份为二了。其中的高 3bit 用于存储线程的状态，低位的 29bit 用于存储线程池中正在执行的线程数。</p>
+<h5 id="线程池的状态"><a href="#线程池的状态" class="headerlink" title="线程池的状态"></a>线程池的状态</h5><p>在 <code>ThreadPoolExecutor</code> 定义了线程池的五种状态（<code>注意，这里说的是线程池状态，不是池中的线程的状态</code>），当创建一个线程池时的状态为 <code>RUNNING</code>。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> RUNNING    = -<span class="number">1</span> &lt;&lt; COUNT_BITS;</span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> SHUTDOWN   =  <span class="number">0</span> &lt;&lt; COUNT_BITS;</span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> STOP       =  <span class="number">1</span> &lt;&lt; COUNT_BITS;</span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> TIDYING    =  <span class="number">2</span> &lt;&lt; COUNT_BITS;</span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> TERMINATED =  <span class="number">3</span> &lt;&lt; COUNT_BITS;</span><br></pre></td></tr></table></figure>
+
 <table>
 <thead>
 <tr>
-<th align="center">厂商</th>
-<th align="left">JVM</th>
+<th align="center">线程池状态</th>
+<th align="center">含义</th>
 </tr>
 </thead>
 <tbody><tr>
-<td align="center">Oracle-SUN</td>
-<td align="left">Hotspot</td>
+<td align="center">RUNNING</td>
+<td align="center">允许提交并处理任务</td>
 </tr>
 <tr>
-<td align="center">Oracle</td>
-<td align="left">JRocket</td>
+<td align="center">SHUTDOWN</td>
+<td align="center">不会处理新提交的任务，但会处理完已处理的任务</td>
 </tr>
 <tr>
-<td align="center">IBM</td>
-<td align="left">J9 JVM</td>
+<td align="center">STOP</td>
+<td align="center">不会处理新提交的任务，也不会处理阻塞队列中未执行的任务，并设置正在执行任务的中断标志位</td>
 </tr>
 <tr>
-<td align="center">阿里</td>
-<td align="left">Taobao JVM</td>
+<td align="center">TIDYING</td>
+<td align="center">所有任务执行完毕，线程池中工作的线程数为 0，等待执行 terminated() 钩子方法</td>
+</tr>
+<tr>
+<td align="center">TERMINATED</td>
+<td align="center">terminated() 钩子方法执行完毕</td>
 </tr>
 </tbody></table>
-<p>其内存区域划分规范对于 JVM 的含义类似于我们 Java 中的接口，都是起到了规范的作用，JVM 是一台可以运行 Java 应用程序的抽象的计算机。在 JVM 中存在三个重要的概念：</p>
-<ul>
-<li>JVM 规范：它定义了虚拟机运行的规范，但是由 Oracle（SUN）或者其它厂商实现</li>
-<li>Java 运行时环境(JRE：Java Runtime Environment)：它是 JVM 规范的具体实现</li>
-<li>JVM 实例：编写好 Java 代码之后，运行 Java 程序，此时就会创建 JMV 实例</li>
-</ul>
-<p>对于 Java 程序员来说，在虚拟机自动内存管理机制的帮助下，不再需要为每一个对象去编写内存释放的代码，不要像 C 或者 C++ 要时刻注意着内存泄漏和内存溢出的问题，这种由虚拟机去管理一切看起来都很美好。不过，也正是因为 Java 设计者把内存控制全部交给了 JVM，一旦出现了内存泄漏和溢出方面的问题，如果不了解虚拟机是怎么分配运行时内存的，那么排查错误将是一项非常艰难的工作。</p>
-<a id="more"></a>
+<p>调用线程池的 <code>shutdown</code> 方法，将线程池由 RUNNING 状态转为 SHUTDOWN 状态。调用 <code>shutdownNow</code> 方法，将线程池由 RUNNING 状态转为 STOP 状态。SHUTDOWN 状态和 STOP 状态都会先变为 TIDYING 状态，最终都会变为 TERMINATED 状态。用图表示为：</p>
+<p><img src="https://i.loli.net/2019/11/23/RwvDlzJU23GfjdZ.png" alt="thread-pool-one.png"></p>
+<p><code>ThreadPoolExecutor</code> 同时提供了一下三个方法来查看线程池的状态和池中正在执行的线程数</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">runStateOf</span><span class="params">(<span class="keyword">int</span> c)</span>     </span>&#123; <span class="keyword">return</span> c &amp; ~CAPACITY; &#125;</span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">workerCountOf</span><span class="params">(<span class="keyword">int</span> c)</span>  </span>&#123; <span class="keyword">return</span> c &amp; CAPACITY; &#125;</span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">ctlOf</span><span class="params">(<span class="keyword">int</span> rs, <span class="keyword">int</span> wc)</span> </span>&#123; <span class="keyword">return</span> rs | wc; &#125;</span><br></pre></td></tr></table></figure>
 
-<h4 id="1-2-运行时数据区域的组成"><a href="#1-2-运行时数据区域的组成" class="headerlink" title="1.2 运行时数据区域的组成"></a>1.2 运行时数据区域的组成</h4><p>为什么我们经常把运行时数据区叫做 Java 内存模型（JMM：Java Memory Model），是因为运行时数据区太过于分散，没有联系，所以才会有 JVM 内存模型这个词，让我们把这些东西联系起来，方便记忆。JVM 运行时数据区中有些数据是一直存在的，被所有线程所共享。而有些区域则是线程私有的，伴随着线程的开始而创建，线程的结束而销毁。所以我们可以把JMM 分为两类：<code>线程共享的</code>、<code>线程私有的</code>。根据 JVM 虚拟机规范的规定，JVM 虚拟机运行时数据区划分如下图所示：</p>
-<p><img src="https://i.loli.net/2019/10/27/2TGhQutDpMkinlo.png" alt="jmm-structure.png"> 运行时数据区主要分为以下几个部分：</p>
-<ul>
-<li>方法区</li>
-<li>虚拟机栈</li>
-<li>本地方法栈</li>
-<li>堆</li>
-<li>程序计数器</li>
-</ul>
-<p>其中，按照线程在各个区域的数据是否共享划分为：</p>
-<ul>
-<li>线程共享部分：方法区、Java 堆以及运行时常量池（归属于方法区）</li>
-<li>线程私有部分：虚拟机栈、本地方法栈、程序计数器</li>
-</ul>
-<p>接下来看看 Java 运行时数据区中各个部分的用途和特点：</p>
-<blockquote>
-<h4 id="方法区"><a href="#方法区" class="headerlink" title="方法区"></a>方法区</h4></blockquote>
-<h5 id="1-1-什么是方法区"><a href="#1-1-什么是方法区" class="headerlink" title="1.1 什么是方法区"></a>1.1 什么是方法区</h5><p>在 JVM 中，方法区是可供各个线程共享运行时的内存区域。方法区域传统语言中的编译代码存储区或者操作系统进程的正文段的作用非常类似，它存储了每一个类的结构信息，例如运行时常量池、字段和方法数据、类的构造函数和普通方法的字节码内容、还包括一些类、实例、接口初始化的时候用到的特殊方法。在 Hotspot 虚拟机中，JDK 1.7 版本称作<code>永久代（Permanent Generation）</code>，而在 JDK 1.8 则称为 <code>元空间（Metapace）</code>。<br>方法区有个别名叫做非堆（Non-Heap），用于区别于 Java 堆区。默认最小值为 16 MB，最大值为 64 MB，可通过 <code>-XX:PermSize</code> 和 <code>-XX:MaxPermSize</code> 参数设置方法的大小。<br>JDK 1.7 及之前的版本设置为：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">-XX:PermSize=<span class="number">10</span>m</span><br><span class="line">-XX:MaxPermSize=<span class="number">55</span>m</span><br></pre></td></tr></table></figure>
+<h5 id="ThreadPoolExecutor-的构造函数"><a href="#ThreadPoolExecutor-的构造函数" class="headerlink" title="ThreadPoolExecutor 的构造函数"></a>ThreadPoolExecutor 的构造函数</h5><p>该类参数最全的构造方法如下，这个方法决定了创建出来的线程池的各种属性：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">ThreadPoolExecutor</span><span class="params">(<span class="keyword">int</span> corePoolSize,</span></span></span><br><span class="line"><span class="function"><span class="params">                          <span class="keyword">int</span> maximumPoolSize,</span></span></span><br><span class="line"><span class="function"><span class="params">                          <span class="keyword">long</span> keepAliveTime,</span></span></span><br><span class="line"><span class="function"><span class="params">                          TimeUnit unit,</span></span></span><br><span class="line"><span class="function"><span class="params">                          BlockingQueue&lt;Runnable&gt; workQueue,</span></span></span><br><span class="line"><span class="function"><span class="params">                          ThreadFactory threadFactory,</span></span></span><br><span class="line"><span class="function"><span class="params">                          RejectedExecutionHandler handler)</span></span></span><br></pre></td></tr></table></figure>
 
-<p>JDK 1.8 及之后的版本设置为：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">-XX:MetaspaceSize=<span class="number">10</span>m</span><br><span class="line">-XX:MaxMetaspaceSize=<span class="number">55</span>m</span><br></pre></td></tr></table></figure>
-
-<h5 id="1-2-方法区的特点"><a href="#1-2-方法区的特点" class="headerlink" title="1.2 方法区的特点"></a>1.2 方法区的特点</h5><ul>
-<li>线程共享：方法区是堆的一个逻辑部分，因此和对一样是线程共享的。整个虚拟机中只有一个方法区。</li>
-<li>永久代：方法区中的信息一般要长期存在，而且它又是堆的逻辑部分，因此用堆的划分方法，我们把方法区称作永久代（方法区是规范，永久代是实现）。</li>
-<li>内存回收低：方法区中的信息一般需要长期存在，回收一遍内存之后可能之后少量信息无效。对方法区的内存回收主要是 <code>对常量池的回收和对类型的卸载</code>。</li>
-<li>JVM 规范对方法区的定义比较宽松：和堆一样，允许固定大小，也允许可扩展大小，还允许不实现垃圾回收。</li>
-</ul>
-<p>方法区是所有都线程共享的，在一定的条件下它也会被 GC，当方法区域需要使用的内存超过其允许的大小时，会抛出 OOM（OutOfMemory）错误信息。</p>
-<h5 id="1-3-运行时常量池"><a href="#1-3-运行时常量池" class="headerlink" title="1.3 运行时常量池"></a>1.3 运行时常量池</h5><p>类加载后，Class 文件结构中常量池中的数据将被存储在运行时常量池中。我们一般在一个类中通过 <code>public static final</code> 来声明一个常量或者声明一个字符串 <code>String str = &quot;abc&quot;</code>。这个类编译后产生的 Class 文件，这个类的所有信息都存储在这个 class 文件中，当这个类被 JVM 加载之后，class 文件中的常量就存放在方法区的运行时常量池中。而且在运行期间，可以向常量池添加新的常量。比如，String 类的 intern() 方法就能在运行期间向常量池中添加新的常量。当运行时常量池中的某些常量没有被对象引用，同时也没有被变量引用时，那么就需要垃圾收集器回收。JVM 为每个已加载的类型维护一个常量池，常量池就是这个类型用到的常量的一个有序集合。其包括直接常量(基本类型，String)和对其他类型、方法、字段的符号引用。即字面量和符号引用，其中字面量指的是整个类中的字面量。包含成员变量、静态方法、非静态方法等中的字面量。池中的数据和数组一样通过索引访问。</p>
+<p>各个参数的含义：<br><code>corePoolSize</code> 线程池中核心线程数的最大值<br><code>maximumPoolSize</code> 线程池中最多能拥有的线程数<br><code>keepAliveTime</code> 空闲线程存活时间<br><code>unit</code> 空闲线程存活时间的单位<br><code>workQueue</code> 用于存放任务的阻塞队列<br><code>threadFactory</code> 创建线程工厂<br><code>handler</code> 当 <code>workQueue</code> 已满，并且池中的线程数达到 <code>maximumPoolSize</code> 时，线程池继续添加新任务时采取的策略</p>
+<p>下面通过一张图来更形象的理解线程池的这几个参数：</p>
+<p><img src="https://i.loli.net/2019/11/23/1rzqtsmXv3g5O24.png" alt="thread-pool-two.png"></p>
+<p>corePoolSize、maximumPoolSize、workQueue 三者的关系，通过向线程池添加新的任务来说明着三者之间的关系：</p>
+<ol>
+<li>如果没有空闲的线程执行该任务，并且池中运行的线程数小于<code>corePoolSize</code>时，则创建新的线程执行该任务</li>
+<li>如果没有空闲的线程执行该任务，并且当池中正在执行的线程数大于<code>corePoolSize</code>时，新添加的任务进入<code>workQueue</code>排队（如果<code>workQueue</code>长度允许），等待空闲线程来执行</li>
+<li>如果没有空闲的线程执行该任务，并且阻塞队列已满同时池中的线程数小于<code>maximumPoolSize</code>，则创建新的线程执行该任务</li>
+<li>如果没有空闲的线程执行该任务，并且阻塞队列已满同时池中的线程数等于<code>maximumPoolSize</code>，则根据构造函数中的<code>handler</code>指定的策略来拒绝新添加的任务</li>
+</ol>
+<p>在线程池的当中并没有标记出哪些线程是核心线程，哪些非核心线程，线程池它只关系<code>核心线程的数量</code>。下面这个是网上看到的一个形象的比喻：</p>
 <blockquote>
-<h4 id="虚拟机栈"><a href="#虚拟机栈" class="headerlink" title="虚拟机栈"></a>虚拟机栈</h4></blockquote>
-<h5 id="1-1-什么是虚拟机栈"><a href="#1-1-什么是虚拟机栈" class="headerlink" title="1.1 什么是虚拟机栈"></a>1.1 什么是虚拟机栈</h5><p>Java 虚拟机栈是描述 Java 方法运行过程的内存模型。Java 虚拟机栈会为每一个即将运行的方法创建一块叫做 <code>栈帧</code> 的区域，这块区域用于存储用于方法在运行时所需要的一些信息，这些信息具体包括：</p>
-<ul>
-<li>局部变量表</li>
-<li>操作数栈</li>
-<li>动态链接</li>
-<li>方法出口信息</li>
-<li>其它信息</li>
-</ul>
-<p>当一个方法即将被运行时，Java 虚拟机栈首先会在 Java 虚拟机栈中为该方法创建一块”栈帧”，栈帧中包含局部变量表，操作数栈，动态链接，方法出口信息等。当方法在运行过程中需要创建局部变量时，就将局部变量的值存入栈帧的局部变量表中。当这个方法执行完毕后，这个方法所对应的栈帧将会出栈，并释放内存空间。<code>Java 虚拟机栈上数据都是私有的</code>，其他线程都不能访问该线程的栈数据。在函数中定义的一些基本类型的变量数据和对象的引用变量都在函数的栈内存中分配。当在一段代码块中定义一个变量时，Java 就会在栈中为这个变量分配内存空间，当该变量退出该作用域后，Java 会自动释放掉为该变量所分配的内存空间，该内存空间可以立即被另作他用。</p>
-<h5 id="1-2-Java-虚拟机栈的特点"><a href="#1-2-Java-虚拟机栈的特点" class="headerlink" title="1.2 Java 虚拟机栈的特点"></a>1.2 Java 虚拟机栈的特点</h5><ul>
-<li>局部变量表的创建是在方法被执行的时候，随着栈帧的创建而创建。局部变量表的大小在程序的编译期间就确定下来了，在创建的时候需要事先指定好大小，在方法运行的过程中局部变量表的大小是不会发生改变的。</li>
-<li>Java虚拟机栈会出现两种错误（StackOverFlowError 和 OutOfMemoryError），<code>StackOverFlowError</code>：若 Java 虚拟机栈的内存大小不允许动态扩展，那么当线程请求栈的深度超过当前 Java 虚拟机栈的最大深度的时候就会抛出 StackOverFlowError。<code>OutOfMemoryError</code>：若 Java 虚拟机栈的内存大小不允许动态扩展，那么当线程请求栈时内存用完了，无法再动态扩展了，此时就会抛出 StackOverFlowError。</li>
-<li>虚拟机栈也是线程私有的，每个线程都有各自的 Java 虚拟机栈，而且随着线程的创建而创建，随着线程的死亡而死亡。</li>
-<li>栈中的数据在线程内部是共享的，要注意这种数据的共享与两个对象引用同 时指向一个对象的这种共享是不同的。它是由编译器完成的，它有利于节省空间。</li>
-</ul>
-<blockquote>
-<h4 id="本地方法栈"><a href="#本地方法栈" class="headerlink" title="本地方法栈"></a>本地方法栈</h4></blockquote>
-<p>本地方法指的是使用 Java 以外的其他语言编写的代码，因为有些时候 Java 无法直接操作一些底层资源，只能通过 C 或汇编操作。因此需要通过本地方法来实现。而本地方法栈就是设计用来调用这些非 Java 语言方法的。会存放对应的局部变量信息、返回结果等。本地方法栈和 Java 虚拟机栈实现的功能类似，只不过本地方法栈是本地方法运行的内存模型。区别是虚拟机栈为虚拟机执行 Java 方法服务，而本地方法栈则是为虚拟机用到的 Native 方法服务，本地方法被执行的时候，在本地方法栈也会创建一个栈帧，用于存放该本地方法的局部变量表、操作数栈、动态链接以及出口信息等。方法执行完毕后相应的栈帧也会出栈并释放内存空间。也会抛出两种错误，StackOverFlowError 和 OutOfMemoryError。</p>
-<blockquote>
-<h4 id="堆"><a href="#堆" class="headerlink" title="堆"></a>堆</h4></blockquote>
-<h5 id="1-1-什么是堆"><a href="#1-1-什么是堆" class="headerlink" title="1.1 什么是堆"></a>1.1 什么是堆</h5><p>堆是用来存放对象（类、接口、数组）的内存空间。几乎所有的对象都存储在堆中（实例创建后，成员变量也随对象存在堆中，随着垃圾回收进行释放）。堆是一个运行时数据区，在程序运行时动态分配内存。<br>在堆中产生了一个数组对对象后，还可以在栈中定义一个特殊的变量，让栈用这个变量的取值等于数组或对象在堆地址内存中的首地址，栈中的这个变量就成了数组或对象的引用变量。引用变量就相当于是为数组和对象起的一个名称，以后就可以在程序中使用栈中的引用变量来访问堆中数组或对象。<br>引用变量是普通的变量，定义时在栈中分配，引用变量在程序运行到其作用域外后释放。而数组和对象本身在堆中分配，即使程序运行到使用 new 产生数组或者对象的语句所在的代码之外，数组和对象本身占据的内存空间不会被释放，数组和对象在没有引用指向它的时候才会变为垃圾，不能再被使用。仍然占据内存空间不放，在随后的一个不确定的时期被 GC 垃圾回收收走。这也是 Java 比较占用内存的原因之一，实际上，栈中的变量指向堆内存的变量，这就是 Java 中的指针。</p>
-<h5 id="1-2-堆的特点"><a href="#1-2-堆的特点" class="headerlink" title="1.2 堆的特点"></a>1.2 堆的特点</h5><ul>
-<li>线程共享：整个 JVM 只有一个堆，所有的线程都访问同一个堆。而程序计数器、Java 虚拟机栈、本地方法栈都是一个线程对应一个。</li>
-<li>在虚拟机启动的时候创建。</li>
-<li>垃圾回收的主要场所。</li>
-<li>堆的大小既可以固定也可以扩展，但主流的虚拟机堆的大小是可扩展的。</li>
-<li>堆可以分为：新生代和老年代<br>新生代：新生代程序新创建的对象都在新生代分配的，新生代由 <code>Eden Space</code> 和两块大小相同的 <code>Survivor Space</code>（通常又称 S0 和 S1或 FROM 和 To ）构成，可通过 -Xmn 参数来指定新生代的大小，也可以通过 -XX:SurvivorRation 来调整 Eden Space 及 Survivor Space 的大小，因此新生代又可被分为：Eden，From Survivor，To Survivor。<br>老年代：老年代用户存放经过多次新生代垃圾回收仍然存活的对象，例如缓存对象，新建的对象也有可能直接进入老年代。主要有两种情况：一种是 <code>大对象</code>，可通过启动参数设置 -XX:PretenureSizeThreshold=1024（单位为字节，默认为 0）来代表超过多大时就不再在新生代分配，而是直接在老年代分配。另一种是 <code>大的数组对象</code>，且数组中无引用外部对象。老年代所占的内存大小为 -Xmx 对应的值减去 -Xmn（新生代）对应的值。不同的区域存放具有不同生命周期的对象。这样可以根据不同的区域使用不同的垃圾回收算法，从而更具有针对性，从而更加高效。</li>
-<li>JDK 1.8 及之后版本堆的内存空间分配<br>老年代：三分之二的堆空间<br>年轻代：三分之一的堆空间<ul>
-<li>eden 区： 十分之八的年轻代空间</li>
-<li>survivor 0：十分之一的年轻代空间</li>
-<li>survivor 1：十分之一的年轻代空间</li>
-</ul>
-</li>
-</ul>
-<blockquote>
-<h4 id="程序计数器"><a href="#程序计数器" class="headerlink" title="程序计数器"></a>程序计数器</h4></blockquote>
-<h5 id="1-1-什么是程序计数器"><a href="#1-1-什么是程序计数器" class="headerlink" title="1.1 什么是程序计数器"></a>1.1 什么是程序计数器</h5><p>程序计数器是一块比较小的内存空间，可以把它看作当前线程正在执行的字节码的行号指示器。程序计数器里面记录的是当前线程正在执行的那一条字节码指令的地址。当然，<code>程序计数器是线程私有的</code>。但是，如果当前线程执行的是一个线程本地的方法，那么此时这个线程的程序计数器为空。</p>
-<blockquote>
-<p>本地方法为 Native Method，即由 native 修饰的方法。在定义一个 native 方法时，并不提供实现（类似 Java 中的接口或者抽象方法），因为其实现往往是由外面的 C 或者 C++ 等非 Java 语言实现的。</p>
+<p>如果把线程池比作一个单位的话，<code>corePoolSize</code>就表示正式工，线程就可以表示一个员工。当我们向单位委派一项工作时，如果单位发现正式工还没招满，单位就会招个正式工来完成这项工作。随着我们向这个单位委派的工作增多，即使正式工全部满了，工作还是干不完，那么单位只能按照我们新委派的工作按先后顺序将它们找个地方搁置起来，这个地方就是<code>workQueue</code>，等正式工完成了手上的工作，就到这里来取新的任务。如果不巧，年末了，各个部门都向这个单位委派任务，导致<code>workQueue</code>已经没有空位置放新的任务，于是单位决定招点临时工吧（临时工：又是我！）。临时工也不是想招多少就找多少，上级部门通过这个单位的<code>maximumPoolSize</code>确定了你这个单位的人数的最大值，换句话说最多招<code>maximumPoolSize – corePoolSize</code>个临时工。当然，在线程池中，谁是正式工，谁是临时工是没有区别，完全同工同酬。</p>
 </blockquote>
-<h5 id="1-2-程序计数器的作用"><a href="#1-2-程序计数器的作用" class="headerlink" title="1.2 程序计数器的作用"></a>1.2 程序计数器的作用</h5><p>程序计数器主要有两个作用：</p>
-<ul>
-<li>字节码解释器通过改变程序计数器来一次读取指令，从而实现代码的流程控制，如顺序执行、选择、循环、异常处理等。</li>
-<li>在多线程的条件下，程序计数器用来记录当前线程执行的位置，从而当线程被切换回来的时候能够知道这个线程上次运行到哪个地方了。</li>
-</ul>
-<h5 id="1-3-程序计数器的特点"><a href="#1-3-程序计数器的特点" class="headerlink" title="1.3 程序计数器的特点"></a>1.3 程序计数器的特点</h5><ul>
-<li>是一块比较小的存储空间</li>
-<li>是线程私有的，即每一个线程都有一个独立程序计数器</li>
-<li>是唯一一个不会出现 OOM（OutOfMemoryError）的内存区域</li>
-<li>声明周期随着线程的开始而创建，随着线程的终止而结束</li>
-</ul>
-<blockquote>
-<h4 id="方法区、永久代和元空间"><a href="#方法区、永久代和元空间" class="headerlink" title="方法区、永久代和元空间"></a>方法区、永久代和元空间</h4></blockquote>
-<h5 id="1-1-方法区和永久代的关系"><a href="#1-1-方法区和永久代的关系" class="headerlink" title="1.1 方法区和永久代的关系"></a>1.1 方法区和永久代的关系</h5><p>涉及到内存模型，往往都会提到永久代，那么它和方法区又是什么关系呢？<br><a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-2.html#jvms-2.5" target="_blank" rel="noopener">JVM 虚拟机规范</a> 只是规定了有方法区这个概念和它的作用，并没有规定如何实现它。那么，在不同 JVM 上方法区的实现肯定是不同的。同时大多数公司用的 JVM 都是 Oracle 公司的 HotSpot。在 HotSpot 上把 GC 分代收集扩展至方法区，或者说使用永久代来实现方法区。因此，我们可以得到结论，永久代是 HotSpot 的概念，方式区是 JVM 规范的定义，是一种规范，而永久代是一种实现，一个是标准一个是实现。其它的虚拟机实现并没有永久代这么一说。在 JDK 1.7 及之前的实现中，HotSpot 使用永久代实现方法区，HotSpot 使用 GC 分代来实现方法区内存回收，可以使用以下参数来调准方法区的大小：</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">-XX:PermSize     # 方法区初始大小</span><br><span class="line">-XX:MaxPermSize  # 方法区最大大小（超过这个值会抛出 OutOfMemoryError 异常：java.lang.OutOfMemoryError：PermGen）</span><br></pre></td></tr></table></figure>
+<h5 id="keepAliveTime-和-unit-单位"><a href="#keepAliveTime-和-unit-单位" class="headerlink" title="keepAliveTime 和 unit 单位"></a>keepAliveTime 和 unit 单位</h5><p>keepAliveTime 表示哪些超出<code>corePoolSize</code>数量之外的线程的空闲时间大于<code>keepAliveTime</code>后就被清除了。</p>
+<h5 id="workQueue-任务队列"><a href="#workQueue-任务队列" class="headerlink" title="workQueue 任务队列"></a>workQueue 任务队列</h5><p><code>workQueue</code>决定了缓存任务的排队策略，我们对于不同的任务场景我们可以采取不同的策略，这个队列需要一个实现了<code>BlockingQueue</code>接口的任务等待队列。从<code>ThreadPoolExecutor</code>的文档中得知，官方一共给我们推荐了三种队列，分别是：<code>SynchronousQueue</code>、<code>LinkedBlockingQueue</code>、<code>ArrayBlockingQueue</code>。其中<code>SynchronousQueue</code>和<code>ArrayBlockingQueue</code>属于<code>有限队列</code>，<code>LinkedBlockingQueue</code>属于<code>无限队列</code>，具体作用如下：</p>
+<ol>
+<li><code>SynchronousQueue</code>：一个不存储元素的阻塞队列。每个插入操作必须等待另一个线程调用移除操作，否则插入操作一直处于阻塞状态，吞吐量通常要高于<code>LinkedBlockingQueue</code>，静态工厂方法<code>Executors.newCachedThreadPool</code>使用了这个队列。</li>
+<li><code>ArrayBlockingQueue</code>：有界阻塞队列。一个由数组支持的有界阻塞队列。此队列按<code>FIFO</code>（先进先出）原则对元素进行排序。新元素插入到队列的尾部，队列获取操作则是从队列头部开始获得元素。这是一个典型的“有界缓存区”，固定大小的数组在其中保持生产者插入的元素和使用者提取的元素。一旦创建了这样的缓存区，就不能再增加其容量。试图向已满队列中放入元素会导致操作受阻塞，试图从空队列中提取元素将导致类似阻塞。</li>
+<li><code>LinkedBlockingQueue</code>：链表结构的阻塞队列，尾部插入元素，头部取出元素。<code>LinkedBlockingQueue</code>是我们在<code>ThreadPoolExecutor</code>线程池中常用的等待队列。它可以指定容量也可以不指定容量。由于它具有“无限容量”的特性，实际上任何无限容量的队列/栈都是有容量的，这个容量就是<code>Integer.MAX_VALUE</code>。<code>LinkedBlockingQueue</code>的实现是基于链表结构，而不是类似<code>ArrayBlockingQueue</code>那样的数组。但实际使用过程中，不需要关心它的内部实现，如果指定了<code>LinkedBlockingQueue</code>的容量大小，那么它反映出来的使用特性就和<code>ArrayBlockingQueue</code>类似了。</li>
+</ol>
+<h5 id="threadFactory-指定创建线程的工厂"><a href="#threadFactory-指定创建线程的工厂" class="headerlink" title="threadFactory 指定创建线程的工厂"></a>threadFactory 指定创建线程的工厂</h5><p>其实像<code>ThreadPoolExecutor</code>有的没有<code>threadFactory</code>的构造方法中使用的创建线程的工厂就是默认的工厂，比如下面这个构造方法：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">ThreadPoolExecutor</span><span class="params">(<span class="keyword">int</span> corePoolSize,</span></span></span><br><span class="line"><span class="function"><span class="params">                          <span class="keyword">int</span> maximumPoolSize,</span></span></span><br><span class="line"><span class="function"><span class="params">                          <span class="keyword">long</span> keepAliveTime,</span></span></span><br><span class="line"><span class="function"><span class="params">                          TimeUnit unit,</span></span></span><br><span class="line"><span class="function"><span class="params">                          BlockingQueue&lt;Runnable&gt; workQueue)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>(corePoolSize, maximumPoolSize, keepAliveTime, unit, workQueue,</span><br><span class="line">            Executors.defaultThreadFactory(), defaultHandler);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<h5 id="1-2-元空间"><a href="#1-2-元空间" class="headerlink" title="1.2 元空间"></a>1.2 元空间</h5><p>对于 Java 8，HotSpot 取消了永久代，那么是不是也就没有方法了吗？<br>当然不是，方法区是一个规范，规范没变，它就会一直在。那么取代永久代的就是元空间。它和永久代有什么不同呢？</p>
-<ul>
-<li>存储位置不同，永久代物理上是堆的一部分，和新生代、老年代地址是连续的，而元空间属于本地内存</li>
-<li>存储内容不同，元空间存储类的元信息，静态变量和常量池等并入堆中。相当于永久代的数据被分到了堆和元空间中。</li>
-</ul>
-<h4 id="1-3-总结"><a href="#1-3-总结" class="headerlink" title="1.3 总结"></a>1.3 总结</h4><h6 id="1-1-JVM-内存模型一共有两个“栈”，分别是-Java-虚拟机栈和本地方法栈"><a href="#1-1-JVM-内存模型一共有两个“栈”，分别是-Java-虚拟机栈和本地方法栈" class="headerlink" title="1.1 JVM 内存模型一共有两个“栈”，分别是 Java 虚拟机栈和本地方法栈"></a>1.1 JVM 内存模型一共有两个“栈”，分别是 Java 虚拟机栈和本地方法栈</h6><p>两个“栈”功能类似，都是方法运行过程的内存模型。并且两个“栈”内部构造相同，都是方法私有的。只不过 Java 虚拟机栈描述的是 Java 方法运行过程的内存模型，而本地方法栈是描述 Java 本地方法运行过程的内存模型。</p>
-<h6 id="1-2-JVM-内存模型中一共有两个“堆”，分别是原本的堆和方法区"><a href="#1-2-JVM-内存模型中一共有两个“堆”，分别是原本的堆和方法区" class="headerlink" title="1.2 JVM 内存模型中一共有两个“堆”，分别是原本的堆和方法区"></a>1.2 JVM 内存模型中一共有两个“堆”，分别是原本的堆和方法区</h6><p>方法区本质上还是属于堆的一个逻辑部分。堆中存放对象，方法区中存放类信息、常量、静态变量，即时编译器编译后的代码等。</p>
-<h6 id="1-3-堆是-JVM-中最大的一块内存区域，也是垃圾收集器主要工作的地方"><a href="#1-3-堆是-JVM-中最大的一块内存区域，也是垃圾收集器主要工作的地方" class="headerlink" title="1.3 堆是 JVM 中最大的一块内存区域，也是垃圾收集器主要工作的地方"></a>1.3 堆是 JVM 中最大的一块内存区域，也是垃圾收集器主要工作的地方</h6><p>在创建对象的时候，非静态成员会被加载到堆内存中，并完成成员变量的初始化。也就是说所有的非静态成员（成员变量、成员方法、构造方法、构造代码块和普通代码块）都是保存在堆内存中的。但是方法调用的时候，调用的方法会在栈内存中执行，构造代码块也会在栈内存中执行。</p>
-<h6 id="1-4-线程私有与共享"><a href="#1-4-线程私有与共享" class="headerlink" title="1.4 线程私有与共享"></a>1.4 线程私有与共享</h6><p>Java 虚拟机栈、程序计数器和本地方法栈都是线程私有的，也就是说每个线程都是各自的程序计数器、Java 虚拟机栈和本地方法栈。他们的生命周期和线程的生命周期一样。而堆、方法区则是线程共享的，在 JVM 中只有一个堆，一个方法区。并在 JVM 启动的时候就创建，直到 JVM 停止的时候才销毁。</p>
+<p>在这个构造方法中，创建线程的工厂的方法使用<code>Executors.defaultThreadFactory()</code>的工厂和<code>ThreadPoolExecutor</code>中的<code>defaultHandler</code>默认抛弃策略。使用 <code>Executors.defaultThreadFactory</code>创建的线程同属于相同的线程组，具有同为<code>Thread.NORM_PRIORITY</code>的优先级，以及名为<code>pool-poolNumber.getAndIncrement()-thread-</code>的线程名（poolNumber.getAndIncrement() 为线程池顺序序号），且创建的线程都是非守护进程。</p>
+<h5 id="handler-拒绝策略"><a href="#handler-拒绝策略" class="headerlink" title="handler 拒绝策略"></a>handler 拒绝策略</h5><p>表示当<code>workQueue</code>已满，池中的线程数达到<code>maximumPoolSize</code>时，线程池拒绝添加新任务时采取的策略。从类的注释文档中得知，<code>handler</code>一般可以取以下四种值：</p>
+<table>
+<thead>
+<tr>
+<th align="center">拒绝策略</th>
+<th align="center">含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">AbortPolicy</td>
+<td align="center">抛出 RejectedExecutionException 异常</td>
+</tr>
+<tr>
+<td align="center">CallerRunsPolicy</td>
+<td align="center">由向线程池提交任务的线程来执行该任务</td>
+</tr>
+<tr>
+<td align="center">DiscardPolicy</td>
+<td align="center">直接丢弃当前的任务</td>
+</tr>
+<tr>
+<td align="center">DiscardOldestPolicy</td>
+<td align="center">抛弃最旧的任务（最先提交而没有得到执行的任务）</td>
+</tr>
+</tbody></table>
+<p>个人觉得最优雅的方式还是<code>AbortPolicy</code>提供的处理方式：抛出异常，由开发人员进行处理。<code>ThreadPoolExecutor</code>默认的拒绝方式<code>defaultHandler</code>就是<code>ThreadPoolExecutor.AbortPolicy</code>。</p>
+<h4 id="合理配置线程池"><a href="#合理配置线程池" class="headerlink" title="合理配置线程池"></a>合理配置线程池</h4><p>最后，我们要想合理的配置线程池，就必须首先分析任务特性，可以从以下几个角度来进行分析：</p>
+<h5 id="任务的性质"><a href="#任务的性质" class="headerlink" title="任务的性质"></a>任务的性质</h5><p>任务性质不同的任务可以用不同规模的线程池分开处理。CPU密集型任务配置尽可能少的线程数量，如配置<code>Ncpu+1</code>个线程的线程池。IO 密集型任务则由于需要等待 IO 操作，线程并不是一直在执行任务，则配置尽可能多的线程，如<code>2*Ncpu</code>。混合型的任务，如果可以拆分，则将其拆分成一个 CPU 密集型任务和一个 IO 密集型任务，只要这两个任务执行的时间相差不是太大，那么分解后执行的吞吐率要高于串行执行的吞吐率，如果这两个任务执行时间相差太大，则没必要进行分解。我们可以通过<code>Runtime.getRuntime().availableProcessors()</code>方法获得当前设备的 CPU 个数。</p>
+<h5 id="任务的优先级"><a href="#任务的优先级" class="headerlink" title="任务的优先级"></a>任务的优先级</h5><p>优先级不同的任务可以使用优先级队列<code>PriorityBlockingQueue</code>来处理。它可以让优先级高的任务先得到执行，需要注意的是如果一直有优先级高的任务提交到队列里，那么优先级低的任务可能永远不能执行。</p>
+<h5 id="任务的执行时间"><a href="#任务的执行时间" class="headerlink" title="任务的执行时间"></a>任务的执行时间</h5><p>执行时间不同的任务可以交给不同规模的线程池来处理，或者也可以使用优先级队列，让执行时间短的任务先执行。</p>
+<h5 id="任务的依赖性"><a href="#任务的依赖性" class="headerlink" title="任务的依赖性"></a>任务的依赖性</h5><p>依赖数据库连接池的任务，因为线程提交 SQL 后需要等待数据库返回结果，如果等待的时间越长 CPU 空闲时间就越长，那么线程数应该设置越大，这样才能更好的利用 CPU。建议使用有界队列，有界队列能增加系统的稳定性和预警能力，可以根据需要设大一点，比如几千。有一次我们组使用的后台任务线程池的队列和线程池全满了，不断的抛出抛弃任务的异常，通过排查发现是数据库出现了问题，导致执行 SQL 变得非常缓慢，因为后台任务线程池里的任务全是需要向数据库查询和插入数据的，所以导致线程池里的工作线程全部阻塞住，任务积压在线程池里。如果当时我们设置成无界队列，线程池的队列就会越来越多，有可能会撑满内存，导致整个系统不可用，而不只是后台任务出现问题。当然我们的系统所有的任务是用的单独的服务器部署的，而我们使用不同规模的线程池跑不同类型的任务，但是出现这样问题时也会影响到其他任务。</p>
 <hr>
-<p>参考文章：<br><a href="https://betsol.com/2017/06/java-memory-management-for-java-virtual-machine-jvm/" target="_blank" rel="noopener">Java Memory Management for Java Virtual Machine (JVM)</a><br><a href="https://docs.oracle.com/javase/specs/jvms/se8/html" target="_blank" rel="noopener">The Java® Virtual Machine Specification（Java SE 8 Edition）</a></p>
+<p>参考文章：<br><a href="https://www.infoq.cn/article/java-threadPool" target="_blank" rel="noopener">JAVA 线程池的分析和使用</a><br><a href="https://blog.csdn.net/xiaojin21cen/article/details/87363143" target="_blank" rel="noopener">ThreadPoolExecutor 的 workQueue 任务队列详解</a></p>
 
       
     </div>
@@ -659,7 +636,7 @@
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="https://www.mghio.cn/post/8a061473.html" title="Java 运行时数据区域">https://www.mghio.cn/post/8a061473.html</a>
+    <a href="https://www.mghio.cn/post/bc557e1a.html" title="Java 线程池（一）">https://www.mghio.cn/post/bc557e1a.html</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>
@@ -675,8 +652,6 @@
           
             <a href="/tags/Java/" rel="tag"># Java</a>
           
-            <a href="/tags/JVM/" rel="tag"># JVM</a>
-          
         </div>
       
 
@@ -688,8 +663,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/post/bfcdfeaf.html" rel="next" title="Java 并发之 ThreadLocal">
-                <i class="fa fa-chevron-left"></i> Java 并发之 ThreadLocal
+              <a href="/post/99ea2970.html" rel="next" title="深挖 HashMap">
+                <i class="fa fa-chevron-left"></i> 深挖 HashMap
               </a>
             
           </div>
@@ -697,10 +672,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/post/ee27c07f.html" rel="prev" title="同步工具类">
-                同步工具类 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -860,7 +831,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-1-为什么要进行内存区域划分"><span class="nav-number">1.</span> <span class="nav-text">1.1 为什么要进行内存区域划分</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-2-运行时数据区域的组成"><span class="nav-number">2.</span> <span class="nav-text">1.2 运行时数据区域的组成</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#方法区"><span class="nav-number">3.</span> <span class="nav-text">方法区</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-1-什么是方法区"><span class="nav-number">3.1.</span> <span class="nav-text">1.1 什么是方法区</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#1-2-方法区的特点"><span class="nav-number">3.2.</span> <span class="nav-text">1.2 方法区的特点</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#1-3-运行时常量池"><span class="nav-number">3.3.</span> <span class="nav-text">1.3 运行时常量池</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#虚拟机栈"><span class="nav-number">4.</span> <span class="nav-text">虚拟机栈</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-1-什么是虚拟机栈"><span class="nav-number">4.1.</span> <span class="nav-text">1.1 什么是虚拟机栈</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#1-2-Java-虚拟机栈的特点"><span class="nav-number">4.2.</span> <span class="nav-text">1.2 Java 虚拟机栈的特点</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#本地方法栈"><span class="nav-number">5.</span> <span class="nav-text">本地方法栈</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#堆"><span class="nav-number">6.</span> <span class="nav-text">堆</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-1-什么是堆"><span class="nav-number">6.1.</span> <span class="nav-text">1.1 什么是堆</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#1-2-堆的特点"><span class="nav-number">6.2.</span> <span class="nav-text">1.2 堆的特点</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#程序计数器"><span class="nav-number">7.</span> <span class="nav-text">程序计数器</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-1-什么是程序计数器"><span class="nav-number">7.1.</span> <span class="nav-text">1.1 什么是程序计数器</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#1-2-程序计数器的作用"><span class="nav-number">7.2.</span> <span class="nav-text">1.2 程序计数器的作用</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#1-3-程序计数器的特点"><span class="nav-number">7.3.</span> <span class="nav-text">1.3 程序计数器的特点</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#方法区、永久代和元空间"><span class="nav-number">8.</span> <span class="nav-text">方法区、永久代和元空间</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-1-方法区和永久代的关系"><span class="nav-number">8.1.</span> <span class="nav-text">1.1 方法区和永久代的关系</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#1-2-元空间"><span class="nav-number">8.2.</span> <span class="nav-text">1.2 元空间</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-3-总结"><span class="nav-number">9.</span> <span class="nav-text">1.3 总结</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#1-1-JVM-内存模型一共有两个“栈”，分别是-Java-虚拟机栈和本地方法栈"><span class="nav-number">9.0.1.</span> <span class="nav-text">1.1 JVM 内存模型一共有两个“栈”，分别是 Java 虚拟机栈和本地方法栈</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#1-2-JVM-内存模型中一共有两个“堆”，分别是原本的堆和方法区"><span class="nav-number">9.0.2.</span> <span class="nav-text">1.2 JVM 内存模型中一共有两个“堆”，分别是原本的堆和方法区</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#1-3-堆是-JVM-中最大的一块内存区域，也是垃圾收集器主要工作的地方"><span class="nav-number">9.0.3.</span> <span class="nav-text">1.3 堆是 JVM 中最大的一块内存区域，也是垃圾收集器主要工作的地方</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#1-4-线程私有与共享"><span class="nav-number">9.0.4.</span> <span class="nav-text">1.4 线程私有与共享</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#线程池简介"><span class="nav-number">1.</span> <span class="nav-text">线程池简介</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Java-四种线程池"><span class="nav-number">2.</span> <span class="nav-text">Java 四种线程池</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Java-线程池参数详解"><span class="nav-number">3.</span> <span class="nav-text">Java 线程池参数详解</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#线程池的状态"><span class="nav-number">3.1.</span> <span class="nav-text">线程池的状态</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#ThreadPoolExecutor-的构造函数"><span class="nav-number">3.2.</span> <span class="nav-text">ThreadPoolExecutor 的构造函数</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#keepAliveTime-和-unit-单位"><span class="nav-number">3.3.</span> <span class="nav-text">keepAliveTime 和 unit 单位</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#workQueue-任务队列"><span class="nav-number">3.4.</span> <span class="nav-text">workQueue 任务队列</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#threadFactory-指定创建线程的工厂"><span class="nav-number">3.5.</span> <span class="nav-text">threadFactory 指定创建线程的工厂</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#handler-拒绝策略"><span class="nav-number">3.6.</span> <span class="nav-text">handler 拒绝策略</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#合理配置线程池"><span class="nav-number">4.</span> <span class="nav-text">合理配置线程池</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#任务的性质"><span class="nav-number">4.1.</span> <span class="nav-text">任务的性质</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#任务的优先级"><span class="nav-number">4.2.</span> <span class="nav-text">任务的优先级</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#任务的执行时间"><span class="nav-number">4.3.</span> <span class="nav-text">任务的执行时间</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#任务的依赖性"><span class="nav-number">4.4.</span> <span class="nav-text">任务的依赖性</span></a></li></ol></li></ol></div>
             
 
           </div>
