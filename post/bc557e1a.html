@@ -100,7 +100,7 @@
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://i.loli.net/2019/11/23/RwvDlzJU23GfjdZ.png">
 <meta property="og:image" content="https://i.loli.net/2019/11/23/1rzqtsmXv3g5O24.png">
-<meta property="og:updated_time" content="2019-11-24T02:35:22.945Z">
+<meta property="og:updated_time" content="2019-11-24T02:56:58.724Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Java 线程池（一）">
 <meta name="twitter:description" content="线程池简介使用线程池可以很好的提高性能，线程池在运行之初就会创建一定数量的空闲线程，我们将一个任务提交给线程池，线程池就会使用一个空闲的线程来执行这个任务，该任务执行完后，该线程不会死亡，而是再次变成空闲状态返回线程池，等待下一个任务的到来。在使用线程池时，我们把要执行的任务提交给整个线程池，而不是提交给某个线程，线程池拿到提交的任务后，会在内部寻找是否还有空闲的线程，如果有，就将这个任务提交给某">
@@ -475,7 +475,7 @@
 <h4 id="Java-线程池参数详解"><a href="#Java-线程池参数详解" class="headerlink" title="Java 线程池参数详解"></a>Java 线程池参数详解</h4><p>上文说到的 Executors 工具类提供的四种适用于不同场景的线程池，通过查看源码可以发现最终都是调用 <code>ThreadPoolExecutor</code> 类来实现的，我们接下来深入了解这个类一些成员变量的具体含义。首先是<code>ctl</code>，其声明如下：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">final</span> AtomicInteger ctl = <span class="keyword">new</span> AtomicInteger(ctlOf(RUNNING, <span class="number">0</span>));</span><br></pre></td></tr></table></figure>
 
-<p>这个成员变量 <code>ctl</code> 主要用于<code>存储线程池的工作状态以及线程池正在运行的线程数</code>。很显然，要在一个整型变量中存储两部分数据，只能将其一份为二。其中的高 3bit 用于存储线程的状态，低 29bit 用于存储线程池中正在执行的线程数。</p>
+<p>这个成员变量 <code>ctl</code> 主要用于<code>存储线程池的工作状态以及线程池正在运行的线程数</code>。很显然，要在一个整型变量中存储两部分数据，只能将其一分为二。其中的高 3bit 用于存储线程的状态，低 29bit 用于存储线程池中正在执行的线程数。</p>
 <h5 id="线程池的状态"><a href="#线程池的状态" class="headerlink" title="线程池的状态"></a>线程池的状态</h5><p>在 <code>ThreadPoolExecutor</code> 定义了线程池的五种状态（<code>注意，这里说的是线程池状态，不是池中的线程的状态</code>），当创建一个线程池时的状态为 <code>RUNNING</code>。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> RUNNING    = -<span class="number">1</span> &lt;&lt; COUNT_BITS;</span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> SHUTDOWN   =  <span class="number">0</span> &lt;&lt; COUNT_BITS;</span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> STOP       =  <span class="number">1</span> &lt;&lt; COUNT_BITS;</span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> TIDYING    =  <span class="number">2</span> &lt;&lt; COUNT_BITS;</span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> TERMINATED =  <span class="number">3</span> &lt;&lt; COUNT_BITS;</span><br></pre></td></tr></table></figure>
 
