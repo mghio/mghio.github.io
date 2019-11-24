@@ -90,20 +90,20 @@
 
 
 
-<meta name="description" content="线程池简介线程池就是首先创建一些线程，把这些线程的集合称为线程池。使用线程池可以很好的提高性能，线程池在运行之初就会创建一定数量的空闲线程，我们将一个任务提交给线程池，线程池就会使用一个空闲的线程来执行这个任务，该任务执行完后，该线程不会死亡，而是再次变成空闲状态返回线程池，等待下一个任务的到来。在线程池编程模式下，我们把要执行的任务提交给整个线程池，而不是提交给某个线程，线程池拿到提交的任务后，">
+<meta name="description" content="线程池简介使用线程池可以很好的提高性能，线程池在运行之初就会创建一定数量的空闲线程，我们将一个任务提交给线程池，线程池就会使用一个空闲的线程来执行这个任务，该任务执行完后，该线程不会死亡，而是再次变成空闲状态返回线程池，等待下一个任务的到来。在使用线程池时，我们把要执行的任务提交给整个线程池，而不是提交给某个线程，线程池拿到提交的任务后，会在内部寻找是否还有空闲的线程，如果有，就将这个任务提交给某">
 <meta name="keywords" content="Java">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Java 线程池（一）">
 <meta property="og:url" content="https://www.mghio.cn/post/bc557e1a.html">
 <meta property="og:site_name" content="mghio&#39;s blog">
-<meta property="og:description" content="线程池简介线程池就是首先创建一些线程，把这些线程的集合称为线程池。使用线程池可以很好的提高性能，线程池在运行之初就会创建一定数量的空闲线程，我们将一个任务提交给线程池，线程池就会使用一个空闲的线程来执行这个任务，该任务执行完后，该线程不会死亡，而是再次变成空闲状态返回线程池，等待下一个任务的到来。在线程池编程模式下，我们把要执行的任务提交给整个线程池，而不是提交给某个线程，线程池拿到提交的任务后，">
+<meta property="og:description" content="线程池简介使用线程池可以很好的提高性能，线程池在运行之初就会创建一定数量的空闲线程，我们将一个任务提交给线程池，线程池就会使用一个空闲的线程来执行这个任务，该任务执行完后，该线程不会死亡，而是再次变成空闲状态返回线程池，等待下一个任务的到来。在使用线程池时，我们把要执行的任务提交给整个线程池，而不是提交给某个线程，线程池拿到提交的任务后，会在内部寻找是否还有空闲的线程，如果有，就将这个任务提交给某">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://i.loli.net/2019/11/23/RwvDlzJU23GfjdZ.png">
 <meta property="og:image" content="https://i.loli.net/2019/11/23/1rzqtsmXv3g5O24.png">
-<meta property="og:updated_time" content="2019-11-23T16:59:00.566Z">
+<meta property="og:updated_time" content="2019-11-24T02:35:22.945Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Java 线程池（一）">
-<meta name="twitter:description" content="线程池简介线程池就是首先创建一些线程，把这些线程的集合称为线程池。使用线程池可以很好的提高性能，线程池在运行之初就会创建一定数量的空闲线程，我们将一个任务提交给线程池，线程池就会使用一个空闲的线程来执行这个任务，该任务执行完后，该线程不会死亡，而是再次变成空闲状态返回线程池，等待下一个任务的到来。在线程池编程模式下，我们把要执行的任务提交给整个线程池，而不是提交给某个线程，线程池拿到提交的任务后，">
+<meta name="twitter:description" content="线程池简介使用线程池可以很好的提高性能，线程池在运行之初就会创建一定数量的空闲线程，我们将一个任务提交给线程池，线程池就会使用一个空闲的线程来执行这个任务，该任务执行完后，该线程不会死亡，而是再次变成空闲状态返回线程池，等待下一个任务的到来。在使用线程池时，我们把要执行的任务提交给整个线程池，而不是提交给某个线程，线程池拿到提交的任务后，会在内部寻找是否还有空闲的线程，如果有，就将这个任务提交给某">
 <meta name="twitter:image" content="https://i.loli.net/2019/11/23/RwvDlzJU23GfjdZ.png">
 
 
@@ -424,7 +424,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  4k 字
+                  3.9k 字
                 </span>
               
 
@@ -440,7 +440,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  14 分钟
+                  13 分钟
                 </span>
               
             </div>
@@ -463,19 +463,19 @@
       
 
       
-        <h4 id="线程池简介"><a href="#线程池简介" class="headerlink" title="线程池简介"></a>线程池简介</h4><p>线程池就是首先创建一些线程，把这些线程的集合称为线程池。使用线程池可以很好的提高性能，线程池在运行之初就会创建一定数量的空闲线程，我们将一个任务提交给线程池，线程池就会使用一个空闲的线程来执行这个任务，该任务执行完后，该线程不会死亡，<code>而是再次变成空闲状态返回线程池，等待下一个任务的到来</code>。<br>在线程池编程模式下，我们把要执行的任务提交给整个线程池，而不是提交给某个线程，线程池拿到提交的任务后，会在内部寻找是否还有空闲的线程，如果有，就将这个任务提交给某个空闲的线程，一个线程同一时刻只能执行一个任务，但是我们可以向线程池提交多个任务。合理使用线程池有以下几个优点：<br>① <strong>降低资源消耗</strong> 多线程运行期间，系统不断的启动和关闭新线程，成本高，会过度消耗系统资源，通过<code>重用</code>存在的线程，减少对象创建、消亡的开销。<br>② <strong>降提高响应速度</strong> 降当有任务到达时，任务可以不需要等待线程的创建，可以直接从线程池中取出空闲的线程来执行任务。<br>③ <strong>降方便线程管理</strong> 降线程对计算机来说是很稀缺的资源，如果让他无限制的创建，它不仅消耗系统的资源，还会降低系统的稳定性，我们使用线程池后可以统一进行分配和监控。<br>谈到线程池就会想到<code>池化</code>技术，最核心的思想就<code>是把宝贵的资源放到一个池子中</code>，每次要使用都从池子里面取，用完只有又放回池子让别人用。那么它在 Java 中是如何实现的呢？</p>
-<h4 id="Java-四种线程池"><a href="#Java-四种线程池" class="headerlink" title="Java 四种线程池"></a>Java 四种线程池</h4><p>在 Java 中 Executors 工具类给我们提供了四种不同使用场景的线程池，分别为：</p>
+        <h4 id="线程池简介"><a href="#线程池简介" class="headerlink" title="线程池简介"></a>线程池简介</h4><p>使用线程池可以很好的提高性能，线程池在运行之初就会创建一定数量的空闲线程，我们将一个任务提交给线程池，线程池就会使用一个空闲的线程来执行这个任务，该任务执行完后，该线程不会死亡，<code>而是再次变成空闲状态返回线程池，等待下一个任务的到来</code>。在使用线程池时，我们把要执行的任务提交给整个线程池，而不是提交给某个线程，线程池拿到提交的任务后，会在内部寻找是否还有空闲的线程，如果有，就将这个任务提交给某个空闲的线程，虽然一个线程同一时刻只能执行一个任务，但是我们可以向线程池提交多个任务。合理使用线程池有以下几个优点：<br>① <strong>降低资源消耗</strong> 多线程运行期间，系统不断的启动和关闭新线程，成本高，会过度消耗系统资源，通过<code>重用</code>存在的线程，减少对象创建、消亡的开销<br>② <strong>提高响应速度</strong> 当有任务到达时，任务可以不需要等待线程的创建，可以直接从线程池中取出空闲的线程来执行任务<br>③ <strong>方便线程管理</strong> 线程对计算机来说是很稀缺的资源，如果让他无限制创建，它不仅消耗系统的资源，还会降低系统的稳定性，我们使用线程池后可以统一进行分配和监控<br>谈到线程池就会想到<code>池化</code>技术，核心思想就是<code>把宝贵的资源放到一个池子中</code>，每次要使用都从池子里面取，用完之后又放回池子让别人用。那么线程池在 Java 中是如何实现的呢？</p>
+<h4 id="Java-四种线程池"><a href="#Java-四种线程池" class="headerlink" title="Java 四种线程池"></a>Java 四种线程池</h4><p>在 Java 中 Executors 工具类给我们提供了四种不同使用场景的线程池的创建方法，分别为：</p>
 <ol>
-<li><code>newSingleThreadExecutor</code> 只有一条线程来执行任务，适用于有顺序的任务的应用场景。如果这个唯一的线程因为异常结束，那么会有一个新的线程来替代它，它可以保证任务按照指定顺序（FIFO，LIFO）串行执行，它还有一个可以指定线程工厂（<code>ThreadFactory</code>）的重载方法，可以指定线程的创建行为</li>
-<li><code>newFixedThreadPool</code> 定长的线程池，有核心线程，核心线程的即为最大的线程数量，没有非核心线程。每次提交一个任务就创建一个线程，直到达到线程池的最大大小。线程池一旦达到最大值就会保持不变，如果当中的某个线程因为异常而结束，那么线程池会新建一个线程加入到线程池中。它还可以控制线程的最大并发数，超出的线程会在阻塞队列（<code>LinkedBlockingQueue</code>）中等待，同时它也有一个可以指定线程工厂（<code>ThreadFactory</code>）的重载方法，可以指定线程的创建行为。</li>
+<li><code>newSingleThreadExecutor</code> 只有一个线程来执行任务，适用于有顺序的任务的应用场景。如果这个唯一的线程因为异常结束，那么会有一个新的线程来替代它，它可以保证任务按照指定顺序（FIFO，LIFO）执行，它还有可以指定线程工厂（<code>ThreadFactory</code>）的重载方法，可以自定义线程的创建行为</li>
+<li><code>newFixedThreadPool</code> 固定线程数的线程池，只有核心线程，核心线程的即为最大的线程数量，没有非核心线程。每次提交一个任务就创建一个线程，直到达到线程池的最大大小。线程池一旦达到最大值就会保持不变，如果当中的某个线程因为异常而结束，那么线程池会新建一个线程加入到线程池中。它还可以控制线程的最大并发数，超出的线程会在阻塞队列（<code>LinkedBlockingQueue</code>）中等待，同样它也有可以指定线程工厂（<code>ThreadFactory</code>）的重载方法，可以自定义线程的创建行为。</li>
 <li><code>newCachedThreadPool</code> 创建一个可缓存线程池，最大的线程个数为 <code>2^31 - 1（Integer.MAX_VALUE）</code>，可以认为是无限大，若无可回收，则新建线程，如果线程池的大小超出了处理任务所需要的线程，那么就会回收部分空闲（60s 不执行任务）的线程。</li>
-<li><code>newScheduledThreadPool</code> 周期性执行任务的线程池，按照某种特定的计划执行线程中的任务，有核心线程，但也有非核心线程，非核心线程的大小也为无限大。适用于执行周期性的任务。</li>
+<li><code>newScheduledThreadPool</code> 周期性执行任务的线程池，按照某种特定的计划执行线程中的任务，有核心线程，但也有非核心线程，非核心线程的大小也为无限大（<code>Integer.MAX_VALUE：2^31 - 1</code>），适用于执行周期性的任务。</li>
 </ol>
 <a id="more"></a>
-<h4 id="Java-线程池参数详解"><a href="#Java-线程池参数详解" class="headerlink" title="Java 线程池参数详解"></a>Java 线程池参数详解</h4><p>上文说到的 Executors 工具类提供的四种适用于不同场景的线程池，通过查看源码发现最终都是调用 <code>ThreadPoolExecutor</code> 类来实现的，我们接下来深入了解这个类一些成员变量的具体含义。首先是<code>ctl</code>，其声明如下：</p>
+<h4 id="Java-线程池参数详解"><a href="#Java-线程池参数详解" class="headerlink" title="Java 线程池参数详解"></a>Java 线程池参数详解</h4><p>上文说到的 Executors 工具类提供的四种适用于不同场景的线程池，通过查看源码可以发现最终都是调用 <code>ThreadPoolExecutor</code> 类来实现的，我们接下来深入了解这个类一些成员变量的具体含义。首先是<code>ctl</code>，其声明如下：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">final</span> AtomicInteger ctl = <span class="keyword">new</span> AtomicInteger(ctlOf(RUNNING, <span class="number">0</span>));</span><br></pre></td></tr></table></figure>
 
-<p>通过源码的注释得知，这个成员变量 <code>ctl</code> 主要用于<code>存储线程池的工作状态已经线程池正在运行的线程数</code>。很显然，要在一个整型变量中存储两部分数据，只能将其一份为二了。其中的高 3bit 用于存储线程的状态，低位的 29bit 用于存储线程池中正在执行的线程数。</p>
+<p>这个成员变量 <code>ctl</code> 主要用于<code>存储线程池的工作状态以及线程池正在运行的线程数</code>。很显然，要在一个整型变量中存储两部分数据，只能将其一份为二。其中的高 3bit 用于存储线程的状态，低 29bit 用于存储线程池中正在执行的线程数。</p>
 <h5 id="线程池的状态"><a href="#线程池的状态" class="headerlink" title="线程池的状态"></a>线程池的状态</h5><p>在 <code>ThreadPoolExecutor</code> 定义了线程池的五种状态（<code>注意，这里说的是线程池状态，不是池中的线程的状态</code>），当创建一个线程池时的状态为 <code>RUNNING</code>。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> RUNNING    = -<span class="number">1</span> &lt;&lt; COUNT_BITS;</span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> SHUTDOWN   =  <span class="number">0</span> &lt;&lt; COUNT_BITS;</span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> STOP       =  <span class="number">1</span> &lt;&lt; COUNT_BITS;</span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> TIDYING    =  <span class="number">2</span> &lt;&lt; COUNT_BITS;</span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> TERMINATED =  <span class="number">3</span> &lt;&lt; COUNT_BITS;</span><br></pre></td></tr></table></figure>
 
@@ -509,7 +509,7 @@
 </tbody></table>
 <p>调用线程池的 <code>shutdown</code> 方法，将线程池由 RUNNING 状态转为 SHUTDOWN 状态。调用 <code>shutdownNow</code> 方法，将线程池由 RUNNING 状态转为 STOP 状态。SHUTDOWN 状态和 STOP 状态都会先变为 TIDYING 状态，最终都会变为 TERMINATED 状态。用图表示为：</p>
 <p><img src="https://i.loli.net/2019/11/23/RwvDlzJU23GfjdZ.png" alt="thread-pool-one.png"></p>
-<p><code>ThreadPoolExecutor</code> 同时提供了一下三个方法来查看线程池的状态和池中正在执行的线程数</p>
+<p><code>ThreadPoolExecutor</code> 同时提供了以下三个方法来查看线程池的状态和池中正在执行的线程数</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">runStateOf</span><span class="params">(<span class="keyword">int</span> c)</span>     </span>&#123; <span class="keyword">return</span> c &amp; ~CAPACITY; &#125;</span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">workerCountOf</span><span class="params">(<span class="keyword">int</span> c)</span>  </span>&#123; <span class="keyword">return</span> c &amp; CAPACITY; &#125;</span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">ctlOf</span><span class="params">(<span class="keyword">int</span> rs, <span class="keyword">int</span> wc)</span> </span>&#123; <span class="keyword">return</span> rs | wc; &#125;</span><br></pre></td></tr></table></figure>
 
 <h5 id="ThreadPoolExecutor-的构造函数"><a href="#ThreadPoolExecutor-的构造函数" class="headerlink" title="ThreadPoolExecutor 的构造函数"></a>ThreadPoolExecutor 的构造函数</h5><p>该类参数最全的构造方法如下，这个方法决定了创建出来的线程池的各种属性：</p>
@@ -525,22 +525,22 @@
 <li>如果没有空闲的线程执行该任务，并且阻塞队列已满同时池中的线程数小于<code>maximumPoolSize</code>，则创建新的线程执行该任务</li>
 <li>如果没有空闲的线程执行该任务，并且阻塞队列已满同时池中的线程数等于<code>maximumPoolSize</code>，则根据构造函数中的<code>handler</code>指定的策略来拒绝新添加的任务</li>
 </ol>
-<p>在线程池的当中并没有标记出哪些线程是核心线程，哪些非核心线程，线程池它只关系<code>核心线程的数量</code>。下面这个是网上看到的一个形象的比喻：</p>
+<p>在线程池中并没有标记出哪些线程是核心线程，哪些非核心线程，线程池它只关心<code>核心线程的数量</code>。下面这个是网上看到的一个形象的比喻：</p>
 <blockquote>
 <p>如果把线程池比作一个单位的话，<code>corePoolSize</code>就表示正式工，线程就可以表示一个员工。当我们向单位委派一项工作时，如果单位发现正式工还没招满，单位就会招个正式工来完成这项工作。随着我们向这个单位委派的工作增多，即使正式工全部满了，工作还是干不完，那么单位只能按照我们新委派的工作按先后顺序将它们找个地方搁置起来，这个地方就是<code>workQueue</code>，等正式工完成了手上的工作，就到这里来取新的任务。如果不巧，年末了，各个部门都向这个单位委派任务，导致<code>workQueue</code>已经没有空位置放新的任务，于是单位决定招点临时工吧（临时工：又是我！）。临时工也不是想招多少就找多少，上级部门通过这个单位的<code>maximumPoolSize</code>确定了你这个单位的人数的最大值，换句话说最多招<code>maximumPoolSize – corePoolSize</code>个临时工。当然，在线程池中，谁是正式工，谁是临时工是没有区别，完全同工同酬。</p>
 </blockquote>
-<h5 id="keepAliveTime-和-unit-单位"><a href="#keepAliveTime-和-unit-单位" class="headerlink" title="keepAliveTime 和 unit 单位"></a>keepAliveTime 和 unit 单位</h5><p>keepAliveTime 表示哪些超出<code>corePoolSize</code>数量之外的线程的空闲时间大于<code>keepAliveTime</code>后就被清除了。</p>
-<h5 id="workQueue-任务队列"><a href="#workQueue-任务队列" class="headerlink" title="workQueue 任务队列"></a>workQueue 任务队列</h5><p><code>workQueue</code>决定了缓存任务的排队策略，我们对于不同的任务场景我们可以采取不同的策略，这个队列需要一个实现了<code>BlockingQueue</code>接口的任务等待队列。从<code>ThreadPoolExecutor</code>的文档中得知，官方一共给我们推荐了三种队列，分别是：<code>SynchronousQueue</code>、<code>LinkedBlockingQueue</code>、<code>ArrayBlockingQueue</code>。其中<code>SynchronousQueue</code>和<code>ArrayBlockingQueue</code>属于<code>有限队列</code>，<code>LinkedBlockingQueue</code>属于<code>无限队列</code>，具体作用如下：</p>
+<h5 id="keepAliveTime-和-unit-单位"><a href="#keepAliveTime-和-unit-单位" class="headerlink" title="keepAliveTime 和 unit 单位"></a>keepAliveTime 和 unit 单位</h5><p>keepAliveTime 表示那些超出<code>corePoolSize</code>数量之外的线程的空闲时间大于<code>keepAliveTime</code>后就被清除了。</p>
+<h5 id="workQueue-任务队列"><a href="#workQueue-任务队列" class="headerlink" title="workQueue 任务队列"></a>workQueue 任务队列</h5><p><code>workQueue</code>决定了缓存任务的排队策略，对于不同的任务场景我们可以采取不同的策略，这个队列需要一个实现了<code>BlockingQueue</code>接口的任务等待队列。从<code>ThreadPoolExecutor</code>的文档中得知，官方一共给我们推荐了三种队列，分别是：<code>SynchronousQueue</code>、<code>LinkedBlockingQueue</code>、<code>ArrayBlockingQueue</code>。其中<code>SynchronousQueue</code>和<code>ArrayBlockingQueue</code>属于<code>有限队列</code>，<code>LinkedBlockingQueue</code>属于<code>无限队列</code>，具体作用如下：</p>
 <ol>
 <li><code>SynchronousQueue</code>：一个不存储元素的阻塞队列。每个插入操作必须等待另一个线程调用移除操作，否则插入操作一直处于阻塞状态，吞吐量通常要高于<code>LinkedBlockingQueue</code>，静态工厂方法<code>Executors.newCachedThreadPool</code>使用了这个队列。</li>
 <li><code>ArrayBlockingQueue</code>：有界阻塞队列。一个由数组支持的有界阻塞队列。此队列按<code>FIFO</code>（先进先出）原则对元素进行排序。新元素插入到队列的尾部，队列获取操作则是从队列头部开始获得元素。这是一个典型的“有界缓存区”，固定大小的数组在其中保持生产者插入的元素和使用者提取的元素。一旦创建了这样的缓存区，就不能再增加其容量。试图向已满队列中放入元素会导致操作受阻塞，试图从空队列中提取元素将导致类似阻塞。</li>
 <li><code>LinkedBlockingQueue</code>：链表结构的阻塞队列，尾部插入元素，头部取出元素。<code>LinkedBlockingQueue</code>是我们在<code>ThreadPoolExecutor</code>线程池中常用的等待队列。它可以指定容量也可以不指定容量。由于它具有“无限容量”的特性，实际上任何无限容量的队列/栈都是有容量的，这个容量就是<code>Integer.MAX_VALUE</code>。<code>LinkedBlockingQueue</code>的实现是基于链表结构，而不是类似<code>ArrayBlockingQueue</code>那样的数组。但实际使用过程中，不需要关心它的内部实现，如果指定了<code>LinkedBlockingQueue</code>的容量大小，那么它反映出来的使用特性就和<code>ArrayBlockingQueue</code>类似了。</li>
 </ol>
-<h5 id="threadFactory-指定创建线程的工厂"><a href="#threadFactory-指定创建线程的工厂" class="headerlink" title="threadFactory 指定创建线程的工厂"></a>threadFactory 指定创建线程的工厂</h5><p>其实像<code>ThreadPoolExecutor</code>有的没有<code>threadFactory</code>的构造方法中使用的创建线程的工厂就是默认的工厂，比如下面这个构造方法：</p>
+<h5 id="threadFactory-创建线程的工厂"><a href="#threadFactory-创建线程的工厂" class="headerlink" title="threadFactory 创建线程的工厂"></a>threadFactory 创建线程的工厂</h5><p>其实像<code>ThreadPoolExecutor</code>有的没有<code>threadFactory</code>参数的构造方法中使用的创建线程的工厂就是默认的工厂，比如下面这个构造方法：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">ThreadPoolExecutor</span><span class="params">(<span class="keyword">int</span> corePoolSize,</span></span></span><br><span class="line"><span class="function"><span class="params">                          <span class="keyword">int</span> maximumPoolSize,</span></span></span><br><span class="line"><span class="function"><span class="params">                          <span class="keyword">long</span> keepAliveTime,</span></span></span><br><span class="line"><span class="function"><span class="params">                          TimeUnit unit,</span></span></span><br><span class="line"><span class="function"><span class="params">                          BlockingQueue&lt;Runnable&gt; workQueue)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>(corePoolSize, maximumPoolSize, keepAliveTime, unit, workQueue,</span><br><span class="line">            Executors.defaultThreadFactory(), defaultHandler);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>在这个构造方法中，创建线程的工厂的方法使用<code>Executors.defaultThreadFactory()</code>的工厂和<code>ThreadPoolExecutor</code>中的<code>defaultHandler</code>默认抛弃策略。使用 <code>Executors.defaultThreadFactory</code>创建的线程同属于相同的线程组，具有同为<code>Thread.NORM_PRIORITY</code>的优先级，以及名为<code>pool-poolNumber.getAndIncrement()-thread-</code>的线程名（poolNumber.getAndIncrement() 为线程池顺序序号），且创建的线程都是非守护进程。</p>
-<h5 id="handler-拒绝策略"><a href="#handler-拒绝策略" class="headerlink" title="handler 拒绝策略"></a>handler 拒绝策略</h5><p>表示当<code>workQueue</code>已满，池中的线程数达到<code>maximumPoolSize</code>时，线程池拒绝添加新任务时采取的策略。从类的注释文档中得知，<code>handler</code>一般可以取以下四种值：</p>
+<h5 id="handler-拒绝策略"><a href="#handler-拒绝策略" class="headerlink" title="handler 拒绝策略"></a>handler 拒绝策略</h5><p>表示当<code>workQueue</code>已满，池中的线程数达到<code>maximumPoolSize</code>时，线程池拒绝添加新任务时采取的策略。从文档中得知，<code>handler</code>一般可以取以下四种值：</p>
 <table>
 <thead>
 <tr>
@@ -831,7 +831,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#线程池简介"><span class="nav-number">1.</span> <span class="nav-text">线程池简介</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Java-四种线程池"><span class="nav-number">2.</span> <span class="nav-text">Java 四种线程池</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Java-线程池参数详解"><span class="nav-number">3.</span> <span class="nav-text">Java 线程池参数详解</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#线程池的状态"><span class="nav-number">3.1.</span> <span class="nav-text">线程池的状态</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#ThreadPoolExecutor-的构造函数"><span class="nav-number">3.2.</span> <span class="nav-text">ThreadPoolExecutor 的构造函数</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#keepAliveTime-和-unit-单位"><span class="nav-number">3.3.</span> <span class="nav-text">keepAliveTime 和 unit 单位</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#workQueue-任务队列"><span class="nav-number">3.4.</span> <span class="nav-text">workQueue 任务队列</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#threadFactory-指定创建线程的工厂"><span class="nav-number">3.5.</span> <span class="nav-text">threadFactory 指定创建线程的工厂</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#handler-拒绝策略"><span class="nav-number">3.6.</span> <span class="nav-text">handler 拒绝策略</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#合理配置线程池"><span class="nav-number">4.</span> <span class="nav-text">合理配置线程池</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#任务的性质"><span class="nav-number">4.1.</span> <span class="nav-text">任务的性质</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#任务的优先级"><span class="nav-number">4.2.</span> <span class="nav-text">任务的优先级</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#任务的执行时间"><span class="nav-number">4.3.</span> <span class="nav-text">任务的执行时间</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#任务的依赖性"><span class="nav-number">4.4.</span> <span class="nav-text">任务的依赖性</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#线程池简介"><span class="nav-number">1.</span> <span class="nav-text">线程池简介</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Java-四种线程池"><span class="nav-number">2.</span> <span class="nav-text">Java 四种线程池</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Java-线程池参数详解"><span class="nav-number">3.</span> <span class="nav-text">Java 线程池参数详解</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#线程池的状态"><span class="nav-number">3.1.</span> <span class="nav-text">线程池的状态</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#ThreadPoolExecutor-的构造函数"><span class="nav-number">3.2.</span> <span class="nav-text">ThreadPoolExecutor 的构造函数</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#keepAliveTime-和-unit-单位"><span class="nav-number">3.3.</span> <span class="nav-text">keepAliveTime 和 unit 单位</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#workQueue-任务队列"><span class="nav-number">3.4.</span> <span class="nav-text">workQueue 任务队列</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#threadFactory-创建线程的工厂"><span class="nav-number">3.5.</span> <span class="nav-text">threadFactory 创建线程的工厂</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#handler-拒绝策略"><span class="nav-number">3.6.</span> <span class="nav-text">handler 拒绝策略</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#合理配置线程池"><span class="nav-number">4.</span> <span class="nav-text">合理配置线程池</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#任务的性质"><span class="nav-number">4.1.</span> <span class="nav-text">任务的性质</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#任务的优先级"><span class="nav-number">4.2.</span> <span class="nav-text">任务的优先级</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#任务的执行时间"><span class="nav-number">4.3.</span> <span class="nav-text">任务的执行时间</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#任务的依赖性"><span class="nav-number">4.4.</span> <span class="nav-text">任务的依赖性</span></a></li></ol></li></ol></div>
             
 
           </div>
