@@ -77,7 +77,7 @@
 
 
 
-  <meta name="keywords" content="Java,">
+  <meta name="keywords" content="Java,多线程,">
 
 
 
@@ -90,18 +90,20 @@
 
 
 
-<meta name="description" content="1.1 split 的坑前几天在公司对通过 FTP 方式上传的数据文件按照事先规定的格式进行解析后入库，代码的大概实现思路是这样的：先使用流进行文件读取，对文件的每一行数据解析封装成一个个对象，然后进行入库操作。本以为很简单的一个操作，然后写完代码后自己测试发现对文件的每一行进行字符串分割的时候存在问题，在这里做个简单的记录总结。在 Java 中使用 split 方法对字符串进行分割是经常使用的方">
-<meta name="keywords" content="Java">
+<meta name="description" content="简介在接触多线程之前，我们所接触到的都是有关顺序编码的知识，即在我们程序中在任意时刻都只能执行一个步骤，称之为单线程。在单线程开发的程序中所有的程序路径都是顺序执行的，前面的必须先执行，后面的才会执行。单线程的优点也很明显，相对于多线程来说更加稳定、扩展性更强、程序开发相对比较容易。但是由于每次都要等上一个任务执行完成后才能开始新的任务，导致其效率比多线程低，甚至有时候应用程序会出现假死的现象。使">
+<meta name="keywords" content="Java,多线程">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Java 字符串 split 踩坑记">
-<meta property="og:url" content="https://www.mghio.cn/post/8bd965a0.html">
+<meta property="og:title" content="Java 多线程基础（一）">
+<meta property="og:url" content="https://www.mghio.cn/post/7eb2637f.html">
 <meta property="og:site_name" content="mghio&#39;s blog">
-<meta property="og:description" content="1.1 split 的坑前几天在公司对通过 FTP 方式上传的数据文件按照事先规定的格式进行解析后入库，代码的大概实现思路是这样的：先使用流进行文件读取，对文件的每一行数据解析封装成一个个对象，然后进行入库操作。本以为很简单的一个操作，然后写完代码后自己测试发现对文件的每一行进行字符串分割的时候存在问题，在这里做个简单的记录总结。在 Java 中使用 split 方法对字符串进行分割是经常使用的方">
+<meta property="og:description" content="简介在接触多线程之前，我们所接触到的都是有关顺序编码的知识，即在我们程序中在任意时刻都只能执行一个步骤，称之为单线程。在单线程开发的程序中所有的程序路径都是顺序执行的，前面的必须先执行，后面的才会执行。单线程的优点也很明显，相对于多线程来说更加稳定、扩展性更强、程序开发相对比较容易。但是由于每次都要等上一个任务执行完成后才能开始新的任务，导致其效率比多线程低，甚至有时候应用程序会出现假死的现象。使">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-10-16T12:59:36.969Z">
+<meta property="og:image" content="https://i.loli.net/2019/12/07/ZtTHNLP8eoAYqcM.png">
+<meta property="og:updated_time" content="2019-12-07T15:44:27.814Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Java 字符串 split 踩坑记">
-<meta name="twitter:description" content="1.1 split 的坑前几天在公司对通过 FTP 方式上传的数据文件按照事先规定的格式进行解析后入库，代码的大概实现思路是这样的：先使用流进行文件读取，对文件的每一行数据解析封装成一个个对象，然后进行入库操作。本以为很简单的一个操作，然后写完代码后自己测试发现对文件的每一行进行字符串分割的时候存在问题，在这里做个简单的记录总结。在 Java 中使用 split 方法对字符串进行分割是经常使用的方">
+<meta name="twitter:title" content="Java 多线程基础（一）">
+<meta name="twitter:description" content="简介在接触多线程之前，我们所接触到的都是有关顺序编码的知识，即在我们程序中在任意时刻都只能执行一个步骤，称之为单线程。在单线程开发的程序中所有的程序路径都是顺序执行的，前面的必须先执行，后面的才会执行。单线程的优点也很明显，相对于多线程来说更加稳定、扩展性更强、程序开发相对比较容易。但是由于每次都要等上一个任务执行完成后才能开始新的任务，导致其效率比多线程低，甚至有时候应用程序会出现假死的现象。使">
+<meta name="twitter:image" content="https://i.loli.net/2019/12/07/ZtTHNLP8eoAYqcM.png">
 
 
 
@@ -131,13 +133,13 @@
 
 
 
-  <link rel="canonical" href="https://www.mghio.cn/post/8bd965a0.html">
+  <link rel="canonical" href="https://www.mghio.cn/post/7eb2637f.html">
 
 
 
 
 
-  <title>Java 字符串 split 踩坑记 | mghio's blog</title>
+  <title>Java 多线程基础（一） | mghio's blog</title>
   
 
 
@@ -306,7 +308,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://www.mghio.cn/post/8bd965a0.html">
+    <link itemprop="mainEntityOfPage" href="https://www.mghio.cn/post/7eb2637f.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="mghio">
@@ -323,7 +325,7 @@
 
         
         
-          <h2 class="post-title" itemprop="name headline">Java 字符串 split 踩坑记</h2>
+          <h2 class="post-title" itemprop="name headline">Java 多线程基础（一）</h2>
         
 
         <div class="post-meta">
@@ -335,8 +337,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-10-13T10:33:40+08:00">
-                2019-10-13
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-12-05T21:56:55+08:00">
+                2019-12-05
               </time>
             
 
@@ -365,6 +367,17 @@
 
                 
                 
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/多线程/" itemprop="url" rel="index">
+                    <span itemprop="name">多线程</span>
+                  </a>
+                </span>
+
+                
+                
               
             </span>
           
@@ -376,8 +389,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/post/8bd965a0.html#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/post/8bd965a0.html" itemprop="commentCount"></span>
+                <a href="/post/7eb2637f.html#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/post/7eb2637f.html" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -385,7 +398,7 @@
 
           
           
-             <span id="/post/8bd965a0.html" class="leancloud_visitors" data-flag-title="Java 字符串 split 踩坑记">
+             <span id="/post/7eb2637f.html" class="leancloud_visitors" data-flag-title="Java 多线程基础（一）">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -410,7 +423,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  2.4k 字
+                  3.3k 字
                 </span>
               
 
@@ -426,7 +439,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  10 分钟
+                  12 分钟
                 </span>
               
             </div>
@@ -449,82 +462,106 @@
       
 
       
-        <h4 id="1-1-split-的坑"><a href="#1-1-split-的坑" class="headerlink" title="1.1 split 的坑"></a>1.1 split 的坑</h4><p>前几天在公司对通过 <a href="https://zh.wikipedia.org/wiki/%E6%96%87%E4%BB%B6%E4%BC%A0%E8%BE%93%E5%8D%8F%E8%AE%AE" target="_blank" rel="noopener">FTP</a> 方式上传的数据文件按照事先规定的格式进行解析后入库，代码的大概实现思路是这样的：先使用流进行文件读取，对文件的每一行数据解析封装成一个个对象，然后进行入库操作。本以为很简单的一个操作，然后写完代码后自己测试发现对文件的每一行进行字符串分割的时候存在问题，在这里做个简单的记录总结。在 Java 中使用 split 方法对字符串进行分割是经常使用的方法，经常在一些文本处理、字符串分割的逻辑中，需要按照一定的分隔符进行分割拆解。这样的功能，大多数情况下我们都会使用 String 中的 split 方法。关于这个方法，稍不注意很容易踩坑。</p>
-<p><strong>（1）split 的参数是正则表达式</strong><br>首先一个常见的问题，就是忘记了 String 的 split 方法的参数不是普通的字符串，而是正则表达式，例如下面的这两种使用方式都达不到我们的预期：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> mghio</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@date</span>: 2019-10-13</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@version</span>: 1.0</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@description</span>: Java 字符串 split 踩坑记</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@since</span> JDK 1.8</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"> <span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">JavaStringSplitTests</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">     <span class="meta">@Test</span></span><br><span class="line">     <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testStringSplitRegexArg</span><span class="params">()</span> </span>&#123;</span><br><span class="line">         System.out.println(Arrays.toString(<span class="string">"m.g.h.i.o"</span>.split(<span class="string">"."</span>)));</span><br><span class="line">         System.out.println(Arrays.toString(<span class="string">"m|g|h|i|o"</span>.split(<span class="string">"|"</span>)));</span><br><span class="line">     &#125;</span><br><span class="line"></span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
-
+        <h4 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h4><p>在接触<code>多线程</code>之前，我们所接触到的都是有关顺序编码的知识，即<code>在我们程序中在任意时刻都只能执行一个步骤</code>，称之为<code>单线程</code>。在单线程开发的程序中所有的程序路径都是顺序执行的，前面的必须先执行，后面的才会执行。单线程的优点也很明显，相对于多线程来说更加稳定、扩展性更强、程序开发相对比较容易。但是由于每次都要等上一个任务执行完成后才能开始新的任务，导致其效率比多线程低，甚至有时候应用程序会出现假死的现象。<br>使用多线程有利于充分发挥多处理器的功能。通过创建多线程进程，每个线程在一个处理器上运行，从而实现应用程序的并发性，使每个处理器都得到充分运行。多线程是 Java 学习的非常重要的方面，是每个 Java 程序员必须掌握的基本技能。本文是有关 Java 多线程的一些基础总结。</p>
+<h4 id="进程与线程的区别"><a href="#进程与线程的区别" class="headerlink" title="进程与线程的区别"></a>进程与线程的区别</h4><h5 id="进程"><a href="#进程" class="headerlink" title="进程"></a>进程</h5><p>进程是<code>操作系统资源分配</code>的基本单位，它是操作系统的基础，是一个程序及其数据在处理机上顺序执行时所发生的活动。一个程序进入内存运行，即变成一个进程。进程是处于运行过程中的程序，并且具有一定独立功能。进程的实质就是程序在操作系统中的一次执行过程，它是动态产生的、动态销毁的，拥有自己的生命周期和各种不同的运行状态。同时，进程还具有并发性，它可以同其他进程一起并发执行，按各自独立的、不可预知的速度向前推进（<code>PS：并发性和并行性是不同的概念，并行指的是同一时刻，两个及两个以上的指令在多个处理器上同时执行。而并发指的是同一时刻只有一条指令执行，但是多个进程可以被 CPU 快速交换执行，给我们感觉好像是多个执行在同时执行一样。</code>）。　</p>
+<h5 id="线程"><a href="#线程" class="headerlink" title="线程"></a>线程</h5><p>线程是<code>任务调度和执行</code>的基本单位，也被称为<code>轻量级进程</code>，线程由线程 ID，当前指令指针(PC），寄存器集合和堆栈组成。线程不拥有系统资源，它只会拥有一点儿在运行时必不可少的资源，但是它可以与同属于同一进程的线程共享该进程所拥有的所有资源。一个线程只能属于一个进程，而一个进程可以有多个线程，但至少有一个线程。</p>
 <a id="more"></a>
+<h5 id="二者的区别"><a href="#二者的区别" class="headerlink" title="二者的区别"></a>二者的区别</h5><ol>
+<li><strong>调度</strong> 线程作为调度和分配的基本单位，进程作为拥有资源的基本单位</li>
+<li><strong>并发性</strong> 不仅进程之间可以并发执行，同一个进程的多个线程之间也可并发执行</li>
+<li><strong>拥有资源</strong> 进程是拥有资源的一个独立单位，线程不拥有系统资源，但可以访问隶属于进程的资源</li>
+<li><strong>系统开销</strong> 在创建或撤消进程时，由于系统都要为之分配和回收资源，导致系统的开销明显大于创建或撤消线程时的开销</li>
+</ol>
+<h4 id="创建线程的方式"><a href="#创建线程的方式" class="headerlink" title="创建线程的方式"></a>创建线程的方式</h4><p>在 Java 中使用 Thread 类代表线程，所有的线程对象都必须是 Thread 类或者其子类的实例，Java 中创建线程主要有以下三种方式：</p>
+<h5 id="方式一-继承-Thread-类"><a href="#方式一-继承-Thread-类" class="headerlink" title="方式一 继承 Thread 类"></a>方式一 继承 Thread 类</h5><p><strong>step 1</strong> 定义一个类继承自 Thread 类，然后重写该类的 <code>run</code> 方法，这个方法的内容表示线程要完成的任务<br><strong>step 2</strong> 创建线程对象，即创建 Thread 类子类的实例<br><strong>step 3</strong> 调用步骤二中创建出来的对象的 <code>start</code> 方法来启动线程</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> mghio</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@date</span>: 2019-12-07</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@version</span>: 1.0</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@description</span>: 通过继承 Thread 类的方式创建线程</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@since</span> JDK 1.8</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CreateThreadByExtendsThread</span> <span class="keyword">extends</span> <span class="title">Thread</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@Override</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    IntStream.rangeClosed(<span class="number">1</span>, <span class="number">10</span>).forEach(i -&gt; System.out.println(Thread.currentThread().getName() + <span class="string">" "</span> + i));</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">    CreateThreadByExtendsThread threadOne = <span class="keyword">new</span> CreateThreadByExtendsThread();</span><br><span class="line">    CreateThreadByExtendsThread threadTwo = <span class="keyword">new</span> CreateThreadByExtendsThread();</span><br><span class="line">    CreateThreadByExtendsThread threadThree = <span class="keyword">new</span> CreateThreadByExtendsThread();</span><br><span class="line"></span><br><span class="line">    threadOne.start();</span><br><span class="line">    threadTwo.start();</span><br><span class="line">    threadThree.start();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p>以上代码的结果输出为：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[]</span><br><span class="line">[m, |, g, |, h, |, i, |, o]</span><br></pre></td></tr></table></figure>
+<h5 id="方式二-实现-Runnable-接口"><a href="#方式二-实现-Runnable-接口" class="headerlink" title="方式二 实现 Runnable 接口"></a>方式二 实现 Runnable 接口</h5><p><strong>step 1</strong> 定义一个类实现 <code>Runnable</code> 接口，然后实现该接口的 <code>run</code> 方法，这个方法的内容同样也表示线程要完成的任务<br><strong>step 2</strong> 创建 <code>Runnable</code> 接口实现类的实例，并使用该实例作为 <code>Thraed</code> 构造方法的参数创建 <code>Thread</code> 类的对象，该对象才是真正的线程对象<br><strong>step 3</strong> 调用线程对象的 <code>start</code> 方法来启动该线程</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> mghio</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@date</span>: 2019-12-07</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@version</span>: 1.0</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@description</span>: 通过实现 Runnable 接口的方式创建线程</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@since</span> JDK 1.8</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CreateThreadByImplementsRunnable</span> <span class="keyword">implements</span> <span class="title">Runnable</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@Override</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    IntStream.rangeClosed(<span class="number">1</span>, <span class="number">10</span>).forEach(i -&gt; System.out.println(Thread.currentThread().getName() + <span class="string">" "</span> + i));</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">    CreateThreadByImplementsRunnable target = <span class="keyword">new</span> CreateThreadByImplementsRunnable();</span><br><span class="line">    <span class="keyword">new</span> Thread(target, <span class="string">"thread-one"</span>).start();</span><br><span class="line">    <span class="keyword">new</span> Thread(target, <span class="string">"thread-two"</span>).start();</span><br><span class="line">    <span class="keyword">new</span> Thread(target, <span class="string">"thread-three"</span>).start();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p>上面出错的原因是因为 <strong>.</strong> 和 <strong>|</strong> 都是正则表达式，应该用转义字符进行处理：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">"m.g.h.i.o"</span>.split(<span class="string">"\\."</span>)</span><br><span class="line"><span class="string">"m|g|h|i|o"</span>.split(<span class="string">"\\|"</span>)</span><br></pre></td></tr></table></figure>
+<h5 id="方式三-实现-Callable-接口"><a href="#方式三-实现-Callable-接口" class="headerlink" title="方式三 实现 Callable 接口"></a>方式三 实现 Callable 接口</h5><p><strong>step 1</strong> 定义一个类实现 <code>Callable</code> 接口，然后实现该接口的 <code>call</code> 方法，这个方法的内容同样也表示线程要完成的任务，并且有返回值<br><strong>step 2</strong> 创建 <code>Callable</code> 接口实现类的实例，使用 <code>FutureTask</code> 类来包装 <code>Callable</code> 对象，该 <code>FutureTask</code> 对象封装了 <code>Callable</code> 对象的 <code>call</code> 方法的返回值<br><strong>step 3</strong> 并使用 <code>FutureTask</code> 对象作为 <code>Thraed</code> 构造方法的参数创建 <code>Thread</code> 对象，并调用该对象的 <code>start</code> 方法启动线程<br><strong>step 4</strong> 调用 <code>FutureTask</code> 对象的 <code>get</code> 方法获取线程执行结束后的返回值</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> mghio</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@date</span>: 2019-12-07</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@version</span>: 1.0</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@description</span>: 通过实现 Callable 接口的方式创建线程</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@since</span> JDK 1.8</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CreateThreadByImplementsCallable</span> <span class="keyword">implements</span> <span class="title">Callable</span>&lt;<span class="title">Integer</span>&gt; </span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@Override</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> Integer <span class="title">call</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    AtomicInteger count = <span class="keyword">new</span> AtomicInteger();</span><br><span class="line">    IntStream.rangeClosed(<span class="number">0</span>, <span class="number">10</span>).forEach(i -&gt; &#123;</span><br><span class="line">      System.out.println(Thread.currentThread().getName() + <span class="string">" "</span> + i);</span><br><span class="line">      count.getAndIncrement();</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> count.get();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">    CreateThreadByImplementsCallable target = <span class="keyword">new</span> CreateThreadByImplementsCallable();</span><br><span class="line">    FutureTask&lt;Integer&gt; futureTask = <span class="keyword">new</span> FutureTask&lt;&gt;(target);</span><br><span class="line"></span><br><span class="line">    IntStream.rangeClosed(<span class="number">0</span>, <span class="number">10</span>).forEach(i -&gt; &#123;</span><br><span class="line">      System.out.println(Thread.currentThread().getName() + <span class="string">" 的循环变量 i 的值"</span> + i);</span><br><span class="line">      <span class="keyword">if</span> (i == <span class="number">8</span>) &#123;</span><br><span class="line">        <span class="keyword">new</span> Thread(futureTask, <span class="string">"有返回值的线程"</span>).start();</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">      System.out.println(<span class="string">"有返回值线程的返回值："</span> + futureTask.get());</span><br><span class="line">    &#125; <span class="keyword">catch</span> (InterruptedException | ExecutionException e) &#123;</span><br><span class="line">      e.printStackTrace();</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p>在 String 类中还有其它的和这个相似的方法，例如：replaceAll。</p>
-<p><strong>（2）split 会忽略分割后的空字符串</strong><br>大多数情况下我们都只会使用带一个参数的 split 方法，但是只带一个参数的 split 方法有个坑：就是此方法只会匹配到最后一个有值的地方，后面的会忽略掉，例如：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> mghio</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@date</span>: 2019-10-13</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@version</span>: 1.0</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@description</span>: Java 字符串 split 踩坑记</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@since</span> JDK 1.8</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"> <span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">JavaStringSplitTests</span> </span>&#123;</span><br><span class="line">         </span><br><span class="line">     <span class="meta">@Test</span></span><br><span class="line">     <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testStringSplitSingleArg</span><span class="params">()</span> </span>&#123;</span><br><span class="line">         System.out.println(Arrays.toString(<span class="string">"m_g_h_i_o"</span>.split(<span class="string">"_"</span>)));</span><br><span class="line">         System.out.println(Arrays.toString(<span class="string">"m_g_h_i_o__"</span>.split(<span class="string">"_"</span>)));</span><br><span class="line">         System.out.println(Arrays.toString(<span class="string">"m__g_h_i_o_"</span>.split(<span class="string">"_"</span>)));</span><br><span class="line">     &#125;</span><br><span class="line"></span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
-
-<p>以上代码输出结果为：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[m, g, h, i, o]</span><br><span class="line">[m, g, h, i, o]</span><br><span class="line">[m, , g, h, i, o]</span><br></pre></td></tr></table></figure>
-
-<p>像第二、三个输出结果其实和我们的预期是不符的，因为像一些文件上传其实有的字段通常是可以为空的，如果使用单个参数的 split 方法进行处理就会有问题。通过查看 <a href="https://docs.oracle.com/javase/8/docs/api/" target="_blank" rel="noopener">API 文档</a> 后，发现其实 String 中的 split 方法还有一个带两个参数的方法。第二个参数是一个整型类型变量，代表最多匹配上多少个，0 表示只匹配到最后一个有值的地方，单个参数的 split 方法的第二个参数其实就是 0，要想强制匹配可以选择使用负数（通常传入 -1 ），换成以下的写法，输出结果就和我们的预期一致了。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">"m_g_h_i_o"</span>.split(<span class="string">"_"</span>, -<span class="number">1</span>)      <span class="comment">// [m, g, h, i, o]</span></span><br><span class="line"><span class="string">"m_g_h_i_o__"</span>.split(<span class="string">"_"</span>, -<span class="number">1</span>)    <span class="comment">// [m, g, h, i, o, , ]</span></span><br><span class="line"><span class="string">"m__g_h_i_o_"</span>.split(<span class="string">"_"</span>, -<span class="number">1</span>)    <span class="comment">// [m, , g, h, i, o, ]</span></span><br></pre></td></tr></table></figure>
-
-<p><strong>（3）JDK 中字符串切割的其它 API</strong><br>在 JDK 中还有一个叫做 <strong>StringTokenizer</strong> 的类也可以对字符串进行切割，用法如下所示：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> mghio</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@date</span>: 2019-10-13</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@version</span>: 1.0</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@description</span>: Java 字符串 split 踩坑记</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@since</span> JDK 1.8</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"> <span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">JavaStringSplitTests</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">     <span class="meta">@Test</span></span><br><span class="line">     <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testStringTokenizer</span><span class="params">()</span> </span>&#123;</span><br><span class="line">         StringTokenizer st = <span class="keyword">new</span> StringTokenizer(<span class="string">"This|is|a|mghio's|blog"</span>, <span class="string">"|"</span>);</span><br><span class="line">         <span class="keyword">while</span> (st.hasMoreElements()) &#123;</span><br><span class="line">         System.out.println(st.nextElement());</span><br><span class="line">         &#125;</span><br><span class="line">     &#125;</span><br><span class="line"></span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
-
-<p>不过，我们从源码的 javadoc 上得知，这是从 JDK 1.0 开始就已经存在了，属于历史遗留的类，并且推荐使用 String 的 split 方法。</p>
-<h4 id="1-2-JDK-源码探究"><a href="#1-2-JDK-源码探究" class="headerlink" title="1.2 JDK 源码探究"></a>1.2 JDK 源码探究</h4><p>通过查看 JDK 中 String 类的源码，我们得知在 String 类中单个参数的 split 方法（<strong>split(String regex)</strong>）里面调用了两个参数的 split 方法（<strong>split(String regex, int limit)</strong>），两个参数的 split 方法，先根据传入第一个参数 <strong>regex</strong> 正则表达式分割字符串，第二个参数 <strong>limit</strong> 限定了分割后的字符串个数，超过数量限制的情况下前limit-1个子字符串正常分割，最后一个子字符串包含剩下所有字符。单个参数的重载方法将 <strong>limit</strong> 设置为 0。源码如下：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> String[] split(String regex, <span class="keyword">int</span> limit) &#123;</span><br><span class="line">    <span class="keyword">char</span> ch = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">if</span> (((regex.value.length == <span class="number">1</span> &amp;&amp;</span><br><span class="line">         <span class="string">".$|()[&#123;^?*+\\"</span>.indexOf(ch = regex.charAt(<span class="number">0</span>)) == -<span class="number">1</span>) ||</span><br><span class="line">         (regex.length() == <span class="number">2</span> &amp;&amp;</span><br><span class="line">          regex.charAt(<span class="number">0</span>) == <span class="string">'\\'</span> &amp;&amp;</span><br><span class="line">          (((ch = regex.charAt(<span class="number">1</span>))-<span class="string">'0'</span>)|(<span class="string">'9'</span>-ch)) &lt; <span class="number">0</span> &amp;&amp;</span><br><span class="line">          ((ch-<span class="string">'a'</span>)|(<span class="string">'z'</span>-ch)) &lt; <span class="number">0</span> &amp;&amp;</span><br><span class="line">          ((ch-<span class="string">'A'</span>)|(<span class="string">'Z'</span>-ch)) &lt; <span class="number">0</span>)) &amp;&amp;</span><br><span class="line">        (ch &lt; Character.MIN_HIGH_SURROGATE ||</span><br><span class="line">         ch &gt; Character.MAX_LOW_SURROGATE))</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">int</span> off = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span> next = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">boolean</span> limited = limit &gt; <span class="number">0</span>;</span><br><span class="line">        ArrayList&lt;String&gt; list = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">        <span class="keyword">while</span> ((next = indexOf(ch, off)) != -<span class="number">1</span>) &#123;</span><br><span class="line">            <span class="keyword">if</span> (!limited || list.size() &lt; limit - <span class="number">1</span>) &#123;</span><br><span class="line">                list.add(substring(off, next));</span><br><span class="line">                off = next + <span class="number">1</span>;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;    <span class="comment">// last one</span></span><br><span class="line">                <span class="comment">//assert (list.size() == limit - 1);</span></span><br><span class="line">                list.add(substring(off, value.length));</span><br><span class="line">                off = value.length;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// If no match was found, return this</span></span><br><span class="line">        <span class="keyword">if</span> (off == <span class="number">0</span>)</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">new</span> String[]&#123;<span class="keyword">this</span>&#125;;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// Add remaining segment</span></span><br><span class="line">        <span class="keyword">if</span> (!limited || list.size() &lt; limit)</span><br><span class="line">            list.add(substring(off, value.length));</span><br><span class="line"></span><br><span class="line">        <span class="comment">// Construct result</span></span><br><span class="line">        <span class="keyword">int</span> resultSize = list.size();</span><br><span class="line">        <span class="keyword">if</span> (limit == <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">while</span> (resultSize &gt; <span class="number">0</span> &amp;&amp; list.get(resultSize - <span class="number">1</span>).length() == <span class="number">0</span>) &#123;</span><br><span class="line">                resultSize--;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        String[] result = <span class="keyword">new</span> String[resultSize];</span><br><span class="line">        <span class="keyword">return</span> list.subList(<span class="number">0</span>, resultSize).toArray(result);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> Pattern.compile(regex).split(<span class="keyword">this</span>, limit);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>接下来让我们一起看看 String 的 split 方法是如何实现的。</p>
-<p><strong>（1）特殊情况判断</strong></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">(((regex.value.length == <span class="number">1</span> &amp;&amp;</span><br><span class="line">         <span class="string">".$|()[&#123;^?*+\\"</span>.indexOf(ch = regex.charAt(<span class="number">0</span>)) == -<span class="number">1</span>) ||</span><br><span class="line">         (regex.length() == <span class="number">2</span> &amp;&amp;</span><br><span class="line">          regex.charAt(<span class="number">0</span>) == <span class="string">'\\'</span> &amp;&amp;</span><br><span class="line">          (((ch = regex.charAt(<span class="number">1</span>))-<span class="string">'0'</span>)|(<span class="string">'9'</span>-ch)) &lt; <span class="number">0</span> &amp;&amp;</span><br><span class="line">          ((ch-<span class="string">'a'</span>)|(<span class="string">'z'</span>-ch)) &lt; <span class="number">0</span> &amp;&amp;</span><br><span class="line">          ((ch-<span class="string">'A'</span>)|(<span class="string">'Z'</span>-ch)) &lt; <span class="number">0</span>)) &amp;&amp;</span><br><span class="line">        (ch &lt; Character.MIN_HIGH_SURROGATE ||</span><br><span class="line">         ch &gt; Character.MAX_LOW_SURROGATE))</span><br></pre></td></tr></table></figure>
-
+<p>通过以上可以看出，其实通过实现 <code>Runnable</code> 接口和实现 <code>Callable</code> 接口这两种方式创建线程基本相同，采用实现 <code>Runnable</code> 和 <code>Callable</code> 接口的方式创建线程时，线程类只是实现接口，还可以继承其它类（<code>PS：Java 单继承决定</code>）。在这种方式下，多个线程可以共享同一个 <code>target</code>对象，所以非常适合多个相同线程来处理同一份资源的情况。还有一单就是，使用继承 <code>Thread</code> 类的方式创建多线程时，编写简单，如果需要访问当前线程，则无需使用 <code>Thread.currentThread()</code> 方法，直接使用 <code>this</code> 即可获得当前线程。，在实际项目中如果使用这三种方式创建线程，如果创建关闭频繁会消耗系统资源影响性能，而使用线程池可以不用线程的时候放回线程池，用的时候再从线程池取，所以在我们项目开发中主要还是使用线程池，有关线程池的可以看看这两篇 <a href="https://www.mghio.cn/post/bc557e1a.html">Java 线程池（一）</a>、<a href="https://www.mghio.cn/post/ab706eb5.html">Java 线程池（二）</a>。</p>
+<h4 id="线程的几种状态"><a href="#线程的几种状态" class="headerlink" title="线程的几种状态"></a>线程的几种状态</h4><p>线程是一个动态执行的过程，它也有一个从产生到死亡的过程，在 Java 中一个线程完整的生命周期一共包含以下五种状态：<br><strong>新建状态（New）</strong><br>当使用 <code>new</code> 关键字和 <code>Thread</code> 类或其子类创建一个线程对象后，那么线程就进入了<code>新建状态</code>，此时它和其它的 Java 对象一样，仅仅由 JVM 分配了内存，并初始化其成员变量值，它会一直保持这个状态直到调用该对象的 <code>start</code> 方法。</p>
+<p><strong>就绪状态（Runnable）</strong><br>当线程对象调用了 <code>start</code> 方法之后，该线程就进入了就绪状态。就绪状态的线程会放在一个就绪队列中，等待 JVM 里的调度器进行调度。处于就绪状态的线程，随时可能被 CPU 调度执行。</p>
+<p><strong>运行状态（Running）</strong><br>如果就绪状态的执行被 CPU 调度执行，就可以执行 <code>run</code> 方法，此时线程就处于线程状态。处于运行状态的线程最复杂，它可以变为<code>阻塞状态</code>、<code>就绪状态</code>和<code>死亡状态</code>。需要注意一点，线程变为<code>运行状态</code>之前的状态只能是<code>就绪状态</code>。</p>
+<p><strong>阻塞状态（Blocked）</strong><br>线程变为阻塞状态是因为某种原因放弃 CPU 的使用权，暂时停止运行，如果执行了 <code>sleep</code>、<code>suspend</code> 等方法，释放了所占用的资源之后，线程就从<code>运行状态</code>进入<code>阻塞状态</code>。等待睡眠时间结束或者获得设备资源之可以重新进入<code>就绪状态</code>。阻塞可以分为以下三种：</p>
+<ol>
+<li><strong>等待阻塞</strong> 处于<code>运行状态</code>的线程调用<code>wait</code>方法，会使线程进入<code>等待阻塞状态</code></li>
+<li><strong>同步阻塞</strong> 当线程获取 <code>synchronized</code> 同步锁因为同步锁被其他线程占用而失败后，会使线程进入<code>同步阻塞</code></li>
+<li><strong>其它阻塞</strong> 通过调用线程的<code>sleep</code>或<code>join</code>发出了 I/O 请求时，线程就会进入到阻塞状态。当<code>sleep</code>状态超时，<code>join</code>等待线程终止或超时，或者 I/O 处理完毕，线程重新回到<code>就绪状态</code>。</li>
+</ol>
+<p><strong>死亡状态（Dead）</strong><br>一个处于<code>运行状态</code>的线程执行完了 <code>run</code> 方法或者因为其它终止条件发生时，线程就会进入到<code>死亡状态</code>，该线程结束生命周期。<br>以上线程各种状态的流转用一张图表示如下：</p>
+<p><img src="https://i.loli.net/2019/12/07/ZtTHNLP8eoAYqcM.png" alt="thread-state-transfer.png"></p>
+<h4 id="线程的常用方法"><a href="#线程的常用方法" class="headerlink" title="线程的常用方法"></a>线程的常用方法</h4><p>线程中常用的方法按照来源不同可以分为两类，一类是继承自 <code>Object</code> 类的方法，如下所示：</p>
+<table>
+<thead>
+<tr>
+<th align="left">方法</th>
+<th align="center">描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">public final native void notify()</td>
+<td align="center">唤醒在此对象监视器上等待的单个线程，使其进入<code>就绪状态</code></td>
+</tr>
+<tr>
+<td align="left">public final native void notifyAll()</td>
+<td align="center">唤醒在此对象监视器上等待的所有线程，使其进入<code>就绪状态</code></td>
+</tr>
+<tr>
+<td align="left">public final void wait()</td>
+<td align="center">让当前线程处于·<code>等待阻塞状态</code>，直到其他线程调用此对象的<code>notify</code>方法或<code>notifyAll</code>方法，当前线程被唤醒，会释放它所持有的锁</td>
+</tr>
+<tr>
+<td align="left">public final native void wait(long timeout)</td>
+<td align="center">让当前线程处于·<code>等待阻塞状态</code>，直到其他线程调用此对象的<code>notify</code>方法或<code>notifyAll</code>方法，当前线程被唤醒</td>
+</tr>
+<tr>
+<td align="left">public final void wait(long timeout, int nanos)</td>
+<td align="center">让当前线程处于·<code>等待阻塞状态</code>，直到其他线程调用此对象的<code>notify</code>方法或<code>notifyAll</code>方法或者其他某个线程中断当前线程，或者已超过某个实际时间量，当前线程被唤醒</td>
+</tr>
+</tbody></table>
+<p>另一类是 <code>Thread</code> 类定义的方法，如下所示：</p>
+<table>
+<thead>
+<tr>
+<th align="center">方法</th>
+<th align="center">描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">public static native void yield()</td>
+<td align="center">暂停当前正在执行的线程对象，并执行其他线程，<code>yield</code> 方法不会释放锁</td>
+</tr>
+<tr>
+<td align="center">public static native void sleep(long millis)</td>
+<td align="center">在指定的毫秒数内让当前正在执行的线程休眠（暂停执行），<code>sleep</code> 方法不会释放锁</td>
+</tr>
+<tr>
+<td align="center">public final void join()</td>
+<td align="center">当某个程序执行流中调用其他线程的 <code>join</code> 方法时，调用线程将被阻塞，直到被 <code>join</code> 的线程执行完毕</td>
+</tr>
+<tr>
+<td align="center">public void interrupt()</td>
+<td align="center">用于中断本线程，这个方法被调用时，会立即将线程的中断标志设置为 <code>true</code></td>
+</tr>
+<tr>
+<td align="center">public static boolean interrupted()</td>
+<td align="center"><code>Thread</code> 类的一个静态方法，它返回一个布尔类型指明当前线程是否已经被中断，<code>interrupted</code> 方法除了返回中断标记之外，它还会清除中断标记(即将中断标记设为 <code>false</code>)</td>
+</tr>
+<tr>
+<td align="center">public boolean isInterrupted()</td>
+<td align="center"><code>Thread</code> 类的一个实例方法，它返回一个布尔类型指明当前线程是否已经被中断，<code>isInterrupted</code> 方法仅仅返回中断标记，不会清楚终端标记</td>
+</tr>
+</tbody></table>
+<h4 id="线程的优先级"><a href="#线程的优先级" class="headerlink" title="线程的优先级"></a>线程的优先级</h4><p>每一个 Java 线程都有一个优先级，这样有助于操作系统确定线程的调度顺序。Java 线程的优先级是一个整数，其取值范围是<code>1（Thread.MIN_PRIORITY ）~ 10（Thread.MAX_PRIORITY ）</code>。默认情况下，每一个线程都会分配一个优先级<code>NORM_PRIORITY（5）</code>。具有较高优先级的线程对程序更重要，并且应该在低优先级的线程之前分配处理器资源，<code>Thread</code> 类提供了 <code>setPriority</code> 和 <code>getPriority</code> 方法来更改和获取线程优先级（<strong><font color="#ff0000">需要注意的是: 线程优先级不能保证线程执行的顺序，而且非常依赖于平台</font></strong>）。</p>
+<hr>
+<p>参考文章</p>
 <ul>
-<li>第一个参数 <strong>regex</strong> 为单个字符时，将其赋值给 ch，并判断是否在元字符：「.$|()[{^?*+\」中</li>
-<li>第一个参数 <strong>regex</strong> 为两个字符时，第一个字符为 \\（要表示一个\需要用两个\转义得到），第二个字符不在数字、大小写字母和 <a href="https://zh.wikipedia.org/wiki/Unicode" target="_blank" rel="noopener">Unicode 编码</a> Character.MIN_HIGH_SURROGATE（’\uD800’）和 Character.MAX_LOW_SURROGATE（’\uDBFF’）之间。</li>
+<li><a href="https://www.cnblogs.com/skywang12345/p/3479224.html" target="_blank" rel="noopener">Java多线程系列–“基础篇”05之 线程等待与唤醒</a></li>
 </ul>
-<p><strong>（2）字符串分割</strong><br>第一次分割时，使用 off 和 next，off 指向每次分割的起始位置，next 指向分隔符的下标，完成一次分割后更新 off 的值，当 list  的大小等于 limit - 1 时，直接添加剩下的子字符串。</p>
-<ul>
-<li>如果字符串不含有分隔符，则直接返回原字符串</li>
-<li>如果字符串进行完第一次分割后，数量没有达到 limit - 1 的话，则剩余的字符串在第二次添加</li>
-<li>如果传入的第二个参数 <strong>limit</strong> 等于 0 ，则从最后的字符串往前移动，将所有的空字符串（”“）全部清除</li>
-</ul>
-<p><strong>（3）正则匹配</strong><br>String 的 split 方法在不是上面的特殊情况下，会使用两个类 <strong>Pattern</strong> 与 <strong>Matcher</strong> 进行分割匹配处理，而且 Strig 中涉及正则的操作都是调用这两个类进行处理的。</p>
-<ul>
-<li>Pattern 类我们可以将其理解为模式类，它主要是用来创建一个匹配模式，它的构造方法是私有的，不能直接创建该对象，可以通过 <strong>Pattern.complie(String regex)</strong> 简单的工厂方法创建一个正则表达式。</li>
-<li>Matcher 类我们可以将其理解为匹配器类，它是用来解释 Pattern 类对字符串执行匹配操作的引擎，它的构造方法也是私有的，不能直接创建该对象，可以通过 <strong>Pattern.matcher(CharSequence input)</strong> 方法得到该类的实例。String 类的双参数 split 方法最后使用 Pattern 类的 compile 和 split 方法，如下：<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">return</span> Pattern.compile(regex).split(<span class="keyword">this</span>, limit);</span><br></pre></td></tr></table></figure>
-
-</li>
-</ul>
-<p>首先调用 Pattern 类的静态方法 compile 获取 Pattern 模式类对象</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Pattern <span class="title">compile</span><span class="params">(String regex)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> Pattern(regex, <span class="number">0</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>接着调用 Pattern 的 split(CharSequence input, int limit) 方法，在这个方法中调 matcher(CharSequence input) 方法返回一个 Matcher 匹配器类的实例 m，与 String 类中 split 方法的特殊情况有些类似。</p>
-<ul>
-<li>使用 m.find()、m.start()、m.end() 方法</li>
-<li>每找到一个分割符，则更新 start 和 end 的位置</li>
-<li>然后处理没找到分隔符、子字符串数量小于 limit 以及 limit = 0 的情况</li>
-</ul>
-<h4 id="1-3-其它的字符串分割方式"><a href="#1-3-其它的字符串分割方式" class="headerlink" title="1.3 其它的字符串分割方式"></a>1.3 其它的字符串分割方式</h4><ul>
-<li>方式一：使用 org.apache.commons.lang3.StringUtils#split，此方法使用完整的字符串作为参数，而不是正则表达式。底层调用 splitWorker 方法（<strong><font color="#dd0000">注意：</font></strong>此方法会忽略分割后的空字符串）<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> mghio</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@date</span>: 2019-10-13</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@version</span>: 1.0</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@description</span>: Java 字符串 split 踩坑记</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@since</span> JDK 1.8</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"> <span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">JavaStringSplitTests</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">     <span class="meta">@Test</span></span><br><span class="line">     <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testApacheCommonsLangStringUtils</span><span class="params">()</span> </span>&#123;</span><br><span class="line">         System.out.println(Arrays.toString(StringUtils.split(<span class="string">"m.g.h.i.o"</span>, <span class="string">"."</span>)));</span><br><span class="line">         System.out.println(Arrays.toString(StringUtils.split(<span class="string">"m__g_h_i_o_"</span>, <span class="string">"_"</span>)));</span><br><span class="line">     &#125;</span><br><span class="line"></span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
-
-</li>
-</ul>
-<p>输出结果：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[m, g, h, i, o]</span><br><span class="line">[m, g, h, i, o]</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>方式二：使用 com.google.common.base.Splitter，使用 Google Guava 包中提供的分割器 splitter，它提供了更加丰富的分割结果处理的方法，比如对结果前后去除空格，去除空字符串等<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> mghio</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@date</span>: 2019-10-13</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@version</span>: 1.0</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@description</span>: Java 字符串 split 踩坑记</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@since</span> JDK 1.8</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"> <span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">JavaStringSplitTests</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">     <span class="meta">@Test</span></span><br><span class="line">     <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testApacheCommonsLangStringUtils</span><span class="params">()</span> </span>&#123;</span><br><span class="line">         Iterable&lt;String&gt; result = Splitter.on(<span class="string">"_"</span>).split(<span class="string">"m__g_h_i_o_"</span>);</span><br><span class="line">         List&lt;String&gt; resultList = Lists.newArrayList();</span><br><span class="line">         result.forEach(resultList::add);</span><br><span class="line">         System.out.println(<span class="string">"stringList's size: "</span> + resultList.size());</span><br><span class="line">         result.forEach(System.out::println);</span><br><span class="line">     &#125;</span><br><span class="line"></span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
-
-</li>
-</ul>
-<p>输出结果：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">stringList<span class="string">'s size: 7</span></span><br><span class="line"><span class="string">m</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">g</span></span><br><span class="line"><span class="string">h</span></span><br><span class="line"><span class="string">i</span></span><br><span class="line"><span class="string">o</span></span><br></pre></td></tr></table></figure>
-
-<h4 id="1-4-总结"><a href="#1-4-总结" class="headerlink" title="1.4 总结"></a>1.4 总结</h4><p>String 类中除了 split 方法外，有正则表达式接口的方法都是调用 Pattern（模式类）和 Matcher（匹配器类）进行实现的。JDK 源码的每一个如 <strong>final</strong>、<strong>private</strong> 的关键字都设计的十分严谨，多读类和方法中的javadoc，多注意这些细节对于阅读代码和自己写代码都有很大的帮助。</p>
 
       
     </div>
@@ -588,7 +625,7 @@
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="https://www.mghio.cn/post/8bd965a0.html" title="Java 字符串 split 踩坑记">https://www.mghio.cn/post/8bd965a0.html</a>
+    <a href="https://www.mghio.cn/post/7eb2637f.html" title="Java 多线程基础（一）">https://www.mghio.cn/post/7eb2637f.html</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>
@@ -604,6 +641,8 @@
           
             <a href="/tags/Java/" rel="tag"># Java</a>
           
+            <a href="/tags/多线程/" rel="tag"># 多线程</a>
+          
         </div>
       
 
@@ -615,8 +654,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/post/192cb539.html" rel="next" title="Java 字节码">
-                <i class="fa fa-chevron-left"></i> Java 字节码
+              <a href="/post/ab706eb5.html" rel="next" title="Java 线程池（二）">
+                <i class="fa fa-chevron-left"></i> Java 线程池（二）
               </a>
             
           </div>
@@ -624,10 +663,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/post/bfcdfeaf.html" rel="prev" title="Java 并发之 ThreadLocal">
-                Java 并发之 ThreadLocal <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -921,7 +956,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-1-split-的坑"><span class="nav-number">1.</span> <span class="nav-text">1.1 split 的坑</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-2-JDK-源码探究"><span class="nav-number">2.</span> <span class="nav-text">1.2 JDK 源码探究</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-3-其它的字符串分割方式"><span class="nav-number">3.</span> <span class="nav-text">1.3 其它的字符串分割方式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-4-总结"><span class="nav-number">4.</span> <span class="nav-text">1.4 总结</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#简介"><span class="nav-number">1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#进程与线程的区别"><span class="nav-number">2.</span> <span class="nav-text">进程与线程的区别</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#进程"><span class="nav-number">2.1.</span> <span class="nav-text">进程</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#线程"><span class="nav-number">2.2.</span> <span class="nav-text">线程</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#二者的区别"><span class="nav-number">2.3.</span> <span class="nav-text">二者的区别</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#创建线程的方式"><span class="nav-number">3.</span> <span class="nav-text">创建线程的方式</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#方式一-继承-Thread-类"><span class="nav-number">3.1.</span> <span class="nav-text">方式一 继承 Thread 类</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#方式二-实现-Runnable-接口"><span class="nav-number">3.2.</span> <span class="nav-text">方式二 实现 Runnable 接口</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#方式三-实现-Callable-接口"><span class="nav-number">3.3.</span> <span class="nav-text">方式三 实现 Callable 接口</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#线程的几种状态"><span class="nav-number">4.</span> <span class="nav-text">线程的几种状态</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#线程的常用方法"><span class="nav-number">5.</span> <span class="nav-text">线程的常用方法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#线程的优先级"><span class="nav-number">6.</span> <span class="nav-text">线程的优先级</span></a></li></ol></div>
             
 
           </div>
