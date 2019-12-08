@@ -90,19 +90,19 @@
 
 
 
-<meta name="description" content="简介在接触多线程之前，我们所接触到的都是有关顺序编码的知识，即在我们程序中在任意时刻都只能执行一个步骤，称之为单线程。在单线程开发的程序中所有的程序路径都是顺序执行的，前面的必须先执行，后面的才会执行。单线程的优点也很明显，相对于多线程来说更加稳定、扩展性更强、程序开发相对比较容易。但是由于每次都要等上一个任务执行完成后才能开始新的任务，导致其效率比多线程低，甚至有时候应用程序会出现假死的现象。使">
+<meta name="description" content="简介在接触多线程之前，在我们程序中在任意时刻都只能执行一个步骤，称之为单线程。在单线程开发的程序中所有的程序路径都是顺序执行的，前面的必须先执行，后面的才会执行。单线程的优点也很明显，相对于多线程来说更加稳定、扩展性更强、程序开发相对比较容易。但是由于每次都要等上一个任务执行完成后才能开始新的任务，导致其效率比多线程低，甚至有时候应用程序会出现假死的现象。使用多线程有利于充分发挥多处理器的功能。通">
 <meta name="keywords" content="Java,多线程">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Java 多线程基础（一）">
 <meta property="og:url" content="https://www.mghio.cn/post/7eb2637f.html">
 <meta property="og:site_name" content="mghio&#39;s blog">
-<meta property="og:description" content="简介在接触多线程之前，我们所接触到的都是有关顺序编码的知识，即在我们程序中在任意时刻都只能执行一个步骤，称之为单线程。在单线程开发的程序中所有的程序路径都是顺序执行的，前面的必须先执行，后面的才会执行。单线程的优点也很明显，相对于多线程来说更加稳定、扩展性更强、程序开发相对比较容易。但是由于每次都要等上一个任务执行完成后才能开始新的任务，导致其效率比多线程低，甚至有时候应用程序会出现假死的现象。使">
+<meta property="og:description" content="简介在接触多线程之前，在我们程序中在任意时刻都只能执行一个步骤，称之为单线程。在单线程开发的程序中所有的程序路径都是顺序执行的，前面的必须先执行，后面的才会执行。单线程的优点也很明显，相对于多线程来说更加稳定、扩展性更强、程序开发相对比较容易。但是由于每次都要等上一个任务执行完成后才能开始新的任务，导致其效率比多线程低，甚至有时候应用程序会出现假死的现象。使用多线程有利于充分发挥多处理器的功能。通">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://i.loli.net/2019/12/07/ZtTHNLP8eoAYqcM.png">
-<meta property="og:updated_time" content="2019-12-07T15:44:27.814Z">
+<meta property="og:updated_time" content="2019-12-08T02:31:01.884Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Java 多线程基础（一）">
-<meta name="twitter:description" content="简介在接触多线程之前，我们所接触到的都是有关顺序编码的知识，即在我们程序中在任意时刻都只能执行一个步骤，称之为单线程。在单线程开发的程序中所有的程序路径都是顺序执行的，前面的必须先执行，后面的才会执行。单线程的优点也很明显，相对于多线程来说更加稳定、扩展性更强、程序开发相对比较容易。但是由于每次都要等上一个任务执行完成后才能开始新的任务，导致其效率比多线程低，甚至有时候应用程序会出现假死的现象。使">
+<meta name="twitter:description" content="简介在接触多线程之前，在我们程序中在任意时刻都只能执行一个步骤，称之为单线程。在单线程开发的程序中所有的程序路径都是顺序执行的，前面的必须先执行，后面的才会执行。单线程的优点也很明显，相对于多线程来说更加稳定、扩展性更强、程序开发相对比较容易。但是由于每次都要等上一个任务执行完成后才能开始新的任务，导致其效率比多线程低，甚至有时候应用程序会出现假死的现象。使用多线程有利于充分发挥多处理器的功能。通">
 <meta name="twitter:image" content="https://i.loli.net/2019/12/07/ZtTHNLP8eoAYqcM.png">
 
 
@@ -462,7 +462,7 @@
       
 
       
-        <h4 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h4><p>在接触<code>多线程</code>之前，我们所接触到的都是有关顺序编码的知识，即<code>在我们程序中在任意时刻都只能执行一个步骤</code>，称之为<code>单线程</code>。在单线程开发的程序中所有的程序路径都是顺序执行的，前面的必须先执行，后面的才会执行。单线程的优点也很明显，相对于多线程来说更加稳定、扩展性更强、程序开发相对比较容易。但是由于每次都要等上一个任务执行完成后才能开始新的任务，导致其效率比多线程低，甚至有时候应用程序会出现假死的现象。<br>使用多线程有利于充分发挥多处理器的功能。通过创建多线程进程，每个线程在一个处理器上运行，从而实现应用程序的并发性，使每个处理器都得到充分运行。多线程是 Java 学习的非常重要的方面，是每个 Java 程序员必须掌握的基本技能。本文是有关 Java 多线程的一些基础总结。</p>
+        <h4 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h4><p>在接触<code>多线程</code>之前，在我们程序中在任意时刻都只能执行一个步骤，称之为<code>单线程</code>。在单线程开发的程序中所有的程序路径都是顺序执行的，前面的必须先执行，后面的才会执行。单线程的优点也很明显，相对于多线程来说更加稳定、扩展性更强、程序开发相对比较容易。但是由于每次都要等上一个任务执行完成后才能开始新的任务，导致其效率比多线程低，甚至有时候应用程序会出现假死的现象。使用多线程有利于充分发挥多处理器的功能。通过创建多线程进程，每个线程在一个处理器上运行，从而实现应用程序的并发性，使每个处理器都得到充分运行。多线程是 Java 学习的非常重要的方面，是每个 Java 程序员必须掌握的基本技能。本文是有关 Java 多线程的一些基础知识总结。</p>
 <h4 id="进程与线程的区别"><a href="#进程与线程的区别" class="headerlink" title="进程与线程的区别"></a>进程与线程的区别</h4><h5 id="进程"><a href="#进程" class="headerlink" title="进程"></a>进程</h5><p>进程是<code>操作系统资源分配</code>的基本单位，它是操作系统的基础，是一个程序及其数据在处理机上顺序执行时所发生的活动。一个程序进入内存运行，即变成一个进程。进程是处于运行过程中的程序，并且具有一定独立功能。进程的实质就是程序在操作系统中的一次执行过程，它是动态产生的、动态销毁的，拥有自己的生命周期和各种不同的运行状态。同时，进程还具有并发性，它可以同其他进程一起并发执行，按各自独立的、不可预知的速度向前推进（<code>PS：并发性和并行性是不同的概念，并行指的是同一时刻，两个及两个以上的指令在多个处理器上同时执行。而并发指的是同一时刻只有一条指令执行，但是多个进程可以被 CPU 快速交换执行，给我们感觉好像是多个执行在同时执行一样。</code>）。　</p>
 <h5 id="线程"><a href="#线程" class="headerlink" title="线程"></a>线程</h5><p>线程是<code>任务调度和执行</code>的基本单位，也被称为<code>轻量级进程</code>，线程由线程 ID，当前指令指针(PC），寄存器集合和堆栈组成。线程不拥有系统资源，它只会拥有一点儿在运行时必不可少的资源，但是它可以与同属于同一进程的线程共享该进程所拥有的所有资源。一个线程只能属于一个进程，而一个进程可以有多个线程，但至少有一个线程。</p>
 <a id="more"></a>
@@ -473,7 +473,7 @@
 <li><strong>系统开销</strong> 在创建或撤消进程时，由于系统都要为之分配和回收资源，导致系统的开销明显大于创建或撤消线程时的开销</li>
 </ol>
 <h4 id="创建线程的方式"><a href="#创建线程的方式" class="headerlink" title="创建线程的方式"></a>创建线程的方式</h4><p>在 Java 中使用 Thread 类代表线程，所有的线程对象都必须是 Thread 类或者其子类的实例，Java 中创建线程主要有以下三种方式：</p>
-<h5 id="方式一-继承-Thread-类"><a href="#方式一-继承-Thread-类" class="headerlink" title="方式一 继承 Thread 类"></a>方式一 继承 Thread 类</h5><p><strong>step 1</strong> 定义一个类继承自 Thread 类，然后重写该类的 <code>run</code> 方法，这个方法的内容表示线程要完成的任务<br><strong>step 2</strong> 创建线程对象，即创建 Thread 类子类的实例<br><strong>step 3</strong> 调用步骤二中创建出来的对象的 <code>start</code> 方法来启动线程</p>
+<h5 id="方式一-继承-Thread-类"><a href="#方式一-继承-Thread-类" class="headerlink" title="方式一 继承 Thread 类"></a>方式一 继承 Thread 类</h5><p><strong>step 1</strong> 定义一个类继承自 <code>Thread</code> 类，然后重写该类的 <code>run</code> 方法，这个方法的内容表示线程要完成的任务<br><strong>step 2</strong> 创建线程对象，即创建 <code>Thread</code> 类子类的实例<br><strong>step 3</strong> 调用步骤二中创建出来的对象的 <code>start</code> 方法来启动线程</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> mghio</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@date</span>: 2019-12-07</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@version</span>: 1.0</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@description</span>: 通过继承 Thread 类的方式创建线程</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@since</span> JDK 1.8</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CreateThreadByExtendsThread</span> <span class="keyword">extends</span> <span class="title">Thread</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@Override</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    IntStream.rangeClosed(<span class="number">1</span>, <span class="number">10</span>).forEach(i -&gt; System.out.println(Thread.currentThread().getName() + <span class="string">" "</span> + i));</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">    CreateThreadByExtendsThread threadOne = <span class="keyword">new</span> CreateThreadByExtendsThread();</span><br><span class="line">    CreateThreadByExtendsThread threadTwo = <span class="keyword">new</span> CreateThreadByExtendsThread();</span><br><span class="line">    CreateThreadByExtendsThread threadThree = <span class="keyword">new</span> CreateThreadByExtendsThread();</span><br><span class="line"></span><br><span class="line">    threadOne.start();</span><br><span class="line">    threadTwo.start();</span><br><span class="line">    threadThree.start();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <h5 id="方式二-实现-Runnable-接口"><a href="#方式二-实现-Runnable-接口" class="headerlink" title="方式二 实现 Runnable 接口"></a>方式二 实现 Runnable 接口</h5><p><strong>step 1</strong> 定义一个类实现 <code>Runnable</code> 接口，然后实现该接口的 <code>run</code> 方法，这个方法的内容同样也表示线程要完成的任务<br><strong>step 2</strong> 创建 <code>Runnable</code> 接口实现类的实例，并使用该实例作为 <code>Thraed</code> 构造方法的参数创建 <code>Thread</code> 类的对象，该对象才是真正的线程对象<br><strong>step 3</strong> 调用线程对象的 <code>start</code> 方法来启动该线程</p>
@@ -494,7 +494,7 @@
 </ol>
 <p><strong>死亡状态（Dead）</strong><br>一个处于<code>运行状态</code>的线程执行完了 <code>run</code> 方法或者因为其它终止条件发生时，线程就会进入到<code>死亡状态</code>，该线程结束生命周期。<br>以上线程各种状态的流转用一张图表示如下：</p>
 <p><img src="https://i.loli.net/2019/12/07/ZtTHNLP8eoAYqcM.png" alt="thread-state-transfer.png"></p>
-<h4 id="线程的常用方法"><a href="#线程的常用方法" class="headerlink" title="线程的常用方法"></a>线程的常用方法</h4><p>线程中常用的方法按照来源不同可以分为两类，一类是继承自 <code>Object</code> 类的方法，如下所示：</p>
+<h4 id="线程的常用方法"><a href="#线程的常用方法" class="headerlink" title="线程的常用方法"></a>线程的常用方法</h4><p>线程中常用的方法按照来源可以分为两类，一类是继承自 <code>Object</code> 类的方法，如下所示：</p>
 <table>
 <thead>
 <tr>
@@ -560,6 +560,7 @@
 <hr>
 <p>参考文章</p>
 <ul>
+<li><a href="https://www.cnblogs.com/lmule/archive/2010/08/18/1802774.html" target="_blank" rel="noopener">进程和线程的区别</a></li>
 <li><a href="https://www.cnblogs.com/skywang12345/p/3479224.html" target="_blank" rel="noopener">Java多线程系列–“基础篇”05之 线程等待与唤醒</a></li>
 </ul>
 
