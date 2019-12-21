@@ -102,7 +102,7 @@
 <meta property="og:site_name" content="mghio&#39;s blog">
 <meta property="og:description" content="1.1 前言作为 Java 后端开发的我们，开发的项目绝大部分都是部署在 Linux 系统上的，因此熟练使用一些常用的 Linux 命令不管是对于日常开发、服务部署或者查找问题都非常有用。以下整理了一些常用的 Linux 常用命令。 1.2 文件管理1.2.1 ls 命令ls 命令是 Linux 最常用的命令之一，其功能是列出指定目录下的内容及其相关属性信息。默认状态下，ls 命令会列出当前目录的">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-12-21T09:53:23.941Z">
+<meta property="og:updated_time" content="2019-12-21T15:52:44.260Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Linux 常用命令">
 <meta name="twitter:description" content="1.1 前言作为 Java 后端开发的我们，开发的项目绝大部分都是部署在 Linux 系统上的，因此熟练使用一些常用的 Linux 命令不管是对于日常开发、服务部署或者查找问题都非常有用。以下整理了一些常用的 Linux 常用命令。 1.2 文件管理1.2.1 ls 命令ls 命令是 Linux 最常用的命令之一，其功能是列出指定目录下的内容及其相关属性信息。默认状态下，ls 命令会列出当前目录的">
@@ -491,10 +491,10 @@
 <td align="center">递归列出所有子目录</td>
 </tr>
 </tbody></table>
+<a id="more"></a>
 <p><strong>Examples</strong></p>
 <figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">ls</span> -<span class="keyword">a</span>       # 列出所有文件（包括隐藏文件）</span><br><span class="line"><span class="keyword">ls</span> -<span class="keyword">l</span>       # 列出文件的详细信息</span><br><span class="line"><span class="keyword">ls</span> /        # 列出根目录（/）下的所有目录</span><br><span class="line"><span class="keyword">ls</span> -ltr s*  # 列出当前目录下所有名称是 s 开头的文件</span><br><span class="line"><span class="keyword">ls</span> -AS      # 列出当前目录下所有文件及目录并以文件大小进行排序</span><br></pre></td></tr></table></figure>
 
-<a id="more"></a>
 <h5 id="1-2-2-chown-命令"><a href="#1-2-2-chown-命令" class="headerlink" title="1.2.2 chown 命令"></a>1.2.2 chown 命令</h5><p><code>Linux</code> 是一种多用户多任务的操作系统，所有的文件都有一个拥有者。<code>chown</code> 命令就是用来将指定文件的拥有者改为指定的用户或者组（<code>PS：用户和组都可以是名称或者其 ID</code>），文件是以空格分开的要改变权限的文件列表，支持通配符。<br><strong>语法格式</strong>：chown [参数]<br><strong>常用参数</strong></p>
 <table>
 <thead>
