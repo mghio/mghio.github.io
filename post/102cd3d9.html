@@ -102,7 +102,7 @@
 <meta property="og:site_name" content="mghio&#39;s blog">
 <meta property="og:description" content="前言在 Java 中有两种方式可以让我们在运行时识别对象和类的信息。一种是 RTTI（运行时类型识别：Run-Time Type Identification），它假定了我们在编译时已经知道了所有的类型；另一种是我们本文要说的反射机制，它允许我们在运行时获取和使用类的信息。无论是 RTTI 还是反射，其本质都是一样的，都是去动态的获取类的信息。它们唯一不同的是，RTTI 在编译时期知道要解析的类型">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-12-29T14:41:57.293Z">
+<meta property="og:updated_time" content="2019-12-31T04:30:05.163Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Java 反射机制（一）">
 <meta name="twitter:description" content="前言在 Java 中有两种方式可以让我们在运行时识别对象和类的信息。一种是 RTTI（运行时类型识别：Run-Time Type Identification），它假定了我们在编译时已经知道了所有的类型；另一种是我们本文要说的反射机制，它允许我们在运行时获取和使用类的信息。无论是 RTTI 还是反射，其本质都是一样的，都是去动态的获取类的信息。它们唯一不同的是，RTTI 在编译时期知道要解析的类型">
@@ -496,50 +496,50 @@
 <p>两者的区别是，通过 <code>Class</code> 的 <code>newInstance</code> 方法只能通过无参构造方法创建，这就要求这个类必须有一个无参的构造方法，而通过 <code>Constructor</code> 的 <code>newInstance</code> 可以指定参数来选择特定的构造方法来创建对象。以下代码就是指定参数然后通过特定的构造方法创建对象的。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Class&lt;Person&gt; personClass = Person.class;</span><br><span class="line">Constructor personConstructor = personClass.getConstructor();</span><br><span class="line">Person person = (Person) personConstructor.newInstance(<span class="string">"mghio"</span>, <span class="string">"中国上海"</span>);</span><br></pre></td></tr></table></figure>
 
-<h5 id="通过反射获取类的属性"><a href="#通过反射获取类的属性" class="headerlink" title="通过反射获取类的属性"></a>通过反射获取类的属性</h5><p><code>Class</code> 类提供了两种方式获取一个类的属性，第 ① 种是通过 <code>Class</code> 对象的 <code>getFields</code> 方法获取类的属性，该方法只能获取类的 <code>public</code> 属性。</p>
+<h5 id="通过反射获取类的属性"><a href="#通过反射获取类的属性" class="headerlink" title="通过反射获取类的属性"></a>通过反射获取类的属性</h5><p><code>Class</code> 类提供了两种方式获取一个类的属性。<br><strong>第 ① 种</strong> 是通过 <code>Class</code> 对象的 <code>getFields</code> 方法获取类的属性，该方法只能获取类的 <code>public</code> 属性。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Class&lt;Person&gt; personClass = Person.class;</span><br><span class="line">Field[] fields = personClass.getFields();</span><br><span class="line">System.out.println(Arrays.toString(fields));</span><br></pre></td></tr></table></figure>
 
 <p>运行结果</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[<span class="keyword">public</span> java.lang.String cn.mghio.blogmghiocode.reflect.Person.id, </span><br><span class="line"><span class="keyword">public</span> java.lang.String cn.mghio.blogmghiocode.reflect.Person.name]</span><br></pre></td></tr></table></figure>
 
-<p>第 ② 种是通过 <code>Class</code> 对象的 <code>getDeclaredFields</code> 方法获取类的属性，该方法可以获取类的所有属性（包括 <code>private</code> 修饰的属性）。</p>
+<p><strong>第 ② 种</strong> 是通过 <code>Class</code> 对象的 <code>getDeclaredFields</code> 方法获取类的属性，该方法可以获取类的所有属性（包括 <code>private</code> 修饰的属性）。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Class&lt;Person&gt; personClass = Person.class;</span><br><span class="line">Field[] fields = personClass.getDeclaredFields();</span><br><span class="line">System.out.println(Arrays.toString(fields));</span><br></pre></td></tr></table></figure>
 
 <p>运行结果</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[<span class="keyword">public</span> java.lang.String cn.mghio.blogmghiocode.reflect.Person.id, </span><br><span class="line"><span class="keyword">public</span> java.lang.String cn.mghio.blogmghiocode.reflect.Person.name, </span><br><span class="line"><span class="keyword">protected</span> java.lang.Integer cn.mghio.blogmghiocode.reflect.Person.age, </span><br><span class="line"><span class="keyword">private</span> java.lang.String cn.mghio.blogmghiocode.reflect.Person.address]</span><br></pre></td></tr></table></figure>
 
-<h5 id="通过反射获取类的方法"><a href="#通过反射获取类的方法" class="headerlink" title="通过反射获取类的方法"></a>通过反射获取类的方法</h5><p><code>Class</code> 也提供了两种方式获取类的方法，第 ① 种是通过 <code>Class</code> 对象的 <code>getMethods</code> 方法获取类的方法（包括继承而得的方法）。</p>
+<h5 id="通过反射获取类的方法"><a href="#通过反射获取类的方法" class="headerlink" title="通过反射获取类的方法"></a>通过反射获取类的方法</h5><p><code>Class</code> 也提供了两种方式获取类的方法。<br><strong>第 ① 种</strong> 是通过 <code>Class</code> 对象的 <code>getMethods</code> 方法获取类的方法（包括继承而得的方法）。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Class&lt;Person&gt; personClass = Person.class;</span><br><span class="line">Method[] methods = personClass.getMethods();</span><br><span class="line">System.out.println(Arrays.toString(methods));</span><br></pre></td></tr></table></figure>
 
 <p>运行结果</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[<span class="keyword">public</span> java.lang.String cn.mghio.blogmghiocode.reflect.Person.toString(), </span><br><span class="line"><span class="keyword">public</span> java.lang.String cn.mghio.blogmghiocode.reflect.Person.getAddress(), </span><br><span class="line">...</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">native</span> java.lang.Class java.lang.Object.getClass(), </span><br><span class="line"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">native</span> <span class="keyword">void</span> java.lang.Object.notify()]</span><br></pre></td></tr></table></figure>
 
-<p>第 ② 种是通过 <code>Class</code> 对象的 <code>getDeclaredMethods</code> 方法获取类的方法（只包含类中定义的方法，不包含继承而来的方法）。</p>
+<p><strong>第 ② 种</strong> 是通过 <code>Class</code> 对象的 <code>getDeclaredMethods</code> 方法获取类的方法（只包含类中定义的方法，不包含继承而来的方法）。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Class&lt;Person&gt; personClass = Person.class;</span><br><span class="line">Method[] methods = personClass.getDeclaredMethods();</span><br><span class="line">System.out.println(Arrays.toString(methods));</span><br></pre></td></tr></table></figure>
 
 <p>运行结果</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[<span class="keyword">public</span> java.lang.String cn.mghio.blogmghiocode.reflect.Person.toString(), </span><br><span class="line"><span class="keyword">public</span> java.lang.String cn.mghio.blogmghiocode.reflect.Person.getAddress(), </span><br><span class="line">... </span><br><span class="line"><span class="keyword">protected</span> <span class="keyword">void</span> cn.mghio.blogmghiocode.reflect.Person.protectedMethod(), </span><br><span class="line"><span class="keyword">private</span> <span class="keyword">void</span> cn.mghio.blogmghiocode.reflect.Person.privateMethod()]</span><br></pre></td></tr></table></figure>
 
 <p>从以上结果可以看出这个方法只获取当前类中定义的方法，包含 <code>private</code> 方法，不会获取从父类中继承而来的方法。</p>
-<h5 id="通过反射获取类的构造方法"><a href="#通过反射获取类的构造方法" class="headerlink" title="通过反射获取类的构造方法"></a>通过反射获取类的构造方法</h5><p><code>Class</code> 也提供了两种方式获取类的构造方法，第 ① 种是通过 <code>Class</code> 对象的 <code>getConstructors</code> 方法获取类的构造方法（只能获取当前类的 <code>public</code> 构造方法）。</p>
+<h5 id="通过反射获取类的构造方法"><a href="#通过反射获取类的构造方法" class="headerlink" title="通过反射获取类的构造方法"></a>通过反射获取类的构造方法</h5><p><code>Class</code> 也提供了两种方式获取类的构造方法。<br><strong>第 ① 种</strong> 是通过 <code>Class</code> 对象的 <code>getConstructors</code> 方法获取类的构造方法（只能获取当前类的 <code>public</code> 构造方法）。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Class&lt;Person&gt; personClass = Person.class;</span><br><span class="line">Constructor[] constructors = personClass.getConstructors();</span><br><span class="line">System.out.println(Arrays.toString(constructors));</span><br></pre></td></tr></table></figure>
 
 <p>运行结果</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[<span class="keyword">public</span> cn.mghio.blogmghiocode.reflect.Person(java.lang.String,java.lang.String,java.lang.Integer,java.lang.String)]</span><br></pre></td></tr></table></figure>
 
-<p>第 ② 种是通过 <code>Class</code> 对象的 <code>getDeclaredConstructors</code> 方法获取类的构造方法（只包含类中定义的所有构造方法）。</p>
+<p><strong>第 ② 种</strong> 是通过 <code>Class</code> 对象的 <code>getDeclaredConstructors</code> 方法获取类的构造方法（只包含类中定义的所有构造方法）。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Class&lt;Person&gt; personClass = Person.class;</span><br><span class="line">Constructor[] constructors = personClass.getDeclaredConstructors();</span><br><span class="line">System.out.println(Arrays.toString(constructors));</span><br></pre></td></tr></table></figure>
 
 <p>运行结果</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[<span class="keyword">public</span> cn.mghio.blogmghiocode.reflect.Person(java.lang.String,java.lang.String,java.lang.Integer,java.lang.String), </span><br><span class="line"><span class="keyword">protected</span> cn.mghio.blogmghiocode.reflect.Person(java.lang.String,java.lang.String), </span><br><span class="line"><span class="keyword">private</span> cn.mghio.blogmghiocode.reflect.Person()]</span><br></pre></td></tr></table></figure>
 
-<h5 id="通过反射获取类的类名"><a href="#通过反射获取类的类名" class="headerlink" title="通过反射获取类的类名"></a>通过反射获取类的类名</h5><p><code>Class</code> 类提供了两种方式获取类的类名，第 ① 种是通过 <code>getName</code> 方法获取类的全限定名（包含包名）。</p>
+<h5 id="通过反射获取类的类名"><a href="#通过反射获取类的类名" class="headerlink" title="通过反射获取类的类名"></a>通过反射获取类的类名</h5><p><code>Class</code> 类提供了两种方式获取类的类名。<br><strong>第 ① 种</strong> 是通过 <code>getName</code> 方法获取类的全限定名（包含包名）。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Class&lt;Person&gt; personClass = Person.class;</span><br><span class="line">String fullPersonClassName = personClass.getName();</span><br><span class="line">System.out.println(fullPersonClassName);</span><br></pre></td></tr></table></figure>
 
 <p>运行结果</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cn.mghio.blogmghiocode.reflect.Person</span><br></pre></td></tr></table></figure>
 
-<p>第 ② 种是通过 <code>Class</code> 对象的 <code>getSimpleName</code> 方法获取类的类名（不包含包名）。</p>
+<p><strong>第 ② 种</strong> 是通过 <code>Class</code> 对象的 <code>getSimpleName</code> 方法获取类的类名（不包含包名）。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"> Class&lt;Person&gt; personClass = Person.class;</span><br><span class="line">String fullPersonClassName = personClass.getSimpleName();</span><br><span class="line">System.out.println(fullPersonClassName);</span><br></pre></td></tr></table></figure>
 
 <p>运行结果</p>
