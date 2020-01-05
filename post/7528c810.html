@@ -107,7 +107,7 @@
 <meta property="og:image" content="https://i.loli.net/2020/01/05/iOXY41amPClUj7F.png">
 <meta property="og:image" content="https://i.loli.net/2020/01/05/HVpQ48Pmv9MIKG3.png">
 <meta property="og:image" content="https://i.loli.net/2020/01/05/gxE8bmp9s5Ydt1P.png">
-<meta property="og:updated_time" content="2020-01-05T08:19:35.798Z">
+<meta property="og:updated_time" content="2020-01-05T14:51:30.490Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Java 反射机制（二）">
 <meta name="twitter:description" content="前言在上篇 Java 反射机制（一） 介绍了一些 Java 反射相关的常用 API ，在知道了如何去使用反射之后，作为一个合格的工程师，下一步肯定是要去了解它的如何实现的，我们今天就来看看在 JDK 源码中是如何去实现反射的(PS:以下源码分析基于 JDK1.8)。 Field 类 set 方法的实现Field 类的 set 方法是在运行时用来动态修改一个类的属性的值，进入到 Field 类的 s">
@@ -491,7 +491,7 @@
 
 <p>从以上 <code>UnsafeFieldAccessorFactory</code> 类的 <code>newFieldAccessor</code> 方法代码可以看出，方法里面通过类的字段修饰符类型和字段的类类型共同决定返回的 <code>FieldAccessor</code> 实现类，这里要注意一下方法里面这几个变量的含义：</p>
 <ul>
-<li>var3（isStatic）：静态属性，也就是static关键字修饰的属性。</li>
+<li>var3（isStatic）：静态属性，也就是 <code>static</code> 关键字修饰的属性。</li>
 <li>var4（isFinal）：<code>final</code> 关键字修饰的属性。</li>
 <li>var5（isVolatile）：<code>valatile</code> 关键字修饰的属性。</li>
 <li>var6（isQualified）：<code>valatile</code> 关键字或者 <code>final</code> 关键字修饰的属性。</li>
