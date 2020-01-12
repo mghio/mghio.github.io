@@ -4,11 +4,11 @@ $(function(){
         /* code */
         var initCopyCode = function(){
         var copyHtml = '';
-        copyHtml += '<button class="btn-copy" data-clipboard-snippet="">';
+        copyHtml += '<button id="btn-copy" data-clipboard-snippet="">';
         copyHtml += '<span>复制</span>';
         copyHtml += '</button>';
         $(".highlight .code pre").before(copyHtml);
-        new ClipboardJS('.btn-copy', {
+        new ClipboardJS('#btn-copy', {
             target: function(trigger) {
                 return trigger.nextElementSibling;
             }
