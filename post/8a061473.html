@@ -103,7 +103,7 @@
 <meta property="og:description" content="1.1 为什么要进行内存区域划分JVM规范 规定，JVM 在执行 Java 程序的过程中会把它所管理的内存划分为若干个不同的数据区域。这些区域都有各自的用途。以及创建和销毁的时间，有的区域随着虚拟机进程的启动就存在了，而有些区域则依赖用户线程的启动和结束而建立和销毁。JVM 规范对 JVM 定义了运行时统一的内存划分规范，统一了标准，类似于 JDBC 规范一样。JVM 也有许多厂商的不同产品。比如">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://i.loli.net/2019/10/27/2TGhQutDpMkinlo.png">
-<meta property="og:updated_time" content="2019-12-07T15:45:52.083Z">
+<meta property="og:updated_time" content="2020-01-16T12:07:07.557Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Java 运行时数据区域">
 <meta name="twitter:description" content="1.1 为什么要进行内存区域划分JVM规范 规定，JVM 在执行 Java 程序的过程中会把它所管理的内存划分为若干个不同的数据区域。这些区域都有各自的用途。以及创建和销毁的时间，有的区域随着虚拟机进程的启动就存在了，而有些区域则依赖用户线程的启动和结束而建立和销毁。JVM 规范对 JVM 定义了运行时统一的内存划分规范，统一了标准，类似于 JDBC 规范一样。JVM 也有许多厂商的不同产品。比如">
@@ -517,7 +517,7 @@
 <p>接下来看看 Java 运行时数据区中各个部分的用途和特点：</p>
 <blockquote>
 <h4 id="方法区"><a href="#方法区" class="headerlink" title="方法区"></a>方法区</h4></blockquote>
-<h5 id="1-1-什么是方法区"><a href="#1-1-什么是方法区" class="headerlink" title="1.1 什么是方法区"></a>1.1 什么是方法区</h5><p>在 JVM 中，方法区是可供各个线程共享运行时的内存区域。方法区域传统语言中的编译代码存储区或者操作系统进程的正文段的作用非常类似，它存储了每一个类的结构信息，例如运行时常量池、字段和方法数据、类的构造函数和普通方法的字节码内容、还包括一些类、实例、接口初始化的时候用到的特殊方法。在 Hotspot 虚拟机中，JDK 1.7 版本称作<code>永久代（Permanent Generation）</code>，而在 JDK 1.8 则称为 <code>元空间（Metapace）</code>。<br>方法区有个别名叫做非堆（Non-Heap），用于区别于 Java 堆区。默认最小值为 16 MB，最大值为 64 MB，可通过 <code>-XX:PermSize</code> 和 <code>-XX:MaxPermSize</code> 参数设置方法的大小。<br>JDK 1.7 及之前的版本设置为：</p>
+<h5 id="1-1-什么是方法区"><a href="#1-1-什么是方法区" class="headerlink" title="1.1 什么是方法区"></a>1.1 什么是方法区</h5><p>在 JVM 中，方法区是可供各个线程共享运行时的内存区域。方法区与传统语言中的编译代码存储区或者操作系统进程的正文段的作用非常类似，它存储了每一个类的结构信息，例如运行时常量池、字段和方法数据、类的构造函数和普通方法的字节码内容、还包括一些类、实例、接口初始化的时候用到的特殊方法。在 Hotspot 虚拟机中，JDK 1.7 版本称作<code>永久代（Permanent Generation）</code>，而在 JDK 1.8 则称为 <code>元空间（Metapace）</code>。<br>方法区有个别名叫做非堆（Non-Heap），用于区别于 Java 堆区。默认最小值为 16 MB，最大值为 64 MB，可通过 <code>-XX:PermSize</code> 和 <code>-XX:MaxPermSize</code> 参数设置方法的大小。<br>JDK 1.7 及之前的版本设置为：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">-XX:PermSize=<span class="number">10</span>m</span><br><span class="line">-XX:MaxPermSize=<span class="number">55</span>m</span><br></pre></td></tr></table></figure>
 
 <p>JDK 1.8 及之后的版本设置为：</p>
@@ -991,10 +991,6 @@
                 
                   <li class="links-of-blogroll-item">
                     <a href="http://13blog.site" title="13blog" target="_blank">13blog</a>
-                  </li>
-                
-                  <li class="links-of-blogroll-item">
-                    <a href="https://www.ccode.fun" title="半叶子" target="_blank">半叶子</a>
                   </li>
                 
               </ul>
