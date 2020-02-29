@@ -94,13 +94,13 @@
 
 
 
-<meta name="description" content="前言在互联网时代，我们的运用都是分布式系统，部署在 N 台机器上。说到分布式系统我们就不得不说分布式系统的祖先——集中式系统。它和分布式系统是两个完全相反的两个概念，集中式系统就是把所有的程序和功能都放到一台主机上，从而对外提供服务。集中式系统的优点就是容易理解、维护方便，它的的弊端也很明显，如果这个主机出故障了那么整个系统就崩溃了。著名投资家巴菲特有个关于投资的名言：  不要把鸡蛋放在一个篮子里">
+<meta name="description" content="前言在互联网时代，我们的运用都是分布式系统，部署在 N 台机器上。说到分布式系统我们就不得不说分布式系统的祖先——集中式系统。它和分布式系统是两个完全相反的概念，集中式系统就是把所有的程序和功能都放到一台主机上，从而对外提供服务。集中式系统的优点就是容易理解、维护方便，它的的弊端也很明显，如果这个主机出故障了那么整个系统就崩溃了。著名投资家巴菲特有个关于投资的名言：  不要把鸡蛋放在一个篮子里">
 <meta name="keywords" content="分布式系统,CAP定理">
 <meta property="og:type" content="article">
 <meta property="og:title" content="分布式系统之 — CAP 定理">
 <meta property="og:url" content="https://www.mghio.cn/post/11cb7677.html">
 <meta property="og:site_name" content="mghio">
-<meta property="og:description" content="前言在互联网时代，我们的运用都是分布式系统，部署在 N 台机器上。说到分布式系统我们就不得不说分布式系统的祖先——集中式系统。它和分布式系统是两个完全相反的两个概念，集中式系统就是把所有的程序和功能都放到一台主机上，从而对外提供服务。集中式系统的优点就是容易理解、维护方便，它的的弊端也很明显，如果这个主机出故障了那么整个系统就崩溃了。著名投资家巴菲特有个关于投资的名言：  不要把鸡蛋放在一个篮子里">
+<meta property="og:description" content="前言在互联网时代，我们的运用都是分布式系统，部署在 N 台机器上。说到分布式系统我们就不得不说分布式系统的祖先——集中式系统。它和分布式系统是两个完全相反的概念，集中式系统就是把所有的程序和功能都放到一台主机上，从而对外提供服务。集中式系统的优点就是容易理解、维护方便，它的的弊端也很明显，如果这个主机出故障了那么整个系统就崩溃了。著名投资家巴菲特有个关于投资的名言：  不要把鸡蛋放在一个篮子里">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://i.loli.net/2020/02/29/S7GyDcNF5zaxkhW.png">
 <meta property="og:image" content="https://i.loli.net/2020/02/29/Y9JzOLIHCFu8GTd.png">
@@ -111,10 +111,10 @@
 <meta property="og:image" content="https://i.loli.net/2020/02/29/SU9NmiW7PqKwe25.png">
 <meta property="og:image" content="https://i.loli.net/2020/02/29/vDEw5VOk6fiHpzb.png">
 <meta property="og:image" content="https://i.loli.net/2020/02/29/RdfvYtVC16bMnZQ.png">
-<meta property="og:updated_time" content="2020-02-29T04:42:54.898Z">
+<meta property="og:updated_time" content="2020-02-29T09:30:57.616Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="分布式系统之 — CAP 定理">
-<meta name="twitter:description" content="前言在互联网时代，我们的运用都是分布式系统，部署在 N 台机器上。说到分布式系统我们就不得不说分布式系统的祖先——集中式系统。它和分布式系统是两个完全相反的两个概念，集中式系统就是把所有的程序和功能都放到一台主机上，从而对外提供服务。集中式系统的优点就是容易理解、维护方便，它的的弊端也很明显，如果这个主机出故障了那么整个系统就崩溃了。著名投资家巴菲特有个关于投资的名言：  不要把鸡蛋放在一个篮子里">
+<meta name="twitter:description" content="前言在互联网时代，我们的运用都是分布式系统，部署在 N 台机器上。说到分布式系统我们就不得不说分布式系统的祖先——集中式系统。它和分布式系统是两个完全相反的概念，集中式系统就是把所有的程序和功能都放到一台主机上，从而对外提供服务。集中式系统的优点就是容易理解、维护方便，它的的弊端也很明显，如果这个主机出故障了那么整个系统就崩溃了。著名投资家巴菲特有个关于投资的名言：  不要把鸡蛋放在一个篮子里">
 <meta name="twitter:image" content="https://i.loli.net/2020/02/29/S7GyDcNF5zaxkhW.png">
 
 
@@ -474,7 +474,7 @@
       
 
       
-        <h4 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h4><p>在互联网时代，我们的运用都是分布式系统，部署在 N 台机器上。说到分布式系统我们就不得不说分布式系统的祖先——集中式系统。它和分布式系统是两个完全相反的两个概念，集中式系统就是把所有的程序和功能都放到一台主机上，从而对外提供服务。集中式系统的优点就是容易理解、维护方便，它的的弊端也很明显，如果这个主机出故障了那么整个系统就崩溃了。著名投资家巴菲特有个关于投资的名言：</p>
+        <h4 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h4><p>在互联网时代，我们的运用都是分布式系统，部署在 N 台机器上。说到分布式系统我们就不得不说分布式系统的祖先——集中式系统。它和分布式系统是两个完全相反的概念，集中式系统就是把所有的程序和功能都放到一台主机上，从而对外提供服务。集中式系统的优点就是容易理解、维护方便，它的的弊端也很明显，如果这个主机出故障了那么整个系统就崩溃了。著名投资家巴菲特有个关于投资的名言：</p>
 <blockquote>
 <p>不要把鸡蛋放在一个篮子里</p>
 </blockquote>
