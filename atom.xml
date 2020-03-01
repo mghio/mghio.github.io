@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
   <title>mghio</title>
   
-  <subtitle>JAVA 搬运工 &amp; 终身学习者。</subtitle>
+  <subtitle>Java 搬运工 &amp; 终身学习者。</subtitle>
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://www.mghio.cn/"/>
