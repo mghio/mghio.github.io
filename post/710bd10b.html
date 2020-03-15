@@ -94,13 +94,13 @@
 
 
 
-<meta name="description" content="前言现在流行的微服务体系结构正在改变我们构建应用程序的方式，从单一的单体服务转变为将它们分解为越来越小的可单独部署的服务（称为微服务），共同构成了我们的应用程序。当进行一个业务时不可避免就会存在多个服务之间调用，假如一个服务 A 要访问在另一台服务器部署的服务 B，那么前提是服务 A 要知道服务 B 所在机器的 IP 地址和服务对应的端口，最简单的方式就是让服务 A 自己去维护一份服务 B 的配置">
+<meta name="description" content="前言现在流行的微服务体系结构正在改变我们构建应用程序的方式，从单一的单体服务转变为越来越小的可单独部署的服务（称为微服务），共同构成了我们的应用程序。当进行一个业务时不可避免就会存在多个服务之间调用，假如一个服务 A 要访问在另一台服务器部署的服务 B，那么前提是服务 A 要知道服务 B 所在机器的 IP 地址和服务对应的端口，最简单的方式就是让服务 A 自己去维护一份服务 B 的配置（包含 IP">
 <meta name="keywords" content="Java,服务发现,Eureka">
 <meta property="og:type" content="article">
 <meta property="og:title" content="服务发现组件之 — Eureka">
 <meta property="og:url" content="https://www.mghio.cn/post/710bd10b.html">
 <meta property="og:site_name" content="mghio">
-<meta property="og:description" content="前言现在流行的微服务体系结构正在改变我们构建应用程序的方式，从单一的单体服务转变为将它们分解为越来越小的可单独部署的服务（称为微服务），共同构成了我们的应用程序。当进行一个业务时不可避免就会存在多个服务之间调用，假如一个服务 A 要访问在另一台服务器部署的服务 B，那么前提是服务 A 要知道服务 B 所在机器的 IP 地址和服务对应的端口，最简单的方式就是让服务 A 自己去维护一份服务 B 的配置">
+<meta property="og:description" content="前言现在流行的微服务体系结构正在改变我们构建应用程序的方式，从单一的单体服务转变为越来越小的可单独部署的服务（称为微服务），共同构成了我们的应用程序。当进行一个业务时不可避免就会存在多个服务之间调用，假如一个服务 A 要访问在另一台服务器部署的服务 B，那么前提是服务 A 要知道服务 B 所在机器的 IP 地址和服务对应的端口，最简单的方式就是让服务 A 自己去维护一份服务 B 的配置（包含 IP">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://i.loli.net/2020/03/15/7TAmjGKnQ2PXuMd.png">
 <meta property="og:image" content="https://i.loli.net/2020/03/15/O7QpAjDRsqEBcz1.png">
@@ -118,10 +118,10 @@
 <meta property="og:image" content="https://i.loli.net/2020/03/15/ImUKf8lScgj37ZN.png">
 <meta property="og:image" content="https://i.loli.net/2020/03/15/Dy5LA439fcpjYav.png">
 <meta property="og:image" content="https://i.loli.net/2020/03/15/5Zi6MstvO87UoSJ.png">
-<meta property="og:updated_time" content="2020-03-15T08:17:06.996Z">
+<meta property="og:updated_time" content="2020-03-15T12:51:25.802Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="服务发现组件之 — Eureka">
-<meta name="twitter:description" content="前言现在流行的微服务体系结构正在改变我们构建应用程序的方式，从单一的单体服务转变为将它们分解为越来越小的可单独部署的服务（称为微服务），共同构成了我们的应用程序。当进行一个业务时不可避免就会存在多个服务之间调用，假如一个服务 A 要访问在另一台服务器部署的服务 B，那么前提是服务 A 要知道服务 B 所在机器的 IP 地址和服务对应的端口，最简单的方式就是让服务 A 自己去维护一份服务 B 的配置">
+<meta name="twitter:description" content="前言现在流行的微服务体系结构正在改变我们构建应用程序的方式，从单一的单体服务转变为越来越小的可单独部署的服务（称为微服务），共同构成了我们的应用程序。当进行一个业务时不可避免就会存在多个服务之间调用，假如一个服务 A 要访问在另一台服务器部署的服务 B，那么前提是服务 A 要知道服务 B 所在机器的 IP 地址和服务对应的端口，最简单的方式就是让服务 A 自己去维护一份服务 B 的配置（包含 IP">
 <meta name="twitter:image" content="https://i.loli.net/2020/03/15/7TAmjGKnQ2PXuMd.png">
 
 
@@ -492,7 +492,7 @@
       
 
       
-        <h4 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h4><p>现在流行的微服务体系结构正在改变我们构建应用程序的方式，从单一的单体服务转变为将它们分解为越来越小的可单独部署的服务（称为<code>微服务</code>），共同构成了我们的应用程序。当进行一个业务时不可避免就会存在多个服务之间调用，假如一个服务 A 要访问在另一台服务器部署的服务 B，那么前提是服务 A 要知道服务 B 所在机器的 IP 地址和服务对应的端口，最简单的方式就是让服务 A 自己去维护一份服务 B 的配置（包含 IP 地址和端口等信息），但是这种方式有几个明显的缺点：随着我们调用服务数量的增加，配置文件该如何维护；缺乏灵活性，如果服务 B 改变 IP 地址或者端口，服务 A 也要修改相应的文件配置；还有一个就是进行服务的动态扩容或缩小不方便。<br>一个比较好的解决方案就是 <code>服务发现（Service Discovery）</code>。它抽象出来了一个注册中心，当一个新的服务上线时，它会将自己的 IP 和端口注册到注册中心去，会对注册的服务进行定期的心跳检测，当发现服务状态异常时将其从注册中心剔除下线。服务 A 只要从注册中心中获取服务 B 的信息即可，即使当服务 B 的 IP 或者端口变更了，服务 A 也无需修改，从一定程度上解耦了服务。服务发现目前业界有很多开源的实现，比如 <code>apache</code> 的 <a href="https://github.com/apache/zookeepe" target="_blank" rel="noopener">zookeeper</a>、 <code>Netflix</code> 的 <a href="https://github.com/Netflix/eureka" target="_blank" rel="noopener">eureka</a>、<code>hashicorp</code> 的 <a href="https://github.com/hashicorp/consul" target="_blank" rel="noopener">consul</a>、 <code>CoreOS</code> 的 <a href="https://github.com/etcd-io/etcd" target="_blank" rel="noopener">etcd</a>。</p>
+        <h4 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h4><p>现在流行的微服务体系结构正在改变我们构建应用程序的方式，从单一的单体服务转变为越来越小的可单独部署的服务（称为<code>微服务</code>），共同构成了我们的应用程序。当进行一个业务时不可避免就会存在多个服务之间调用，假如一个服务 A 要访问在另一台服务器部署的服务 B，那么前提是服务 A 要知道服务 B 所在机器的 IP 地址和服务对应的端口，最简单的方式就是让服务 A 自己去维护一份服务 B 的配置（包含 IP 地址和端口等信息），但是这种方式有几个明显的缺点：随着我们调用服务数量的增加，配置文件该如何维护；缺乏灵活性，如果服务 B 改变 IP 地址或者端口，服务 A 也要修改相应的文件配置；还有一个就是进行服务的动态扩容或缩小不方便。<br>一个比较好的解决方案就是 <code>服务发现（Service Discovery）</code>。它抽象出来了一个注册中心，当一个新的服务上线时，它会将自己的 IP 和端口注册到注册中心去，会对注册的服务进行定期的心跳检测，当发现服务状态异常时将其从注册中心剔除下线。服务 A 只要从注册中心中获取服务 B 的信息即可，即使当服务 B 的 IP 或者端口变更了，服务 A 也无需修改，从一定程度上解耦了服务。服务发现目前业界有很多开源的实现，比如 <code>apache</code> 的 <a href="https://github.com/apache/zookeepe" target="_blank" rel="noopener">zookeeper</a>、 <code>Netflix</code> 的 <a href="https://github.com/Netflix/eureka" target="_blank" rel="noopener">eureka</a>、<code>hashicorp</code> 的 <a href="https://github.com/hashicorp/consul" target="_blank" rel="noopener">consul</a>、 <code>CoreOS</code> 的 <a href="https://github.com/etcd-io/etcd" target="_blank" rel="noopener">etcd</a>。</p>
 <a id="more"></a>
 <h4 id="Eureka-是什么"><a href="#Eureka-是什么" class="headerlink" title="Eureka 是什么"></a>Eureka 是什么</h4><p><code>Eureka</code> 在 <a href="https://github.com/Netflix/eureka" target="_blank" rel="noopener">github</a> 上对其的定义为</p>
 <blockquote>
@@ -531,7 +531,7 @@
 <p><img src="https://i.loli.net/2020/03/15/uv9GsO2JPeCMd3N.png" alt="service-provider-register-sequence-chart.png"></p>
 <h5 id="服务续约（Renew）-1"><a href="#服务续约（Renew）-1" class="headerlink" title="服务续约（Renew）"></a>服务续约（Renew）</h5><p>服务续约是由服务提供者方定期（默认为 <code>30</code> 秒）发起心跳的，主要是用来告知注册中心 <code>Eureka Server</code> 自己状态是正常的还活着，可以通过配置 <code>eureka.instance.lease-renewal-interval-in-seconds</code> 来修改，当然服务续约的前提是要配置 <code>eureka.client.register-with-eureka=true</code>，将该服务注册到注册中心中去，主要调用流程如下图所示：</p>
 <p><img src="https://i.loli.net/2020/03/15/1YVRCjrm45sPOag.png" alt="service-provider-renew-sequence-chart.png"></p>
-<h5 id="服务下线（Cancel）-1"><a href="#服务下线（Cancel）-1" class="headerlink" title="服务下线（Cancel）"></a>服务下线（Cancel）</h5><p>当服务提供者方服务停止时，要发送 <code>DELETE</code> 请求告知注册中心 <code>Eureka Server</code> 自己已经下线，好让注册中心将自己剔除下线，防止服务消费方从注册中心获取到不可用的服务。这个过程实现比较简单，在类 <code>DiscoveryClient</code> 的 <code>shutdown</code> 方法加上注解 <code>@PreDestroy</code>，当服务停止时会自动触发服务剔除下线，执行服务下线逻辑，，主要调用流程如下图所示：</p>
+<h5 id="服务下线（Cancel）-1"><a href="#服务下线（Cancel）-1" class="headerlink" title="服务下线（Cancel）"></a>服务下线（Cancel）</h5><p>当服务提供者方服务停止时，要发送 <code>DELETE</code> 请求告知注册中心 <code>Eureka Server</code> 自己已经下线，好让注册中心将自己剔除下线，防止服务消费方从注册中心获取到不可用的服务。这个过程实现比较简单，在类 <code>DiscoveryClient</code> 的 <code>shutdown</code> 方法加上注解 <code>@PreDestroy</code>，当服务停止时会自动触发服务剔除下线，执行服务下线逻辑，主要调用流程如下图所示：</p>
 <p><img src="https://i.loli.net/2020/03/15/UGIsoMjSh9xu23t.png" alt="service-provider-cancel-sequence-chart.png"></p>
 <h4 id="服务消费者（Service-Consumer）"><a href="#服务消费者（Service-Consumer）" class="headerlink" title="服务消费者（Service Consumer）"></a>服务消费者（Service Consumer）</h4><p>这里的服务消费者如果不需要被其它服务调用的话，其实只会涉及到两个操作，分别是从注册中心 <code>获取服务列表（Fetch）</code> 和 <code>更新服务列表（Update）</code>。如果同时也需要注册到注册中心对外提供服务的话，那么剩下的过程和上文提到的服务提供者是一致的，这里不再阐述，接下来看看这两个操作是如何实现的。</p>
 <h5 id="获取服务列表（Fetch）"><a href="#获取服务列表（Fetch）" class="headerlink" title="获取服务列表（Fetch）"></a>获取服务列表（Fetch）</h5><p>服务消费者方启动之后首先肯定是要先从注册中心 <code>Eureka Server</code> 获取到可用的服务列表同时本地也会缓存一份。这个获取服务列表的操作是在服务启动后 <code>DiscoverClient</code> 类实例化的时候执行的。</p>
