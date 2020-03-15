@@ -118,7 +118,7 @@
 <meta property="og:image" content="https://i.loli.net/2020/03/15/ImUKf8lScgj37ZN.png">
 <meta property="og:image" content="https://i.loli.net/2020/03/15/Dy5LA439fcpjYav.png">
 <meta property="og:image" content="https://i.loli.net/2020/03/15/5Zi6MstvO87UoSJ.png">
-<meta property="og:updated_time" content="2020-03-15T07:46:29.008Z">
+<meta property="og:updated_time" content="2020-03-15T08:17:06.996Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="服务发现组件之 — Eureka">
 <meta name="twitter:description" content="前言现在流行的微服务体系结构正在改变我们构建应用程序的方式，从单一的单体服务转变为将它们分解为越来越小的可单独部署的服务（称为微服务），共同构成了我们的应用程序。当进行一个业务时不可避免就会存在多个服务之间调用，假如一个服务 A 要访问在另一台服务器部署的服务 B，那么前提是服务 A 要知道服务 B 所在机器的 IP 地址和服务对应的端口，最简单的方式就是让服务 A 自己去维护一份服务 B 的配置">
@@ -540,7 +540,7 @@
 <p><img src="https://i.loli.net/2020/03/15/Dy5LA439fcpjYav.png" alt="service-consumer-fetch-sequence-chart.png"></p>
 <h5 id="更新服务列表（Update）"><a href="#更新服务列表（Update）" class="headerlink" title="更新服务列表（Update）"></a>更新服务列表（Update）</h5><p>由上面的 <code>获取服务列表（Fetch）</code> 操作过程可知，本地也会缓存一份，所以这里需要定期的去到注册中心 <code>Eureka Server</code> 获取服务的最新配置，然后比较更新本地缓存，这个更新的间隔时间可以通过配置 <code>eureka.client.registry-fetch-interval-seconds</code> 修改，默认为 <code>30</code> 秒，能进行这一步更新服务列表的前提是你要配置 <code>eureka.client.register-with-eureka=true</code>，这个默认值为 <code>true</code>。主要调用流程如下图所示：</p>
 <p><img src="https://i.loli.net/2020/03/15/5Zi6MstvO87UoSJ.png" alt="service-consumer-update-sequence-chart.png"></p>
-<h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><p>工作中项目是使用 <code>Spring Cloud</code> 技术栈，它有一套非常完善的开源代码来整合 <code>Eureka</code>，使用起来非常方便。之前都是直接加注解和修改几个配置属性一气呵成的，没有深入了解过源码实现，本文主要是阐述了服务注册、服务发现等相关过程和实现方式，对 <code>Eureka</code> 服务发现组件有了更近一步的了解。</p>
+<h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><p>工作中项目使用的是 <code>Spring Cloud</code> 技术栈，它有一套非常完善的开源代码来整合 <code>Eureka</code>，使用起来非常方便。之前都是直接加注解和修改几个配置属性一气呵成的，没有深入了解过源码实现，本文主要是阐述了服务注册、服务发现等相关过程和实现方式，对 <code>Eureka</code> 服务发现组件有了更近一步的了解。</p>
 <hr>
 <p>参考文章<br><a href="https://github.com/Netflix/eureka" target="_blank" rel="noopener">Netflix Eureka</a><br><a href="https://www.nginx.com/blog/service-discovery-in-a-microservices-architecture" target="_blank" rel="noopener">Service Discovery in a Microservices Architecture</a></p>
 
