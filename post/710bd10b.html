@@ -118,7 +118,7 @@
 <meta property="og:image" content="https://i.loli.net/2020/03/15/ImUKf8lScgj37ZN.png">
 <meta property="og:image" content="https://i.loli.net/2020/03/15/Dy5LA439fcpjYav.png">
 <meta property="og:image" content="https://i.loli.net/2020/03/15/5Zi6MstvO87UoSJ.png">
-<meta property="og:updated_time" content="2020-03-15T12:51:25.802Z">
+<meta property="og:updated_time" content="2020-03-16T00:27:13.560Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="服务发现组件之 — Eureka">
 <meta name="twitter:description" content="前言现在流行的微服务体系结构正在改变我们构建应用程序的方式，从单一的单体服务转变为越来越小的可单独部署的服务（称为微服务），共同构成了我们的应用程序。当进行一个业务时不可避免就会存在多个服务之间调用，假如一个服务 A 要访问在另一台服务器部署的服务 B，那么前提是服务 A 要知道服务 B 所在机器的 IP 地址和服务对应的端口，最简单的方式就是让服务 A 自己去维护一份服务 B 的配置（包含 IP">
@@ -504,7 +504,7 @@
 <p>我们继续添加两个模块 <code>service-provider</code>，<code>service-consumer</code>，然后在启动类加上注解 <code>@EnableEurekaClient</code> 并指定注册中心地址为我们刚刚启动的 <code>Eureka Server</code>，再次访问可以看到两个服务都已经注册进来了。</p>
 <p><img src="https://i.loli.net/2020/03/15/O7QpAjDRsqEBcz1.png" alt="instance-registered-currently.png"></p>
 <p><code>Demo</code> 仓库地址：<a href="https://github.com/mghio/depth-in-springcloud" target="_blank" rel="noopener">https://github.com/mghio/depth-in-springcloud</a></p>
-<p>可以看到 <code>Eureka</code> 的使用非常简单，只需要添加几个注解和配置就实现了服务注册和服务发现，接下我们看看它是如何实现这些功能的。</p>
+<p>可以看到 <code>Eureka</code> 的使用非常简单，只需要添加几个注解和配置就实现了服务注册和服务发现，接下来我们看看它是如何实现这些功能的。</p>
 <h5 id="服务注册（Register）"><a href="#服务注册（Register）" class="headerlink" title="服务注册（Register）"></a>服务注册（Register）</h5><p>注册中心提供了服务注册接口，用于当有新的服务启动后进行调用来实现服务注册，或者心跳检测到服务状态异常时，变更对应服务的状态。服务注册就是发送一个 <code>POST</code> 请求带上当前实例信息到类 <code>ApplicationResource</code> 的 <code>addInstance</code> 方法进行服务注册。</p>
 <p><img src="https://i.loli.net/2020/03/15/fsuYMRQgdZJ2BjK.png" alt="eureka-server-applicationresource-addinstance.png"></p>
 <p>可以看到方法调用了类 <code>PeerAwareInstanceRegistryImpl</code> 的 <code>register</code> 方法，该方法主要分为两步：</p>
