@@ -94,19 +94,19 @@
 
 
 
-<meta name="description" content="前言在计算机科学中，垃圾收回（GC: garbage collection）是内存自动管理的一种方式，它并不是同 Java 语言一起诞生的，实际上，早在 1959 年为了简化 Lisp 语言的手动内存管理，该语言的作者就开始使用了内存自动管理技术。 垃圾收集和手动内存管理刚好相反，后者需要编程人员自己去指定需要释放的对象然后将内存归还给操作系统，而前者不需要关心给对象分配的内存回收问题。Java">
+<meta name="description" content="前言在计算机科学中，垃圾回收（GC: garbage collection）是内存自动管理的一种方式，它并不是同 Java 语言一起诞生的，实际上，早在 1959 年为了简化 Lisp 语言的手动内存管理，该语言的作者就开始使用了内存自动管理技术。 垃圾收集和手动内存管理刚好相反，后者需要编程人员自己去指定需要释放的对象然后将内存归还给操作系统，而前者不需要关心给对象分配的内存回收问题。Java">
 <meta name="keywords" content="Java,GC">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Java 垃圾收集技术">
 <meta property="og:url" content="https://www.mghio.cn/post/4615256d.html">
 <meta property="og:site_name" content="mghio">
-<meta property="og:description" content="前言在计算机科学中，垃圾收回（GC: garbage collection）是内存自动管理的一种方式，它并不是同 Java 语言一起诞生的，实际上，早在 1959 年为了简化 Lisp 语言的手动内存管理，该语言的作者就开始使用了内存自动管理技术。 垃圾收集和手动内存管理刚好相反，后者需要编程人员自己去指定需要释放的对象然后将内存归还给操作系统，而前者不需要关心给对象分配的内存回收问题。Java">
+<meta property="og:description" content="前言在计算机科学中，垃圾回收（GC: garbage collection）是内存自动管理的一种方式，它并不是同 Java 语言一起诞生的，实际上，早在 1959 年为了简化 Lisp 语言的手动内存管理，该语言的作者就开始使用了内存自动管理技术。 垃圾收集和手动内存管理刚好相反，后者需要编程人员自己去指定需要释放的对象然后将内存归还给操作系统，而前者不需要关心给对象分配的内存回收问题。Java">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://i.loli.net/2020/03/21/aSIOt2ei6xHg1Zz.png">
-<meta property="og:updated_time" content="2020-03-21T06:49:04.775Z">
+<meta property="og:updated_time" content="2020-03-22T06:55:21.680Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Java 垃圾收集技术">
-<meta name="twitter:description" content="前言在计算机科学中，垃圾收回（GC: garbage collection）是内存自动管理的一种方式，它并不是同 Java 语言一起诞生的，实际上，早在 1959 年为了简化 Lisp 语言的手动内存管理，该语言的作者就开始使用了内存自动管理技术。 垃圾收集和手动内存管理刚好相反，后者需要编程人员自己去指定需要释放的对象然后将内存归还给操作系统，而前者不需要关心给对象分配的内存回收问题。Java">
+<meta name="twitter:description" content="前言在计算机科学中，垃圾回收（GC: garbage collection）是内存自动管理的一种方式，它并不是同 Java 语言一起诞生的，实际上，早在 1959 年为了简化 Lisp 语言的手动内存管理，该语言的作者就开始使用了内存自动管理技术。 垃圾收集和手动内存管理刚好相反，后者需要编程人员自己去指定需要释放的对象然后将内存归还给操作系统，而前者不需要关心给对象分配的内存回收问题。Java">
 <meta name="twitter:image" content="https://i.loli.net/2020/03/21/aSIOt2ei6xHg1Zz.png">
 
 
@@ -466,7 +466,7 @@
       
 
       
-        <h4 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h4><p>在计算机科学中，垃圾收回（<code>GC: garbage collection</code>）是内存自动管理的一种方式，它并不是同 <code>Java</code> 语言一起诞生的，实际上，早在 1959 年为了简化 <a href="https://en.wikipedia.org/wiki/Lisp_(programming_language)" target="_blank" rel="noopener">Lisp</a> 语言的手动内存管理，该语言的作者就开始使用了内存自动管理技术。 <code>垃圾收集</code>和<code>手动内存管理</code>刚好相反，后者需要编程人员自己去指定需要释放的对象然后将内存归还给操作系统，而前者不需要关心给对象分配的内存回收问题。<code>Java</code> 语言使用自动垃圾收集器来管理对象生命周期中的内存，要进行垃圾收集首先需要明确三个问题：<code>1. 哪些内存需要回收</code>、<code>2. 什么时候进行回收</code>、<code>3. 怎么进行内存回收</code>。接下来让我们一起看看 <code>Java</code> 语言对这些问题是如何处理的。</p>
+        <h4 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h4><p>在计算机科学中，垃圾回收（<code>GC: garbage collection</code>）是内存自动管理的一种方式，它并不是同 <code>Java</code> 语言一起诞生的，实际上，早在 1959 年为了简化 <a href="https://en.wikipedia.org/wiki/Lisp_(programming_language)" target="_blank" rel="noopener">Lisp</a> 语言的手动内存管理，该语言的作者就开始使用了内存自动管理技术。 <code>垃圾收集</code>和<code>手动内存管理</code>刚好相反，后者需要编程人员自己去指定需要释放的对象然后将内存归还给操作系统，而前者不需要关心给对象分配的内存回收问题。<code>Java</code> 语言使用自动垃圾收集器来管理对象生命周期中的内存，要进行垃圾收集首先需要明确三个问题：<code>1. 哪些内存需要回收</code>、<code>2. 什么时候进行回收</code>、<code>3. 怎么进行内存回收</code>。接下来让我们一起看看 <code>Java</code> 语言对这些问题是如何处理的。</p>
 <h4 id="哪些内存需要回收"><a href="#哪些内存需要回收" class="headerlink" title="哪些内存需要回收"></a>哪些内存需要回收</h4><p>为了方便管理和跨平台，<code>Java</code> 虚拟机规范规定在执行 <code>Java</code> 程序的时候把它所管理的内存划分为若干个不同的数据区域。这些区域都有着各自不同的用途以及创建和销毁的时间，有的数据区域随着用户线程的启动和结束而建立和销毁，有的区域会随着虚拟机进程的启动和停止而存在和销毁。更多有关运行时数据区域的内容请看 <a href="https://www.mghio.cn/post/8a061473.html">Java 运行时数据区域</a>。<br>由于 <code>Java</code> 运行时数据区域中的 <code>程序计数器</code>、<code>虚拟机栈</code>和<code>本地方法栈</code>和线程的生命周期一致，随线程的启动和结束而建立和销毁。而且当我们的类结构确定了之后，在编译期间，一个栈帧需要分配内存的大小基本上也就确定下来了，这三个区域的内存分配和收回都是具备确定性的，不需要我们过多的去考虑内存回收问题。主要考虑<code>Java 堆</code>和<code>方法区</code>的内存回收的问题。</p>
 <a id="more"></a>
 <h4 id="什么时候进行回收"><a href="#什么时候进行回收" class="headerlink" title="什么时候进行回收"></a>什么时候进行回收</h4><p>在 <code>Java</code> 语言中，一个对象的生命周期分为以下三个阶段：</p>
