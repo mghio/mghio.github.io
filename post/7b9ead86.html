@@ -102,7 +102,7 @@
 <meta property="og:site_name" content="mghio">
 <meta property="og:description" content="前言在我们的意识里，同步执行的程序都比较符合人们的思维方式，而异步的东西通常都不好处理。在异步计算的情况下，以回调表示的动作往往会分散在代码中，也可能相互嵌套在内部，如果需要处理其中一个步骤中可能发生的错误时，情况变得更加糟糕。Java 8 引入了很多的新特性，其中就包含了 CompletableFuture 类的引入，这让我们编写清晰可读的异步代码变得更加容易，该类功能非常强大，包含了超过 50">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2020-04-06T10:45:16.132Z">
+<meta property="og:updated_time" content="2020-04-06T10:57:31.326Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="如何编写优雅的异步代码 — CompletableFuture">
 <meta name="twitter:description" content="前言在我们的意识里，同步执行的程序都比较符合人们的思维方式，而异步的东西通常都不好处理。在异步计算的情况下，以回调表示的动作往往会分散在代码中，也可能相互嵌套在内部，如果需要处理其中一个步骤中可能发生的错误时，情况变得更加糟糕。Java 8 引入了很多的新特性，其中就包含了 CompletableFuture 类的引入，这让我们编写清晰可读的异步代码变得更加容易，该类功能非常强大，包含了超过 50">
@@ -466,6 +466,7 @@
       
         <h4 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h4><p>在我们的意识里，同步执行的程序都比较符合人们的思维方式，而异步的东西通常都不好处理。在异步计算的情况下，以回调表示的动作往往会分散在代码中，也可能相互嵌套在内部，如果需要处理其中一个步骤中可能发生的错误时，情况变得更加糟糕。Java 8 引入了很多的新特性，其中就包含了 <a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/CompletableFuture.html" target="_blank" rel="noopener">CompletableFuture</a> 类的引入，这让我们编写清晰可读的异步代码变得更加容易，该类功能非常强大，包含了超过 50 多个方法。。。</p>
 <h4 id="什么是-CompletableFuture"><a href="#什么是-CompletableFuture" class="headerlink" title="什么是 CompletableFuture"></a>什么是 CompletableFuture</h4><p><code>CompletableFuture</code> 类的设计灵感来自于 <code>Google Guava</code> 的 <a href="https://guava.dev/releases/21.0/api/docs/com/google/common/util/concurrent/ListenableFuture.html" target="_blank" rel="noopener">ListenableFuture</a> 类，它实现了 <code>Future</code> 和 <code>CompletionStage</code> 接口并且新增了许多方法，它支持 lambda，通过回调利用非阻塞方法，提升了异步编程模型。它允许我们通过在与主应用程序线程不同的线程上（也就是异步）运行任务，并向主线程通知任务的进度、完成或失败，来编写非阻塞代码。</p>
+<a id="more"></a>
 <h4 id="为什么要引入-CompletableFuture"><a href="#为什么要引入-CompletableFuture" class="headerlink" title="为什么要引入 CompletableFuture"></a>为什么要引入 CompletableFuture</h4><p><code>Java</code> 的 1.5 版本引入了 <code>Future</code>，你可以把它简单的理解为运算结果的占位符，它提供了两个方法来获取运算结果。</p>
 <ul>
 <li><code>get()</code>：调用该方法线程将会无限期等待运算结果。</li>
@@ -526,7 +527,7 @@
 <p>第三种是使用 <code>whenComplete</code> 方法处理异常。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testCompletableFutureWhenComplete</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    CompletableFuture.supplyAsync(<span class="keyword">this</span>::findAccountNumber)</span><br><span class="line">        .thenApply(<span class="keyword">this</span>::calculateBalance)</span><br><span class="line">        .thenApply(<span class="keyword">this</span>::notifyBalance)</span><br><span class="line">        .whenComplete((result, ex) -&gt; &#123;</span><br><span class="line">            System.out.println(<span class="string">"result = "</span> + result + <span class="string">", ex = "</span> + ex);</span><br><span class="line">            System.out.println(<span class="string">"最终要运行的代码..."</span>);</span><br><span class="line">        &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><p>在本文中，介绍了 <code>CompletableFuture</code> 类的部分方法和使用方式，这个类的方法很多同时提供的功能也非常强大，在异步编程中使用的比较多，要想深入了解熟悉了基本的使用方法之后还是要深入源码分析其实现原理。</p>
+<h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><p>在本文中，介绍了 <code>CompletableFuture</code> 类的部分方法和使用方式，这个类的方法很多同时提供的功能也非常强大，在异步编程中使用的比较多，熟悉了基本的使用方法之后要深入了解还是要深入源码分析其实现原理。</p>
 
       
     </div>
