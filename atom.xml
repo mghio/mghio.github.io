@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://www.mghio.cn/"/>
-  <updated>2020-03-29T11:26:55.617Z</updated>
+  <updated>2020-04-06T06:31:10.316Z</updated>
   <id>https://www.mghio.cn/</id>
   
   <author>
@@ -15,6 +15,36 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>如何编写优雅的异步代码-CompletableFuture</title>
+    <link href="https://www.mghio.cn/post/7b9ead86.html"/>
+    <id>https://www.mghio.cn/post/7b9ead86.html</id>
+    <published>2020-04-06T06:17:55.000Z</published>
+    <updated>2020-04-06T06:31:10.316Z</updated>
+    
+    <content type="html"><![CDATA[<h4 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h4><h4 id="什么是-CompletableFuture"><a href="#什么是-CompletableFuture" class="headerlink" title="什么是 CompletableFuture"></a>什么是 CompletableFuture</h4><h4 id="CompletableFuture-vs-Future"><a href="#CompletableFuture-vs-Future" class="headerlink" title="CompletableFuture vs Future"></a>CompletableFuture vs Future</h4><h4 id="如何创建-Completablefuture"><a href="#如何创建-Completablefuture" class="headerlink" title="如何创建 Completablefuture"></a>如何创建 Completablefuture</h4><h4 id="异步处理结果"><a href="#异步处理结果" class="headerlink" title="异步处理结果"></a>异步处理结果</h4><h4 id="thenApply-与-thenCompose-的区别"><a href="#thenApply-与-thenCompose-的区别" class="headerlink" title="thenApply() 与 thenCompose() 的区别"></a>thenApply() 与 thenCompose() 的区别</h4><h4 id="并行执行多个计算"><a href="#并行执行多个计算" class="headerlink" title="并行执行多个计算"></a>并行执行多个计算</h4><h4 id="运行异常处理"><a href="#运行异常处理" class="headerlink" title="运行异常处理"></a>运行异常处理</h4><h4 id="异步方法"><a href="#异步方法" class="headerlink" title="异步方法"></a>异步方法</h4><h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h4 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h4&gt;&lt;h4 id=&quot;什么是-CompletableFuture&quot;&gt;&lt;a href=&quot;#什么是-CompletableFuture&quot; class=&quot;he
+      
+    
+    </summary>
+    
+    
+      <category term="Java" scheme="https://www.mghio.cn/categories/Java/"/>
+    
+      <category term="异步" scheme="https://www.mghio.cn/categories/Java/%E5%BC%82%E6%AD%A5/"/>
+    
+    
+      <category term="Java" scheme="https://www.mghio.cn/tags/Java/"/>
+    
+      <category term="异步" scheme="https://www.mghio.cn/tags/%E5%BC%82%E6%AD%A5/"/>
+    
+  </entry>
   
   <entry>
     <title>代码中的坏味道</title>
@@ -614,29 +644,6 @@
     <summary type="html">
     
       &lt;h4 id=&quot;1-1-什么是字节码？&quot;&gt;&lt;a href=&quot;#1-1-什么是字节码？&quot; class=&quot;headerlink&quot; title=&quot;1.1 什么是字节码？&quot;&gt;&lt;/a&gt;1.1 什么是字节码？&lt;/h4&gt;&lt;p&gt;Java 在刚刚诞生之时曾经提出过一个非常著名的口号: “&lt;strong&gt;一次编写，到处运行（write once，run anywhere）&lt;/strong&gt;”，这句话充分表达了软件开发人员对冲破平台界限的渴求。“与平台无关”的理想最终实现在操作系统的运用层上: 虚拟机提供商开发了许多可以运行在不同平台上的虚拟机，这些虚拟机都可以载入和执行同一种平台无关的字节码，从而实现了程序的“一次编写到处运行”。&lt;br&gt;&lt;br&gt;各种不同平台的虚拟机与所有平台都统一使用的程序存储格式—&lt;strong&gt;字节码（ByteCode）&lt;/strong&gt;，因此，可以看出字节码对 Java 生态的重要性。之所以被称为字节码，是因为字节码是由十六进制组成的，而 JVM（Java Virtual Machine）以两个十六进制为一组，即以字节为单位进行读取。在 Java 中使用 &lt;strong&gt;&lt;a href=&quot;https://docs.oracle.com/javase/8/docs/technotes/tools/windows/javac.html&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;javac&lt;/a&gt;&lt;/strong&gt; 命令把源代码编译成字节码文件，一个 .java 源文件从编译成 .class 字节码文件的示例如图 1 所示:&lt;br&gt;&lt;img src=&quot;https://i.loli.net/2019/10/03/jcIPJSvYnd2ayOi.png&quot; alt=&quot;图1&quot;&gt;&lt;center&gt;图 1&lt;/center&gt;&lt;/p&gt;
-    
-    </summary>
-    
-    
-      <category term="Java" scheme="https://www.mghio.cn/categories/Java/"/>
-    
-    
-      <category term="Java" scheme="https://www.mghio.cn/tags/Java/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>hello world</title>
-    <link href="https://www.mghio.cn/post/b1d4025b.html"/>
-    <id>https://www.mghio.cn/post/b1d4025b.html</id>
-    <published>2019-10-01T15:24:11.000Z</published>
-    <updated>2019-10-03T05:23:44.943Z</updated>
-    
-    <content type="html"><![CDATA[<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HelloWorld</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">      System.out.println(<span class="string">"Hello World ~~~"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><a id="more"></a>]]></content>
-    
-    <summary type="html">
-    
-      &lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;class&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;HelloWorld&lt;/span&gt; &lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;main&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;(String[] args)&lt;/span&gt; &lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;      System.out.println(&lt;span class=&quot;string&quot;&gt;&quot;Hello World ~~~&quot;&lt;/span&gt;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
     
     </summary>
     
