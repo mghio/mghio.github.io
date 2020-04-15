@@ -102,7 +102,7 @@
 <meta property="og:site_name" content="mghio">
 <meta property="og:description" content="前言Java 里字符串表示字符的不可变序列，创建后就不能更改。在我们日常的工作中，字符串的使用非常频繁，熟练的对其操作可以极大的提升我们的工作效率，今天要介绍的主角是 Google 开源的一个核心 Java 库 Guava，它提供了集合类型、不可变的集合、并发、I / O、缓存、字符串等许多实用功能。在本文中，我们将学习使用 Guava 中的 Strings 和 Splitter 字符串操作工具类">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2020-04-12T11:46:41.140Z">
+<meta property="og:updated_time" content="2020-04-15T00:50:58.006Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="字符串操作 — Google Guava">
 <meta name="twitter:description" content="前言Java 里字符串表示字符的不可变序列，创建后就不能更改。在我们日常的工作中，字符串的使用非常频繁，熟练的对其操作可以极大的提升我们的工作效率，今天要介绍的主角是 Google 开源的一个核心 Java 库 Guava，它提供了集合类型、不可变的集合、并发、I / O、缓存、字符串等许多实用功能。在本文中，我们将学习使用 Guava 中的 Strings 和 Splitter 字符串操作工具类">
@@ -487,11 +487,11 @@
 <p>PS：<code>28.2-jre 是编写本文时的最新版本，你可以从</code> <a href="https://mvnrepository.com/" target="_blank" rel="noopener">Maven Central</a> <code>中查看当前的最新版本。</code></p>
 <h4 id="为什么需要引入类库"><a href="#为什么需要引入类库" class="headerlink" title="为什么需要引入类库"></a>为什么需要引入类库</h4><p><code>Google Guava</code> 提供了很多实用的静态方法，这些可以解决开发人员在开发中所要完成的一些重复任务。当然，这个工作我们也可以自己做，但是引入类库它会降低错误发生的可能性，毕竟这些类库都是已经经过多年的生产验证。比如类库中 <code>Strings</code> 提供的一个方法 <code>commonPrefix</code>，它接受两个字符串并返回两个字符串之间的公共前缀（eg: <code>abcd</code> 和 <code>abef</code> 返回 <code>ab</code>）。你可以在脑子里想象一下在应用程序代码中面临这样的要求时，自己要如何编写代码来完成该操作，要自己实现这个功能，还是需要花费一些时间的，同时还需要考虑到各种边界异常情况。这就是类库提供给我们的最大价值之一，所以当我们需要的某种功能可以作为一种工具方法使用时，首先应该去寻找一些已存在的类库并去熟练使用的它们，而不是自己去实现。总结起来使用类库有如下几个原因：</p>
 <ol>
-<li><code>Google Guava</code> 类库有人已经对其进行了彻底的测试，<code>bug</code> 出现的概率会比我们自己实现的小很多</li>
+<li><code>Google Guava</code> 类库有人已经对其进行了彻底的测试，<code>bug</code> 出现的概率会比我们自己实现的小很多。</li>
 <li>作为 <code>Google Guava</code> 的一部分，已经存在各种测试用例，用于测试实用程序的实现。如果我们自己编写代码实现的话，可能还要去编写和维护它们的测试。</li>
 </ol>
 <h4 id="Strings"><a href="#Strings" class="headerlink" title="Strings"></a>Strings</h4><p><code>Google Guava</code> 有许多实用的工具类和方法，不可能在一篇文章中都有介绍完，在本文中，只会介绍和字符串操作相关的两个工具类。首先第一个是 <code>Strings</code> 类，该类提供了操作 <code>String</code> 和 <code>CharSequence</code> 的实用方法。</p>
-<h5 id="nullToEmpty、emptyToNull-和-isNullOrEmpty"><a href="#nullToEmpty、emptyToNull-和-isNullOrEmpty" class="headerlink" title="nullToEmpty、emptyToNull 和 isNullOrEmpty"></a>nullToEmpty、emptyToNull 和 isNullOrEmpty</h5><p><code>nullToEmpty</code> 方法功能为：如果传入的字符串为 <code>null</code>，则返回一个空字符串 <code>&quot;&quot;</code>，否则，返回一个空字符串，否则按原样返回传递的字符串。</p>
+<h5 id="nullToEmpty、emptyToNull-和-isNullOrEmpty"><a href="#nullToEmpty、emptyToNull-和-isNullOrEmpty" class="headerlink" title="nullToEmpty、emptyToNull 和 isNullOrEmpty"></a>nullToEmpty、emptyToNull 和 isNullOrEmpty</h5><p><code>nullToEmpty</code> 方法功能为：如果传入的字符串为 <code>null</code>，则返回一个空字符串 <code>&quot;&quot;</code>，否则按原样返回传入的字符串。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testStringsOfNullToEmpty</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    System.out.println(Strings.nullToEmpty(<span class="string">"mghio"</span>));         <span class="comment">// mghio</span></span><br><span class="line">    System.out.println(Strings.nullToEmpty(<span class="string">""</span>));              <span class="comment">// ""</span></span><br><span class="line">    System.out.println(Strings.nullToEmpty(<span class="keyword">null</span>));            <span class="comment">// ""</span></span><br><span class="line">    System.out.println(Strings.nullToEmpty(<span class="keyword">null</span>).isEmpty());  <span class="comment">// true</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p><code>emptyToNull</code> 方法功能为：它与 <code>nullToEmpty</code> 相反，如果传入了空字符串，则返回 <code>null</code>，否则返回原始字符串。</p>
