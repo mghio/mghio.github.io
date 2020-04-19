@@ -104,7 +104,7 @@
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://i.loli.net/2020/04/19/jpnTHrx42hG3MfI.png">
 <meta property="og:image" content="https://i.loli.net/2020/04/19/6eJM1huLtsl8KUz.png">
-<meta property="og:updated_time" content="2020-04-19T11:14:26.371Z">
+<meta property="og:updated_time" content="2020-04-19T13:33:12.108Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="如何在亿级数据中判断一个元素是否存在？">
 <meta name="twitter:description" content="前言在日常工作中，经常要判断一个元素是否在一个集合中。假设你要向浏览器添加一项功能，该功能可以通知用户输入的网址是否是恶意网址，此时你手上有大约 1000 万个恶意 URL 的数据集，你该如何实现该功能。按我之前的思维，要判断一个元素在不在当前的数据集中，首先想到的就是使用 hash table，通过哈希函数运行所有的恶意网址以获取其哈希值，然后创建出一个哈希表（数组）。这个方案有个明显的缺点，就">
@@ -492,7 +492,7 @@
 </ol>
 <p>对于给定的 n、m 和 k 计算错误率，如果这个错误率不能接受的话，可以继续回到第二步。</p>
 <h5 id="布隆过滤器的时间复杂度和空间复杂度"><a href="#布隆过滤器的时间复杂度和空间复杂度" class="headerlink" title="布隆过滤器的时间复杂度和空间复杂度?"></a>布隆过滤器的时间复杂度和空间复杂度?</h5><p>对于一个 m（比特位个数）和 k（哈希函数个数）值确定的布隆过滤器，添加和判断操作的时间复杂度都是 <code>O(k)</code>，这意味着每次你想要插入一个元素或者查询一个元素是否在集合中，只需要使用 k 个哈希函数对该元素求值，然后将对应的比特位标记或者检查对应的比特位即可。</p>
-<h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><p>布隆过滤器的实际应用很广泛，特别是哪些要在大量数据中判断一个元素是否存在的场景。可以看到，布隆过滤器的算法原理比较简单，但要实际做一个生产级别的布隆过滤器还是很复杂的，谷歌的开源库 <code>Guava</code> 的 <code>BloomFilter</code> 提供了 Java 版的实现，用法很简单。最后留给大家一个问题：布隆过滤器支持元素删除吗？</p>
+<h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><p>布隆过滤器的实际应用很广泛，特别是那些要在大量数据中判断一个元素是否存在的场景。可以看到，布隆过滤器的算法原理比较简单，但要实际做一个生产级别的布隆过滤器还是很复杂的，谷歌的开源库 <code>Guava</code> 的 <code>BloomFilter</code> 提供了 Java 版的实现，用法很简单。最后留给大家一个问题：布隆过滤器支持元素删除吗？</p>
 
       
     </div>
