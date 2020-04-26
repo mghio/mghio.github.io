@@ -81,7 +81,7 @@
 
 
 
-  <meta name="keywords" content="Java,多线程,">
+  <meta name="keywords" content="Java,IO模型,">
 
 
 
@@ -94,20 +94,21 @@
 
 
 
-<meta name="description" content="简介在接触多线程之前，在我们程序中在任意时刻都只能执行一个步骤，称之为单线程。在单线程开发的程序中所有的程序路径都是顺序执行的，前面的必须先执行，后面的才会执行。单线程的优点也很明显，相对于多线程来说更加稳定、扩展性更强、程序开发相对比较容易。但是由于每次都要等上一个任务执行完成后才能开始新的任务，导致其效率比多线程低，甚至有时候应用程序会出现假死的现象。使用多线程有利于充分发挥多处理器的功能。通">
-<meta name="keywords" content="Java,多线程">
+<meta name="description" content="前言在网上看到过很多讲有关同步与异步、阻塞与非阻塞的文章，但是很多都是抛出一堆相关定义，看了之后还是云里雾里的，对这几个概念还是不能很好的去区分它们。本文通过通俗易懂的语言和相关例子让你深入理解其本质。 同步与异步首先我们要明确的是，同步和异步都是针对两个或者两个以上的事物来说的。比如当我们在网上购物看中一件物品，然后去浏览该商品详情的时候，首先页面会先发送一个请求，后台服务器查询对应商品的相关数">
+<meta name="keywords" content="Java,IO模型">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Java 多线程基础（一）">
-<meta property="og:url" content="https://www.mghio.cn/post/7eb2637f.html">
+<meta property="og:title" content="看了你就懂的同步与异步、阻塞与非阻塞">
+<meta property="og:url" content="https://www.mghio.cn/post/34755d6c.html">
 <meta property="og:site_name" content="mghio">
-<meta property="og:description" content="简介在接触多线程之前，在我们程序中在任意时刻都只能执行一个步骤，称之为单线程。在单线程开发的程序中所有的程序路径都是顺序执行的，前面的必须先执行，后面的才会执行。单线程的优点也很明显，相对于多线程来说更加稳定、扩展性更强、程序开发相对比较容易。但是由于每次都要等上一个任务执行完成后才能开始新的任务，导致其效率比多线程低，甚至有时候应用程序会出现假死的现象。使用多线程有利于充分发挥多处理器的功能。通">
+<meta property="og:description" content="前言在网上看到过很多讲有关同步与异步、阻塞与非阻塞的文章，但是很多都是抛出一堆相关定义，看了之后还是云里雾里的，对这几个概念还是不能很好的去区分它们。本文通过通俗易懂的语言和相关例子让你深入理解其本质。 同步与异步首先我们要明确的是，同步和异步都是针对两个或者两个以上的事物来说的。比如当我们在网上购物看中一件物品，然后去浏览该商品详情的时候，首先页面会先发送一个请求，后台服务器查询对应商品的相关数">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https://i.loli.net/2019/12/07/ZtTHNLP8eoAYqcM.png">
-<meta property="og:updated_time" content="2019-12-08T15:20:18.832Z">
+<meta property="og:image" content="https://i.loli.net/2020/04/26/IBynqeRC93Qg5MA.png">
+<meta property="og:image" content="https://i.loli.net/2020/04/26/APB7ZoWlzqbnXCR.jpg">
+<meta property="og:updated_time" content="2020-04-26T06:08:55.551Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Java 多线程基础（一）">
-<meta name="twitter:description" content="简介在接触多线程之前，在我们程序中在任意时刻都只能执行一个步骤，称之为单线程。在单线程开发的程序中所有的程序路径都是顺序执行的，前面的必须先执行，后面的才会执行。单线程的优点也很明显，相对于多线程来说更加稳定、扩展性更强、程序开发相对比较容易。但是由于每次都要等上一个任务执行完成后才能开始新的任务，导致其效率比多线程低，甚至有时候应用程序会出现假死的现象。使用多线程有利于充分发挥多处理器的功能。通">
-<meta name="twitter:image" content="https://i.loli.net/2019/12/07/ZtTHNLP8eoAYqcM.png">
+<meta name="twitter:title" content="看了你就懂的同步与异步、阻塞与非阻塞">
+<meta name="twitter:description" content="前言在网上看到过很多讲有关同步与异步、阻塞与非阻塞的文章，但是很多都是抛出一堆相关定义，看了之后还是云里雾里的，对这几个概念还是不能很好的去区分它们。本文通过通俗易懂的语言和相关例子让你深入理解其本质。 同步与异步首先我们要明确的是，同步和异步都是针对两个或者两个以上的事物来说的。比如当我们在网上购物看中一件物品，然后去浏览该商品详情的时候，首先页面会先发送一个请求，后台服务器查询对应商品的相关数">
+<meta name="twitter:image" content="https://i.loli.net/2020/04/26/IBynqeRC93Qg5MA.png">
 
 
 
@@ -137,13 +138,13 @@
 
 
 
-  <link rel="canonical" href="https://www.mghio.cn/post/7eb2637f.html">
+  <link rel="canonical" href="https://www.mghio.cn/post/34755d6c.html">
 
 
 
 
 
-  <title>Java 多线程基础（一） | mghio</title>
+  <title>看了你就懂的同步与异步、阻塞与非阻塞 | mghio</title>
   
 
 
@@ -312,7 +313,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://www.mghio.cn/post/7eb2637f.html">
+    <link itemprop="mainEntityOfPage" href="https://www.mghio.cn/post/34755d6c.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="mghio">
@@ -329,7 +330,7 @@
 
         
         
-          <h2 class="post-title" itemprop="name headline">Java 多线程基础（一）</h2>
+          <h2 class="post-title" itemprop="name headline">看了你就懂的同步与异步、阻塞与非阻塞</h2>
         
 
         <div class="post-meta">
@@ -341,8 +342,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-12-07T21:56:55+08:00">
-                2019-12-07
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-26T10:04:04+08:00">
+                2020-04-26
               </time>
             
 
@@ -375,8 +376,8 @@
                 
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Java/多线程/" itemprop="url" rel="index">
-                    <span itemprop="name">多线程</span>
+                  <a href="/categories/Java/IO模型/" itemprop="url" rel="index">
+                    <span itemprop="name">IO模型</span>
                   </a>
                 </span>
 
@@ -393,8 +394,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/post/7eb2637f.html#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="post/7eb2637f.html" itemprop="commentCount"></span>
+                <a href="/post/34755d6c.html#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="post/34755d6c.html" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -421,7 +422,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  3.3k 字
+                  1.9k 字
                 </span>
               
 
@@ -437,7 +438,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  12 分钟
+                  6 分钟
                 </span>
               
             </div>
@@ -460,107 +461,29 @@
       
 
       
-        <h4 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h4><p>在接触<code>多线程</code>之前，在我们程序中在任意时刻都只能执行一个步骤，称之为<code>单线程</code>。在单线程开发的程序中所有的程序路径都是顺序执行的，前面的必须先执行，后面的才会执行。单线程的优点也很明显，相对于多线程来说更加稳定、扩展性更强、程序开发相对比较容易。但是由于每次都要等上一个任务执行完成后才能开始新的任务，导致其效率比多线程低，甚至有时候应用程序会出现假死的现象。使用多线程有利于充分发挥多处理器的功能。通过创建多线程进程，每个线程在一个处理器上运行，从而实现应用程序的并发性，使每个处理器都得到充分运行。多线程是 Java 学习的非常重要的方面，是每个 Java 程序员必须掌握的基本技能。本文是有关 Java 多线程的一些基础知识总结。</p>
-<h4 id="进程与线程的区别"><a href="#进程与线程的区别" class="headerlink" title="进程与线程的区别"></a>进程与线程的区别</h4><h5 id="进程"><a href="#进程" class="headerlink" title="进程"></a>进程</h5><p>进程是<code>操作系统资源分配</code>的基本单位，它是操作系统的基础，是一个程序及其数据在处理机上顺序执行时所发生的活动。一个程序进入内存运行，即变成一个进程。进程是处于运行过程中的程序，并且具有一定独立功能。进程的实质就是程序在操作系统中的一次执行过程，它是动态产生的、动态销毁的，拥有自己的生命周期和各种不同的运行状态。同时，进程还具有并发性，它可以同其他进程一起并发执行，按各自独立的、不可预知的速度向前推进（<code>PS：并发性和并行性是不同的概念，并行指的是同一时刻，两个及两个以上的指令在多个处理器上同时执行。而并发指的是同一时刻只有一条指令执行，但是多个进程可以被 CPU 快速交换执行，给我们感觉好像是多个执行在同时执行一样</code>）。　</p>
-<h5 id="线程"><a href="#线程" class="headerlink" title="线程"></a>线程</h5><p>线程是<code>任务调度和执行</code>的基本单位，也被称为<code>轻量级进程</code>，线程由线程 ID，当前指令指针(PC），寄存器集合和堆栈组成。线程不拥有系统资源，它只会拥有一点儿在运行时必不可少的资源，但是它可以与同属于同一进程的线程共享该进程所拥有的所有资源。一个线程只能属于一个进程，而一个进程可以有多个线程，但至少有一个线程。</p>
+        <h4 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h4><p>在网上看到过很多讲有关<code>同步与异步</code>、<code>阻塞与非阻塞</code>的文章，但是很多都是抛出一堆相关定义，看了之后还是云里雾里的，对这几个概念还是不能很好的去区分它们。本文通过通俗易懂的语言和相关例子让你深入理解其本质。</p>
+<h4 id="同步与异步"><a href="#同步与异步" class="headerlink" title="同步与异步"></a>同步与异步</h4><p>首先我们要明确的是，<code>同步和异步都是针对两个或者两个以上的事物来说的</code>。比如当我们在网上购物看中一件物品，然后去浏览该商品详情的时候，首先页面会先发送一个请求，后台服务器查询对应商品的相关数据，然后前端详情页面才根据返回数据展示该商品的详细信息。而此时你的网速比较差，一个详情页面等了将近一分钟才全部展示完成，这时候你问这个请求是同步还是异步？答案显然是同步请求，它给我们最直观的表现形式就是页面一直显示在加载中，商品的详情页面渲染必须要等待后台服务器返回商品详情数据后才能进行。也就是说<code>下一个操作必须要等待上一个操作完成才能进行</code>，它依赖于上一个操作的返回结果。</p>
 <a id="more"></a>
-<h5 id="二者的区别"><a href="#二者的区别" class="headerlink" title="二者的区别"></a>二者的区别</h5><ol>
-<li><strong>调度</strong> 线程作为调度和分配的基本单位，进程作为拥有资源的基本单位</li>
-<li><strong>并发性</strong> 不仅进程之间可以并发执行，同一个进程的多个线程之间也可并发执行</li>
-<li><strong>拥有资源</strong> 进程是拥有资源的一个独立单位，线程不拥有系统资源，但可以访问隶属于进程的资源</li>
-<li><strong>系统开销</strong> 在创建或撤消进程时，由于系统都要为之分配和回收资源，导致系统的开销明显大于创建或撤消线程时的开销</li>
-</ol>
-<h4 id="创建线程的方式"><a href="#创建线程的方式" class="headerlink" title="创建线程的方式"></a>创建线程的方式</h4><p>在 Java 中使用 Thread 类代表线程，所有的线程对象都必须是 Thread 类或者其子类的实例，Java 中创建线程主要有以下三种方式：</p>
-<h5 id="方式一-继承-Thread-类"><a href="#方式一-继承-Thread-类" class="headerlink" title="方式一 继承 Thread 类"></a>方式一 继承 Thread 类</h5><p><strong>step 1</strong> 定义一个类继承自 <code>Thread</code> 类，然后重写该类的 <code>run</code> 方法，这个方法的内容表示线程要完成的任务<br><strong>step 2</strong> 创建线程对象，即创建 <code>Thread</code> 类子类的实例<br><strong>step 3</strong> 调用步骤二中创建出来的对象的 <code>start</code> 方法来启动线程</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> mghio</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@date</span>: 2019-12-07</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@version</span>: 1.0</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@description</span>: 通过继承 Thread 类的方式创建线程</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@since</span> JDK 1.8</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CreateThreadByExtendsThread</span> <span class="keyword">extends</span> <span class="title">Thread</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@Override</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    IntStream.rangeClosed(<span class="number">1</span>, <span class="number">10</span>).forEach(i -&gt; System.out.println(Thread.currentThread().getName() + <span class="string">" "</span> + i));</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">    CreateThreadByExtendsThread threadOne = <span class="keyword">new</span> CreateThreadByExtendsThread();</span><br><span class="line">    CreateThreadByExtendsThread threadTwo = <span class="keyword">new</span> CreateThreadByExtendsThread();</span><br><span class="line">    CreateThreadByExtendsThread threadThree = <span class="keyword">new</span> CreateThreadByExtendsThread();</span><br><span class="line"></span><br><span class="line">    threadOne.start();</span><br><span class="line">    threadTwo.start();</span><br><span class="line">    threadThree.start();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<h5 id="方式二-实现-Runnable-接口"><a href="#方式二-实现-Runnable-接口" class="headerlink" title="方式二 实现 Runnable 接口"></a>方式二 实现 Runnable 接口</h5><p><strong>step 1</strong> 定义一个类实现 <code>Runnable</code> 接口，然后实现该接口的 <code>run</code> 方法，这个方法的内容同样也表示线程要完成的任务<br><strong>step 2</strong> 创建 <code>Runnable</code> 接口实现类的实例，并使用该实例作为 <code>Thraed</code> 构造方法的参数创建 <code>Thread</code> 类的对象，该对象才是真正的线程对象<br><strong>step 3</strong> 调用线程对象的 <code>start</code> 方法来启动该线程</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> mghio</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@date</span>: 2019-12-07</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@version</span>: 1.0</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@description</span>: 通过实现 Runnable 接口的方式创建线程</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@since</span> JDK 1.8</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CreateThreadByImplementsRunnable</span> <span class="keyword">implements</span> <span class="title">Runnable</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@Override</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    IntStream.rangeClosed(<span class="number">1</span>, <span class="number">10</span>).forEach(i -&gt; System.out.println(Thread.currentThread().getName() + <span class="string">" "</span> + i));</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">    CreateThreadByImplementsRunnable target = <span class="keyword">new</span> CreateThreadByImplementsRunnable();</span><br><span class="line">    <span class="keyword">new</span> Thread(target, <span class="string">"thread-one"</span>).start();</span><br><span class="line">    <span class="keyword">new</span> Thread(target, <span class="string">"thread-two"</span>).start();</span><br><span class="line">    <span class="keyword">new</span> Thread(target, <span class="string">"thread-three"</span>).start();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h5 id="方式三-实现-Callable-接口"><a href="#方式三-实现-Callable-接口" class="headerlink" title="方式三 实现 Callable 接口"></a>方式三 实现 Callable 接口</h5><p><strong>step 1</strong> 定义一个类实现 <code>Callable</code> 接口，然后实现该接口的 <code>call</code> 方法，这个方法的内容同样也表示线程要完成的任务，并且有返回值<br><strong>step 2</strong> 创建 <code>Callable</code> 接口实现类的实例，使用 <code>FutureTask</code> 类来包装 <code>Callable</code> 对象，该 <code>FutureTask</code> 对象封装了 <code>Callable</code> 对象的 <code>call</code> 方法的返回值<br><strong>step 3</strong> 并使用 <code>FutureTask</code> 对象作为 <code>Thraed</code> 构造方法的参数创建 <code>Thread</code> 对象，并调用该对象的 <code>start</code> 方法启动线程<br><strong>step 4</strong> 调用 <code>FutureTask</code> 对象的 <code>get</code> 方法获取线程执行结束后的返回值</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> mghio</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@date</span>: 2019-12-07</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@version</span>: 1.0</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@description</span>: 通过实现 Callable 接口的方式创建线程</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@since</span> JDK 1.8</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CreateThreadByImplementsCallable</span> <span class="keyword">implements</span> <span class="title">Callable</span>&lt;<span class="title">Integer</span>&gt; </span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@Override</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> Integer <span class="title">call</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    AtomicInteger count = <span class="keyword">new</span> AtomicInteger();</span><br><span class="line">    IntStream.rangeClosed(<span class="number">0</span>, <span class="number">10</span>).forEach(i -&gt; &#123;</span><br><span class="line">      System.out.println(Thread.currentThread().getName() + <span class="string">" "</span> + i);</span><br><span class="line">      count.getAndIncrement();</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> count.get();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">    CreateThreadByImplementsCallable target = <span class="keyword">new</span> CreateThreadByImplementsCallable();</span><br><span class="line">    FutureTask&lt;Integer&gt; futureTask = <span class="keyword">new</span> FutureTask&lt;&gt;(target);</span><br><span class="line"></span><br><span class="line">    IntStream.rangeClosed(<span class="number">0</span>, <span class="number">10</span>).forEach(i -&gt; &#123;</span><br><span class="line">      System.out.println(Thread.currentThread().getName() + <span class="string">" 的循环变量 i 的值"</span> + i);</span><br><span class="line">      <span class="keyword">if</span> (i == <span class="number">8</span>) &#123;</span><br><span class="line">        <span class="keyword">new</span> Thread(futureTask, <span class="string">"有返回值的线程"</span>).start();</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">      System.out.println(<span class="string">"有返回值线程的返回值："</span> + futureTask.get());</span><br><span class="line">    &#125; <span class="keyword">catch</span> (InterruptedException | ExecutionException e) &#123;</span><br><span class="line">      e.printStackTrace();</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>通过以上可以看出，其实通过实现 <code>Runnable</code> 接口和实现 <code>Callable</code> 接口这两种方式创建线程基本相同，采用实现 <code>Runnable</code> 和 <code>Callable</code> 接口的方式创建线程时，线程类只是实现接口，还可以继承其它类（<code>PS：Java 单继承决定</code>）。在这种方式下，多个线程可以共享同一个 <code>target</code>对象，所以非常适合多个相同线程来处理同一份资源的情况。还有一点就是，使用继承 <code>Thread</code> 类的方式创建多线程时，编写简单，如果需要访问当前线程，则无需使用 <code>Thread.currentThread()</code> 方法，直接使用 <code>this</code> 即可获得当前线程。，在实际项目中如果使用这三种方式创建线程，如果创建关闭频繁会消耗系统资源影响性能，而使用线程池可以不用线程的时候放回线程池，用的时候再从线程池取，所以在我们项目开发中主要还是使用线程池，有关线程池的可以看看这两篇 <a href="https://www.mghio.cn/post/bc557e1a.html">Java 线程池（一）</a>、<a href="https://www.mghio.cn/post/ab706eb5.html">Java 线程池（二）</a>。</p>
-<h4 id="线程的几种状态"><a href="#线程的几种状态" class="headerlink" title="线程的几种状态"></a>线程的几种状态</h4><p>线程是一个动态执行的过程，它也有一个从产生到死亡的过程，在 Java 中一个线程完整的生命周期一共包含以下五种状态：<br><strong>新建状态（New）</strong><br>当使用 <code>new</code> 关键字和 <code>Thread</code> 类或其子类创建一个线程对象后，那么线程就进入了<code>新建状态</code>，此时它和其它的 Java 对象一样，仅仅由 JVM 分配了内存，并初始化其成员变量值，它会一直保持这个状态直到调用该对象的 <code>start</code> 方法。</p>
-<p><strong>就绪状态（Runnable）</strong><br>当线程对象调用了 <code>start</code> 方法之后，该线程就进入了就绪状态。就绪状态的线程会放在一个就绪队列中，等待 JVM 里的调度器进行调度。处于就绪状态的线程，随时可能被 CPU 调度执行。</p>
-<p><strong>运行状态（Running）</strong><br>如果就绪状态的执行被 CPU 调度执行，就可以执行 <code>run</code> 方法，此时线程就处于线程状态。处于运行状态的线程最复杂，它可以变为<code>阻塞状态</code>、<code>就绪状态</code>和<code>死亡状态</code>。需要注意一点，线程变为<code>运行状态</code>之前的状态只能是<code>就绪状态</code>。</p>
-<p><strong>阻塞状态（Blocked）</strong><br>线程变为阻塞状态是因为某种原因放弃 CPU 的使用权，暂时停止运行，如果执行了 <code>sleep</code>、<code>suspend</code> 等方法，释放了所占用的资源之后，线程就从<code>运行状态</code>进入<code>阻塞状态</code>。等待睡眠时间结束或者获得设备资源之可以重新进入<code>就绪状态</code>。阻塞可以分为以下三种：</p>
-<ol>
-<li><strong>等待阻塞</strong> 处于<code>运行状态</code>的线程调用<code>wait</code>方法，会使线程进入<code>等待阻塞状态</code></li>
-<li><strong>同步阻塞</strong> 当线程获取 <code>synchronized</code> 同步锁因为同步锁被其他线程占用而失败后，会使线程进入<code>同步阻塞</code></li>
-<li><strong>其它阻塞</strong> 通过调用线程的<code>sleep</code>或<code>join</code>发出了 I/O 请求时，线程就会进入到阻塞状态。当<code>sleep</code>状态超时，<code>join</code>等待线程终止或超时，或者 I/O 处理完毕，线程重新回到<code>就绪状态</code>。</li>
-</ol>
-<p><strong>死亡状态（Dead）</strong><br>一个处于<code>运行状态</code>的线程执行完了 <code>run</code> 方法或者因为其它终止条件发生时，线程就会进入到<code>死亡状态</code>，该线程结束生命周期。<br>以上线程各种状态的流转用一张图表示如下：</p>
-<p><img src="https://i.loli.net/2019/12/07/ZtTHNLP8eoAYqcM.png" alt="thread-state-transfer.png"></p>
-<h4 id="线程常用方法"><a href="#线程常用方法" class="headerlink" title="线程常用方法"></a>线程常用方法</h4><p>线程中常用的方法按照来源可以分为两类，一类是继承自 <code>Object</code> 类的方法，如下所示：</p>
-<table>
-<thead>
-<tr>
-<th align="left">方法</th>
-<th align="center">描述</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="left">public final native void notify()</td>
-<td align="center">唤醒在此对象监视器上等待的单个线程，使其进入<code>就绪状态</code></td>
-</tr>
-<tr>
-<td align="left">public final native void notifyAll()</td>
-<td align="center">唤醒在此对象监视器上等待的所有线程，使其进入<code>就绪状态</code></td>
-</tr>
-<tr>
-<td align="left">public final void wait()</td>
-<td align="center">让当前线程处于·<code>等待阻塞状态</code>，直到其他线程调用此对象的<code>notify</code>方法或<code>notifyAll</code>方法，当前线程被唤醒，会释放它所持有的锁</td>
-</tr>
-<tr>
-<td align="left">public final native void wait(long timeout)</td>
-<td align="center">让当前线程处于·<code>等待阻塞状态</code>，直到其他线程调用此对象的<code>notify</code>方法或<code>notifyAll</code>方法，当前线程被唤醒</td>
-</tr>
-<tr>
-<td align="left">public final void wait(long timeout, int nanos)</td>
-<td align="center">让当前线程处于·<code>等待阻塞状态</code>，直到其他线程调用此对象的<code>notify</code>方法或<code>notifyAll</code>方法或者其他某个线程中断当前线程，或者已超过某个实际时间量，当前线程被唤醒</td>
-</tr>
-</tbody></table>
-<p>另一类是 <code>Thread</code> 类定义的方法，如下所示：</p>
-<table>
-<thead>
-<tr>
-<th align="center">方法</th>
-<th align="center">描述</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center">public static native void yield()</td>
-<td align="center">暂停当前正在执行的线程对象，并执行其他线程，<code>yield</code> 方法不会释放锁</td>
-</tr>
-<tr>
-<td align="center">public static native void sleep(long millis)</td>
-<td align="center">在指定的毫秒数内让当前正在执行的线程休眠（暂停执行），<code>sleep</code> 方法不会释放锁</td>
-</tr>
-<tr>
-<td align="center">public final void join()</td>
-<td align="center">当某个程序执行流中调用其他线程的 <code>join</code> 方法时，调用线程将被阻塞，直到被 <code>join</code> 的线程执行完毕</td>
-</tr>
-<tr>
-<td align="center">public void interrupt()</td>
-<td align="center">用于中断本线程，这个方法被调用时，会立即将线程的中断标志设置为 <code>true</code></td>
-</tr>
-<tr>
-<td align="center">public static boolean interrupted()</td>
-<td align="center"><code>Thread</code> 类的一个静态方法，它返回一个布尔类型指明当前线程是否已经被中断，<code>interrupted</code> 方法除了返回中断标记之外，它还会清除中断标记(即将中断标记设为 <code>false</code>)</td>
-</tr>
-<tr>
-<td align="center">public boolean isInterrupted()</td>
-<td align="center"><code>Thread</code> 类的一个实例方法，它返回一个布尔类型指明当前线程是否已经被中断，<code>isInterrupted</code> 方法仅仅返回中断标记，不会清楚终端标记</td>
-</tr>
-</tbody></table>
-<h4 id="线程的优先级"><a href="#线程的优先级" class="headerlink" title="线程的优先级"></a>线程的优先级</h4><p>每一个 Java 线程都有一个优先级，这样有助于操作系统确定线程的调度顺序。Java 线程的优先级是一个整数，其取值范围是<code>1（Thread.MIN_PRIORITY ）~ 10（Thread.MAX_PRIORITY ）</code>。默认情况下，每一个线程都会分配一个优先级<code>NORM_PRIORITY（5）</code>。具有较高优先级的线程对程序更重要，并且应该在低优先级的线程之前分配处理器资源，<code>Thread</code> 类提供了 <code>setPriority</code> 和 <code>getPriority</code> 方法来更改和获取线程优先级（<strong><font color="#ff0000">需要注意的是: 线程优先级不能保证线程执行的顺序，而且非常依赖于平台</font></strong>）。</p>
-<hr>
-<p>参考文章</p>
+<p>你可能会问，在同步的情况下，当一个事物正在进行操作的时候，其它的事物此时在干嘛呢？这个实际上并没有明确的规定，其实同步更多的是关注事物一个一个的串行执行的过程，保证不会交叉执行，至于某个时刻处于什么状态并不关心。这在计算机中大部分时候其它事物都是处于一个<code>等待</code>的状态，而我们人则要灵活得多，在我们日常生活中常用的同步手段就是<code>排队</code>，比如我们上下班坐地铁进行安检的时候，需要依次排队安检进站乘车，但是你在排队的过程是在看手机、聊天还是什么也不做都可以，安检人员并不会在意你在做什么，这种就是由于安检<code>资源有限</code>导致的同步。</p>
+<p><img src="https://i.loli.net/2020/04/26/IBynqeRC93Qg5MA.png" alt="sync-async.jpg"></p>
+<p>对于同步这里有两个点需要注意，一是<code>同步的范围</code>，有时候并不需要全局的大范围的去同步，只需要在特定的操作同步即可，这样可以提升执行效率，比如 <code>Java</code> 语言中的同步方法和同步代码块。另一个是<code>同步的粒度</code>，并不是在一些大的操作粒度上才需要同步操作，小的粒度操作也需要同步操作，只是有的小粒度操作天然就已经是同步操作，并不需要我们人为的去添加同步操作控制。比如 <code>Java</code> 语言中的同步都是针对有两个或者两个以上线程的程序来说的，因为单线程的程序里它天然就是同步的。<br>而<code>异步</code>则完全相反，在异步情况下多个事务可以同时进行，互不影响，你进行你的，我进行我的，谁都不用关心谁。总的来说就是:</p>
 <ul>
-<li><a href="https://www.cnblogs.com/lmule/archive/2010/08/18/1802774.html" target="_blank" rel="noopener">进程和线程的区别</a></li>
-<li><a href="https://www.cnblogs.com/skywang12345/p/3479224.html" target="_blank" rel="noopener">Java多线程系列–“基础篇”05之 线程等待与唤醒</a></li>
+<li><strong>同步</strong> 两个事物相互依赖，并且一个事物必须以依赖于另一事物的执行结果。比如在事物 <code>A-&gt;B</code> 事件模型中，你需要先完成事物 A 才能执行事物 B。也就是说，同步调用在被调用者未处理完请求之前，调用不返回，调用者会一直等待结果的返回。</li>
+<li><strong>异步</strong> 两个事物完全独立，一个事物的执行不需要等待另外一个事物的执行。也就是说，异步调用可以返回结果不需要等待结果返回，当结果返回的时候通过回调函数或者其他方式带着调用结果再做相关事情。</li>
 </ul>
+<p>可以看出同步与异步是从<code>行为角度</code>描述事物的，你品，你细品。（PS：<code>这里的多个事务可以指代不同的操作、不同的方法或者不同的代码语句等等</code>）</p>
+<h4 id="阻塞与非阻塞"><a href="#阻塞与非阻塞" class="headerlink" title="阻塞与非阻塞"></a>阻塞与非阻塞</h4><p>所谓<code>阻塞</code>，简单来说就是发出一个请求不能立刻返回响应，要等所有的逻辑全处理完才能返回响应。<code>非阻塞</code>反之，发出一个请求立刻返回应答，不用等处理完所有逻辑。阻塞与非阻塞指的是<code>单个线程内</code>遇到同步等待时，是否在原地不做任何操作。<br><code>堵车</code>就是阻塞与非阻塞最好的例子，在一线城市生活过的朋友应该都有体会，在交通正常的时候汽车可以正常通行，就是<code>非阻塞</code>，上下班高峰的时候经常发生堵车，交通正常的时候半个小时车程，高峰期可能需要二、三个小时才能到。。。而且一旦发生交通堵塞，所有马路上的车子都一动不动，只能在车子里等待，就是<code>阻塞</code>，当然大多数人不会选择干等，他们会玩手机或者和朋友聊天等等，同样的在计算机里，阻塞就意味着停止执行停下来等待，非阻塞表明操作可以继续向下执行，但是在发生阻塞的时候计算机可就没有像人这么灵活了，通常计算机的处理方式就是挂起当前线程，然后干等着，阻塞结束后才继续执行该线程。可以看出阻塞和非阻塞描述的<code>当前事物的状态</code>（等待调用结果时的状态）。</p>
+<p><img src="https://i.loli.net/2020/04/26/APB7ZoWlzqbnXCR.jpg" alt="recv-wait.jpeg"></p>
+<p>结合前面介绍的<code>同步与异步</code>，两两组合就会有四种情况，分别是<code>同步阻塞</code>、<code>同步非阻塞</code>、<code>异步阻塞</code>和<code>异步非阻塞</code>。下面通过车道的例子来形象的解释这几种状态：</p>
+<ul>
+<li><strong>同步阻塞</strong> 只有一个车道，不能超车，所有车子依次行使，一次只能通过一辆车，尴尬的是这个车道还堵车了。</li>
+<li><strong>同步非阻塞</strong> 只有一个车道，不能超车，所有车子依次行使，一次只能通过一辆车，不过比较幸运这个车道没有堵车，可以正常通行。</li>
+<li><strong>异步阻塞</strong> 有两个或两个以上车道，每条马路都可以通行，不同车道上的车子可以并行行使，尴尬的是所有的车道都堵车了。</li>
+<li><strong>异步非阻塞</strong> 有两个或两个以上车道，每条马路都可以通行，不同车道上的车子可以并行行使，不过比较幸运的是没有一个车道堵车，都可以正常通行。</li>
+</ul>
+<p>对应到我们计算机里也是一样的，同步阻塞相当于只有一个线程，而且该线程处于阻塞（Blocked）状态，同步非阻塞相当于只有一个线程，而且该线程处于运行（Running）状态。异步阻塞相当于有多个线程，而且所有线程都处于阻塞（Blocked）状态，异步非阻塞相当于有多个线程，而且所有线程都在正常运行。</p>
+<h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><p>很多程序思想都来源于生活，需要我们自己去寻找身边的场景多类比思考、总结归纳，这样才会理解得更深刻。</p>
 
       
     </div>
@@ -624,7 +547,7 @@
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="https://www.mghio.cn/post/7eb2637f.html" title="Java 多线程基础（一）">https://www.mghio.cn/post/7eb2637f.html</a>
+    <a href="https://www.mghio.cn/post/34755d6c.html" title="看了你就懂的同步与异步、阻塞与非阻塞">https://www.mghio.cn/post/34755d6c.html</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>
@@ -640,7 +563,7 @@
           
             <a href="/tags/Java/" rel="tag"># Java</a>
           
-            <a href="/tags/多线程/" rel="tag"># 多线程</a>
+            <a href="/tags/IO模型/" rel="tag"># IO模型</a>
           
         </div>
       
@@ -653,8 +576,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/post/ab706eb5.html" rel="next" title="Java 线程池（二）">
-                <i class="fa fa-chevron-left"></i> Java 线程池（二）
+              <a href="/post/fe76043.html" rel="next" title="如何在亿级数据中判断一个元素是否存在？">
+                <i class="fa fa-chevron-left"></i> 如何在亿级数据中判断一个元素是否存在？
               </a>
             
           </div>
@@ -662,10 +585,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/post/4ea48fa7.html" rel="prev" title="Java 多线程基础（二）">
-                Java 多线程基础（二） <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -988,7 +907,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#简介"><span class="nav-number">1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#进程与线程的区别"><span class="nav-number">2.</span> <span class="nav-text">进程与线程的区别</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#进程"><span class="nav-number">2.1.</span> <span class="nav-text">进程</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#线程"><span class="nav-number">2.2.</span> <span class="nav-text">线程</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#二者的区别"><span class="nav-number">2.3.</span> <span class="nav-text">二者的区别</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#创建线程的方式"><span class="nav-number">3.</span> <span class="nav-text">创建线程的方式</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#方式一-继承-Thread-类"><span class="nav-number">3.1.</span> <span class="nav-text">方式一 继承 Thread 类</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#方式二-实现-Runnable-接口"><span class="nav-number">3.2.</span> <span class="nav-text">方式二 实现 Runnable 接口</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#方式三-实现-Callable-接口"><span class="nav-number">3.3.</span> <span class="nav-text">方式三 实现 Callable 接口</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#线程的几种状态"><span class="nav-number">4.</span> <span class="nav-text">线程的几种状态</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#线程常用方法"><span class="nav-number">5.</span> <span class="nav-text">线程常用方法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#线程的优先级"><span class="nav-number">6.</span> <span class="nav-text">线程的优先级</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#同步与异步"><span class="nav-number">2.</span> <span class="nav-text">同步与异步</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#阻塞与非阻塞"><span class="nav-number">3.</span> <span class="nav-text">阻塞与非阻塞</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#总结"><span class="nav-number">4.</span> <span class="nav-text">总结</span></a></li></ol></div>
             
 
           </div>
@@ -1175,9 +1094,9 @@
     
       <script type="text/javascript">
         var disqus_config = function () {
-          this.page.url = 'https://www.mghio.cn/post/7eb2637f.html';
-          this.page.identifier = 'post/7eb2637f.html';
-          this.page.title = 'Java 多线程基础（一）';
+          this.page.url = 'https://www.mghio.cn/post/34755d6c.html';
+          this.page.identifier = 'post/34755d6c.html';
+          this.page.title = '看了你就懂的同步与异步、阻塞与非阻塞';
         };
         var d = document, s = d.createElement('script');
         s.src = 'https://mghio.disqus.com/embed.js';
