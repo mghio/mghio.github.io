@@ -1,0 +1,1609 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+  <meta name="google-site-verification" content="IU4uoUf44pYguUI7ecCbIduQdIgrWXQKMRVyHFH26vc">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+  <link href="https://cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+  
+
+<link href="https://cdn.bootcss.com/font-awesome/4.6.2/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon-32x32-next.ico?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.ico?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.ico?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Java,JDK,版本管理工具,">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="mghio" type="application/atom+xml">
+
+
+
+
+
+
+<meta name="description" content="前言对于使用 Java 语言开发的朋友可能会遇到这种情况，有时想学习和探索 Java 的最新版本提供的一些新特性，比如 Java 11，但你无法将其安装在自己的计算机上，因为你的团队正在使用比这个旧的版本（我们目前用的 Java 8)，你并不想影响目前的项目。或者你目前是在维护和开发多个项目，而这些不同的项目使用的 JDK 版本不一样，比如那些维护的老项目使用的是 JDK 8，而新项目你打算使用比">
+<meta name="keywords" content="Java,JDK,版本管理工具">
+<meta property="og:type" content="article">
+<meta property="og:title" content="如何在一台计算机上安装多个 JDK 版本">
+<meta property="og:url" content="https://www.mghio.cn/post/51e5bd99.html">
+<meta property="og:site_name" content="mghio">
+<meta property="og:description" content="前言对于使用 Java 语言开发的朋友可能会遇到这种情况，有时想学习和探索 Java 的最新版本提供的一些新特性，比如 Java 11，但你无法将其安装在自己的计算机上，因为你的团队正在使用比这个旧的版本（我们目前用的 Java 8)，你并不想影响目前的项目。或者你目前是在维护和开发多个项目，而这些不同的项目使用的 JDK 版本不一样，比如那些维护的老项目使用的是 JDK 8，而新项目你打算使用比">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://i.loli.net/2020/05/16/ZKIvQfl4syq5S7J.png">
+<meta property="og:image" content="https://i.loli.net/2020/05/16/xczL8U7qCfbwOrP.png">
+<meta property="og:image" content="https://i.loli.net/2020/05/16/BlFScVCmUDe8xNZ.png">
+<meta property="og:image" content="http://pic.cnw.me/imgs/2020/05/0ebcf0d26ce111fa.png">
+<meta property="og:image" content="http://pic.cnw.me/imgs/2020/05/a3a8fce8f227dbbb.png">
+<meta property="og:image" content="http://pic.cnw.me/imgs/2020/05/ff36347cb7a4dfe7.png">
+<meta property="og:image" content="http://pic.cnw.me/imgs/2020/05/412ed30ac2283fa0.png">
+<meta property="og:image" content="http://pic.cnw.me/imgs/2020/05/b28c67cf63ad28cb.png">
+<meta property="og:image" content="http://pic.cnw.me/imgs/2020/05/c37973b5619d90a3.png">
+<meta property="og:image" content="http://pic.cnw.me/imgs/2020/05/6d3fb2245c19ecf2.png">
+<meta property="og:updated_time" content="2020-05-17T09:20:01.905Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="如何在一台计算机上安装多个 JDK 版本">
+<meta name="twitter:description" content="前言对于使用 Java 语言开发的朋友可能会遇到这种情况，有时想学习和探索 Java 的最新版本提供的一些新特性，比如 Java 11，但你无法将其安装在自己的计算机上，因为你的团队正在使用比这个旧的版本（我们目前用的 Java 8)，你并不想影响目前的项目。或者你目前是在维护和开发多个项目，而这些不同的项目使用的 JDK 版本不一样，比如那些维护的老项目使用的是 JDK 8，而新项目你打算使用比">
+<meta name="twitter:image" content="https://i.loli.net/2020/05/16/ZKIvQfl4syq5S7J.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://www.mghio.cn/post/51e5bd99.html">
+
+
+
+
+
+  <title>如何在一台计算机上安装多个 JDK 版本 | mghio</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">mghio</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description">Java 搬运工 & 终身学习者。</h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://www.mghio.cn/post/51e5bd99.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="mghio">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="https://i.loli.net/2020/01/12/8qITJvhw2R9HN7M.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="mghio">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">如何在一台计算机上安装多个 JDK 版本</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-05-16T20:52:22+08:00">
+                2020-05-16
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/JDK/" itemprop="url" rel="index">
+                    <span itemprop="name">JDK</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/JDK/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/JDK/Java/版本管理工具/" itemprop="url" rel="index">
+                    <span itemprop="name">版本管理工具</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/post/51e5bd99.html#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="post/51e5bd99.html" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-eye"></i>  本文总阅读量
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>次
+            </span>
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  1.4k 字
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  5 分钟
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h4 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h4><p>对于使用 <code>Java</code> 语言开发的朋友可能会遇到这种情况，有时想学习和探索 <code>Java</code> 的最新版本提供的一些新特性，比如 <code>Java 11</code>，但你无法将其安装在自己的计算机上，因为你的团队正在使用比这个旧的版本（我们目前用的 <code>Java 8</code>)，你并不想影响目前的项目。或者你目前是在维护和开发多个项目，而这些不同的项目使用的 <code>JDK</code> 版本不一样，比如那些维护的老项目使用的是 <code>JDK 8</code>，而新项目你打算使用比较新的版本 <code>JDK 11</code>，以上这些情况都需要在计算机上安装多个 <code>JDK</code>，并且应该能够在多个版本之间方便快速的切换。今天要介绍的主角 <a href="https://sdkman.io" target="_blank" rel="noopener">SDKMAN</a> 可以很好的解决上面这种问题，它提供了在同一台计算机上对多个版本的开发工具包管理。需要注意的是：这个工具只适用于类 <code>Unix</code> 的系统（比如：Mac OSX、Linux、Cygwin、Solaris、FreeBSD 等）。</p>
+<a id="more"></a>
+<h4 id="SDKMan-简介"><a href="#SDKMan-简介" class="headerlink" title="SDKMan 简介"></a>SDKMan 简介</h4><p>直接引用 <a href="https://sdkman.io" target="_blank" rel="noopener">SDKMan</a> 官网上的介绍如下：</p>
+<blockquote>
+<p>SDKMAN! is a tool for managing parallel versions of multiple Software Development Kits on most Unix based systems. It provides a convenient Command Line Interface (CLI) and API for installing, switching, removing and listing Candidates.</p>
+</blockquote>
+<p>简单来说就是其提供了管理多个版本开发工具包的能力，同时也提供了一些命令行接口让我们方便安装、版本切换、版本移除和显示版本列表。关于 <code>SDKMan</code> 还有几个要点如下：</p>
+<ol>
+<li><code>SDKMan</code> 是由开源社区开发的，免费使用，。</li>
+<li><code>SDKMan</code> 是用 <code>bash</code> 编写的，它只需要您的系统上安装了 <code>curl</code> 和 <code>zip / unzip</code> 命令即可。</li>
+<li><code>SDKMan</code> 可以为 <code>JVM</code> 安装大约 29 个软件开发包，比如 <code>Java</code>、<code>Groovy</code>、<code>Scala</code>、<code>Kotlin</code>、<code>Gradle</code>、<code>Maven</code>、<code>Spark</code>、<code>Spring Boot</code> 等。</li>
+<li><code>SDKMan</code> 可以自动处理帮我们配置 <code>*_HOME(e.g.:JAVA_HOME)</code> 和 <code>PATH</code> 环境变量，因此我们不需要担心切换版本后这些环境变量的设置。</li>
+</ol>
+<h4 id="安装-SDKMan"><a href="#安装-SDKMan" class="headerlink" title="安装 SDKMan"></a>安装 SDKMan</h4><p><code>SDKMan</code> 可以运行在任何类 <code>Unix</code> 系统上，我们只需要在命令行输入以下命令即可安装：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -s <span class="string">"https://get.sdkman.io"</span> | bash</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://i.loli.net/2020/05/16/ZKIvQfl4syq5S7J.png" alt="install-sdkman.png"></p>
+<p>然后执行以下命令，加载文件 <code>sdkman-init.sh</code> 到当前环境，执行完该命令之后我们可以通过 <code>sdk version</code> 来验证是否安装成功，同时还可以通过 <code>sdk help</code> 命令显示有关 <code>sdk</code> 命令用法和帮助（<code>PS: 对于使用 Windows 环境的朋友可以安装 Cygwin 或 Git Bash 运行以上命令</code>）。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">source</span> <span class="string">"<span class="variable">$HOME</span>/.sdkman/bin/sdkman-init.sh"</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="https://i.loli.net/2020/05/16/xczL8U7qCfbwOrP.png" alt="verify-sdkman-install.png"></p>
+<h4 id="使用-SDKMan-安装-JDK"><a href="#使用-SDKMan-安装-JDK" class="headerlink" title="使用 SDKMan 安装 JDK"></a>使用 SDKMan 安装 JDK</h4><p>前面已经介绍过，<code>SDKMan</code> 支持多达大约 29 个软件开发包管理，我们也可以使用 <code>sdk list</code> 命令来查看支持的完整列表，本文主要介绍 <code>Java</code> 相关的内容，可以通过命令 <code>sdk list java</code> 来查看支持安装的 <code>Java</code> 版本。</p>
+<p><img src="https://i.loli.net/2020/05/16/BlFScVCmUDe8xNZ.png" alt="sdk-list-java.png"></p>
+<p>使用以下命令安装 <code>Java 11</code> ：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sdk install java 11.0.7.hs-adpt</span><br></pre></td></tr></table></figure>
+
+<p>该命令会花费一些时间，因为它会在我们的计算机上下载对应版本的 <code>JDK</code>，执行完成之后 <code>SDKman</code> 会自动给我们配置好 <code>JAVA_HOME</code> 和 <code>PATH</code> 等环境变量，可以通过 <code>Java -version</code> 命令验证。</p>
+<p><img src="http://pic.cnw.me/imgs/2020/05/0ebcf0d26ce111fa.png" alt></p>
+<p>现在，如果检查 <code>Java</code> 版本和 <code>JAVA_HOME</code> 环境变量，可以看到当前 <code>Java</code> 的版本已更新为 <code>11.0.7</code>。</p>
+<p><img src="http://pic.cnw.me/imgs/2020/05/a3a8fce8f227dbbb.png" alt="java-version-verify"></p>
+<p>可以使用以下命令来设置默认使用的 <code>JDK</code> 版本。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sdk default java 11.0.7.hs-adpt</span><br></pre></td></tr></table></figure>
+
+<h4 id="将-SDKMan-指向已安装-Java-版本"><a href="#将-SDKMan-指向已安装-Java-版本" class="headerlink" title="将 SDKMan 指向已安装 Java 版本"></a>将 SDKMan 指向已安装 Java 版本</h4><p>如果在你安装 <code>SDKMan</code> 之前本地电脑已经安装了 <code>JDK</code> 版本，默认是无法识别到的，那么你需要进行以下配置才能让 <code>SDKMan</code> 识别已安装的版本，首先，第一步你要先找到你的 <code>Java</code> 安装目录，我本地 <code>Mac</code> 的安装目录是 <code>/Library/Java/JavaVirtualMachines/jdk1.8.0_181.jdk</code>，然后使用命令 <code>ln -s</code> 来为 <code>Java</code> 安装目录建立符号链接。</p>
+<p><img src="http://pic.cnw.me/imgs/2020/05/ff36347cb7a4dfe7.png" alt="point-sdkman-existing-installd-version.png"></p>
+<h4 id="多个-JDK-版本切换示例"><a href="#多个-JDK-版本切换示例" class="headerlink" title="多个 JDK 版本切换示例"></a>多个 JDK 版本切换示例</h4><p><code>SDKMan</code> 提供了命令 <code>sdk use java &lt;version_want_to_use&gt;</code> 在多个版本之间进行切换，使用 <code>sdk use java jdk1.8.0_181.jdk</code> 命令来使用之前本地安装的 <code>Java 8</code>。</p>
+<p><img src="http://pic.cnw.me/imgs/2020/05/412ed30ac2283fa0.png" alt="sdk-use-jdk8.png"></p>
+<p>使用命令 <code>sdk use java 11.0.7.hs-adpt</code> 来设置版本为 <code>Java 11</code>。</p>
+<p><img src="http://pic.cnw.me/imgs/2020/05/b28c67cf63ad28cb.png" alt="sdk-use-java11"></p>
+<blockquote>
+<p>需要注意的是：使用命令 <code>sdk use java &lt;version&gt;</code> 只在当前会话有效，如果你关闭终端并再次打开它，则将使用以前安装的版本，不会改变你本地使用的版本，此时可以使用 <code>sdk default java &lt;version&gt;</code> 来设置永久生效。</p>
+</blockquote>
+<h4 id="如何卸载指定的-JDK-版本"><a href="#如何卸载指定的-JDK-版本" class="headerlink" title="如何卸载指定的 JDK 版本"></a>如何卸载指定的 JDK 版本</h4><p>如果你想要卸载任何已安装的 <code>JDK</code> 版本，比如： <code>11.0.7.hs-adpt</code>，可以使用以下命令卸载：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sdk uninstall java 11.0.7.hs-adpt</span><br></pre></td></tr></table></figure>
+
+<p>此时，如果你想再次安装之前通过 <code>SDKMan</code> 卸载的版本，此时不会再次重新下载，会提示 <code>Found a previously downloaded java 11.0.7.hs-adpt archive. Not downloading it again...</code>，因为之前删除操作并没有真正的从你计算机上删除源压缩包文件。</p>
+<h4 id="IntelliJ-IDEA-使用-SDMan-安装-JDK"><a href="#IntelliJ-IDEA-使用-SDMan-安装-JDK" class="headerlink" title="IntelliJ IDEA 使用 SDMan 安装 JDK"></a>IntelliJ IDEA 使用 SDMan 安装 JDK</h4><p><code>SDKMan</code> 所有安装的 <code>JDK</code> 都放在目录 <code>.sdkman/candidates/java/</code>，你可以在你当前用户的 <code>home</code> 文件夹下面看到该文件夹（注意是隐藏文件夹）。</p>
+<p><img src="http://pic.cnw.me/imgs/2020/05/c37973b5619d90a3.png" alt="show-sdkman-directory.png"></p>
+<p>在 <code>IntelliJ IDEA</code> 中打开任何一个 <code>Java</code> 项目后，您可以按 <code>Command + :</code> 快捷键打开项目结构窗口，在 <code>Project SDK</code> 模块选择新建一个 <code>JDK</code> 后输入你需要的 <code>JDK</code> 版本在 <code>SDKMan</code> 中的路径即可。</p>
+<p><img src="http://pic.cnw.me/imgs/2020/05/6d3fb2245c19ecf2.png" alt="idea-set-jdk-version.png"></p>
+<p>因为 <code>.sdkman</code> 是隐藏文件夹不太方便查找，可以使用以下命令创建一个非隐藏文件夹指向它。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ln -s ~/.sdkman ~/sdkman</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    
+    
+    
+
+    
+      <div>
+          <div>  <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-smile-o"></i>感谢您的阅读-------------</div>  </div>
+      </div>
+    
+
+    
+      <div>
+        <div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="https://i.loli.net/2020/01/12/tXKpok8JAqQZ7ER.jpg" alt="mghio wechat" style="width: 200px; max-width: 100%;">
+    <div>微信公众号「mghio」</div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>请我吃🍗</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="https://i.loli.net/2020/01/12/jznfu23QkaIXgTt.jpg" alt="mghio 微信打赏">
+        <p>微信打赏</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="https://i.loli.net/2020/01/12/ihvqOG2TMjkItyU.jpg" alt="mghio 支付宝打赏">
+        <p>支付宝打赏</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    mghio  |  微信公众号「mghio」
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://www.mghio.cn/post/51e5bd99.html" title="如何在一台计算机上安装多个 JDK 版本">https://www.mghio.cn/post/51e5bd99.html</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Java/" rel="tag"># Java</a>
+          
+            <a href="/tags/JDK/" rel="tag"># JDK</a>
+          
+            <a href="/tags/版本管理工具/" rel="tag"># 版本管理工具</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/post/34755d6c.html" rel="next" title="看了你就懂的同步与异步、阻塞与非阻塞">
+                <i class="fa fa-chevron-left"></i> 看了你就懂的同步与异步、阻塞与非阻塞
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="https://i.loli.net/2020/01/12/8qITJvhw2R9HN7M.png" alt="mghio">
+            
+              <p class="site-author-name" itemprop="name">mghio</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">25</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">24</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">23</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/mghio" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://segmentfault.com/u/mghio" target="_blank" title="思否">
+                      
+                        <i class="fa fa-fw fa-skype"></i>思否</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.jianshu.com/u/c08ba86593ce" target="_blank" title="简书">
+                      
+                        <i class="fa fa-fw fa-book"></i>简书</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://juejin.im/user/5bbccb4b6fb9a05ce95c7a81" target="_blank" title="掘金">
+                      
+                        <i class="fa fa-fw fa-bookmark"></i>掘金</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://twitter.com/immghio" target="_blank" title="Twitter">
+                      
+                        <i class="fa fa-fw fa-twitter"></i>Twitter</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                友情链接
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.debuginn.cn" title="Debug 客栈" target="_blank">Debug 客栈</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.bigfool.cn" title="大笨蛋程序员" target="_blank">大笨蛋程序员</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.i121.net" title="气象万千" target="_blank">气象万千</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.dute.org" title="独特工具箱" target="_blank">独特工具箱</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.xiaorongmao.com" title="小绒毛的足迹" target="_blank">小绒毛的足迹</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://xiaojun1994.top" title="xiaojun's blog" target="_blank">xiaojun's blog</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://httpsauthor.cn" title="Https Author" target="_blank">Https Author</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://p00q.cn" title="淡白记忆博客" target="_blank">淡白记忆博客</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://blog.searchinfogo.com" title="Junhua's blog" target="_blank">Junhua's blog</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://g-lab.xyz" title="G-lab" target="_blank">G-lab</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://v2c.tech" title="木頭" target="_blank">木頭</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://orxing.top" title="OURONGXING" target="_blank">OURONGXING</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.cnitdog.com" title="IT运维狗" target="_blank">IT运维狗</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.anyuhanfei.com" title="暗语寒飞 blog" target="_blank">暗语寒飞 blog</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.tbfeng.com" title="天边风" target="_blank">天边风</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://too.pub" title="TooPub" target="_blank">TooPub</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.qiezipig.top:8090" title="White water" target="_blank">White water</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://log.zvz.im" title="Z" target="_blank">Z</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://eindex.me" title="EINDEX's Blog" target="_blank">EINDEX's Blog</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.liuershuang.com" title="土鱼笔记" target="_blank">土鱼笔记</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://toc.lieme.cn" title="故事胶片" target="_blank">故事胶片</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://cmsblogs.com" title="Java 技术驿站" target="_blank">Java 技术驿站</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.fishmaple.cn" title="鱼鱼的小站" target="_blank">鱼鱼的小站</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.tigerbook.cn" title="虎书博客" target="_blank">虎书博客</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.liangzl.com" title="梁钟霖个人博客" target="_blank">梁钟霖个人博客</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.netcore.pub" title="开源netcore" target="_blank">开源netcore</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://xerrors.coding.me" title="Angor" target="_blank">Angor</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://clawhub.club" title="ClawHub的博客" target="_blank">ClawHub的博客</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://13blog.site" title="13blog" target="_blank">13blog</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://zhang0peter.com" title="zhang0peter的博客" target="_blank">zhang0peter的博客</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://crossoverjie.top" title="crossoverJie" target="_blank">crossoverJie</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://zebinh.github.io" title="黄泽彬个人站" target="_blank">黄泽彬个人站</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#SDKMan-简介"><span class="nav-number">2.</span> <span class="nav-text">SDKMan 简介</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#安装-SDKMan"><span class="nav-number">3.</span> <span class="nav-text">安装 SDKMan</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#使用-SDKMan-安装-JDK"><span class="nav-number">4.</span> <span class="nav-text">使用 SDKMan 安装 JDK</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#将-SDKMan-指向已安装-Java-版本"><span class="nav-number">5.</span> <span class="nav-text">将 SDKMan 指向已安装 Java 版本</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#多个-JDK-版本切换示例"><span class="nav-number">6.</span> <span class="nav-text">多个 JDK 版本切换示例</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#如何卸载指定的-JDK-版本"><span class="nav-number">7.</span> <span class="nav-text">如何卸载指定的 JDK 版本</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#IntelliJ-IDEA-使用-SDMan-安装-JDK"><span class="nav-number">8.</span> <span class="nav-text">IntelliJ IDEA 使用 SDMan 安装 JDK</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; 2019 &mdash; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">mghio</span>
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      访客数
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      人
+    </span>
+  
+
+  
+    <span class="site-pv">
+      总访问量
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      次
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="https://cdn.bootcss.com/jquery/2.1.3/jquery.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="https://cdn.bootcss.com/jquery_lazyload/1.9.7/jquery.lazyload.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="https://cdn.bootcss.com/velocity/1.2.1/velocity.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="https://cdn.bootcss.com/velocity/1.2.1/velocity.ui.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="https://cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://mghio.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'https://www.mghio.cn/post/51e5bd99.html';
+          this.page.identifier = 'post/51e5bd99.html';
+          this.page.title = '如何在一台计算机上安装多个 JDK 版本';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://mghio.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+  <style>
+    .copy-btn {
+      display: inline-block;
+      padding: 6px 12px;
+      font-size: 13px;
+      font-weight: 700;
+      line-height: 20px;
+      color: #333;
+      white-space: nowrap;
+      vertical-align: middle;
+      cursor: pointer;
+      background-color: #eee;
+      background-image: linear-gradient(#fcfcfc, #eee);
+      border: 1px solid #d5d5d5;
+      border-radius: 3px;
+      user-select: none;
+      outline: 0;
+    }
+
+    .highlight-wrap .copy-btn {
+      transition: opacity .3s ease-in-out;
+      opacity: 0;
+      padding: 2px 6px;
+      position: absolute;
+      right: 4px;
+      top: 8px;
+      z-index: 999;
+    }
+
+    .highlight-wrap:hover .copy-btn,
+    .highlight-wrap .copy-btn:focus {
+      opacity: 1
+    }
+
+    .highlight-wrap {
+      position: relative;
+    }
+  </style>
+  
+  <script>
+    $('.highlight').each(function (i, e) {
+      var $wrap = $('<div>').addClass('highlight-wrap')
+      $(e).after($wrap)
+      $wrap.append($('<button>').addClass('copy-btn').append('复制').on('click', function (e) {
+        var code = $(this).parent().find('.code').find('.line').map(function (i, e) {
+          return $(e).text()
+        }).toArray().join('\n')
+        var ta = document.createElement('textarea')
+        document.body.appendChild(ta)
+        ta.style.position = 'absolute'
+        ta.style.top = '0px'
+        ta.style.left = '0px'
+        ta.value = code
+        ta.select()
+        ta.focus()
+        var result = document.execCommand('copy')
+        document.body.removeChild(ta)
+        
+          if(result)$(this).text('复制成功')
+          else $(this).text('复制失败')
+        
+        $(this).blur()
+      })).on('mouseleave', function (e) {
+        var $b = $(this).find('.copy-btn')
+        setTimeout(function () {
+          $b.text('复制')
+        }, 300)
+      }).append(e)
+    })
+  </script>
+
+</body>
+</html>
