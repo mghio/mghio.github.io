@@ -112,7 +112,7 @@
 <meta property="og:image" content="http://pic.cnw.me/imgs/2020/05/b28c67cf63ad28cb.png">
 <meta property="og:image" content="http://pic.cnw.me/imgs/2020/05/c37973b5619d90a3.png">
 <meta property="og:image" content="http://pic.cnw.me/imgs/2020/05/6d3fb2245c19ecf2.png">
-<meta property="og:updated_time" content="2020-05-17T09:20:01.905Z">
+<meta property="og:updated_time" content="2020-05-17T09:42:06.027Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="如何在一台计算机上安装多个 JDK 版本">
 <meta name="twitter:description" content="前言对于使用 Java 语言开发的朋友可能会遇到这种情况，有时想学习和探索 Java 的最新版本提供的一些新特性，比如 Java 11，但你无法将其安装在自己的计算机上，因为你的团队正在使用比这个旧的版本（我们目前用的 Java 8)，你并不想影响目前的项目。或者你目前是在维护和开发多个项目，而这些不同的项目使用的 JDK 版本不一样，比如那些维护的老项目使用的是 JDK 8，而新项目你打算使用比">
@@ -507,7 +507,7 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sdk install java 11.0.7.hs-adpt</span><br></pre></td></tr></table></figure>
 
 <p>该命令会花费一些时间，因为它会在我们的计算机上下载对应版本的 <code>JDK</code>，执行完成之后 <code>SDKman</code> 会自动给我们配置好 <code>JAVA_HOME</code> 和 <code>PATH</code> 等环境变量，可以通过 <code>Java -version</code> 命令验证。</p>
-<p><img src="http://pic.cnw.me/imgs/2020/05/0ebcf0d26ce111fa.png" alt></p>
+<p><img src="http://pic.cnw.me/imgs/2020/05/0ebcf0d26ce111fa.png" alt="sdk-install-jdk-11"></p>
 <p>现在，如果检查 <code>Java</code> 版本和 <code>JAVA_HOME</code> 环境变量，可以看到当前 <code>Java</code> 的版本已更新为 <code>11.0.7</code>。</p>
 <p><img src="http://pic.cnw.me/imgs/2020/05/a3a8fce8f227dbbb.png" alt="java-version-verify"></p>
 <p>可以使用以下命令来设置默认使用的 <code>JDK</code> 版本。</p>
