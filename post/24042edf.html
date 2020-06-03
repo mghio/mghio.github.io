@@ -110,7 +110,7 @@
 <meta property="og:image" content="https://i.loli.net/2020/05/30/U6nTHWx7YDQ3uLe.png">
 <meta property="og:image" content="https://i.loli.net/2020/05/30/waKFURI1tvhi5Ex.png">
 <meta property="og:image" content="https://i.loli.net/2020/05/31/YnuEAzr7OpHPhVW.png">
-<meta property="og:updated_time" content="2020-05-31T01:26:10.899Z">
+<meta property="og:updated_time" content="2020-06-03T08:03:59.893Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="一文让你快速上手 Mockito 单元测试框架">
 <meta name="twitter:description" content="前言在计算机编程中，单元测试是一种软件测试方法，通过该方法可以测试源代码的各个单元功能是否适合使用。为代码编写单元测试有很多好处，包括可以及早的发现代码错误，促进更改，简化集成，方便代码重构以及许多其它功能。使用 Java 语言的朋友应该用过或者听过 Junit 就是用来做单元测试的，那么为什么我们还需要 Mockito 测试框架呢？想象一下这样的一个常见的场景，当前要测试的类依赖于其它一些类对象">
@@ -535,7 +535,7 @@
 
 <p>结果是编译通过，但是在运行时报错：</p>
 <p><img src="https://i.loli.net/2020/05/30/9zc3GyJoeQ8gB5v.png" alt="mockito_when_method_runtime_error.png"></p>
-<p>从错误提示可以看出，<code>when</code> 方法需要一个方法调用的参数，实际上它只需要 <code>more</code> 对象方法调用在 <code>when</code> 方法之前就行，我们看看下面这个测试代码：</p>
+<p>从错误提示可以看出，<code>when</code> 方法需要一个方法调用的参数，实际上它只需要 <code>mock</code> 对象方法调用在 <code>when</code> 方法之前就行，我们看看下面这个测试代码：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test_mockitoWhenMethod</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  String expectedResult = <span class="string">"Mocked mghio"</span>;</span><br><span class="line">  mockTarget.foo(<span class="string">"mghio"</span>);</span><br><span class="line">  when(<span class="string">"Hello, I am mghio"</span>).thenReturn(expectedResult);</span><br><span class="line">  String actualResult = mockTarget.foo(<span class="string">"mghio"</span>);</span><br><span class="line">  assertEquals(expectedResult, actualResult);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>以上代码可以正常测试通过，结果如下：</p>
