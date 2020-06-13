@@ -107,13 +107,13 @@
 <meta property="og:image" content="https://i.loli.net/2020/06/09/qXP56i3JgYTufko.png">
 <meta property="og:image" content="https://i.loli.net/2020/06/09/l93fx5haFmQLzpI.png">
 <meta property="og:image" content="https://i.loli.net/2020/06/09/dXMSofuRgi3pahe.png">
-<meta property="og:image" content="https://i.loli.net/2020/06/09/uoZrdCaXxeQjTUs.png">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/13482422-21a10972726df6ba.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="https://i.loli.net/2020/06/09/DwHVCAzUjbBtNI1.png">
 <meta property="og:image" content="https://i.loli.net/2020/06/09/QqUlTD3OG8HxCP9.png">
-<meta property="og:image" content="https://i.loli.net/2020/06/09/MmZJrfan34hEjKt.png">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/13482422-9a7cea5cd098de92.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="https://i.loli.net/2020/06/10/uWSsLgIhDxn5Bzm.png">
 <meta property="og:image" content="https://i.loli.net/2020/06/10/fhGQElDjSNeC8zn.png">
-<meta property="og:updated_time" content="2020-06-11T13:52:13.721Z">
+<meta property="og:updated_time" content="2020-06-13T10:59:03.430Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Java 中队列同步器 AQS（AbstractQueuedSynchronizer）实现原理">
 <meta name="twitter:description" content="前言在 Java 中通过 锁 来控制多个线程对共享资源的访问，使用 Java 编程语言开发的朋友都知道，可以通过 synchronized 关键字来实现锁的功能，它可以隐式的获取锁，也就是说我们使用该关键字并不需要去关心锁的获取和释放过程，但是在提供方便的同时也意味着其灵活性的下降。例如，有这样的一个场景，先获取锁 A，然后再获取锁 B，当锁 B 获取到之后，释放锁 A 同时获取锁 C，当获取锁">
@@ -600,7 +600,7 @@
 <p>首先获取头节点的等待状态 <code>ws</code>，如果状态值为负数（Node.SIGNAL or Node.PROPAGATE），则通过 CAS 操作将其改为初始状态（0），然后获取头节点的后继节点，如果后继节点为 <code>null</code> 或者后继节点状态为 <code>CANCELLED</code>（获取锁请求已取消），就从队列尾部开始寻找第一个状态为非 <code>CANCELLED</code> 的节点，如果该节点不为空则使用 <code>LockSupport</code> 的 <code>unpark</code> 方法将其唤醒，该方法底层是通过 <code>Unsafe</code> 类的 <code>unpark</code> 实现的。这里需要从队尾查找非 <code>CANCELLED</code> 状态的节点的原因是，在之前的获取独占锁失败时的入队 <code>addWaiter</code> 方法实现中，该方法如下：</p>
 <p><img src="https://i.loli.net/2020/06/09/dXMSofuRgi3pahe.png" alt="AQS_unparkSuccessor.png"></p>
 <p>假设一个线程执行到了上图中的 ① 处，② 处还没有执行，此时另一个线程恰好执行了 <code>unparkSuccessor</code> 方法，那么就无法通过从前向后查找了，因为节点的后继指针 <code>next</code> 还没赋值呢，所以需要从后往前进行查找。至此，独占式锁释放操作就结束了，同样的，最后我们也通过一个流程图来看看整个锁释放的过程：</p>
-<p><img src="https://i.loli.net/2020/06/09/uoZrdCaXxeQjTUs.png" alt="AQS_release.png"></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/13482422-21a10972726df6ba.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="AQS_release.png"></p>
 <h4 id="独占式可中断同步状态获取"><a href="#独占式可中断同步状态获取" class="headerlink" title="独占式可中断同步状态获取"></a>独占式可中断同步状态获取</h4><p>同步器提供了 <code>acquireInterruptibly</code> 方法来进行可响应中断的获取锁操作，方法实现源码如下：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">void</span> <span class="title">acquireInterruptibly</span><span class="params">(<span class="keyword">int</span> arg)</span></span></span><br><span class="line"><span class="function">        <span class="keyword">throws</span> InterruptedException </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (Thread.interrupted())</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> InterruptedException();</span><br><span class="line">    <span class="keyword">if</span> (!tryAcquire(arg))</span><br><span class="line">        doAcquireInterruptibly(arg);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
@@ -619,7 +619,7 @@
 <p>由以上方法实现源码可以看出，针对超时获取这里主要实现思路是：先使用当前时间加上参数传入的超时时间间隔 <code>deadline</code> 计算出超时的时间点，然后每次进行循环的时候使用超时时间点 <code>deadline</code> 减去当前时间得到剩余的时间 <code>nanosTimeout</code>，如果剩余时间小于 0 则证明当前获取锁操作已经超时，方法结束返回 <code>false</code>，反如果剩余时间大于 0。<br>可以看到在里面执行自旋的时候和上面独占式同步获取锁状态 <code>acquireQueued</code> 方法那里是一样的套路，即当当前节点的前驱节点为头节点时调用 <code>tryAcquire</code> 尝试获取锁，如果获取成功则返回。</p>
 <p><img src="https://i.loli.net/2020/06/09/QqUlTD3OG8HxCP9.png" alt="AQS_acquireQueued_doAcquireNanos_compare.png"></p>
 <p>除了超时时间计算那里不同外，还有个不同的地方就是在超时获取锁失败之后的操作，如果当前线程获取锁失败，则判断剩余超时时间 <code>nanosTimeout</code> 是否小于 0，如果小于 0 则表示已经超时方法立即返回，反之则会判断是否需要进行阻塞挂起当前线程，如果通过 <code>shouldParkAfterFailedAcquire</code> 方法判断需要挂起阻塞当前线程，还要进一步比较超时剩余时间 <code>nanosTimeout</code> 和 <code>spinForTimeoutThreshold</code> 的大小，如果小于等于 <code>spinForTimeoutThreshold</code> 值（1000 纳秒）的话，将不会使当前线程进行超时等待，而是再次进行自旋过程。<br>加后面这个判断的主要原因在于，在非常短（小于 1000 纳秒）的时间内的等待无法做到十分精确，如果这时还进行超时等待的话，反而会让我们指定 <code>nanosTimeout</code> 的超时从整体上给人感觉反而不太精确，因此，在剩余超时时间非常短的情况下，同步器会再次自旋进行超时获取锁的过程，独占式超时获取锁整个过程如下所示：</p>
-<p><img src="https://i.loli.net/2020/06/09/MmZJrfan34hEjKt.png" alt="AQS_tryAcquireNanos_flow.png"></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/13482422-9a7cea5cd098de92.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="AQS_tryAcquireNanos_flow.png"></p>
 <h4 id="共享式同步状态获取与释放"><a href="#共享式同步状态获取与释放" class="headerlink" title="共享式同步状态获取与释放"></a>共享式同步状态获取与释放</h4><p><code>共享锁</code>顾名思义就是可以多个线程共用一个锁，在同步器中使用 <code>acquireShared</code> 来获取共享锁（同步状态），方法源码如下：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">void</span> <span class="title">acquireShared</span><span class="params">(<span class="keyword">int</span> arg)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (tryAcquireShared(arg) &lt; <span class="number">0</span>)</span><br><span class="line">        doAcquireShared(arg);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
