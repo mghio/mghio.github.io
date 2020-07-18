@@ -114,7 +114,7 @@
 <meta property="og:image" content="https://i.loli.net/2020/07/18/7amFw9g5VnkRlJO.jpg">
 <meta property="og:image" content="https://i.loli.net/2020/07/18/8IADrG5voFPEqSb.jpg">
 <meta property="og:image" content="https://i.loli.net/2020/07/18/D8Wy2mT3FrVzOdg.jpg">
-<meta property="og:updated_time" content="2020-07-18T09:39:48.484Z">
+<meta property="og:updated_time" content="2020-07-18T10:10:37.869Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="RabbitMQ 入门之基础概念">
 <meta name="twitter:description" content="什么是消息队列（MQ）消息是在不同应用间传递的数据。这里的消息可以非常简单，比如只包含字符串，也可以非常复杂，包含多个嵌套的对象。消息队列（Message Queue）简单来说就是一种应用程序间的通讯方式，消息发送后立即返回，然后由消息系统保证消息的可靠性传输，消息生产者只需要把消息发到 MQ 中就可以了，不需要关心消息的消费，同样，消息消费者只管从 MQ 中拉取消息而不管是谁生产的消息，通过这样">
@@ -472,9 +472,9 @@
 
       
         <h4 id="什么是消息队列（MQ）"><a href="#什么是消息队列（MQ）" class="headerlink" title="什么是消息队列（MQ）"></a>什么是消息队列（MQ）</h4><p>消息是在不同应用间传递的数据。这里的消息可以非常简单，比如只包含字符串，也可以非常复杂，包含多个嵌套的对象。消息队列（Message Queue）简单来说就是一种应用程序间的通讯方式，消息发送后立即返回，然后由消息系统保证消息的可靠性传输，消息生产者只需要把消息发到 MQ 中就可以了，不需要关心消息的消费，同样，消息消费者只管从 MQ 中拉取消息而不管是谁生产的消息，通过这样的一个“互相不知道对象存在”模式，将消息的生产者和消息的消费者解耦了。</p>
-<h4 id="什么场景下考虑使用消息队列"><a href="#什么场景下考虑使用消息队列" class="headerlink" title="什么场景下考虑使用消息队列"></a>什么场景下考虑使用消息队列</h4><p>从上面可以知道，消息队列是一种应用间的异步协作机制，那么我们什么时候需要用到 MQ 呢？以常见的订单系统为例，当用户点击「下单」后的业务逻辑可能包括：扣减库存、生成相应订单数据、发短信通知等。在项目和业务发展初期上面这些逻辑可能放在一起执行，随着业务的发展订单量的增加，需要提升系统服务的性能，此时就可以将一些不需要立即生效的操作这份出来异步执行，比如发送短信通知等。这种场景下就可以使用 MQ ，在下单主流程（比如扣减库存、生成订单数据等）完成之后发送一条消息到 MQ 让主流程快速走完，然后由另外一个线程拉取 MQ 的消息，执行相应的业务逻辑。这里的例子主要是用消息队列来解耦。</p>
+<h4 id="什么场景下考虑使用消息队列"><a href="#什么场景下考虑使用消息队列" class="headerlink" title="什么场景下考虑使用消息队列"></a>什么场景下考虑使用消息队列</h4><p>从上面可以知道，消息队列是一种应用间的异步协作机制，那么我们什么时候需要用到 MQ 呢？以常见的订单系统为例，当用户点击「下单」后的业务逻辑可能包括：扣减库存、生成相应订单数据、发短信通知等。在项目和业务发展初期上面这些逻辑可能放在一起执行，随着业务的发展订单量的增加，需要提升系统服务的性能，此时就可以将一些不需要立即生效的操作拆分出来异步执行，比如发送短信通知等。这种场景下就可以使用 MQ ，在下单主流程（比如扣减库存、生成订单数据等）完成之后发送一条消息到 MQ 让主流程快速走完，然后由另外一个线程拉取 MQ 的消息，执行相应的业务逻辑。这里的例子主要是用消息队列来解耦。</p>
 <a id="more"></a>
-<h4 id="RabbitMQ-的特点"><a href="#RabbitMQ-的特点" class="headerlink" title="RabbitMQ 的特点"></a>RabbitMQ 的特点</h4><p>RabbitMQ 是一个由 Relang 语言开发的 AMQP 的开源实现。AMQP（Advanced Message Queue：高级消息度列协议）它是应用层协议的一个开放标准，为面向消息的中间件设计，基于此协议的客户端与消息中间件可传递消息，并不受产品、开发语言等条件的限制。RabbitMQ 最初起源于消息系统，用于在分布式系统中存储转发消息，具体有如下一些特点：</p>
+<h4 id="RabbitMQ-的特点"><a href="#RabbitMQ-的特点" class="headerlink" title="RabbitMQ 的特点"></a>RabbitMQ 的特点</h4><p>RabbitMQ 是一个由 Relang 语言开发的 AMQP 的开源实现。AMQP（Advanced Message Queue：高级消息队列协议）它是应用层协议的一个开放标准，为面向消息的中间件设计，基于此协议的客户端与消息中间件可传递消息，并不受产品、开发语言等条件的限制。RabbitMQ 最初起源于消息系统，用于在分布式系统中存储转发消息，具体有如下一些特点：</p>
 <ul>
 <li><strong>可靠性：</strong> RabbitMQ 使用一些机制来保证可靠性，比如持久化、传输确认机制（ack）和发布确认等。</li>
 <li><strong>灵活的路由策略：</strong> 在消息进入队列之前，通过 Exchange 来路由消息，对于典型的路由功能，RabbitMQ 已经提供了一些内置的 Exchange 来实现。针对复杂的路由功能，可以将多个 Exchange 绑在一起，也通过插件机制实现自己的 Exchange。</li>
