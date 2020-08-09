@@ -81,7 +81,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT">
+  <meta name="keywords" content="Java,RabbitMQ,">
 
 
 
@@ -94,17 +94,28 @@
 
 
 
-<meta name="description" content="Java 搬运工&amp;终身学习者。">
-<meta name="keywords" content="Java,后端博客,Spring">
-<meta property="og:type" content="website">
-<meta property="og:title" content="mghio">
-<meta property="og:url" content="https://www.mghio.cn/tags/分布式系统/index.html">
+<meta name="description" content="上一篇 RabbitMQ 入门之基础概念 介绍了 RabbitMQ 的一些基础概念，本文再来介绍其中的一些细节和其它的进阶的概念。 消息生产者发送的消息不可达时如何处理RabbitMQ 提供了消息在传递过程中无法发送到一个队列（比如根据自己的类型和路由键没有找到匹配的队列）时将消息回传给消息发送方的功能，使用 RabbitMQ 的客户端提供 channel.basicPublish 方法的两个参数">
+<meta name="keywords" content="Java,RabbitMQ">
+<meta property="og:type" content="article">
+<meta property="og:title" content="RabbitMQ 基础概念进阶">
+<meta property="og:url" content="https://www.mghio.cn/post/f92758d8.html">
 <meta property="og:site_name" content="mghio">
-<meta property="og:description" content="Java 搬运工&amp;终身学习者。">
+<meta property="og:description" content="上一篇 RabbitMQ 入门之基础概念 介绍了 RabbitMQ 的一些基础概念，本文再来介绍其中的一些细节和其它的进阶的概念。 消息生产者发送的消息不可达时如何处理RabbitMQ 提供了消息在传递过程中无法发送到一个队列（比如根据自己的类型和路由键没有找到匹配的队列）时将消息回传给消息发送方的功能，使用 RabbitMQ 的客户端提供 channel.basicPublish 方法的两个参数">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://i.loli.net/2020/08/09/iZ5cOLFDSmXQ2JI.png">
+<meta property="og:image" content="https://i.loli.net/2020/08/09/euBVbRUdAymOW26.png">
+<meta property="og:image" content="https://i.loli.net/2020/08/09/Fm54eid7fY3x2LA.png">
+<meta property="og:image" content="https://i.loli.net/2020/08/09/1Qbye6RUlTuIrWh.png">
+<meta property="og:image" content="https://i.loli.net/2020/08/09/9gNDI4QMmByiCPj.png">
+<meta property="og:image" content="https://i.loli.net/2020/08/09/alscN4d8ujVhrC5.png">
+<meta property="og:image" content="https://i.loli.net/2020/08/09/43pOqmvoZaujzli.png">
+<meta property="og:image" content="https://i.loli.net/2020/08/09/XcrHLAsvFnk2RMV.png">
+<meta property="og:image" content="https://i.loli.net/2020/08/09/Y3594Xw1IdzWxSV.png">
+<meta property="og:updated_time" content="2020-08-09T14:44:05.879Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="mghio">
-<meta name="twitter:description" content="Java 搬运工&amp;终身学习者。">
+<meta name="twitter:title" content="RabbitMQ 基础概念进阶">
+<meta name="twitter:description" content="上一篇 RabbitMQ 入门之基础概念 介绍了 RabbitMQ 的一些基础概念，本文再来介绍其中的一些细节和其它的进阶的概念。 消息生产者发送的消息不可达时如何处理RabbitMQ 提供了消息在传递过程中无法发送到一个队列（比如根据自己的类型和路由键没有找到匹配的队列）时将消息回传给消息发送方的功能，使用 RabbitMQ 的客户端提供 channel.basicPublish 方法的两个参数">
+<meta name="twitter:image" content="https://i.loli.net/2020/08/09/iZ5cOLFDSmXQ2JI.png">
 
 
 
@@ -134,13 +145,13 @@
 
 
 
-  <link rel="canonical" href="https://www.mghio.cn/tags/分布式系统/">
+  <link rel="canonical" href="https://www.mghio.cn/post/f92758d8.html">
 
 
 
 
 
-  <title>标签: 分布式系统 | mghio</title>
+  <title>RabbitMQ 基础概念进阶 | mghio</title>
   
 
 
@@ -159,7 +170,7 @@
     
   
 
-  <div class="container sidebar-position-left ">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -295,52 +306,329 @@
           <div id="content" class="content">
             
 
-  
-  
-  
-  <div class="post-block tag">
+  <div id="posts" class="posts-expand">
+    
 
-    <div id="posts" class="posts-collapse">
-      <div class="collection-title">
-        <h2>分布式系统<small>标签</small>
-        </h2>
-      </div>
+  
 
-      
-        
+  
+  
+  
 
   <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://www.mghio.cn/post/f92758d8.html">
 
-      <h3 class="post-title">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="mghio">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="https://i.loli.net/2020/01/12/8qITJvhw2R9HN7M.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="mghio">
+    </span>
+
+    
+      <header class="post-header">
+
         
-            <a class="post-title-link" href="/post/11cb7677.html" itemprop="url">
-              
-                <span itemprop="name">分布式系统之 — CAP 定理</span>
-              
-            </a>
         
-      </h3>
+          <h2 class="post-title" itemprop="name headline">RabbitMQ 基础概念进阶</h2>
+        
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2020-02-29T09:12:06+08:00" content="2020-02-29">
-          02-29
-        </time>
-      </div>
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-08-09T22:28:00+08:00">
+                2020-08-09
+              </time>
+            
 
-    </header>
-  </article>
+            
 
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/RabbitMQ/" itemprop="url" rel="index">
+                    <span itemprop="name">RabbitMQ</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/RabbitMQ/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/post/f92758d8.html#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="post/f92758d8.html" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-eye"></i>  本文总阅读量
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>次
+            </span>
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  3k 字
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  10 分钟
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>上一篇 <a href="https://www.mghio.cn/post/c34b451f.html">RabbitMQ 入门之基础概念</a> 介绍了 RabbitMQ 的一些基础概念，本文再来介绍其中的一些细节和其它的进阶的概念。</p>
+<h4 id="消息生产者发送的消息不可达时如何处理"><a href="#消息生产者发送的消息不可达时如何处理" class="headerlink" title="消息生产者发送的消息不可达时如何处理"></a>消息生产者发送的消息不可达时如何处理</h4><p>RabbitMQ 提供了消息在传递过程中无法发送到一个队列（比如根据自己的类型和路由键没有找到匹配的队列）时将消息回传给消息发送方的功能，使用 RabbitMQ 的客户端提供 <code>channel.basicPublish</code> 方法的两个参数 <code>mandatory</code> 和 <code>immediate</code> (RabbitMQ 3.0 以下版本)，除此之外还提供了一个备份交换器可以将无法发送的消息存储起来处理，不用重新传回给发送方。</p>
+<a id="more"></a>
+<h5 id="1-1-mandatory-参数"><a href="#1-1-mandatory-参数" class="headerlink" title="1.1 mandatory 参数"></a>1.1 mandatory 参数</h5><p>mandatory 被定义在 RabbitMQ 提供的客户端的 <code>channel.basicPublish</code> 方法中，如下所示：</p>
+<p><img src="https://i.loli.net/2020/08/09/iZ5cOLFDSmXQ2JI.png" alt="rabbitmq_advanced_1.png"></p>
+<p>当把方法的 mandatory 参数设置为 <code>true</code> 时，那么会在交换器无法根据自身的类型和路由键找到一个符合要求的队列时，RabbitMQ 会自动调用 <code>Basic.Return</code> 把该消息回传给发送方也就是我们的消息生产者。反之，如果设置为 <code>false</code> 的话，消息就会被直接丢弃掉。那么问题来了，我们要如何去获取这些没有被发送出去的消息呢？RabbitMQ 给我们提供了事件监听机制来获取这种消息，可以通过 <code>addReturnListener</code> 方法添加一个 <code>ReturnListener</code> 来获取这种未发送到队列的消息，如下所示：</p>
+<p><img src="https://i.loli.net/2020/08/09/euBVbRUdAymOW26.png" alt="rabbitmq_advanced_2.png"></p>
+<p>通过查看 ReturnListener 接口的源码可以看到，该接口只有一个方法，如果是 JDK8+ 的版本的话可以使用 Lambda 表达式来简化一些代码。</p>
+<p>可以看出，当设置了 mandatory 参数时，还必须为生产者同时添加 ReturnListener 监听器的编程逻辑，这样就会使得生产者的代码变得更加复杂了，为了处理这种情况，RabbitMQ 提供了 <code>备份交换器</code> 来将没有成功路由出去的消息存储起来，当我们需要的时候再去处理即可。</p>
+<h5 id="1-2-immediate-参数"><a href="#1-2-immediate-参数" class="headerlink" title="1.2 immediate 参数"></a>1.2 immediate 参数</h5><p>该的参数同样也是在<code>channel.basicPublish</code> 方法中定义的，其官方描述如下：</p>
+<blockquote>
+<p>This flag tells the server how to react if the message cannot be routed to a queue consumer immediately. If this flag is set, the server will return an undeliverable message with a Return method. If this flag is zero, the server will queue the message, but with no guarantee that it will ever be consumed.</p>
+</blockquote>
+<p>当把 immediate 参数设置为 true 时，如果交换器根据其类型和路由键找到符合要求的队列时，发现所有队列上没有任何消费者，则该消息并不会存入到队列中，会通过 Basic.Return 命令把消息回传给生产者。简而言之也就是说，当设置了 immediate 参数时，该消息关联的队列上存在消费者时，会立即发送消息到该队列中，反之如果匹配的队列上不存在任何消费者，则直接把消息回传给生产者。这里有一点需要注意的是：从 RabbitMQ 3.0 + 已经去除了该参数。</p>
+<h4 id="如何对消息和队列设置过期时间-（TTL）"><a href="#如何对消息和队列设置过期时间-（TTL）" class="headerlink" title="如何对消息和队列设置过期时间 （TTL）"></a>如何对消息和队列设置过期时间 （TTL）</h4><p>TTL 是 time to live 首字母的简称，RabbitMQ 中可以设置消息和队列的过期时间，我们先来看看要如何设置消息的过期时间。</p>
+<h5 id="1-1-消息-TTL-设置"><a href="#1-1-消息-TTL-设置" class="headerlink" title="1.1 消息 TTL 设置"></a>1.1 消息 TTL 设置</h5><p>RabbitMQ 提供了两种设置消息的过期时间，第一种是通过队列的属性设置，该方式的特点就是队列中所有消息的过期时间都一致。还有一种是更小粒度的设置，就是对每条消息单独设置过期时间，这种方式更加灵活，每条消息的过期时间都可以不一样。这是你可能会问，如果同时设置了队列的过期属性和消息本身的过期属性，最终以哪个为准呢？结果是 RabbitMQ 会比较这两个 TTL 的值大小，以较小的那个为准。很容易想到，通过队列的属性的方式设置过期时间的话是在声明队列的时候指定，对应到客户端就是其提供的 <code>channel.queueDeclare</code> 方法的参数 arguments 指定，示例代码如下：</p>
+<p><img src="https://i.loli.net/2020/08/09/Fm54eid7fY3x2LA.png" alt="rabbitmq_advanced_3.png"></p>
+<p>需要注意的是 <code>x-message-ttl</code> 参数的单位是毫秒。如果不设置 TLL，则表示该消息不会过期，如果将 TTL 设置为 0，表示除非此时可以把消息直接发送投递到消费者端去，否则就会直接丢弃该消息。</p>
+<p>准对每条消息设置 TTL 的方法是在发送消息的时候设置的，对应到客户端方法是 <code>channel.basicPublish</code> 的 expiration 属性参数，具体设置代码如下：</p>
+<p><img src="https://i.loli.net/2020/08/09/1Qbye6RUlTuIrWh.png" alt="rabbitmq_advanced_4.png"></p>
+<p>这种设置方式，即使队列过期也不会立即从队列中移除，因为每条消息是否过期的判定是在发送到消费者是才进行的，如果此时发现已经过期才会删除消息。而对于第一种方式则会把已经过期的消息移到队列头部，然后 RabbitMQ 只要定期的从头开始扫描是否存在过期的消息即可。</p>
+<h5 id="1-2-队列-TTL-设置"><a href="#1-2-队列-TTL-设置" class="headerlink" title="1.2 队列 TTL 设置"></a>1.2 队列 TTL 设置</h5><p>设置队列的过期时间使用的是客户端的 <code>channel.queueDeclare</code> 方法参数中的 <code>x-expires</code> 参数，其单位同样也是毫秒，不过需要注意的是它不能设置为 0。设置队列过期的代码如下所示：</p>
+<p><img src="https://i.loli.net/2020/08/09/9gNDI4QMmByiCPj.png" alt="rabbitmq_advanced_5.png"></p>
+<p>上面代码创建了一个过期时间为 15 分钟的队列。</p>
+<h4 id="死信队列介绍"><a href="#死信队列介绍" class="headerlink" title="死信队列介绍"></a>死信队列介绍</h4><p>死信交换器（DLX）的全称是 <code>Dead-Letter-Exchange</code> ，也称之为死信邮箱。简单来说就是当一个消息由于 <code>消息被拒绝</code> 、 <code>消息过期</code> 、 <code>队列达到最大长度</code> 时，变成死信（dead message）之后，会被重新发送到一个交换器中，这个交换器就是死信交换器，绑定在这个交换器上的队列就称之为死信队列。死信交换器实际上就是平常的交换器，可以在任何队列上指定，当在一个队列上设置死信交换器后，如果该队列出现死信时就会被 RabbitMQ 把死信消息重新发送到死信交换器上去，然后路由到死信队列中，我们可以监听这个队列来处理那些死信消息。为一个队列设置死信交换器是在生产者的声明队列的方法中设置 <code>x-dead-letter-message</code> 参数来实现的，如下所示：</p>
+<p><img src="https://i.loli.net/2020/08/09/alscN4d8ujVhrC5.png" alt="rabbitmq_advanced_6.png"></p>
+<p>同时也可以通过 <code>x-dead-letter-routing-key</code> 参数设置死信交互器的路由键，不设置默认使用原始度列的路由键。可以到 RabbitMQ 的后台管理界面，有 <code>DLX</code> 标志的就是死信队列。</p>
+<p><img src="https://i.loli.net/2020/08/09/43pOqmvoZaujzli.png" alt="rabbitmq_advanced_7.png"></p>
+<p>RabbitMQ 提供的 DLX 是个比较实用的功能特性，它可以在我们消息不能被消费者正确消费的情况下放入到死信队列，后续我们可以通过这个死信队列的内容来查看异常情况来改造和优化系统。</p>
+<h4 id="延迟队列介绍"><a href="#延迟队列介绍" class="headerlink" title="延迟队列介绍"></a>延迟队列介绍</h4><p>顾名思义，延迟队列存储的是哪些需要等待指定时间后才能拿到的延迟消息，一个比较典型的场景就是订单 30 分钟后未支付取消订单。这里需要注意的是，在 RabbitMQ 中并没有直接提供延迟队列的功能，而是需要通过上面介绍的过期时间（TTL）和死信队列一起来实现，比如超时取消订单这个场景，我们可以让消费者订阅死信队列，设置正常的那个队列的超时时间为 30 分钟并绑定到该死信队列上，当消息超过 30 分钟未被处理后消息就会把发送到死信队列中，然后死信队列的消费者就可以在 30 分钟后成功的消费到该消息了。</p>
+<p><img src="https://i.loli.net/2020/08/09/XcrHLAsvFnk2RMV.png" alt="rabbitmq_advanced_8.png"></p>
+<p>同时当我们有其它的超时配置需求时也很方便扩展，比如可以在生产者发送消息的时候通过设置不同的路由键，通过路由键来将消息发送到与交换器绑定的不同队列中，然后这些队列分别设置不同的过期时间和与之相对应的死信队列，当消息过期时就会被 RabbitMQ 转发到相应的死信队列中，这样就可以去订阅相应的死信队列即可。</p>
+<h4 id="交换器、消息和队列持久化"><a href="#交换器、消息和队列持久化" class="headerlink" title="交换器、消息和队列持久化"></a>交换器、消息和队列持久化</h4><p>持久化可以提高可靠性，可以防止宕机或者重启等异常下数据的丢失，RabbitMQ 的持久化从组成结构上可以分为三个部分，即交换器持久化、消息持久化和队列持久化。</p>
+<h5 id="1-1-交换器持久化"><a href="#1-1-交换器持久化" class="headerlink" title="1.1 交换器持久化"></a>1.1 交换器持久化</h5><p>交换器持久化是在声明交换器时将 durable 参数设置为 true 来实现的。如果不设置持久化属性的话，当 RabbitMQ 服务重启后交换器的数据就会丢失，需要注意的是，是交换器的数据丢失，消息不会丢失，只是不能将消息发送到这个交换器中了，一般生产环境使用都会把该属性设置为持久化。</p>
+<h5 id="1-2-消息持久化"><a href="#1-2-消息持久化" class="headerlink" title="1.2 消息持久化"></a>1.2 消息持久化</h5><p>交换器的持久化仅仅只是保证了交换器本身的元数据不会丢失，无法保证其存储的消息不会丢失，如果需要其内部存储的消息不丢失，则需要设置消息的持久化，通过将消息的投递模式(deliveryMode)设置为 2 即可实现消息的持久化，如下所示：</p>
+<p><img src="https://i.loli.net/2020/08/09/Y3594Xw1IdzWxSV.png" alt="rabbitmq_advanced_9.png"></p>
+<p>需要消息持久化的前提是其所在的队列也要设置持久化，假如仅仅只设置消息的持久化的话，RabbitMQ 重启之后队列消失，然后消息也会丢失。这里有点需要注意一下，虽然持久化可以提高可靠性，但是持久化是将数据存储到硬盘上，比直接操作内存要慢很多，所以对于哪些可靠性要求不高的业务不需要进行持久化。</p>
+<h5 id="1-3-队列持久化"><a href="#1-3-队列持久化" class="headerlink" title="1.3 队列持久化"></a>1.3 队列持久化</h5><p>队列的持久化的设置和交换器持久化类似，同样也是在声明的时候通过 durable 参数设置为 true 实现的，如果不设置，当 RabbitMQ 重启后，相关的队列元数据也会丢失，相应的其存储的消息也会随之丢失掉。</p>
+<p>将交换器、队列、消息都设置了持久化之后就能百分之百保证数据不丢失了吗？其实无法保证百分之百数据不丢失。比如消费者在订阅消费队列时将自动应答（autoAck）参数设置为 true 的话，在接收到消息后还没来得及处理就挂了，这时需要把自动应答设置 false，进行手动 ack 应答即可。还有一个就是由于不是实时持久化存盘，当消息存盘的过程中 RabbitMQ 宕机了，此时也会发生数据丢失，此时需要通过 RabbitMQ 的 <code>镜像队列机制</code> 来处理了。</p>
+<h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><p>本文主要介绍了一些参数具体使用时的设置细节和死信队列、延迟队列以及持久化等，还有一些比较重要的点没有涉及到，比如消息确认机制。“纸上得来终觉浅，绝知此事要躬行”，在了解一些基础的概念之后还是需要通过具体编码实践才能对其更加理解深刻。</p>
 
       
     </div>
+    
+    
+    
 
+    
+      <div>
+          <div>  <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-smile-o"></i>感谢您的阅读-------------</div>  </div>
+      </div>
+    
+
+    
+      <div>
+        <div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="https://i.loli.net/2020/01/12/tXKpok8JAqQZ7ER.jpg" alt="mghio wechat" style="width: 200px; max-width: 100%;">
+    <div>微信公众号「mghio」</div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>请我吃🍗</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="https://i.loli.net/2020/01/12/jznfu23QkaIXgTt.jpg" alt="mghio 微信打赏">
+        <p>微信打赏</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="https://i.loli.net/2020/01/12/ihvqOG2TMjkItyU.jpg" alt="mghio 支付宝打赏">
+        <p>支付宝打赏</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    mghio  |  微信公众号「mghio」
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://www.mghio.cn/post/f92758d8.html" title="RabbitMQ 基础概念进阶">https://www.mghio.cn/post/f92758d8.html</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Java/" rel="tag"># Java</a>
+          
+            <a href="/tags/RabbitMQ/" rel="tag"># RabbitMQ</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/post/c34b451f.html" rel="next" title="RabbitMQ 入门之基础概念">
+                <i class="fa fa-chevron-left"></i> RabbitMQ 入门之基础概念
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
+  </article>
 
-  
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -348,6 +636,20 @@
 
 
           
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    </div>
+
+  
+
+
 
         </div>
         
@@ -368,8 +670,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -623,6 +934,22 @@
       </section>
 
       
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#消息生产者发送的消息不可达时如何处理"><span class="nav-number">1.</span> <span class="nav-text">消息生产者发送的消息不可达时如何处理</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-1-mandatory-参数"><span class="nav-number">1.1.</span> <span class="nav-text">1.1 mandatory 参数</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#1-2-immediate-参数"><span class="nav-number">1.2.</span> <span class="nav-text">1.2 immediate 参数</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#如何对消息和队列设置过期时间-（TTL）"><span class="nav-number">2.</span> <span class="nav-text">如何对消息和队列设置过期时间 （TTL）</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-1-消息-TTL-设置"><span class="nav-number">2.1.</span> <span class="nav-text">1.1 消息 TTL 设置</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#1-2-队列-TTL-设置"><span class="nav-number">2.2.</span> <span class="nav-text">1.2 队列 TTL 设置</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#死信队列介绍"><span class="nav-number">3.</span> <span class="nav-text">死信队列介绍</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#延迟队列介绍"><span class="nav-number">4.</span> <span class="nav-text">延迟队列介绍</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#交换器、消息和队列持久化"><span class="nav-number">5.</span> <span class="nav-text">交换器、消息和队列持久化</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-1-交换器持久化"><span class="nav-number">5.1.</span> <span class="nav-text">1.1 交换器持久化</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#1-2-消息持久化"><span class="nav-number">5.2.</span> <span class="nav-text">1.2 消息持久化</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#1-3-队列持久化"><span class="nav-number">5.3.</span> <span class="nav-text">1.3 队列持久化</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#总结"><span class="nav-number">6.</span> <span class="nav-text">总结</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
 
       
 
@@ -779,6 +1106,10 @@
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 
@@ -796,6 +1127,18 @@
       <script id="dsq-count-scr" src="https://mghio.disqus.com/count.js" async></script>
     
 
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'https://www.mghio.cn/post/f92758d8.html';
+          this.page.identifier = 'post/f92758d8.html';
+          this.page.title = 'RabbitMQ 基础概念进阶';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://mghio.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
     
 
   
