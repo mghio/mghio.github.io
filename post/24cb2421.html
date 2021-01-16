@@ -108,7 +108,7 @@
 <meta property="og:image" content="https://i.loli.net/2020/11/29/ux1cEOAGQoqD9h8.png">
 <meta property="og:image" content="https://i.loli.net/2020/11/29/wOijZNT8cAlMY1r.png">
 <meta property="og:image" content="https://i.loli.net/2020/11/29/CK8HgDEuWTIFU45.png">
-<meta property="og:updated_time" content="2020-11-29T07:58:43.606Z">
+<meta property="og:updated_time" content="2021-01-16T12:52:41.291Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="如何实现一个简易版的 Spring - 如何实现 Setter 注入">
 <meta name="twitter:description" content="前言之前在 上篇 提到过会实现一个简易版的 IoC 和 AOP，今天它终于来了。。。相信对于使用 Java 开发语言的朋友们都使用过或者听说过 Spring 这个开发框架，绝大部分的企业级开发中都离不开它，通过 官网 可以了解到其生态非常庞大，针对不同方面的开发提供了一些解决方案，可以说 Spring 框架的诞生是对 Java 开发人员的一大福利，自 2004 年发布以来，Spring 为了解决一">
@@ -474,7 +474,7 @@
 <p><img src="https://i.loli.net/2020/11/28/YnDv6MqHVNwTAg5.png" alt="spring-injection-beanfactory-2.png"></p>
 <p>接下来面临的一个问题就是，像 <code>XML</code> 这种配置文件资源要如何表示呢，这些配置对于程序来说是一种资源，可以统一抽象为 <code>Resource</code>，然后提供一个返回资源对应流（<code>InputStream</code>）对象接口，这种资源可以从项目中获取、本地文件获取甚至是从远程获取，它们都是一种 <code>Resource</code>，结构如下：</p>
 <p><img src="https://i.loli.net/2020/11/29/GBP2M3aZLhbfcm5.png" alt="spring-injection-resource-3.png"></p>
-<p>最后就是要一个提供去组合调用上面的那些类去完成 <code>XML</code> 配置文件解析为 <code>BeanDefinition</code> 并注入到容器中了的功能，担任这程序上下文的职责，将其命名为 <code>ApplicationContext</code>，这里同样也可以根据 <code>Resource</code> 的类型分为多种不同的类，比如：<code>FileSystmXmlApplicationContext</code>、<code>ClassPathXmlApplicationContext</code> 等，这些内部都有一个将配置文件转换为 <code>Resource</code> 的过程，可以使用 <a href="https://en.wikipedia.org/wiki/Template_method_pattern" target="_blank" rel="noopener">模板方法</a> 抽象出一个公共父类抽象类，如下所示:</p>
+<p>最后就是要一个提供去组合调用上面的那些类去完成 <code>XML</code> 配置文件解析为 <code>BeanDefinition</code> 并注入到容器中了的功能，担任着程序上下文的职责，将其命名为 <code>ApplicationContext</code>，这里同样也可以根据 <code>Resource</code> 的类型分为多种不同的类，比如：<code>FileSystmXmlApplicationContext</code>、<code>ClassPathXmlApplicationContext</code> 等，这些内部都有一个将配置文件转换为 <code>Resource</code> 的过程，可以使用 <a href="https://en.wikipedia.org/wiki/Template_method_pattern" target="_blank" rel="noopener">模板方法</a> 抽象出一个公共父类抽象类，如下所示:</p>
 <p><img src="https://i.loli.net/2020/11/29/ux1cEOAGQoqD9h8.png" alt="spring-injection-applicationcontext.png"></p>
 <p>总结以上分析结果，得出初步类图设计如下：</p>
 <p><img src="https://i.loli.net/2020/11/29/wOijZNT8cAlMY1r.png" alt="spring-injection-all-4.png"></p>
@@ -966,7 +966,7 @@
     <footer id="footer" class="footer">
       <div class="footer-inner">
         <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-<div class="copyright">&copy; 2019 &mdash; <span itemprop="copyrightYear">2020</span>
+<div class="copyright">&copy; 2019 &mdash; <span itemprop="copyrightYear">2021</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
