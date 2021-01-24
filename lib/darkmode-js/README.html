@@ -1,0 +1,110 @@
+<h1 id="Darkmode-js"><a href="#Darkmode-js" class="headerlink" title="Darkmode.js"></a>Darkmode.js</h1><p><a href="https://npmjs.com/package/darkmode-js"><img src="https://img.shields.io/npm/v/darkmode-js/latest.svg" alt="npm version"></a><br><a href="https://npmjs.com/package/darkmode-js"><img src="https://img.shields.io/npm/dt/darkmode-js.svg" alt="npm downloads"></a><br><a href="./LICENSE"><img src="https://img.shields.io/npm/l/darkmode-js.svg" alt="License"></a><br><a href="https://medium.com/@sandoche"><img src="https://badgen.net/badge/icon/medium?icon=medium&label" alt="Medium Badge"></a><br><a href="https://twitter.com/sandochee"><img src="https://img.shields.io/twitter/follow/sandochee.svg?style=social" alt="Twitter: sandochee"></a></p>
+<p>🌓 Add a Dark Mode / Night Mode to your website in a few seconds</p>
+<p>This library uses the CSS <code>mix-blend-mode</code> to bring Dark Mode to any of your websites.<br>Just copy-paste the snippet and you will get a widget to turn on and off the Dark Mode. You can also use it without the widget programmatically. The plugin is lightweight, built-in Vanilla.<br>It also uses local storage by default, so your last setting will be remembered!</p>
+<p>I have been inspired by this article: <a href="https://dev.wgao19.cc/2019-05-04__sun-moon-blending-mode/">https://dev.wgao19.cc/2019-05-04__sun-moon-blending-mode/</a></p>
+<h2 id="Features"><a href="#Features" class="headerlink" title="Features"></a>Features</h2><ul>
+<li>Widget appears automatically</li>
+<li>Saving users choice</li>
+<li>Automatically shows Darkmode if the OS preferred theme is dark (if the browsers support <code>prefers-color-scheme</code>)</li>
+<li>Can be used programmatically without widget</li>
+</ul>
+<h2 id="✨-Demo"><a href="#✨-Demo" class="headerlink" title="✨ Demo"></a>✨ Demo</h2><p>Check out the demo in these websites: </p>
+<ul>
+<li><a href="https://darkmodejs.learn.uno">https://darkmodejs.learn.uno</a></li>
+<li><a href="https://tradivegan.com">https://tradivegan.com</a> (with custom label)</li>
+<li><a href="https://what.toeat.in">https://what.toeat.in</a> (with custom label)</li>
+<li><a href="https://www.kanbanote.com">https://www.kanbanote.com</a> (without the widget, once logged in)</li>
+<li><a href="https://www.sandoche.com">https://www.sandoche.com</a> (with custom label)</li>
+<li><a href="https://pilab.dev">https://pilab.dev</a> (without the widget, with a custom toggle button)</li>
+</ul>
+<h2 id="Wordpress-plugins"><a href="#Wordpress-plugins" class="headerlink" title="Wordpress plugins"></a>Wordpress plugins</h2><p>If you are using Wordpress you may want to have a look at these plugins based on Darkmode.js:</p>
+<ul>
+<li><a href="https://wordpress.org/plugins/blackout-darkmode-widget/">https://wordpress.org/plugins/blackout-darkmode-widget/</a></li>
+<li><a href="https://wordpress.org/plugins/darkmode/">https://wordpress.org/plugins/darkmode/</a></li>
+</ul>
+<h2 id="Nuxt-js-module"><a href="#Nuxt-js-module" class="headerlink" title="Nuxt.js module"></a>Nuxt.js module</h2><p>If you are using Nuxt.js there is a module for Darkmode.js:</p>
+<ul>
+<li><a href="https://github.com/sandoche/nuxtjs-darkmode-js-module">https://github.com/sandoche/nuxtjs-darkmode-js-module</a></li>
+</ul>
+<h2 id="📖-How-to-use"><a href="#📖-How-to-use" class="headerlink" title="📖 How to use"></a>📖 How to use</h2><p>Darkmode.js is very easy to use, just copy-paste the following code or use the npm package.</p>
+<h3 id="🚀-Easy-way-using-the-JSDelivr-CDN"><a href="#🚀-Easy-way-using-the-JSDelivr-CDN" class="headerlink" title="🚀 Easy way (using the JSDelivr CDN)"></a>🚀 Easy way (using the JSDelivr CDN)</h3><p>Just add this code to your HTML page:</p>
+<pre><code class="html"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"https://cdn.jsdelivr.net/npm/darkmode-js@1.5.7/lib/darkmode-js.min.js"</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span>
+<span class="tag">&lt;<span class="name">script</span>&gt;</span>
+<span class="javascript">  <span class="function"><span class="keyword">function</span> <span class="title">addDarkmodeWidget</span>(<span class="params"></span>) </span>{</span>
+<span class="javascript">    <span class="keyword">new</span> Darkmode().showWidget();</span>
+  }
+<span class="javascript">  <span class="built_in">window</span>.addEventListener(<span class="string">'load'</span>, addDarkmodeWidget);</span>
+<span class="tag">&lt;/<span class="name">script</span>&gt;</span></code></pre>
+<h3 id="📦-Using-NPM"><a href="#📦-Using-NPM" class="headerlink" title="📦 Using NPM"></a>📦 Using NPM</h3><pre><code class="sh">npm install darkmode-js</code></pre>
+<p>Then add the following JavaScript code:</p>
+<pre><code class="javascript"><span class="keyword">import</span> Darkmode <span class="keyword">from</span> <span class="string">'darkmode-js'</span>;
+
+<span class="keyword">new</span> Darkmode().showWidget();</code></pre>
+<h2 id="⚙️-Options"><a href="#⚙️-Options" class="headerlink" title="⚙️ Options"></a>⚙️ Options</h2><p>Here are the option availables:</p>
+<pre><code class="javascript"><span class="keyword">const</span> options = {
+  bottom: <span class="string">'64px'</span>, <span class="comment">// default: '32px'</span>
+  right: <span class="string">'unset'</span>, <span class="comment">// default: '32px'</span>
+  left: <span class="string">'32px'</span>, <span class="comment">// default: 'unset'</span>
+  time: <span class="string">'0.5s'</span>, <span class="comment">// default: '0.3s'</span>
+  mixColor: <span class="string">'#fff'</span>, <span class="comment">// default: '#fff'</span>
+  backgroundColor: <span class="string">'#fff'</span>,  <span class="comment">// default: '#fff'</span>
+  buttonColorDark: <span class="string">'#100f2c'</span>,  <span class="comment">// default: '#100f2c'</span>
+  buttonColorLight: <span class="string">'#fff'</span>, <span class="comment">// default: '#fff'</span>
+  saveInCookies: <span class="literal">false</span>, <span class="comment">// default: true,</span>
+  label: <span class="string">'🌓'</span>, <span class="comment">// default: ''</span>
+  autoMatchOsTheme: <span class="literal">true</span> <span class="comment">// default: true</span>
+}
+
+<span class="keyword">const</span> darkmode = <span class="keyword">new</span> Darkmode(options);
+darkmode.showWidget();</code></pre>
+<h2 id="▶️-Methods"><a href="#▶️-Methods" class="headerlink" title="▶️ Methods"></a>▶️ Methods</h2><p>If you don’t want to show the widget and enable/disable Darkmode programatically you can use the method <code>toggle()</code>. You can also check if the Dark Mode is activated with the method <code>isActivated()</code>. See them in action in the following example:</p>
+<pre><code class="javascript"><span class="keyword">const</span> darkmode =  <span class="keyword">new</span> Darkmode();
+darkmode.toggle();
+<span class="built_in">console</span>.log(darkmode.isActivated()) <span class="comment">// will return true</span></code></pre>
+<h2 id="Override-style"><a href="#Override-style" class="headerlink" title="Override style"></a>Override style</h2><ul>
+<li>A CSS class <code>darkmode--activated</code> is added to the body tag when the darkmode is activated. You can take advantage of it to override the style and have a custom style</li>
+<li>Use the class <code>darkmode-ignore</code> where you don’t want to apply darkmode</li>
+<li>You can also add this style: <code>isolation: isolate;</code> in your CSS, this will also ignore the darkmode.</li>
+<li>It is also possible to revert the Dark Mode with this style <code>mix-blend-mode: difference;</code></li>
+</ul>
+<h3 id="Examples"><a href="#Examples" class="headerlink" title="Examples"></a>Examples</h3><pre><code class="css"><span class="selector-class">.darkmode--activated</span> <span class="selector-tag">p</span>, <span class="selector-class">.darkmode--activated</span> <span class="selector-tag">li</span> {
+  <span class="attribute">color</span>: <span class="number">#000</span>;
+}
+
+<span class="selector-class">.button</span> {
+  <span class="attribute">isolation</span>: isolate;
+}
+
+<span class="selector-class">.darkmode--activated</span> <span class="selector-class">.logo</span> {
+  <span class="attribute">mix-blend-mode</span>: difference;
+}</code></pre>
+<pre><code class="html"><span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">"darkmode-ignore"</span>&gt;</span>😬<span class="tag">&lt;<span class="name">span</span>&gt;</span></code></pre>
+<h2 id="Debug"><a href="#Debug" class="headerlink" title="Debug"></a>Debug</h2><p>If it does not work you may have to add the following code, but this will invalidate the classes to override.</p>
+<pre><code class="css"><span class="selector-class">.darkmode-layer</span>, <span class="selector-class">.darkmode-toggle</span> {
+  <span class="attribute">z-index</span>: <span class="number">500</span>;
+}</code></pre>
+<h2 id="Browser-compatibility"><a href="#Browser-compatibility" class="headerlink" title="Browser compatibility"></a>Browser compatibility</h2><p>This library uses the CSS <code>mix-blend-mode: difference;</code> to provide the Dark Mode.<br>It may not be compatible with all the browsers. Therefore the widget has been hidden in Internet Explorer and Edge.<br>This library also uses <code>prefers-color-scheme: dark</code> to automatically enable the Dark Mode if the OS prefered theme is dark.</p>
+<p>Check the compatibility here: </p>
+<ul>
+<li><a href="https://caniuse.com/#search=mix-blend-mode">https://caniuse.com/#search=mix-blend-mode</a></li>
+<li><a href="https://caniuse.com/#search=prefers-color-scheme">https://caniuse.com/#search=prefers-color-scheme</a> (to activate Dark Mode automatically)</li>
+</ul>
+<h2 id="Development"><a href="#Development" class="headerlink" title="Development"></a>Development</h2><ul>
+<li><code>yarn build</code> or <code>npm run build</code> - produces a production version of your library under the <code>lib</code> folder</li>
+<li><code>yarn dev</code> or <code>npm run dev</code> - produces development version of your library and runs a watcher</li>
+<li><code>yarn test</code> or <code>npm run test</code> - it runs the tests :)</li>
+<li><code>yarn test:watch</code> or <code>npm run test:watch</code> - same as above but in a watch mode</li>
+</ul>
+<h2 id="⭐️-Show-your-support"><a href="#⭐️-Show-your-support" class="headerlink" title="⭐️ Show your support"></a>⭐️ Show your support</h2><p>Please ⭐️ this repository if this project helped you!</p>
+<p><a href="https://www.patreon.com/sandoche"><a href="https://www.patreon.com/sandoche"><img src="https://c5.patreon.com/external/logo/become_a_patron_button.png" alt="patreon.png"></a></a></p>
+<h2 id="🍺-Buy-me-a-beer"><a href="#🍺-Buy-me-a-beer" class="headerlink" title="🍺 Buy me a beer"></a>🍺 Buy me a beer</h2><p>If you like this project, feel free to donate:</p>
+<ul>
+<li>PayPal: <a href="https://www.paypal.me/kanbanote">https://www.paypal.me/kanbanote</a></li>
+<li>Bitcoin: 19JiNZ1LkMaz57tewqJaTg2hQWH4RgW4Yp</li>
+<li>Ethereum: 0xded81fa4624e05339924355fe3504ba9587d5419</li>
+<li>Monero: 43jqzMquW2q989UKSrB2YbeffhmJhbYb2Yxu289bv7pLRh4xVgMKj5yTd52iL6x1dvCYs9ERg5biHYxMjGkpSTs6S2jMyJn</li>
+<li>Motive: MOTIV-25T5-SD65-V7LJ-BBWRD (Get Motive Now: <a href="https://motive.network">https://motive.network</a>)</li>
+</ul>
+<h2 id="📄-License"><a href="#📄-License" class="headerlink" title="📄 License"></a>📄 License</h2><p><a href="./LICENSE">MIT License</a></p>
+<p>Copyright (c) Sandoche Adittane</p>
+<!-- Badges -->
