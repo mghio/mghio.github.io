@@ -394,7 +394,7 @@
                   <i class="fa fa-comment-o"></i>
                 </span>
                 <a href="/post/80982e71.html#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="post/80982e71.html" itemprop="commentCount"></span>
+                  <span class="post-comments-count valine-comment-count" data-xid="/post/80982e71.html" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -596,7 +596,7 @@
                   <i class="fa fa-comment-o"></i>
                 </span>
                 <a href="/post/7eb50303.html#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="post/7eb50303.html" itemprop="commentCount"></span>
+                  <span class="post-comments-count valine-comment-count" data-xid="/post/7eb50303.html" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -798,7 +798,7 @@
                   <i class="fa fa-comment-o"></i>
                 </span>
                 <a href="/post/6775e26e.html#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="post/6775e26e.html" itemprop="commentCount"></span>
+                  <span class="post-comments-count valine-comment-count" data-xid="/post/6775e26e.html" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -1000,7 +1000,7 @@
                   <i class="fa fa-comment-o"></i>
                 </span>
                 <a href="/post/315ff4dc.html#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="post/315ff4dc.html" itemprop="commentCount"></span>
+                  <span class="post-comments-count valine-comment-count" data-xid="/post/315ff4dc.html" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -1202,7 +1202,7 @@
                   <i class="fa fa-comment-o"></i>
                 </span>
                 <a href="/post/24cb2421.html#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="post/24cb2421.html" itemprop="commentCount"></span>
+                  <span class="post-comments-count valine-comment-count" data-xid="/post/24cb2421.html" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -1404,7 +1404,7 @@
                   <i class="fa fa-comment-o"></i>
                 </span>
                 <a href="/post/558ca0bd.html#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="post/558ca0bd.html" itemprop="commentCount"></span>
+                  <span class="post-comments-count valine-comment-count" data-xid="/post/558ca0bd.html" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -1606,7 +1606,7 @@
                   <i class="fa fa-comment-o"></i>
                 </span>
                 <a href="/post/fa75f5d7.html#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="post/fa75f5d7.html" itemprop="commentCount"></span>
+                  <span class="post-comments-count valine-comment-count" data-xid="/post/fa75f5d7.html" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -1815,7 +1815,7 @@
                   <i class="fa fa-comment-o"></i>
                 </span>
                 <a href="/post/d7d0fc76.html#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="post/d7d0fc76.html" itemprop="commentCount"></span>
+                  <span class="post-comments-count valine-comment-count" data-xid="/post/d7d0fc76.html" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -2019,7 +2019,7 @@
                   <i class="fa fa-comment-o"></i>
                 </span>
                 <a href="/post/f92758d8.html#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="post/f92758d8.html" itemprop="commentCount"></span>
+                  <span class="post-comments-count valine-comment-count" data-xid="/post/f92758d8.html" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -2222,7 +2222,7 @@
                   <i class="fa fa-comment-o"></i>
                 </span>
                 <a href="/post/c34b451f.html#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="post/c34b451f.html" itemprop="commentCount"></span>
+                  <span class="post-comments-count valine-comment-count" data-xid="/post/c34b451f.html" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -2804,14 +2804,6 @@
 
   
 
-    
-      <script id="dsq-count-scr" src="https://mghio.disqus.com/count.js" async></script>
-    
-
-    
-
-  
-
 
 
 
@@ -2827,12 +2819,38 @@
 
 
 
+  
 
 
 
 
 
 
+
+
+
+
+  <!--<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>-->
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item=>{
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: true,
+        appId: 'XAoPxrNuHkaW6gukStUPwKsL-gzGzoHsz',
+        appKey: 'F9iycH0hDlUkFbDRVI5noq0u',
+        placeholder: '等你评论，等你“一鸣惊人”',
+        avatar:'monsterid',
+        guest_info:guest,
+        pageSize:'10' || 10,
+    });
+  </script>
 
 
 

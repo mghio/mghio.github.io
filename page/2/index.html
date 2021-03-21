@@ -405,7 +405,7 @@
                   <i class="fa fa-comment-o"></i>
                 </span>
                 <a href="/post/4b00e13c.html#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="post/4b00e13c.html" itemprop="commentCount"></span>
+                  <span class="post-comments-count valine-comment-count" data-xid="/post/4b00e13c.html" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -618,7 +618,7 @@
                   <i class="fa fa-comment-o"></i>
                 </span>
                 <a href="/post/24042edf.html#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="post/24042edf.html" itemprop="commentCount"></span>
+                  <span class="post-comments-count valine-comment-count" data-xid="/post/24042edf.html" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -831,7 +831,7 @@
                   <i class="fa fa-comment-o"></i>
                 </span>
                 <a href="/post/51e5bd99.html#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="post/51e5bd99.html" itemprop="commentCount"></span>
+                  <span class="post-comments-count valine-comment-count" data-xid="/post/51e5bd99.html" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -1033,7 +1033,7 @@
                   <i class="fa fa-comment-o"></i>
                 </span>
                 <a href="/post/34755d6c.html#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="post/34755d6c.html" itemprop="commentCount"></span>
+                  <span class="post-comments-count valine-comment-count" data-xid="/post/34755d6c.html" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -1236,7 +1236,7 @@
                   <i class="fa fa-comment-o"></i>
                 </span>
                 <a href="/post/fe76043.html#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="post/fe76043.html" itemprop="commentCount"></span>
+                  <span class="post-comments-count valine-comment-count" data-xid="/post/fe76043.html" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -1453,7 +1453,7 @@
                   <i class="fa fa-comment-o"></i>
                 </span>
                 <a href="/post/3ae0ff4e.html#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="post/3ae0ff4e.html" itemprop="commentCount"></span>
+                  <span class="post-comments-count valine-comment-count" data-xid="/post/3ae0ff4e.html" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -1660,7 +1660,7 @@
                   <i class="fa fa-comment-o"></i>
                 </span>
                 <a href="/post/7b9ead86.html#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="post/7b9ead86.html" itemprop="commentCount"></span>
+                  <span class="post-comments-count valine-comment-count" data-xid="/post/7b9ead86.html" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -1863,7 +1863,7 @@
                   <i class="fa fa-comment-o"></i>
                 </span>
                 <a href="/post/a38c0645.html#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="post/a38c0645.html" itemprop="commentCount"></span>
+                  <span class="post-comments-count valine-comment-count" data-xid="/post/a38c0645.html" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -2066,7 +2066,7 @@
                   <i class="fa fa-comment-o"></i>
                 </span>
                 <a href="/post/4615256d.html#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="post/4615256d.html" itemprop="commentCount"></span>
+                  <span class="post-comments-count valine-comment-count" data-xid="/post/4615256d.html" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -2280,7 +2280,7 @@
                   <i class="fa fa-comment-o"></i>
                 </span>
                 <a href="/post/710bd10b.html#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="post/710bd10b.html" itemprop="commentCount"></span>
+                  <span class="post-comments-count valine-comment-count" data-xid="/post/710bd10b.html" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -2861,14 +2861,6 @@
 
   
 
-    
-      <script id="dsq-count-scr" src="https://mghio.disqus.com/count.js" async></script>
-    
-
-    
-
-  
-
 
 
 
@@ -2884,12 +2876,38 @@
 
 
 
+  
 
 
 
 
 
 
+
+
+
+
+  <!--<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>-->
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item=>{
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: true,
+        appId: 'XAoPxrNuHkaW6gukStUPwKsL-gzGzoHsz',
+        appKey: 'F9iycH0hDlUkFbDRVI5noq0u',
+        placeholder: '等你评论，等你“一鸣惊人”',
+        avatar:'monsterid',
+        guest_info:guest,
+        pageSize:'10' || 10,
+    });
+  </script>
 
 
 
