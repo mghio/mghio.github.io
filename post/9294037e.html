@@ -102,16 +102,16 @@
 <meta property="og:site_name" content="mghio">
 <meta property="og:description" content="前言本文是「如何实现一个简易版的 Spring 系列」的第五篇，在之前介绍了 Spring 中的核心技术之一 IoC，从这篇开始我们再来看看 Spring 的另一个重要的技术——AOP。用过 Spring 框架进行开发的朋友们相信或多或少应该接触过 AOP，用中文描述就是面向切面编程。学习一个新技术了解其产生的背景是至关重要的，在刚开始接触 AOP 时不知道你有没有想过这个问题，既然在面向对象的语">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https://i.loli.net/2021/05/22/S3ajuPM4C6hR9qb.png">
+<meta property="og:image" content="https://i.loli.net/2021/05/23/eAdboOvtYyprQfC.png">
 <meta property="og:image" content="https://i.loli.net/2021/05/22/VLlwGWj7EpXDzPC.png">
 <meta property="og:image" content="https://i.loli.net/2021/05/22/8TdVQNyfPJbz7hv.png">
 <meta property="og:image" content="https://i.loli.net/2021/05/23/tYkImafH3pXwZNJ.png">
 <meta property="og:image" content="https://i.loli.net/2021/05/23/PF6zhclxALpVtRO.png">
-<meta property="og:updated_time" content="2021-05-23T02:56:52.127Z">
+<meta property="og:updated_time" content="2021-05-23T09:24:32.845Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="如何实现一个简易版的 Spring - 如何实现 AOP（上）">
 <meta name="twitter:description" content="前言本文是「如何实现一个简易版的 Spring 系列」的第五篇，在之前介绍了 Spring 中的核心技术之一 IoC，从这篇开始我们再来看看 Spring 的另一个重要的技术——AOP。用过 Spring 框架进行开发的朋友们相信或多或少应该接触过 AOP，用中文描述就是面向切面编程。学习一个新技术了解其产生的背景是至关重要的，在刚开始接触 AOP 时不知道你有没有想过这个问题，既然在面向对象的语">
-<meta name="twitter:image" content="https://i.loli.net/2021/05/22/S3ajuPM4C6hR9qb.png">
+<meta name="twitter:image" content="https://i.loli.net/2021/05/23/eAdboOvtYyprQfC.png">
 
 
 
@@ -468,7 +468,7 @@
 <a id="more"></a>
 
 <h4 id="为什么需要-AOP"><a href="#为什么需要-AOP" class="headerlink" title="为什么需要 AOP"></a>为什么需要 AOP</h4><p>我们做软件开发的最终目的是为了解决公司的各种<strong>需求</strong>，为业务赋能，注意，这里的需求包含了<code>业务需求</code>和<code>系统需求</code>，对于绝大部分的业务需求的普通关注点，都可以通过面向对象（<code>OOP</code>）的方式对其进行很好的抽象、封装以及模块化，但是对于系统需求使用面向对象的方式虽然很好的对其进行分解并对其模块化，但是却不能很好的避免这些<strong>类似的系统需求在系统的各个模块中到处散落</strong>的问题。</p>
-<p><img src="https://i.loli.net/2021/05/22/S3ajuPM4C6hR9qb.png" alt="why-need-aop.png"></p>
+<p><img src="https://i.loli.net/2021/05/23/eAdboOvtYyprQfC.png" alt="why-need-aop.png"></p>
 <p>因此，需要去重新寻找一种更好的办法，可以在基于 <code>OOP</code> 的基础上提供一套全新的方法来处理上面的问题，或者说是对 <code>OOP</code> 面向对象的开发模式做一个补充，使其可以更优雅的处理上面的问题，迄今为止 <code>Spring</code> 提供一个的解决方案就是面向切面编程——<code>AOP</code>。有了 <code>AOP</code> 后，我们可以将这些<code>事务管理</code>、<code>系统日志</code>以及<code>安全检查</code>等系统需求（横切关注点：<code>cross-cutting concern</code>）进行模块化的组织，使得整个系统更加的模块化方便后续的管理和维护。细心的你应该发现在 <code>AOP</code> 里面引入了一个关键的抽象就是切面（<code>Aspect</code>），用于对于系统中的一些横切关注点进行封装，要明确的一点是 <code>AOP</code> 和 <code>OOP</code> 不是非此即彼的对立关系，<code>AOP</code> 是对 <code>OOP</code> 的一种补充和完善，可以相互协作来完成需求，<code>Aspect</code> 对于 <code>AOP</code> 的重要程度就像 <code>Class</code> 对 <code>OOP</code> 一样。</p>
 <p><img src="https://i.loli.net/2021/05/22/VLlwGWj7EpXDzPC.png" alt="use-aop-arc.png"></p>
 <h4 id="几个重要的概念"><a href="#几个重要的概念" class="headerlink" title="几个重要的概念"></a>几个重要的概念</h4><p>我们最终的目的是要模仿 <code>Spring</code> 框架自己去实现一个简易版的 <code>AOP</code> 出来，虽然是简易版但是会涉及到 <code>Spring AOP</code> 中的核心思想和主要实现步骤，不过在此之前先来看看 <code>AOP</code> 中的重要概念，同时也是为以后的实现打下理论基础，这里需要说明一点是我不会使用中文翻译去描述这些 <code>AOP</code> 定义的术语（另外，业界 <code>AOP</code> 术语本来就不太统一），你需要重点理解的是术语在 <code>AOP</code> 中代表的含义，就像我们不会把 <code>Spring</code> 给翻译成<code>春天</code>一样，在软件开发交流你知道它表示一个 <code>Java</code> 开发框架就可以了。下面对其关键术语进行逐个介绍：</p>
