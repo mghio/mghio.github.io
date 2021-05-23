@@ -107,7 +107,7 @@
 <meta property="og:image" content="https://i.loli.net/2021/05/22/8TdVQNyfPJbz7hv.png">
 <meta property="og:image" content="https://i.loli.net/2021/05/23/tYkImafH3pXwZNJ.png">
 <meta property="og:image" content="https://i.loli.net/2021/05/23/PF6zhclxALpVtRO.png">
-<meta property="og:updated_time" content="2021-05-23T02:17:20.519Z">
+<meta property="og:updated_time" content="2021-05-23T02:56:52.127Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="如何实现一个简易版的 Spring - 如何实现 AOP（上）">
 <meta name="twitter:description" content="前言本文是「如何实现一个简易版的 Spring 系列」的第五篇，在之前介绍了 Spring 中的核心技术之一 IoC，从这篇开始我们再来看看 Spring 的另一个重要的技术——AOP。用过 Spring 框架进行开发的朋友们相信或多或少应该接触过 AOP，用中文描述就是面向切面编程。学习一个新技术了解其产生的背景是至关重要的，在刚开始接触 AOP 时不知道你有没有想过这个问题，既然在面向对象的语">
@@ -501,7 +501,7 @@
 <li><strong>正则表达式方式</strong>。正则表达式相信大家都有一些了解，功能很强大，可以匹配表示多个不同方法类型的 <code>Jointpoint</code>，<code>Spring</code> 框架的 <code>AOP</code> 也支持这种表述方式。</li>
 <li><strong>Pointcut 特定语言方式</strong>。这个因为是一种特定领域语言（<code>DSL</code>），所以其提供的功能也是最为灵活和丰富的，这也导致了不管其使用和实现复杂度都比较高，像 <code>AspectJ</code> 就是使用的这种表述方式，当然 <code>Spring</code> 也支持。</li>
 </ul>
-<p>还是一点是 <code>Pointcut</code> 也支持进行一些简单的<code>逻辑运算</code>，这用我们就可以将多个简单的 <code>Pointcut</code> 通过逻辑运算组合为一个比较复杂的 <code>Pointcut</code> 了，比如在 <code>Spring</code> 配置中的 <code>and</code> 和 <code>or</code> 等逻辑运算标识符以及 <code>AspectJ</code> 中的 <code>&amp;&amp;</code> 和 <code>||</code> 等逻辑运算符。</p>
+<p>另外 <code>Pointcut</code> 也支持进行一些简单的<code>逻辑运算</code>，这样我们就可以将多个简单的 <code>Pointcut</code> 通过逻辑运算组合为一个比较复杂的 <code>Pointcut</code> 了，比如在 <code>Spring</code> 配置中的 <code>and</code> 和 <code>or</code> 等逻辑运算标识符以及 <code>AspectJ</code> 中的 <code>&amp;&amp;</code> 和 <code>||</code> 等逻辑运算符。</p>
 <h5 id="Advice"><a href="#Advice" class="headerlink" title="Advice"></a>Advice</h5><blockquote>
 <p>Action taken by an aspect at a particular join point. Different types of advice include “around”, “before” and “after” advice. (Advice types are discussed later.) Many AOP frameworks, including Spring, model an advice as an interceptor and maintain a chain of interceptors around the join point.– by Spring Docs</p>
 </blockquote>
