@@ -81,7 +81,7 @@
 
 
 
-  <meta name="keywords" content="Java,">
+  <meta name="keywords" content="Java,Spring,AOP,">
 
 
 
@@ -94,33 +94,23 @@
 
 
 
-<meta name="description" content="1.1 什么是字节码？Java 在刚刚诞生之时曾经提出过一个非常著名的口号: “一次编写，到处运行（write once，run anywhere）”，这句话充分表达了软件开发人员对冲破平台界限的渴求。“与平台无关”的理想最终实现在操作系统的运用层上: 虚拟机提供商开发了许多可以运行在不同平台上的虚拟机，这些虚拟机都可以载入和执行同一种平台无关的字节码，从而实现了程序的“一次编写到处运行”。各种不">
-<meta name="keywords" content="Java">
+<meta name="description" content="前言在上篇 如何实现 AOP（上） 介绍了 AOP 技术出现的原因和一些重要的概念。在我们自己实现之前有必要先了解一下 AOP 底层到底是如何运作的，所以这篇再来看看 AOP 实现所依赖的一些核心基础技术。AOP 是使用动态代理和字节码生成技术来实现的，在运行期（注意：不是编译期！）为目标对象生成代理对象，然后将横切逻辑织入到生成的代理对象中，最后系统使用的是带有横切逻辑的代理对象，而不是被代理对">
+<meta name="keywords" content="Java,Spring,AOP">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Java 字节码">
-<meta property="og:url" content="https://www.mghio.cn/post/192cb539.html">
+<meta property="og:title" content="如何实现一个简易版的 Spring - 如何实现 AOP（中）">
+<meta property="og:url" content="https://www.mghio.cn/post/af7194f9.html">
 <meta property="og:site_name" content="mghio">
-<meta property="og:description" content="1.1 什么是字节码？Java 在刚刚诞生之时曾经提出过一个非常著名的口号: “一次编写，到处运行（write once，run anywhere）”，这句话充分表达了软件开发人员对冲破平台界限的渴求。“与平台无关”的理想最终实现在操作系统的运用层上: 虚拟机提供商开发了许多可以运行在不同平台上的虚拟机，这些虚拟机都可以载入和执行同一种平台无关的字节码，从而实现了程序的“一次编写到处运行”。各种不">
+<meta property="og:description" content="前言在上篇 如何实现 AOP（上） 介绍了 AOP 技术出现的原因和一些重要的概念。在我们自己实现之前有必要先了解一下 AOP 底层到底是如何运作的，所以这篇再来看看 AOP 实现所依赖的一些核心基础技术。AOP 是使用动态代理和字节码生成技术来实现的，在运行期（注意：不是编译期！）为目标对象生成代理对象，然后将横切逻辑织入到生成的代理对象中，最后系统使用的是带有横切逻辑的代理对象，而不是被代理对">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https://i.loli.net/2019/10/03/jcIPJSvYnd2ayOi.png">
-<meta property="og:image" content="https://i.loli.net/2019/10/03/raIK3DpwS67lTsZ.png">
-<meta property="og:image" content="https://i.loli.net/2019/10/03/gZfiXKmzI7o628x.png">
-<meta property="og:image" content="https://i.loli.net/2019/10/03/f8NnQeZ6BuqGRHC.png">
-<meta property="og:image" content="https://i.loli.net/2019/10/03/drScelTF6xN3Uoa.png">
-<meta property="og:image" content="https://i.loli.net/2019/10/03/IGVoJLYUSP9a3uH.png">
-<meta property="og:image" content="https://i.loli.net/2019/10/03/VB8KPSiEh6Zzav7.png">
-<meta property="og:image" content="https://i.loli.net/2019/10/03/cgUGTEs5rqm4wQ6.png">
-<meta property="og:image" content="https://i.loli.net/2019/10/03/XLOV4PnltSoEQ8A.png">
-<meta property="og:image" content="https://i.loli.net/2019/10/03/7qSyCJugf6iWLNc.png">
-<meta property="og:image" content="https://i.loli.net/2019/10/03/JcOBekuzqwMovAb.png">
-<meta property="og:image" content="https://i.loli.net/2019/10/03/2zmkgxBdhCrweL9.png">
-<meta property="og:image" content="https://i.loli.net/2019/10/03/Vza6e1xhFGsg9HJ.png">
-<meta property="og:image" content="https://i.loli.net/2019/10/03/Xj5kUt6eO2ysYCb.png">
-<meta property="og:updated_time" content="2019-10-03T07:10:43.847Z">
+<meta property="og:image" content="https://i.loli.net/2021/05/30/2m47LEoJBpjUGSC.png">
+<meta property="og:image" content="https://i.loli.net/2021/05/30/FDlYgMUb5kdWtOo.png">
+<meta property="og:image" content="https://i.loli.net/2021/05/30/ZQRXpubaLsl9n2d.png">
+<meta property="og:image" content="https://i.loli.net/2021/05/30/F46CaDjsBS9U8E2.png">
+<meta property="og:updated_time" content="2021-05-30T06:21:16.378Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Java 字节码">
-<meta name="twitter:description" content="1.1 什么是字节码？Java 在刚刚诞生之时曾经提出过一个非常著名的口号: “一次编写，到处运行（write once，run anywhere）”，这句话充分表达了软件开发人员对冲破平台界限的渴求。“与平台无关”的理想最终实现在操作系统的运用层上: 虚拟机提供商开发了许多可以运行在不同平台上的虚拟机，这些虚拟机都可以载入和执行同一种平台无关的字节码，从而实现了程序的“一次编写到处运行”。各种不">
-<meta name="twitter:image" content="https://i.loli.net/2019/10/03/jcIPJSvYnd2ayOi.png">
+<meta name="twitter:title" content="如何实现一个简易版的 Spring - 如何实现 AOP（中）">
+<meta name="twitter:description" content="前言在上篇 如何实现 AOP（上） 介绍了 AOP 技术出现的原因和一些重要的概念。在我们自己实现之前有必要先了解一下 AOP 底层到底是如何运作的，所以这篇再来看看 AOP 实现所依赖的一些核心基础技术。AOP 是使用动态代理和字节码生成技术来实现的，在运行期（注意：不是编译期！）为目标对象生成代理对象，然后将横切逻辑织入到生成的代理对象中，最后系统使用的是带有横切逻辑的代理对象，而不是被代理对">
+<meta name="twitter:image" content="https://i.loli.net/2021/05/30/2m47LEoJBpjUGSC.png">
 
 
 
@@ -150,13 +140,13 @@
 
 
 
-  <link rel="canonical" href="https://www.mghio.cn/post/192cb539.html">
+  <link rel="canonical" href="https://www.mghio.cn/post/af7194f9.html">
 
 
 
 
 
-  <title>Java 字节码 | mghio</title>
+  <title>如何实现一个简易版的 Spring - 如何实现 AOP（中） | mghio</title>
   
 
 
@@ -325,7 +315,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://www.mghio.cn/post/192cb539.html">
+    <link itemprop="mainEntityOfPage" href="https://www.mghio.cn/post/af7194f9.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="mghio">
@@ -342,7 +332,7 @@
 
         
         
-          <h2 class="post-title" itemprop="name headline">Java 字节码</h2>
+          <h2 class="post-title" itemprop="name headline">如何实现一个简易版的 Spring - 如何实现 AOP（中）</h2>
         
 
         <div class="post-meta">
@@ -354,8 +344,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-10-02T15:45:32+08:00">
-                2019-10-02
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2021-05-30T08:54:38+08:00">
+                2021-05-30
               </time>
             
 
@@ -384,6 +374,28 @@
 
                 
                 
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/Spring/" itemprop="url" rel="index">
+                    <span itemprop="name">Spring</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/Spring/AOP/" itemprop="url" rel="index">
+                    <span itemprop="name">AOP</span>
+                  </a>
+                </span>
+
+                
+                
               
             </span>
           
@@ -395,8 +407,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/post/192cb539.html#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/post/192cb539.html" itemprop="commentCount"></span>
+                <a href="/post/af7194f9.html#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/post/af7194f9.html" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -423,7 +435,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  3.1k 字
+                  2.7k 字
                 </span>
               
 
@@ -439,7 +451,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  11 分钟
+                  10 分钟
                 </span>
               
             </div>
@@ -462,115 +474,81 @@
       
 
       
-        <h4 id="1-1-什么是字节码？"><a href="#1-1-什么是字节码？" class="headerlink" title="1.1 什么是字节码？"></a>1.1 什么是字节码？</h4><p>Java 在刚刚诞生之时曾经提出过一个非常著名的口号: “<strong>一次编写，到处运行（write once，run anywhere）</strong>”，这句话充分表达了软件开发人员对冲破平台界限的渴求。“与平台无关”的理想最终实现在操作系统的运用层上: 虚拟机提供商开发了许多可以运行在不同平台上的虚拟机，这些虚拟机都可以载入和执行同一种平台无关的字节码，从而实现了程序的“一次编写到处运行”。<br><br>各种不同平台的虚拟机与所有平台都统一使用的程序存储格式—<strong>字节码（ByteCode）</strong>，因此，可以看出字节码对 Java 生态的重要性。之所以被称为字节码，是因为字节码是由十六进制组成的，而 JVM（Java Virtual Machine）以两个十六进制为一组，即以字节为单位进行读取。在 Java 中使用 <strong><a href="https://docs.oracle.com/javase/8/docs/technotes/tools/windows/javac.html" target="_blank" rel="noopener">javac</a></strong> 命令把源代码编译成字节码文件，一个 .java 源文件从编译成 .class 字节码文件的示例如图 1 所示:<br><img src="https://i.loli.net/2019/10/03/jcIPJSvYnd2ayOi.png" alt="图1"><center>图 1</center></p>
+        <h4 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h4><p>在上篇 <a href="https://www.mghio.cn/post/9294037e.html">如何实现 AOP（上）</a> 介绍了 <code>AOP</code> 技术出现的原因和一些重要的概念。在我们自己实现之前有必要先了解一下 <code>AOP</code> 底层到底是如何运作的，所以这篇再来看看 <code>AOP</code> 实现所依赖的一些核心基础技术。<code>AOP</code> 是使用<code>动态代理</code>和<code>字节码生成技术</code>来实现的，在<strong>运行期</strong>（注意：不是编译期！）为目标对象生成代理对象，然后将横切逻辑织入到生成的代理对象中，最后系统使用的是带有横切逻辑的代理对象，而不是被代理对象，由代理对象转发到被代理对象。</p>
 <a id="more"></a>
-<p>对于从事基于 JVM 的语言的开发人员来说，比如: Java，了解字节码可以更准确、更直观的理解 Java 语言中更深层次的东西，比如通过字节码，可以很直观的看到 <strong>volatile</strong> 关键字如何在字节码上生效。另外，字节码增强技术在各种 ORM 框架、Spring AOP、热部署等一些应用中经常使用，深入理解其原理对于我们来说大有裨益。由于 JVM 规范的存在，只要最终生成了符合 JVM 字节码规范的文件都可以在 JVM 上运行，因此，这个也给其它各种运行在 JVM 上的语言（如: <a href="https://www.scala-lang.org/" target="_blank" rel="noopener">Scala</a>、<a href="https://groovy-lang.org/" target="_blank" rel="noopener">Groovy</a>、<a href="https://kotlinlang.org/" target="_blank" rel="noopener">Kotlin</a>）提供了一个机会，可以扩展 Java 没有实现的特性或者实现一些语法糖。<br><br>接下来就让我们就一起看看这个字节码文件结构到底是什么样的。</p>
-<h4 id="1-2-Java-字节码结构"><a href="#1-2-Java-字节码结构" class="headerlink" title="1.2 Java 字节码结构"></a>1.2 Java 字节码结构</h4><p>Java 源文件通过用 <strong><a href="https://docs.oracle.com/javase/8/docs/technotes/tools/windows/javac.html" target="_blank" rel="noopener">javac</a></strong> 命令编译后就会得到 .class 结尾的字节码文件，比如一个简单的 <strong>JavaCodeCompilerDemo</strong> 类如图 2 所示:<br><img src="https://i.loli.net/2019/10/03/raIK3DpwS67lTsZ.png" alt="图2"><center>图 2</center><br>编译后生成的 .class 字节码文件，打开后是一堆 <a href="https://zh.wikipedia.org/wiki/%E5%8D%81%E5%85%AD%E8%BF%9B%E5%88%B6" target="_blank" rel="noopener">十六进制</a> 数，如图 3 所示:<br><img src="https://i.loli.net/2019/10/03/gZfiXKmzI7o628x.png" alt="图3"><center>图 3</center><br>在上节提过，JVM 对于字节码规范是有要求的，打开编译后的字节码文件看似混乱无章，其实它是符合一定的结构规范的，JVM 规范要求每一个字节码文件都要由十部分固定的顺序组成的，接下来我们将一一介绍这部分，整体的组成结构如图 4 所示:<br><img src="https://i.loli.net/2019/10/03/f8NnQeZ6BuqGRHC.png" alt="图4"><center>图 4</center></p>
-<p><strong>（1）魔数（Magic Number）</strong><br>每个字节码文件的头 4 个字节称为 <strong>魔数（Magic Number）</strong>，它的唯一作用是确定这个文件是否为一个能被虚拟机接受的 Class 文件。很多文件存储标准中都使用魔数来进行身份识别，譬如图片格式，如 gif 或者 jpg 等在文件头中都存有魔数。使用魔数而不是扩展名来进行识别主要是基于安全方面的考虑，因为文件扩展名可以随意改动。魔数的固定值为: <strong>0xCAFEBABE</strong>，魔数放在文件头，JVM 可以根据文件的开头来判断这个文件是否可能是一个字节码文件，如果是，才会进行之后的操作。</p>
+<h4 id="代理模式"><a href="#代理模式" class="headerlink" title="代理模式"></a>代理模式</h4><p>动态代理的根源是设计模式中的<a href="https://en.wikipedia.org/wiki/Proxy_pattern" target="_blank" rel="noopener">代理模式</a>，代理模式在 <a href="https://en.wikipedia.org/wiki/Design_Patterns" target="_blank" rel="noopener">GoF</a> 中的描述如下：</p>
 <blockquote>
-<p>有趣的是，魔数的固定值是 Java 之父 <a href="https://zh.wikipedia.org/wiki/%E8%A9%B9%E5%A7%86%E6%96%AF%C2%B7%E9%AB%98%E6%96%AF%E6%9E%97" target="_blank" rel="noopener">James Gosling</a> 制定的，为 CafeBabe（咖啡宝贝），而 Java 的图标为一杯咖啡。</p>
+<p>Provide a surrogate or placeholder for another object to control access to it.</p>
 </blockquote>
-<p><strong>（2）版本号（Version）</strong><br>版本号为魔数之后的 4 个字节，前两个字节表示次版本号（Minor Version），后两个字节表示主版本号（Major Version），上图 3 中版本号为: “00 00 00 34”，次版本号转化为十进制为 0，主版本号转化为十进制 52（3 * 16^1 + 4 * 16^0 = 52），在 Oracle 官网中查询序号 52 对应的 JDK 版本为 1.8，所以编译该源代码文件的 Java 版本为 1.8.0。</p>
-<p><strong>（3）常量池（Constant Pool）</strong><br>紧接着主版本号之后的字节是常量池入口。常量池中存储两种类型常量: 字面量和符号运用。字面量为代码中声明为 <strong>final</strong> 的常量值，符号引用如类和接口的全局限定名、字段的名称和描述符、方法的名称和描述符。常量池整体上分为两部分: 常量池计数器和常量池数据区，如图 5 所示：<br><img src="https://i.loli.net/2019/10/03/drScelTF6xN3Uoa.png" alt="图5"><center>图 5</center><br><strong>常量池计数器（constant_pool_count）</strong>: 由于常量池的数量不固定，所以需要先放置两个字节来表示常量池容量计数值，图 2 示例代码的字节码的前十个字节如下图 6 所示，将十六进制的 17 转为十进制的值为 33 (1 * 16^1 + 7 * 16^0 = 33)，排除下标 0，也就是说这个类文件有 32 个常量。<br><img src="https://i.loli.net/2019/10/03/IGVoJLYUSP9a3uH.png" alt="图6"><center>图 6</center><br><strong>常量池数据区</strong>: 数据区是由（constant_pool_count - 1）个 cp_info 结构组成，一个 cp_info 的结构对应一个常量。在字节码中共有 14 种类型的 cp_info ，每种类型的结构都是固定的，如图 7 所示:<br><img src="https://i.loli.net/2019/10/03/VB8KPSiEh6Zzav7.png" alt="图7"><center>图 7</center><br>以 CONSTANT_Utf8_info 为例，它的结构如表 1 所示:</p>
-<table>
-<thead>
-<tr>
-<th>名称</th>
-<th align="left">长度</th>
-<th align="center">值</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>tag</td>
-<td align="left">1 字节</td>
-<td align="center">01 对应图 7 中 CONSTANT_Utf8_info 的<strong>标志栏</strong>中的值</td>
-</tr>
-<tr>
-<td>length</td>
-<td align="left">2 字节</td>
-<td align="center">该 utf8 字符串的长度</td>
-</tr>
-<tr>
-<td>bytes</td>
-<td align="left">length 字节</td>
-<td align="center">length 个字节的具体数据</td>
-</tr>
-</tbody></table>
-<center>表 1</center>
-首先第一个字节 tag，它的取值对应图 7 中的 Tag，由于它的类型是 CONSTANT_Utf8_info，所以值为 01（十六进制）。接下来两个字节标识该字符串的长度 length，然后 length 个字节为这个字符串具体的值。从图 3 的字节码中摘取一个 cp_info 结构，将它翻译过来后，其含义为: 该常量为 utf8 字符串，长度为 7 字节，数据为: numberA，如图 8 所示:
+<p>从其定义可以看出，代理模式主要是为了控制对象的访问，通常也会拥有被代理者的所有功能。通过代理模式我们可以在不改变被代理类的情况下，通过引入代理类来给被代理类添加一些功能，此时脑海里飘过计算机科学界中一句著名的话(P.S. 基础知识很重要啊，可以参见 <a href="https://www.mghio.cn/post/a328bfd.html">这篇</a>)：</p>
+<blockquote>
+<p>计算机科学的任何一个问题，都可以通过增加一个中间层来解决。</p>
+</blockquote>
+<p>代理模式其实在现实生活中也经常会接触到，比如在一线城市租房时大部分都是找的租房中介去看的房子、谈价格以及签合同，是因为房子的房东已经把房子全权托管给了中介处理了，这里的租房中介其实就是充当了代理模式中的代理对象的解决，而真正的被代理对象(目标对象)其实是房子的房东，而和我们打交道都是租房中介(代理对象)。代理模式类图结构如下图所示：</p>
+<p><img src="https://i.loli.net/2021/05/30/2m47LEoJBpjUGSC.png" alt="proxy-pattern.png"></p>
+<p>图中各个部分的含义如下：</p>
+<ul>
+<li><strong>ISubject</strong> 是被代理对象所能提供能力的抽象。</li>
+<li><strong>SubjectImpl</strong> 是被代理的具体实现类。</li>
+<li><strong>SubjectProxy</strong> 是代理的实现类，通常该类持有 <code>ISubject</code> 接口的实例。</li>
+<li><strong>Client</strong> 是访问者的抽象角色，要访问 <code>ISubject</code> 类型的资源。</li>
+</ul>
+<p>可以看到 <code>SubjectImpl</code> 和 <code>SubjectProxy</code> 都实现了相同的接口 <code>ISubject</code>，在代理对象 <code>SubjectProxy</code> 内持有 <code>ISubject</code> 的引用，当 <code>Client</code> 访问 <code>doOperation()</code> 时，代理对象将请求转发给被代理对象，单单从这个过程来看，代理对象如果只是为了转发请求，是不是有点多此一举了？再结合代理模式的定义思考一下，在转发之前（后者之后）不就可以添加一些访问控制了吗。</p>
+<p><img src="https://i.loli.net/2021/05/30/FDlYgMUb5kdWtOo.png" alt="static-proxy.png"></p>
+<p>在代理对象(<code>SubjectProxy</code>)将请求转发给被代理对象(<code>SubejctImpl</code>)之前或者之后都是根据需要添加一些处理逻辑，而不需要修改被代理对象的具体实现逻辑，假设 <code>SubjectImpl</code> 是我们系统中 <code>Joinpoint</code> 所在的对象，此时 <code>SubjectImpl</code> 就是我们的目标对象了，只需要为这个目标对象创建一个代理对象，然后将横切逻辑添加到代理对象中，对外暴露出创建出来的代理对象就可以将将横切逻辑和原来的逻辑融合在一起了。</p>
+<h4 id="动态代理"><a href="#动态代理" class="headerlink" title="动态代理"></a>动态代理</h4><p>到目前为止，一切都是那么美好，当只为同一个目标对象类型添加横切逻辑时，只需要创建一个代理对象即可，但是在 <code>Joinpoint</code> 相同而目标对象类型不同时，需要为每个不同的目标对象类型都单独创建一个代理对象，而这些代理对象的横切逻辑其实都是一样的，根据 <a href="https://en.wikipedia.org/wiki/Don%27t_repeat_yourself" target="_blank" rel="noopener">DRY原则</a>，需要寻找另一种技术来解决这个问题。<br>在 <code>JDK 1.3</code> 引入的 <code>动态代理机制</code> 可以为指定的接口在<code>运行期</code>动态的去生成代理对象，使用这个<code>动态代理机制</code>可以解决上述问题，这样我们就可以不事先为每个原始类创建代理类，而是在运行时<code>动态生成</code>代理类。在 <code>Java</code> 中，使用动态代理是比较简单的，它本身就已经使用反射实现了动态代理的语法，主要是由一个类 <code>Proxy</code> 和一个接口 <code>InvocationHandler</code> 组成，使用动态代理机制实现前文示例如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> mghio</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@since</span> 2021-05-29</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Subject</span> </span>&#123;</span><br><span class="line">  <span class="function"><span class="keyword">void</span> <span class="title">doOperation</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SubjectImpl</span> <span class="keyword">implements</span> <span class="title">Subject</span> </span>&#123;</span><br><span class="line">  <span class="meta">@Override</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">doOperation</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    System.out.println(<span class="string">"SubjectImpl doOperation..."</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">JDKInvocationHandler</span> <span class="keyword">implements</span> <span class="title">InvocationHandler</span> </span>&#123;</span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">final</span> Subject target;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="title">JDKInvocationHandler</span><span class="params">(Subject target)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.target = target;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="meta">@Override</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> Object <span class="title">invoke</span><span class="params">(Object proxy, Method method, Object[] args)</span> <span class="keyword">throws</span> Throwable </span>&#123;</span><br><span class="line">    <span class="comment">// add pre process logic if necessary</span></span><br><span class="line">    </span><br><span class="line">    System.out.println(<span class="string">"Proxy before JDKInvocationHandler doOperation..."</span>);</span><br><span class="line">    Object result = method.invoke(target, args);</span><br><span class="line">    System.out.println(<span class="string">"Proxy after JDKInvocationHandler doOperation..."</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// add post process logic if necessary</span></span><br><span class="line">    <span class="keyword">return</span> result;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Client</span> </span>&#123;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 将生成的代理类保存在根目录下（com/sun/proxy/XXX.class）</span></span><br><span class="line">    System.setProperty(<span class="string">"sun.misc.ProxyGenerator.saveGeneratedFiles"</span>, <span class="string">"true"</span>);</span><br><span class="line">    Subject target = <span class="keyword">new</span> SubjectImpl();</span><br><span class="line">    Subject proxy = (Subject) Proxy.newProxyInstance(SubjectImpl.class.getClassLoader(),</span><br><span class="line">        <span class="keyword">new</span> Class[]&#123;Subject.class&#125;, <span class="keyword">new</span> JDKInvocationHandler(target));</span><br><span class="line">    proxy.doOperation();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p><img src="https://i.loli.net/2019/10/03/cgUGTEs5rqm4wQ6.png" alt="图8"><center>图 8</center><br>其它类型的 cp_info 结构在本文不在细说，和 CONSTANT_Utf8_info 的结构大同小异，都是先通过 tag 来标识类型，然后后续的 n 个字节来描述长度和数据。等我们对这些结构比较了解了之后，我们可以通过: <strong>javap -verbose JavaCodeCompilerDemo</strong> 命令查看 JVM 反编译后的完整常量池，可以看到反编译结果可以将每一个 cp_info 结构的类型和值都很明确的呈现出来，如图 9 所示:<br><img src="https://i.loli.net/2019/10/03/XLOV4PnltSoEQ8A.png" alt="图9"><center>图 9</center></p>
-<p><strong>（4）访问标志（access_flag）</strong><br>常量池结束之后的两个字节，描述该 Class 是类还是接口，以及是否被 <strong>Public</strong>、<strong>Abstract</strong>、<strong>Final</strong> 等修饰符修饰。JVM 规范规定了如下表 2 所示的 9 种访问标志。需要注意的是，JVM 并没有穷举所有的访问标志，而是使用 <a href="https://zh.wikipedia.org/wiki/%E4%BD%8D%E6%93%8D%E4%BD%9C#%E6%8C%89%E4%BD%8D%E6%88%96%EF%BC%88OR%EF%BC%89" target="_blank" rel="noopener">按位或</a> 操作来进行描述的，比如某个类的修饰符为 public final，则对应的访问修饰符的值为 ACC_PUBLIC | ACC_FINAL，即 <strong>0x0001 | 0x0010 = 0x0011</strong>。</p>
-<table>
-<thead>
-<tr>
-<th>标志名称</th>
-<th align="left">标志值</th>
-<th align="center">含义</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>ACC_PUBLIC</td>
-<td align="left">0x0001</td>
-<td align="center">字段是否为 public</td>
-</tr>
-<tr>
-<td>ACC_PRIVATE</td>
-<td align="left">0x0002</td>
-<td align="center">字段是否为 private</td>
-</tr>
-<tr>
-<td>ACC_PROTECTED</td>
-<td align="left">0x0004</td>
-<td align="center">字段是否为 protected</td>
-</tr>
-<tr>
-<td>ACC_STATIC</td>
-<td align="left">0x0008</td>
-<td align="center">字段是否为 static</td>
-</tr>
-<tr>
-<td>ACC_FINAL</td>
-<td align="left">0x0010</td>
-<td align="center">字段是否为 final</td>
-</tr>
-<tr>
-<td>ACC_VOLATILE</td>
-<td align="left">0x0040</td>
-<td align="center">字段是否为 volatile</td>
-</tr>
-<tr>
-<td>ACC_TRANSIENT</td>
-<td align="left">0x0080</td>
-<td align="center">字段是否为 transient</td>
-</tr>
-<tr>
-<td>ACC_SYNCHETIC</td>
-<td align="left">0x1000</td>
-<td align="center">字段是否为编译器自动产生</td>
-</tr>
-<tr>
-<td>ACC_ENUM</td>
-<td align="left">0x4000</td>
-<td align="center">字段是否为 enum</td>
-</tr>
-</tbody></table>
-<center>表 2</center>
-
-<p><strong>（5）当前类名（this_class）</strong><br>访问标志后的两个字节，描述的是当前类的全限定名。这两个字节保存的值为常量池中的索引值，根据索引值就能在常量池中找到这个类的全限定名。</p>
-<p><strong>（6）父类名称（super_class）</strong><br>当前类名的后两个字节，描述父类的全限定名。这两个字节保存的值也是在常量池中的索引值，根据索引值就能在常量池中找到这个类的父类的全限定名。</p>
-<p><strong>（7）接口信息（interfaces）</strong><br>父类名称后的两个字节，描述这个类的接口计数器，即: 当前类或父类实现的接口数量。紧接着的 n 个字节是所有的接口名称的字符串常量在常量池的索引值。</p>
-<p><strong>（8）字段表（field_table）</strong><br>字段表用于描述类和接口中声明的变量，包含类级别的变量以及实例变量，但是不包含方法内部声明的 <a href="https://zh.wikipedia.org/wiki/%E5%B1%80%E9%83%A8%E5%8F%98%E9%87%8F" target="_blank" rel="noopener">局部变量</a>。字段表也分为两部分，第一部分是两个字节，描述字段个数，第二部分是每个字段的详细信息 <strong>field_info</strong>。字段表结构如图 10 所示:<br><img src="https://i.loli.net/2019/10/03/7qSyCJugf6iWLNc.png" alt="图10"><center>图 10</center><br>以图 3 中的字节码字段表为例，如下图 11 所示。其中字段的访问标志查表 2，002 对应为 Private，通过索引下标在图 9 中常量池分别得到字段名为: numberA，描述符为: I（在JVM 中的I代表 Java 中的 int）。综上，就可以唯一确定出类 <strong>JavaCodeCompilerDemo</strong> 中声明的变量为: <strong>private int numberA</strong> 。<br><img src="https://i.loli.net/2019/10/03/JcOBekuzqwMovAb.png" alt="图11"><center>图 11</center></p>
-<p><strong>（9）方法表（method_table）</strong><br>字段表结束后为方法表，方法表也是由两部分组成，第一部分为两个字节描述方法的个数，第二个部分为每个方法的详细信息。方法的详细信息包括：方法的访问标志、方法名、方法的描述符以及方法的属性，如图 12 所示:<br><img src="https://i.loli.net/2019/10/03/2zmkgxBdhCrweL9.png" alt="图12"><center>图 12</center><br>方法的权限修饰符依然可以通过图 9 的值查询到，方法名和方法的描述符都是常量池的索引值，可以通过索引值在常量池中查询得到。而方法属性这个部分比较复杂，我们可以借助 <strong>javap -verbose</strong> 将其反编译为人们可读的信息进行解读。如图 13 所示。我们可以看到属性中包含三个部分:</p>
+<p>由以上代码可知，使用 <code>JDK</code> 的动态代理只要 3 步：</p>
 <ol>
-<li><strong>Code 区</strong>: 源代码对应的 JVM 指令操作码，我们在字节码增强的时候重点操作的就是这个部分。</li>
-<li><strong>LineNumberTable</strong>: 行号表，将 Code 区的操作码和源代码的行号对应，Debug 时会起到作用（即: 当源代码向下走一行，相应的需要走几个 JVM 指令操作码）。 </li>
-<li><strong>LocalVariableTable</strong>: 本地变量表，包含 this 和局部变量，之所以可以在每一个非 static 的方法内部都可以调用到 this，是因为 JVM 将 this 作为每个方法的第一个参数隐式进行传入。<br><img src="https://i.loli.net/2019/10/03/Vza6e1xhFGsg9HJ.png" alt="图13"><center>图 13</center></li>
+<li>定义公共接口 <code>Subject</code>，创建被代理对象 <code>SubjectImpl</code></li>
+<li>创建被代理对象的处理对象 <code>JDKInvocationHandler</code>，持有目标对象 <code>Subject</code> 的引用</li>
+<li>使用 <code>JDK</code> 的 <code>Proxy</code> 类的静态方法 <code>newProxyInstance</code> 创建代理对象</li>
 </ol>
-<p><strong>（10）附加属性表（additional_attribute_table）</strong><br>字节码的最后一部分，存放了在文件中类或接口所定义的属性的基本信息。</p>
-<h4 id="1-3-Java-字节码操作集合"><a href="#1-3-Java-字节码操作集合" class="headerlink" title="1.3 Java 字节码操作集合"></a>1.3 Java 字节码操作集合</h4><p>在图 13 中，Code 区的编号是 0 ~ 10，就是 .java 源文件的方法源代码编译后让 JVM 真正执行的操作码。为了帮助人们理解，反编译后看到的是十六进制操作码所对应的助记符，十六进制值操作码和助记符的对应关系，以及每个操作码的具体作用可以查看 <a href="https://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html" target="_blank" rel="noopener">Oracle 官网</a>，在需要的时候查阅即可。比如上图 13 的助记符为 iconst_2，对应图 3 中的字节码 0x05，作用是将 int 值 2 压入操作数栈中。以此类推，对 0 ~ 10 的助记符理解后就是整个 <strong>sum()</strong> 方法的操作数码实现。</p>
-<h4 id="1-4-查看字节码工具"><a href="#1-4-查看字节码工具" class="headerlink" title="1.4 查看字节码工具"></a>1.4 查看字节码工具</h4><p>如果我们每次反编译都要使用 <strong>javap</strong> 命令的话，确实比较繁琐，这里我推荐大家一个 IDEA 插件: <a href="https://plugins.jetbrains.com/plugin/9248-jclasslib-bytecode-viewer" target="_blank" rel="noopener">jclasslib</a>。使用效果如图 14 所示: 代码编译后在菜单栏: <strong>View</strong> -&gt; <strong>Show Bytecode With jclasslib</strong>，可以很直观地看到当前字节码文件的类信息、常量池、方法区等信息，非常方便。<br><img src="https://i.loli.net/2019/10/03/Xj5kUt6eO2ysYCb.png" alt="图14"><center>图 14</center></p>
-<h4 id="1-5-总结"><a href="#1-5-总结" class="headerlink" title="1.5 总结"></a>1.5 总结</h4><p>Java 中字节码文件是 JVM 执行引擎的数据入口，也是 Java 技术体系的基础构成之一。了解字节码文件的组成结构对后面进一步了解虚拟机和深入学习 Java 有很重要的意义。本文较为详细的讲解了字节码文件结构的各个组成部分，以及每个部分的定义、数据结构和使用方法。强烈建议自己动手分析一下，会理解得更加深入。</p>
+<p>通过设置 <code>sun.misc.ProxyGenerator.saveGeneratedFiles</code> 属性，可以将动态生成的代理类保存在项目根目录下，运行上面的示例代码生成的代理类如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">final</span> <span class="class"><span class="keyword">class</span> $<span class="title">Proxy0</span> <span class="keyword">extends</span> <span class="title">Proxy</span> <span class="keyword">implements</span> <span class="title">Subject</span> </span>&#123;</span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">static</span> Method m1;</span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">static</span> Method m2;</span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">static</span> Method m3;</span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">static</span> Method m0;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">static</span> &#123;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">      m1 = Class.forName(<span class="string">"java.lang.Object"</span>).getMethod(<span class="string">"equals"</span>, Class.forName(<span class="string">"java.lang.Object"</span>));</span><br><span class="line">      m2 = Class.forName(<span class="string">"java.lang.Object"</span>).getMethod(<span class="string">"toString"</span>);</span><br><span class="line">      m3 = Class.forName(<span class="string">"cn.mghio.designpattern.proxy.dynamicproxy.Subject"</span>).getMethod(<span class="string">"doOperation"</span>);</span><br><span class="line">      m0 = Class.forName(<span class="string">"java.lang.Object"</span>).getMethod(<span class="string">"hashCode"</span>);</span><br><span class="line">    &#125; <span class="keyword">catch</span> (NoSuchMethodException var2) &#123;</span><br><span class="line">      <span class="keyword">throw</span> <span class="keyword">new</span> NoSuchMethodError(var2.getMessage());</span><br><span class="line">    &#125; <span class="keyword">catch</span> (ClassNotFoundException var3) &#123;</span><br><span class="line">      <span class="keyword">throw</span> <span class="keyword">new</span> NoClassDefFoundError(var3.getMessage());</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">public</span> $Proxy0(InvocationHandler var1) <span class="keyword">throws</span>  &#123;</span><br><span class="line">    <span class="keyword">super</span>(var1);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">void</span> <span class="title">doOperation</span><span class="params">()</span> <span class="keyword">throws</span>  </span>&#123;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">      <span class="keyword">super</span>.h.invoke(<span class="keyword">this</span>, m3, (Object[])<span class="keyword">null</span>);</span><br><span class="line">    &#125; <span class="keyword">catch</span> (RuntimeException | Error var2) &#123;</span><br><span class="line">      <span class="keyword">throw</span> var2;</span><br><span class="line">    &#125; <span class="keyword">catch</span> (Throwable var3) &#123;</span><br><span class="line">      <span class="keyword">throw</span> <span class="keyword">new</span> UndeclaredThrowableException(var3);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// omit toString、equals、hashCode method...</span></span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>从动态生成的代理类的代码可以看出，<code>JDK</code> 动态代理生成的代理类是继承 <code>JDK</code> 中提供的 <code>Proxy</code> 和实现被代理类所实现的接口。进一步可以从这个实现方式得出两点：1. 使用 <code>JDK</code> 动态代理时为什么只能使用<code>接口引用指向代理</code>，而不能使用被代理的具体类引用指向代理；2. 被代理类必须实现接口，因为 <code>JDK</code> 动态代理生成的代理类必须继承自 <code>Proxy</code>，而 <code>Java</code> 不支持多重继承，所以只能通过实现接口的方式。</p>
+<p><img src="https://i.loli.net/2021/05/30/ZQRXpubaLsl9n2d.png" alt="jdk-dynamic-proxy.png"></p>
+<p>在默认情况下，<code>Spring AOP</code> 发现了目标对象实现了接口，会使用 <code>JDK</code> 动态代理机制为其动态生成代理对象，虽然提倡<code>面向接口编程</code>，但是也有目标对象没有实现接口的场景，当被代理的目标对象没有实现接口时就无法使用 <code>JDK</code> 动态代理了，那么这种情况下就需要使用第三方工具来帮忙了。</p>
+<h4 id="字节码生成技术"><a href="#字节码生成技术" class="headerlink" title="字节码生成技术"></a>字节码生成技术</h4><p>当目标对象没有实现接口时，可以通过动态字节码生成来继承目标对象来动态生成相应的子类，在生成的子类中<code>重写</code>父类目标对象的行为，然后将横切逻辑放在子类，在系统中使用目标对象的子类，最终的效果是代理模式是一样的，<a href="https://github.com/cglib/cglib" target="_blank" rel="noopener">CGLIB</a> 动态字节码生成类库（它本身其实也是一个抽象层，更底层是 <a href="https://asm.ow2.io" target="_blank" rel="noopener">ASM</a>）可以动态生成和修改一个类的字节码。当以上示例代码目标对象未实现接口是修改为 <code>CGLIB</code> 动态生成字节码方式实现如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> mghio</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@since</span> 2021-05-29</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">RealSubject</span> </span>&#123;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">doOperation</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    System.out.println(<span class="string">"RealSubject doOperation..."</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CglibMethodInterceptor</span> <span class="keyword">implements</span> <span class="title">MethodInterceptor</span> </span>&#123;</span><br><span class="line">  <span class="meta">@Override</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> Object <span class="title">intercept</span><span class="params">(Object o, Method method, Object[] args, MethodProxy methodProxy)</span></span></span><br><span class="line"><span class="function">      <span class="keyword">throws</span> Throwable </span>&#123;</span><br><span class="line">    <span class="comment">// add pre process logic if necessary</span></span><br><span class="line"></span><br><span class="line">    System.out.println(<span class="string">"Cglib before RealSubject doOperation..."</span>);</span><br><span class="line">    Object result = methodProxy.invokeSuper(o, args);</span><br><span class="line">    System.out.println(<span class="string">"Cglib after RealSubject doOperation..."</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// add post process logic if necessary</span></span><br><span class="line">    <span class="keyword">return</span> result;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Client</span> </span>&#123;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 将生成的动态代理类保存到文件中</span></span><br><span class="line">    System.setProperty(DebuggingClassWriter.DEBUG_LOCATION_PROPERTY,</span><br><span class="line">        <span class="string">"/Users/mghio/IdeaProjects/designpattern/cglib/proxy/"</span>);</span><br><span class="line">    <span class="comment">// 1. 创建 Enhancer 对象</span></span><br><span class="line">    Enhancer enhancer = <span class="keyword">new</span> Enhancer();</span><br><span class="line">    <span class="comment">// 2. 设置被代理类</span></span><br><span class="line">    enhancer.setSuperclass(RealSubject.class);</span><br><span class="line">    <span class="comment">// 3. 设置回调对象(实现 MethodInterceptor 接口)</span></span><br><span class="line">    enhancer.setCallback(<span class="keyword">new</span> CglibMethodInterceptor());</span><br><span class="line">    <span class="comment">// 4. 创建代理对象</span></span><br><span class="line">    RealSubject proxy = (RealSubject) enhancer.create();</span><br><span class="line">    proxy.doOperation();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>使用 <code>CGLIB</code> 生成代理对象需要 4 步：</p>
+<ol>
+<li>创建 <code>Enhancer</code> 对象，动态生成字节码的绝大部分逻辑都是在这个类中完成的。</li>
+<li>设置被代理类(目标对象)，生成的代理类会继承自这个接口，也就意味着这个类不能是 <code>final</code> 类型的。</li>
+<li>设置回调对象(实现 <code>MethodInterceptor</code> 接口)，在这里根据需要添加横切逻辑。</li>
+<li>调用 <code>Enhaner</code> 的 <code>create()</code> 方法创建代理对象。</li>
+</ol>
+<p>在设置 <code>DebuggingClassWriter.DEBUG_LOCATION_PROPERTY</code> 属性后，反编译已保存的动态生成代理类如下：</p>
+<p><img src="https://i.loli.net/2021/05/30/F46CaDjsBS9U8E2.png" alt="cglib-generate.png"></p>
+<p>从反编译后的代码可以看出 <code>CGLIB</code> 生成的代理类是通过继承被代理类 <code>RealSubject</code> 实现 <code>Factory</code> 接口实现的，要能被继承也就要求被代理类不能是 <code>final</code> 类型的。看到这里你可能会问：既然 <code>JDK</code> 动态代理要求被代理类实现接口，而 <code>CGLIB</code> 动态字节码生成要求不能是 <code>final</code> 类，那对于那些没有实现接口同时还是 <code>final</code> 类，要怎么动态代理呢？好问题，这个就留给你自己去思考了。</p>
+<h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><p>本文简要介绍了 <code>Spring AOP</code> 实现所依赖的核心基础技术，从动态代理的根源代理模式到动态代理和动态字节码生成技术，为下篇动手实现简易版的 <code>AOP</code> 打下基础，在了解了所依赖的基础技术后，在具体实现时就会更加丝滑，<code>动态代理</code>和<code>动态字节码生成</code>对比如下：</p>
+<table>
+<thead>
+<tr>
+<th align="center">对比项</th>
+<th align="center">JDK 动态代理</th>
+<th align="center">CGLIB</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">生成代理类的方式</td>
+<td align="center">继承 <code>JDK</code> 中 <code>Proxy</code>，实现被代理类的所有接口</td>
+<td align="center">继承被代理类，实现 <code>CGLIB</code> 的 <code>Factory</code> 接口</td>
+</tr>
+<tr>
+<td align="center">被代理对象的要求</td>
+<td align="center">必须实现接口，可以是 <code>final</code> 类</td>
+<td align="center">非 <code>final</code> 类，方法也要是非 <code>final</code> 类型的</td>
+</tr>
+<tr>
+<td align="center">集成方式</td>
+<td align="center"><code>JDK</code> 内置</td>
+<td align="center">第三方动态字节码生成类库</td>
+</tr>
+</tbody></table>
 
       
     </div>
@@ -634,7 +612,7 @@
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="https://www.mghio.cn/post/192cb539.html" title="Java 字节码">https://www.mghio.cn/post/192cb539.html</a>
+    <a href="https://www.mghio.cn/post/af7194f9.html" title="如何实现一个简易版的 Spring - 如何实现 AOP（中）">https://www.mghio.cn/post/af7194f9.html</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>
@@ -650,6 +628,10 @@
           
             <a href="/tags/Java/" rel="tag"># Java</a>
           
+            <a href="/tags/Spring/" rel="tag"># Spring</a>
+          
+            <a href="/tags/AOP/" rel="tag"># AOP</a>
+          
         </div>
       
 
@@ -661,8 +643,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/post/b1d4025b.html" rel="next" title="hello world">
-                <i class="fa fa-chevron-left"></i> hello world
+              <a href="/post/9294037e.html" rel="next" title="如何实现一个简易版的 Spring - 如何实现 AOP（上）">
+                <i class="fa fa-chevron-left"></i> 如何实现一个简易版的 Spring - 如何实现 AOP（上）
               </a>
             
           </div>
@@ -670,10 +652,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/post/8bd965a0.html" rel="prev" title="Java 字符串 split 踩坑记">
-                Java 字符串 split 踩坑记 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -1029,7 +1007,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-1-什么是字节码？"><span class="nav-number">1.</span> <span class="nav-text">1.1 什么是字节码？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-2-Java-字节码结构"><span class="nav-number">2.</span> <span class="nav-text">1.2 Java 字节码结构</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-3-Java-字节码操作集合"><span class="nav-number">3.</span> <span class="nav-text">1.3 Java 字节码操作集合</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-4-查看字节码工具"><span class="nav-number">4.</span> <span class="nav-text">1.4 查看字节码工具</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-5-总结"><span class="nav-number">5.</span> <span class="nav-text">1.5 总结</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#代理模式"><span class="nav-number">2.</span> <span class="nav-text">代理模式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#动态代理"><span class="nav-number">3.</span> <span class="nav-text">动态代理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#字节码生成技术"><span class="nav-number">4.</span> <span class="nav-text">字节码生成技术</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#总结"><span class="nav-number">5.</span> <span class="nav-text">总结</span></a></li></ol></div>
             
 
           </div>
