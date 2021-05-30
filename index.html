@@ -467,7 +467,7 @@
 
       
         
-          <h4 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h4><p>在上篇 <a href="https://www.mghio.cn/post/9294037e.html">如何实现 AOP（上）</a> 介绍了 <code>AOP</code> 技术出现的原因和一些重要的概念。在我们自己实现之前有必要先了解一下 <code>AOP</code> 底层到底是如何运作的，所以这篇再来看看 <code>AOP</code> 实现所依赖的一些核心基础技术。<code>AOP</code> 是使用<code>动态代理</code>和<code>字节码生成技术</code>来实现的，在<strong>运行期</strong>（注意：不是编译期！）为目标对象生成代理对象，然后将横切逻辑织入到生成的代理对象中，最后系统使用的是带有横切逻辑的代理对象，而不是被代理对象，由代理对象转发到被代理对象。</p>
+          <h4 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h4><p>在上篇 <a href="https://www.mghio.cn/post/9294037e.html">如何实现 AOP（上）</a> 介绍了 <code>AOP</code> 技术出现的原因和一些重要的概念，在我们自己实现之前有必要先了解一下 <code>AOP</code> 底层到底是如何运作的，所以这篇再来看看 <code>AOP</code> 实现所依赖的一些核心基础技术。<code>AOP</code> 是使用<code>动态代理</code>和<code>字节码生成技术</code>来实现的，在<strong>运行期</strong>（注意：不是编译期！）为目标对象生成代理对象，然后将横切逻辑织入到生成的代理对象中，最后系统使用的是带有横切逻辑的代理对象，而不是被代理对象，由代理对象转发到被代理对象。</p>
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/post/af7194f9.html#more" rel="contents">
