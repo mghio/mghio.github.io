@@ -467,7 +467,8 @@
 
       
         
-          <h4 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h4><p>前面两篇 <a href="https://www.mghio.cn/post/9294037e.html">如何实现 AOP（上）</a>、<a href="https://www.mghio.cn/post/af7194f9.html">如何实现 AOP（中）</a> 做了一些 <code>AOP</code> 的核心基础知识简要介绍，本文进入到了实战环节了，去实现一个基于 <code>XML</code> 配置的简易版 <code>AOP</code>，虽然是简易版的但是<code>麻雀虽小五脏俱全</code>，一些核心的功能都会实现，通过实现这个简易版的 <code>AOP</code>，相信你会对 <code>AOP</code> 有深入的理解，不止知其然，还能知其所以然。<code>AOP</code> 的顶层接口规范和底层依赖基础组件都是由一个叫 <a href="http://aopalliance.sourceforge.net" target="_blank" rel="noopener">AOP Alliance</a> 的组织制定的，我们经常听到的 <code>AspectJ</code>、<code>ASM</code>、<code>CGLIB</code> 就是其中被管理的一些项目，需要明确的一点是，在 <code>Spring</code> 中只是使用了 <code>AspectJ</code> 的核心概念和核心类，并不是像 <code>AspectJ</code> 那样在编译期实现的 <code>AOP</code>，而是在<strong>运行期</strong>。话不多说，下面开始进入主题。</p>
+          <p><img src="https://i.loli.net/2021/06/10/lOLEuXIUreJkNgM.jpg" alt="cover.jpeg"></p>
+<h4 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h4><p>前面两篇 <a href="https://www.mghio.cn/post/9294037e.html">如何实现 AOP（上）</a>、<a href="https://www.mghio.cn/post/af7194f9.html">如何实现 AOP（中）</a> 做了一些 <code>AOP</code> 的核心基础知识简要介绍，本文进入到了实战环节了，去实现一个基于 <code>XML</code> 配置的简易版 <code>AOP</code>，虽然是简易版的但是<code>麻雀虽小五脏俱全</code>，一些核心的功能都会实现，通过实现这个简易版的 <code>AOP</code>，相信你会对 <code>AOP</code> 有深入的理解，不止知其然，还能知其所以然。<code>AOP</code> 的顶层接口规范和底层依赖基础组件都是由一个叫 <a href="http://aopalliance.sourceforge.net" target="_blank" rel="noopener">AOP Alliance</a> 的组织制定的，我们经常听到的 <code>AspectJ</code>、<code>ASM</code>、<code>CGLIB</code> 就是其中被管理的一些项目，需要明确的一点是，在 <code>Spring</code> 中只是使用了 <code>AspectJ</code> 的核心概念和核心类，并不是像 <code>AspectJ</code> 那样在编译期实现的 <code>AOP</code>，而是在<strong>运行期</strong>。话不多说，下面开始进入主题。</p>
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/post/2a28641b.html#more" rel="contents">
@@ -680,7 +681,8 @@
 
       
         
-          <h4 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h4><p>在上篇 <a href="https://www.mghio.cn/post/9294037e.html">如何实现 AOP（上）</a> 介绍了 <code>AOP</code> 技术出现的原因和一些重要的概念，在我们自己实现之前有必要先了解一下 <code>AOP</code> 底层到底是如何运作的，所以这篇再来看看 <code>AOP</code> 实现所依赖的一些核心基础技术。<code>AOP</code> 是使用<code>动态代理</code>和<code>字节码生成技术</code>来实现的，在<strong>运行期</strong>（注意：不是编译期！）为目标对象生成代理对象，然后将横切逻辑织入到生成的代理对象中，最后系统使用的是带有横切逻辑的代理对象，而不是被代理对象，由代理对象转发到被代理对象。</p>
+          <p><img src="https://i.loli.net/2021/06/10/zDpSiZX6ThBjLyC.jpg" alt="cover.jpeg"></p>
+<h4 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h4><p>在上篇 <a href="https://www.mghio.cn/post/9294037e.html">如何实现 AOP（上）</a> 介绍了 <code>AOP</code> 技术出现的原因和一些重要的概念，在我们自己实现之前有必要先了解一下 <code>AOP</code> 底层到底是如何运作的，所以这篇再来看看 <code>AOP</code> 实现所依赖的一些核心基础技术。<code>AOP</code> 是使用<code>动态代理</code>和<code>字节码生成技术</code>来实现的，在<strong>运行期</strong>（注意：不是编译期！）为目标对象生成代理对象，然后将横切逻辑织入到生成的代理对象中，最后系统使用的是带有横切逻辑的代理对象，而不是被代理对象，由代理对象转发到被代理对象。</p>
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/post/af7194f9.html#more" rel="contents">
@@ -893,7 +895,8 @@
 
       
         
-          <h4 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h4><p>本文是「如何实现一个简易版的 <code>Spring</code> 系列」的第五篇，在之前介绍了 <code>Spring</code> 中的核心技术之一 <code>IoC</code>，从这篇开始我们再来看看 <code>Spring</code> 的另一个重要的技术——<a href="https://en.wikipedia.org/wiki/Aspect-oriented_programming" target="_blank" rel="noopener">AOP</a>。用过 <code>Spring</code> 框架进行开发的朋友们相信或多或少应该接触过 <code>AOP</code>，用中文描述就是面向<strong>切面</strong>编程。学习一个新技术了解其产生的背景是至关重要的，在刚开始接触 <code>AOP</code> 时不知道你有没有想过这个问题，既然在面向对象的语言中已经有了 <a href="https://en.wikipedia.org/wiki/Object-oriented_programming" target="_blank" rel="noopener">OOP</a> 了，为什么还需要 <code>AOP</code> 呢？换个问法也就是说在 <code>OOP</code> 中有哪些场景其实处理得并不优雅，需要重新寻找一种新的技术去解决处理？（P.S. 这里建议暂停十秒钟，自己先思考一下…）</p>
+          <p><img src="https://i.loli.net/2021/06/10/Pw2T431Dy6hJSUg.jpg" alt="cover.jpeg"></p>
+<h4 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h4><p>本文是「如何实现一个简易版的 <code>Spring</code> 系列」的第五篇，在之前介绍了 <code>Spring</code> 中的核心技术之一 <code>IoC</code>，从这篇开始我们再来看看 <code>Spring</code> 的另一个重要的技术——<a href="https://en.wikipedia.org/wiki/Aspect-oriented_programming" target="_blank" rel="noopener">AOP</a>。用过 <code>Spring</code> 框架进行开发的朋友们相信或多或少应该接触过 <code>AOP</code>，用中文描述就是面向<strong>切面</strong>编程。学习一个新技术了解其产生的背景是至关重要的，在刚开始接触 <code>AOP</code> 时不知道你有没有想过这个问题，既然在面向对象的语言中已经有了 <a href="https://en.wikipedia.org/wiki/Object-oriented_programming" target="_blank" rel="noopener">OOP</a> 了，为什么还需要 <code>AOP</code> 呢？换个问法也就是说在 <code>OOP</code> 中有哪些场景其实处理得并不优雅，需要重新寻找一种新的技术去解决处理？（P.S. 这里建议暂停十秒钟，自己先思考一下…）</p>
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/post/9294037e.html#more" rel="contents">

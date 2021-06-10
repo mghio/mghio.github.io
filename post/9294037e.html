@@ -94,24 +94,25 @@
 
 
 
-<meta name="description" content="前言本文是「如何实现一个简易版的 Spring 系列」的第五篇，在之前介绍了 Spring 中的核心技术之一 IoC，从这篇开始我们再来看看 Spring 的另一个重要的技术——AOP。用过 Spring 框架进行开发的朋友们相信或多或少应该接触过 AOP，用中文描述就是面向切面编程。学习一个新技术了解其产生的背景是至关重要的，在刚开始接触 AOP 时不知道你有没有想过这个问题，既然在面向对象的语">
+<meta name="description" content="前言本文是「如何实现一个简易版的 Spring 系列」的第五篇，在之前介绍了 Spring 中的核心技术之一 IoC，从这篇开始我们再来看看 Spring 的另一个重要的技术——AOP。用过 Spring 框架进行开发的朋友们相信或多或少应该接触过 AOP，用中文描述就是面向切面编程。学习一个新技术了解其产生的背景是至关重要的，在刚开始接触 AOP 时不知道你有没有想过这个问题，既然在面向对象的">
 <meta name="keywords" content="Java,Spring,AOP">
 <meta property="og:type" content="article">
 <meta property="og:title" content="如何实现一个简易版的 Spring - 如何实现 AOP（上）">
 <meta property="og:url" content="https://www.mghio.cn/post/9294037e.html">
 <meta property="og:site_name" content="mghio&#39;s Blog">
-<meta property="og:description" content="前言本文是「如何实现一个简易版的 Spring 系列」的第五篇，在之前介绍了 Spring 中的核心技术之一 IoC，从这篇开始我们再来看看 Spring 的另一个重要的技术——AOP。用过 Spring 框架进行开发的朋友们相信或多或少应该接触过 AOP，用中文描述就是面向切面编程。学习一个新技术了解其产生的背景是至关重要的，在刚开始接触 AOP 时不知道你有没有想过这个问题，既然在面向对象的语">
+<meta property="og:description" content="前言本文是「如何实现一个简易版的 Spring 系列」的第五篇，在之前介绍了 Spring 中的核心技术之一 IoC，从这篇开始我们再来看看 Spring 的另一个重要的技术——AOP。用过 Spring 框架进行开发的朋友们相信或多或少应该接触过 AOP，用中文描述就是面向切面编程。学习一个新技术了解其产生的背景是至关重要的，在刚开始接触 AOP 时不知道你有没有想过这个问题，既然在面向对象的">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://i.loli.net/2021/06/10/Pw2T431Dy6hJSUg.jpg">
 <meta property="og:image" content="https://i.loli.net/2021/05/23/eAdboOvtYyprQfC.png">
 <meta property="og:image" content="https://i.loli.net/2021/05/22/VLlwGWj7EpXDzPC.png">
 <meta property="og:image" content="https://i.loli.net/2021/05/22/8TdVQNyfPJbz7hv.png">
 <meta property="og:image" content="https://i.loli.net/2021/05/23/tYkImafH3pXwZNJ.png">
 <meta property="og:image" content="https://i.loli.net/2021/05/23/PF6zhclxALpVtRO.png">
-<meta property="og:updated_time" content="2021-05-30T00:55:03.290Z">
+<meta property="og:updated_time" content="2021-06-10T14:08:12.920Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="如何实现一个简易版的 Spring - 如何实现 AOP（上）">
-<meta name="twitter:description" content="前言本文是「如何实现一个简易版的 Spring 系列」的第五篇，在之前介绍了 Spring 中的核心技术之一 IoC，从这篇开始我们再来看看 Spring 的另一个重要的技术——AOP。用过 Spring 框架进行开发的朋友们相信或多或少应该接触过 AOP，用中文描述就是面向切面编程。学习一个新技术了解其产生的背景是至关重要的，在刚开始接触 AOP 时不知道你有没有想过这个问题，既然在面向对象的语">
-<meta name="twitter:image" content="https://i.loli.net/2021/05/23/eAdboOvtYyprQfC.png">
+<meta name="twitter:description" content="前言本文是「如何实现一个简易版的 Spring 系列」的第五篇，在之前介绍了 Spring 中的核心技术之一 IoC，从这篇开始我们再来看看 Spring 的另一个重要的技术——AOP。用过 Spring 框架进行开发的朋友们相信或多或少应该接触过 AOP，用中文描述就是面向切面编程。学习一个新技术了解其产生的背景是至关重要的，在刚开始接触 AOP 时不知道你有没有想过这个问题，既然在面向对象的">
+<meta name="twitter:image" content="https://i.loli.net/2021/06/10/Pw2T431Dy6hJSUg.jpg">
 
 
 
@@ -475,7 +476,8 @@
       
 
       
-        <h4 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h4><p>本文是「如何实现一个简易版的 <code>Spring</code> 系列」的第五篇，在之前介绍了 <code>Spring</code> 中的核心技术之一 <code>IoC</code>，从这篇开始我们再来看看 <code>Spring</code> 的另一个重要的技术——<a href="https://en.wikipedia.org/wiki/Aspect-oriented_programming" target="_blank" rel="noopener">AOP</a>。用过 <code>Spring</code> 框架进行开发的朋友们相信或多或少应该接触过 <code>AOP</code>，用中文描述就是面向<strong>切面</strong>编程。学习一个新技术了解其产生的背景是至关重要的，在刚开始接触 <code>AOP</code> 时不知道你有没有想过这个问题，既然在面向对象的语言中已经有了 <a href="https://en.wikipedia.org/wiki/Object-oriented_programming" target="_blank" rel="noopener">OOP</a> 了，为什么还需要 <code>AOP</code> 呢？换个问法也就是说在 <code>OOP</code> 中有哪些场景其实处理得并不优雅，需要重新寻找一种新的技术去解决处理？（P.S. 这里建议暂停十秒钟，自己先思考一下…）</p>
+        <p><img src="https://i.loli.net/2021/06/10/Pw2T431Dy6hJSUg.jpg" alt="cover.jpeg"></p>
+<h4 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h4><p>本文是「如何实现一个简易版的 <code>Spring</code> 系列」的第五篇，在之前介绍了 <code>Spring</code> 中的核心技术之一 <code>IoC</code>，从这篇开始我们再来看看 <code>Spring</code> 的另一个重要的技术——<a href="https://en.wikipedia.org/wiki/Aspect-oriented_programming" target="_blank" rel="noopener">AOP</a>。用过 <code>Spring</code> 框架进行开发的朋友们相信或多或少应该接触过 <code>AOP</code>，用中文描述就是面向<strong>切面</strong>编程。学习一个新技术了解其产生的背景是至关重要的，在刚开始接触 <code>AOP</code> 时不知道你有没有想过这个问题，既然在面向对象的语言中已经有了 <a href="https://en.wikipedia.org/wiki/Object-oriented_programming" target="_blank" rel="noopener">OOP</a> 了，为什么还需要 <code>AOP</code> 呢？换个问法也就是说在 <code>OOP</code> 中有哪些场景其实处理得并不优雅，需要重新寻找一种新的技术去解决处理？（P.S. 这里建议暂停十秒钟，自己先思考一下…）</p>
 <a id="more"></a>
 
 <h4 id="为什么需要-AOP"><a href="#为什么需要-AOP" class="headerlink" title="为什么需要 AOP"></a>为什么需要 AOP</h4><p>我们做软件开发的最终目的是为了解决公司的各种<strong>需求</strong>，为业务赋能，注意，这里的需求包含了<code>业务需求</code>和<code>系统需求</code>，对于绝大部分的业务需求的普通关注点，都可以通过面向对象（<code>OOP</code>）的方式对其进行很好的抽象、封装以及模块化，但是对于系统需求使用面向对象的方式虽然很好的对其进行分解并对其模块化，但是却不能很好的避免这些<strong>类似的系统需求在系统的各个模块中到处散落</strong>的问题。</p>

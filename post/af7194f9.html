@@ -94,23 +94,24 @@
 
 
 
-<meta name="description" content="前言在上篇 如何实现 AOP（上） 介绍了 AOP 技术出现的原因和一些重要的概念，在我们自己实现之前有必要先了解一下 AOP 底层到底是如何运作的，所以这篇再来看看 AOP 实现所依赖的一些核心基础技术。AOP 是使用动态代理和字节码生成技术来实现的，在运行期（注意：不是编译期！）为目标对象生成代理对象，然后将横切逻辑织入到生成的代理对象中，最后系统使用的是带有横切逻辑的代理对象，而不是被代理对">
+<meta name="description" content="前言在上篇 如何实现 AOP（上） 介绍了 AOP 技术出现的原因和一些重要的概念，在我们自己实现之前有必要先了解一下 AOP 底层到底是如何运作的，所以这篇再来看看 AOP 实现所依赖的一些核心基础技术。AOP 是使用动态代理和字节码生成技术来实现的，在运行期（注意：不是编译期！）为目标对象生成代理对象，然后将横切逻辑织入到生成的代理对象中，最后系统使用的是带有横切逻辑的代理对象，而不是被代理">
 <meta name="keywords" content="Java,Spring,AOP">
 <meta property="og:type" content="article">
 <meta property="og:title" content="如何实现一个简易版的 Spring - 如何实现 AOP（中）">
 <meta property="og:url" content="https://www.mghio.cn/post/af7194f9.html">
 <meta property="og:site_name" content="mghio&#39;s Blog">
-<meta property="og:description" content="前言在上篇 如何实现 AOP（上） 介绍了 AOP 技术出现的原因和一些重要的概念，在我们自己实现之前有必要先了解一下 AOP 底层到底是如何运作的，所以这篇再来看看 AOP 实现所依赖的一些核心基础技术。AOP 是使用动态代理和字节码生成技术来实现的，在运行期（注意：不是编译期！）为目标对象生成代理对象，然后将横切逻辑织入到生成的代理对象中，最后系统使用的是带有横切逻辑的代理对象，而不是被代理对">
+<meta property="og:description" content="前言在上篇 如何实现 AOP（上） 介绍了 AOP 技术出现的原因和一些重要的概念，在我们自己实现之前有必要先了解一下 AOP 底层到底是如何运作的，所以这篇再来看看 AOP 实现所依赖的一些核心基础技术。AOP 是使用动态代理和字节码生成技术来实现的，在运行期（注意：不是编译期！）为目标对象生成代理对象，然后将横切逻辑织入到生成的代理对象中，最后系统使用的是带有横切逻辑的代理对象，而不是被代理">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://i.loli.net/2021/06/10/zDpSiZX6ThBjLyC.jpg">
 <meta property="og:image" content="https://i.loli.net/2021/05/30/2m47LEoJBpjUGSC.png">
 <meta property="og:image" content="https://i.loli.net/2021/05/30/FDlYgMUb5kdWtOo.png">
 <meta property="og:image" content="https://i.loli.net/2021/05/30/ZQRXpubaLsl9n2d.png">
 <meta property="og:image" content="https://i.loli.net/2021/05/30/F46CaDjsBS9U8E2.png">
-<meta property="og:updated_time" content="2021-05-30T06:49:01.751Z">
+<meta property="og:updated_time" content="2021-06-10T14:07:46.358Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="如何实现一个简易版的 Spring - 如何实现 AOP（中）">
-<meta name="twitter:description" content="前言在上篇 如何实现 AOP（上） 介绍了 AOP 技术出现的原因和一些重要的概念，在我们自己实现之前有必要先了解一下 AOP 底层到底是如何运作的，所以这篇再来看看 AOP 实现所依赖的一些核心基础技术。AOP 是使用动态代理和字节码生成技术来实现的，在运行期（注意：不是编译期！）为目标对象生成代理对象，然后将横切逻辑织入到生成的代理对象中，最后系统使用的是带有横切逻辑的代理对象，而不是被代理对">
-<meta name="twitter:image" content="https://i.loli.net/2021/05/30/2m47LEoJBpjUGSC.png">
+<meta name="twitter:description" content="前言在上篇 如何实现 AOP（上） 介绍了 AOP 技术出现的原因和一些重要的概念，在我们自己实现之前有必要先了解一下 AOP 底层到底是如何运作的，所以这篇再来看看 AOP 实现所依赖的一些核心基础技术。AOP 是使用动态代理和字节码生成技术来实现的，在运行期（注意：不是编译期！）为目标对象生成代理对象，然后将横切逻辑织入到生成的代理对象中，最后系统使用的是带有横切逻辑的代理对象，而不是被代理">
+<meta name="twitter:image" content="https://i.loli.net/2021/06/10/zDpSiZX6ThBjLyC.jpg">
 
 
 
@@ -474,7 +475,8 @@
       
 
       
-        <h4 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h4><p>在上篇 <a href="https://www.mghio.cn/post/9294037e.html">如何实现 AOP（上）</a> 介绍了 <code>AOP</code> 技术出现的原因和一些重要的概念，在我们自己实现之前有必要先了解一下 <code>AOP</code> 底层到底是如何运作的，所以这篇再来看看 <code>AOP</code> 实现所依赖的一些核心基础技术。<code>AOP</code> 是使用<code>动态代理</code>和<code>字节码生成技术</code>来实现的，在<strong>运行期</strong>（注意：不是编译期！）为目标对象生成代理对象，然后将横切逻辑织入到生成的代理对象中，最后系统使用的是带有横切逻辑的代理对象，而不是被代理对象，由代理对象转发到被代理对象。</p>
+        <p><img src="https://i.loli.net/2021/06/10/zDpSiZX6ThBjLyC.jpg" alt="cover.jpeg"></p>
+<h4 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h4><p>在上篇 <a href="https://www.mghio.cn/post/9294037e.html">如何实现 AOP（上）</a> 介绍了 <code>AOP</code> 技术出现的原因和一些重要的概念，在我们自己实现之前有必要先了解一下 <code>AOP</code> 底层到底是如何运作的，所以这篇再来看看 <code>AOP</code> 实现所依赖的一些核心基础技术。<code>AOP</code> 是使用<code>动态代理</code>和<code>字节码生成技术</code>来实现的，在<strong>运行期</strong>（注意：不是编译期！）为目标对象生成代理对象，然后将横切逻辑织入到生成的代理对象中，最后系统使用的是带有横切逻辑的代理对象，而不是被代理对象，由代理对象转发到被代理对象。</p>
 <a id="more"></a>
 <h4 id="代理模式"><a href="#代理模式" class="headerlink" title="代理模式"></a>代理模式</h4><p>动态代理的根源是设计模式中的<a href="https://en.wikipedia.org/wiki/Proxy_pattern" target="_blank" rel="noopener">代理模式</a>，代理模式在 <a href="https://en.wikipedia.org/wiki/Design_Patterns" target="_blank" rel="noopener">GoF</a> 中的描述如下：</p>
 <blockquote>

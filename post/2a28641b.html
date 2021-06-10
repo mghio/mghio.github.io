@@ -94,23 +94,24 @@
 
 
 
-<meta name="description" content="前言前面两篇 如何实现 AOP（上）、如何实现 AOP（中） 做了一些 AOP 的核心基础知识简要介绍，本文进入到了实战环节了，去实现一个基于 XML 配置的简易版 AOP，虽然是简易版的但是麻雀虽小五脏俱全，一些核心的功能都会实现，通过实现这个简易版的 AOP，相信你会对 AOP 有深入的理解，不止知其然，还能知其所以然。AOP 的顶层接口规范和底层依赖基础组件都是由一个叫 AOP Allian">
+<meta name="description" content="前言前面两篇 如何实现 AOP（上）、如何实现 AOP（中） 做了一些 AOP 的核心基础知识简要介绍，本文进入到了实战环节了，去实现一个基于 XML 配置的简易版 AOP，虽然是简易版的但是麻雀虽小五脏俱全，一些核心的功能都会实现，通过实现这个简易版的 AOP，相信你会对 AOP 有深入的理解，不止知其然，还能知其所以然。AOP 的顶层接口规范和底层依赖基础组件都是由一个叫 AOP Allia">
 <meta name="keywords" content="Java,Spring,AOP">
 <meta property="og:type" content="article">
 <meta property="og:title" content="如何实现一个简易版的 Spring - 如何实现 AOP（下）">
 <meta property="og:url" content="https://www.mghio.cn/post/2a28641b.html">
 <meta property="og:site_name" content="mghio&#39;s Blog">
-<meta property="og:description" content="前言前面两篇 如何实现 AOP（上）、如何实现 AOP（中） 做了一些 AOP 的核心基础知识简要介绍，本文进入到了实战环节了，去实现一个基于 XML 配置的简易版 AOP，虽然是简易版的但是麻雀虽小五脏俱全，一些核心的功能都会实现，通过实现这个简易版的 AOP，相信你会对 AOP 有深入的理解，不止知其然，还能知其所以然。AOP 的顶层接口规范和底层依赖基础组件都是由一个叫 AOP Allian">
+<meta property="og:description" content="前言前面两篇 如何实现 AOP（上）、如何实现 AOP（中） 做了一些 AOP 的核心基础知识简要介绍，本文进入到了实战环节了，去实现一个基于 XML 配置的简易版 AOP，虽然是简易版的但是麻雀虽小五脏俱全，一些核心的功能都会实现，通过实现这个简易版的 AOP，相信你会对 AOP 有深入的理解，不止知其然，还能知其所以然。AOP 的顶层接口规范和底层依赖基础组件都是由一个叫 AOP Allia">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://i.loli.net/2021/06/10/lOLEuXIUreJkNgM.jpg">
 <meta property="og:image" content="https://i.loli.net/2021/06/06/JZHDROnPEletVwU.png">
 <meta property="og:image" content="https://i.loli.net/2021/06/06/rQyJt8KuSDEO6gZ.png">
 <meta property="og:image" content="https://i.loli.net/2021/06/06/gvOmqs4ci8jp1Nx.png">
 <meta property="og:image" content="https://i.loli.net/2021/06/06/Df4bx7AkdLavjrX.png">
-<meta property="og:updated_time" content="2021-06-06T11:44:42.322Z">
+<meta property="og:updated_time" content="2021-06-10T14:04:05.733Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="如何实现一个简易版的 Spring - 如何实现 AOP（下）">
-<meta name="twitter:description" content="前言前面两篇 如何实现 AOP（上）、如何实现 AOP（中） 做了一些 AOP 的核心基础知识简要介绍，本文进入到了实战环节了，去实现一个基于 XML 配置的简易版 AOP，虽然是简易版的但是麻雀虽小五脏俱全，一些核心的功能都会实现，通过实现这个简易版的 AOP，相信你会对 AOP 有深入的理解，不止知其然，还能知其所以然。AOP 的顶层接口规范和底层依赖基础组件都是由一个叫 AOP Allian">
-<meta name="twitter:image" content="https://i.loli.net/2021/06/06/JZHDROnPEletVwU.png">
+<meta name="twitter:description" content="前言前面两篇 如何实现 AOP（上）、如何实现 AOP（中） 做了一些 AOP 的核心基础知识简要介绍，本文进入到了实战环节了，去实现一个基于 XML 配置的简易版 AOP，虽然是简易版的但是麻雀虽小五脏俱全，一些核心的功能都会实现，通过实现这个简易版的 AOP，相信你会对 AOP 有深入的理解，不止知其然，还能知其所以然。AOP 的顶层接口规范和底层依赖基础组件都是由一个叫 AOP Allia">
+<meta name="twitter:image" content="https://i.loli.net/2021/06/10/lOLEuXIUreJkNgM.jpg">
 
 
 
@@ -474,7 +475,8 @@
       
 
       
-        <h4 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h4><p>前面两篇 <a href="https://www.mghio.cn/post/9294037e.html">如何实现 AOP（上）</a>、<a href="https://www.mghio.cn/post/af7194f9.html">如何实现 AOP（中）</a> 做了一些 <code>AOP</code> 的核心基础知识简要介绍，本文进入到了实战环节了，去实现一个基于 <code>XML</code> 配置的简易版 <code>AOP</code>，虽然是简易版的但是<code>麻雀虽小五脏俱全</code>，一些核心的功能都会实现，通过实现这个简易版的 <code>AOP</code>，相信你会对 <code>AOP</code> 有深入的理解，不止知其然，还能知其所以然。<code>AOP</code> 的顶层接口规范和底层依赖基础组件都是由一个叫 <a href="http://aopalliance.sourceforge.net" target="_blank" rel="noopener">AOP Alliance</a> 的组织制定的，我们经常听到的 <code>AspectJ</code>、<code>ASM</code>、<code>CGLIB</code> 就是其中被管理的一些项目，需要明确的一点是，在 <code>Spring</code> 中只是使用了 <code>AspectJ</code> 的核心概念和核心类，并不是像 <code>AspectJ</code> 那样在编译期实现的 <code>AOP</code>，而是在<strong>运行期</strong>。话不多说，下面开始进入主题。</p>
+        <p><img src="https://i.loli.net/2021/06/10/lOLEuXIUreJkNgM.jpg" alt="cover.jpeg"></p>
+<h4 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h4><p>前面两篇 <a href="https://www.mghio.cn/post/9294037e.html">如何实现 AOP（上）</a>、<a href="https://www.mghio.cn/post/af7194f9.html">如何实现 AOP（中）</a> 做了一些 <code>AOP</code> 的核心基础知识简要介绍，本文进入到了实战环节了，去实现一个基于 <code>XML</code> 配置的简易版 <code>AOP</code>，虽然是简易版的但是<code>麻雀虽小五脏俱全</code>，一些核心的功能都会实现，通过实现这个简易版的 <code>AOP</code>，相信你会对 <code>AOP</code> 有深入的理解，不止知其然，还能知其所以然。<code>AOP</code> 的顶层接口规范和底层依赖基础组件都是由一个叫 <a href="http://aopalliance.sourceforge.net" target="_blank" rel="noopener">AOP Alliance</a> 的组织制定的，我们经常听到的 <code>AspectJ</code>、<code>ASM</code>、<code>CGLIB</code> 就是其中被管理的一些项目，需要明确的一点是，在 <code>Spring</code> 中只是使用了 <code>AspectJ</code> 的核心概念和核心类，并不是像 <code>AspectJ</code> 那样在编译期实现的 <code>AOP</code>，而是在<strong>运行期</strong>。话不多说，下面开始进入主题。</p>
 <a id="more"></a>
 <h4 id="解析-XML-中的-pointcut-定义及方法解析"><a href="#解析-XML-中的-pointcut-定义及方法解析" class="headerlink" title="解析 XML 中的 pointcut 定义及方法解析"></a>解析 XML 中的 pointcut 定义及方法解析</h4><p>假设有一个 <code>OrderService</code> 类(P.S. 这里的 <code>@Component</code> 是我自定义的注解，详见 <a href="https://www.mghio.cn/post/6775e26e.html">这篇</a>)，其中有一个下单的方法 <code>placeOrder()</code>，我们想实现的效果是想给这个 <code>placeOrder()</code> 方法加上 <a href="https://en.wikipedia.org/wiki/Database_transaction" target="_blank" rel="noopener">数据库事务</a>，即执行方法之前开启事务，执行过程中发生异常回滚事务，正常执行完成提交事务。<code>OrderService</code> 类的代码如下：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> mghio</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@since</span> 2021-06-06</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Component</span>(value = <span class="string">"orderService"</span>)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">OrderService</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">placeOrder</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    System.out.println(<span class="string">"place order"</span>);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
