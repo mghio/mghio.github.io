@@ -94,23 +94,24 @@
 
 
 
-<meta name="description" content="前言前面两篇文章（如何实现一个简易版的 Spring - 如何实现 Setter 注入、如何实现一个简易版的 Spring - 如何实现 Constructor 注入）介绍的都是基于 XML 配置文件方式的实现，从 JDK 5 版本开始 Java 引入了注解支持，带来了极大的便利，Sprinng 也从 2.5 版本开始支持注解方式，使用注解方式我们只需加上相应的注解即可，不再需要去编写繁琐的 XM">
+<meta name="description" content="前言前面两篇文章（如何实现一个简易版的 Spring - 如何实现 Setter 注入、如何实现一个简易版的 Spring - 如何实现 Constructor 注入）介绍的都是基于 XML 配置文件方式的实现，从 JDK 5 版本开始 Java 引入了注解支持，带来了极大的便利，Sprinng 也从 2.5 版本开始支持注解方式，使用注解方式我们只需加上相应的注解即可，不再需要去编写繁琐的 X">
 <meta name="keywords" content="Java,Spring,Component 注解">
 <meta property="og:type" content="article">
 <meta property="og:title" content="如何实现一个简易版的 Spring - 如何实现 @Component 注解">
 <meta property="og:url" content="https://www.mghio.cn/post/6775e26e.html">
 <meta property="og:site_name" content="mghio&#39;s Blog">
-<meta property="og:description" content="前言前面两篇文章（如何实现一个简易版的 Spring - 如何实现 Setter 注入、如何实现一个简易版的 Spring - 如何实现 Constructor 注入）介绍的都是基于 XML 配置文件方式的实现，从 JDK 5 版本开始 Java 引入了注解支持，带来了极大的便利，Sprinng 也从 2.5 版本开始支持注解方式，使用注解方式我们只需加上相应的注解即可，不再需要去编写繁琐的 XM">
+<meta property="og:description" content="前言前面两篇文章（如何实现一个简易版的 Spring - 如何实现 Setter 注入、如何实现一个简易版的 Spring - 如何实现 Constructor 注入）介绍的都是基于 XML 配置文件方式的实现，从 JDK 5 版本开始 Java 引入了注解支持，带来了极大的便利，Sprinng 也从 2.5 版本开始支持注解方式，使用注解方式我们只需加上相应的注解即可，不再需要去编写繁琐的 X">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://i.loli.net/2021/06/12/ZaBY1LuEdOXKV3k.jpg">
 <meta property="og:image" content="https://i.loli.net/2021/02/13/tN5OVle716oagWc.png">
 <meta property="og:image" content="https://i.loli.net/2021/02/14/AWDROochqdkHxEv.png">
 <meta property="og:image" content="https://i.loli.net/2021/02/14/TAdV8sbhznel7KU.png">
 <meta property="og:image" content="https://i.loli.net/2021/02/14/5GbcQpLHglMP78T.png">
-<meta property="og:updated_time" content="2021-02-14T08:11:04.540Z">
+<meta property="og:updated_time" content="2021-06-12T05:56:22.362Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="如何实现一个简易版的 Spring - 如何实现 @Component 注解">
-<meta name="twitter:description" content="前言前面两篇文章（如何实现一个简易版的 Spring - 如何实现 Setter 注入、如何实现一个简易版的 Spring - 如何实现 Constructor 注入）介绍的都是基于 XML 配置文件方式的实现，从 JDK 5 版本开始 Java 引入了注解支持，带来了极大的便利，Sprinng 也从 2.5 版本开始支持注解方式，使用注解方式我们只需加上相应的注解即可，不再需要去编写繁琐的 XM">
-<meta name="twitter:image" content="https://i.loli.net/2021/02/13/tN5OVle716oagWc.png">
+<meta name="twitter:description" content="前言前面两篇文章（如何实现一个简易版的 Spring - 如何实现 Setter 注入、如何实现一个简易版的 Spring - 如何实现 Constructor 注入）介绍的都是基于 XML 配置文件方式的实现，从 JDK 5 版本开始 Java 引入了注解支持，带来了极大的便利，Sprinng 也从 2.5 版本开始支持注解方式，使用注解方式我们只需加上相应的注解即可，不再需要去编写繁琐的 X">
+<meta name="twitter:image" content="https://i.loli.net/2021/06/12/ZaBY1LuEdOXKV3k.jpg">
 
 
 
@@ -463,7 +464,8 @@
       
 
       
-        <h4 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h4><p>前面两篇文章（<a href="https://www.mghio.cn/post/24cb2421.html">如何实现一个简易版的 Spring - 如何实现 Setter 注入</a>、<a href="https://www.mghio.cn/post/315ff4dc.html">如何实现一个简易版的 Spring - 如何实现 Constructor 注入</a>）介绍的都是基于 <code>XML</code> 配置文件方式的实现，从 <code>JDK 5</code> 版本开始 <code>Java</code> 引入了注解支持，带来了极大的便利，<code>Sprinng</code> 也从 <code>2.5</code> 版本开始支持注解方式，使用注解方式我们只需加上相应的注解即可，不再需要去编写繁琐的 <code>XML</code> 配置文件，深受广大 <code>Java</code> 编程人员的喜爱。接下来一起看看如何实现 <code>Spring</code> 框架中最常用的两个注解（<code>@Component</code>、<code>@Autowired</code>），由于涉及到的内容比较多，会分为两篇文章进行介绍，本文先来介绍上半部分 — <strong>如何实现 <code>@Component</code> 注解</strong>。</p>
+        <p><img src="https://i.loli.net/2021/06/12/ZaBY1LuEdOXKV3k.jpg" alt="cover.jpeg"></p>
+<h4 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h4><p>前面两篇文章（<a href="https://www.mghio.cn/post/24cb2421.html">如何实现一个简易版的 Spring - 如何实现 Setter 注入</a>、<a href="https://www.mghio.cn/post/315ff4dc.html">如何实现一个简易版的 Spring - 如何实现 Constructor 注入</a>）介绍的都是基于 <code>XML</code> 配置文件方式的实现，从 <code>JDK 5</code> 版本开始 <code>Java</code> 引入了注解支持，带来了极大的便利，<code>Sprinng</code> 也从 <code>2.5</code> 版本开始支持注解方式，使用注解方式我们只需加上相应的注解即可，不再需要去编写繁琐的 <code>XML</code> 配置文件，深受广大 <code>Java</code> 编程人员的喜爱。接下来一起看看如何实现 <code>Spring</code> 框架中最常用的两个注解（<code>@Component</code>、<code>@Autowired</code>），由于涉及到的内容比较多，会分为两篇文章进行介绍，本文先来介绍上半部分 — <strong>如何实现 <code>@Component</code> 注解</strong>。</p>
 <a id="more"></a>
 <h4 id="实现步骤拆分"><a href="#实现步骤拆分" class="headerlink" title="实现步骤拆分"></a>实现步骤拆分</h4><p>本文实现的注解虽然说不用再配置 <code>XML</code> 文件，但是有点需要明确的是指定扫描 <code>Bean</code> 的包还使用 <code>XML</code> 文件的方式配置的，只是指定 <code>Bean</code> 不再使用配置文件的方式。有前面两篇文章的基础后实现 <code>@Component</code> 注解主要分成以下几个步骤：</p>
 <ol>

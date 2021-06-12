@@ -94,22 +94,23 @@
 
 
 
-<meta name="description" content="前言本文是 如何实现一个简易版的 Spring 系列第四篇，在 上篇 介绍了 @Component 注解的实现，这篇再来看看在使用 Spring 框架开发中常用的 @Autowired 注入要如何实现，大家用过 Spring 都知道，该注解可以用在字段、构造函数以及setter 方法上，限于篇幅原因我们主要讨论用在字段的方式实现，其它的使用方式大体思路是相同的，不同的只是解析和注入方式有所区别，话">
+<meta name="description" content="前言本文是 如何实现一个简易版的 Spring 系列第四篇，在 上篇 介绍了 @Component 注解的实现，这篇再来看看在使用 Spring 框架开发中常用的 @Autowired 注入要如何实现，大家用过 Spring 都知道，该注解可以用在字段、构造函数以及setter 方法上，限于篇幅原因我们主要讨论用在字段的方式实现，其它的使用方式大体思路是相同的，不同的只是解析和注入方式有所区别，">
 <meta name="keywords" content="Java,Spring,Autowried 注解">
 <meta property="og:type" content="article">
 <meta property="og:title" content="如何实现一个简易版的 Spring - 如何实现 @Autowired 注解">
 <meta property="og:url" content="https://www.mghio.cn/post/80982e71.html">
 <meta property="og:site_name" content="mghio&#39;s Blog">
-<meta property="og:description" content="前言本文是 如何实现一个简易版的 Spring 系列第四篇，在 上篇 介绍了 @Component 注解的实现，这篇再来看看在使用 Spring 框架开发中常用的 @Autowired 注入要如何实现，大家用过 Spring 都知道，该注解可以用在字段、构造函数以及setter 方法上，限于篇幅原因我们主要讨论用在字段的方式实现，其它的使用方式大体思路是相同的，不同的只是解析和注入方式有所区别，话">
+<meta property="og:description" content="前言本文是 如何实现一个简易版的 Spring 系列第四篇，在 上篇 介绍了 @Component 注解的实现，这篇再来看看在使用 Spring 框架开发中常用的 @Autowired 注入要如何实现，大家用过 Spring 都知道，该注解可以用在字段、构造函数以及setter 方法上，限于篇幅原因我们主要讨论用在字段的方式实现，其它的使用方式大体思路是相同的，不同的只是解析和注入方式有所区别，">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://i.loli.net/2021/06/12/xwcrdv6a7CHq5T8.jpg">
 <meta property="og:image" content="https://i.loli.net/2021/03/08/zHKkEywgo7hDVjQ.png">
 <meta property="og:image" content="https://i.loli.net/2021/03/07/xHE2FLZUG1DsTvA.png">
 <meta property="og:image" content="https://i.loli.net/2021/03/07/5ycKNwTSqt2mGnZ.png">
-<meta property="og:updated_time" content="2021-03-08T00:48:19.370Z">
+<meta property="og:updated_time" content="2021-06-12T05:54:49.638Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="如何实现一个简易版的 Spring - 如何实现 @Autowired 注解">
-<meta name="twitter:description" content="前言本文是 如何实现一个简易版的 Spring 系列第四篇，在 上篇 介绍了 @Component 注解的实现，这篇再来看看在使用 Spring 框架开发中常用的 @Autowired 注入要如何实现，大家用过 Spring 都知道，该注解可以用在字段、构造函数以及setter 方法上，限于篇幅原因我们主要讨论用在字段的方式实现，其它的使用方式大体思路是相同的，不同的只是解析和注入方式有所区别，话">
-<meta name="twitter:image" content="https://i.loli.net/2021/03/08/zHKkEywgo7hDVjQ.png">
+<meta name="twitter:description" content="前言本文是 如何实现一个简易版的 Spring 系列第四篇，在 上篇 介绍了 @Component 注解的实现，这篇再来看看在使用 Spring 框架开发中常用的 @Autowired 注入要如何实现，大家用过 Spring 都知道，该注解可以用在字段、构造函数以及setter 方法上，限于篇幅原因我们主要讨论用在字段的方式实现，其它的使用方式大体思路是相同的，不同的只是解析和注入方式有所区别，">
+<meta name="twitter:image" content="https://i.loli.net/2021/06/12/xwcrdv6a7CHq5T8.jpg">
 
 
 
@@ -462,7 +463,8 @@
       
 
       
-        <h4 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h4><p>本文是 <code>如何实现一个简易版的 Spring</code> 系列第四篇，在 <a href="https://www.mghio.cn/post/6775e26e.html">上篇</a> 介绍了 <code>@Component</code> 注解的实现，这篇再来看看在使用 <code>Spring</code> 框架开发中常用的 <code>@Autowired</code> 注入要如何实现，大家用过 <code>Spring</code> 都知道，该注解可以用在<code>字段</code>、<code>构造函数</code>以及<code>setter 方法</code>上，限于篇幅原因我们主要讨论用在字段的方式实现，其它的使用方式大体思路是相同的，不同的只是解析和注入方式有所区别，话不多说，下面进入我们今天的正题—<code>如何实现一个简易版的 Spring - 如何实现 @Autowired 注解</code>。</p>
+        <p><img src="https://i.loli.net/2021/06/12/xwcrdv6a7CHq5T8.jpg" alt="cover.jpeg"></p>
+<h4 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h4><p>本文是 <code>如何实现一个简易版的 Spring</code> 系列第四篇，在 <a href="https://www.mghio.cn/post/6775e26e.html">上篇</a> 介绍了 <code>@Component</code> 注解的实现，这篇再来看看在使用 <code>Spring</code> 框架开发中常用的 <code>@Autowired</code> 注入要如何实现，大家用过 <code>Spring</code> 都知道，该注解可以用在<code>字段</code>、<code>构造函数</code>以及<code>setter 方法</code>上，限于篇幅原因我们主要讨论用在字段的方式实现，其它的使用方式大体思路是相同的，不同的只是解析和注入方式有所区别，话不多说，下面进入我们今天的正题—<code>如何实现一个简易版的 Spring - 如何实现 @Autowired 注解</code>。</p>
 <a id="more"></a>
 
 <h4 id="实现步骤拆分"><a href="#实现步骤拆分" class="headerlink" title="实现步骤拆分"></a>实现步骤拆分</h4><p>实现步骤总的来说分为三大步：</p>
