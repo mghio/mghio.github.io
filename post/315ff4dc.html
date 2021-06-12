@@ -94,20 +94,21 @@
 
 
 
-<meta name="description" content="前言本文是「如何实现一个简易版的 Spring」系列的第二篇，在 第一篇 介绍了如何实现一个基于 XML 的简单 Setter 注入，这篇来看看要如何去实现一个简单的 Constructor 注入功能，实现步骤和 Setter 注入是一样的“套路”，先设计一个数据结构去解析表达 XML 配置文件里的信息，然后再使用这些解析好的数据结构做一些事情，比如这里的 Constructor 注入。话不多说，">
+<meta name="description" content="前言本文是「如何实现一个简易版的 Spring」系列的第二篇，在 第一篇 介绍了如何实现一个基于 XML 的简单 Setter 注入，这篇来看看要如何去实现一个简单的 Constructor 注入功能，实现步骤和 Setter 注入是一样的“套路”，先设计一个数据结构去解析表达 XML 配置文件里的信息，然后再使用这些解析好的数据结构做一些事情，比如这里的 Constructor 注入。话不多说">
 <meta name="keywords" content="Java,Spring,Constructor 注入">
 <meta property="og:type" content="article">
 <meta property="og:title" content="如何实现一个简易版的 Spring - 如何实现 Constructor 注入">
 <meta property="og:url" content="https://www.mghio.cn/post/315ff4dc.html">
 <meta property="og:site_name" content="mghio&#39;s Blog">
-<meta property="og:description" content="前言本文是「如何实现一个简易版的 Spring」系列的第二篇，在 第一篇 介绍了如何实现一个基于 XML 的简单 Setter 注入，这篇来看看要如何去实现一个简单的 Constructor 注入功能，实现步骤和 Setter 注入是一样的“套路”，先设计一个数据结构去解析表达 XML 配置文件里的信息，然后再使用这些解析好的数据结构做一些事情，比如这里的 Constructor 注入。话不多说，">
+<meta property="og:description" content="前言本文是「如何实现一个简易版的 Spring」系列的第二篇，在 第一篇 介绍了如何实现一个基于 XML 的简单 Setter 注入，这篇来看看要如何去实现一个简单的 Constructor 注入功能，实现步骤和 Setter 注入是一样的“套路”，先设计一个数据结构去解析表达 XML 配置文件里的信息，然后再使用这些解析好的数据结构做一些事情，比如这里的 Constructor 注入。话不多说">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://i.loli.net/2021/06/12/6gSsifO9GlI5rNL.jpg">
 <meta property="og:image" content="https://i.loli.net/2021/01/17/2RYuMe9CqGLgbNx.png">
-<meta property="og:updated_time" content="2021-01-17T06:46:20.341Z">
+<meta property="og:updated_time" content="2021-06-12T06:02:43.868Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="如何实现一个简易版的 Spring - 如何实现 Constructor 注入">
-<meta name="twitter:description" content="前言本文是「如何实现一个简易版的 Spring」系列的第二篇，在 第一篇 介绍了如何实现一个基于 XML 的简单 Setter 注入，这篇来看看要如何去实现一个简单的 Constructor 注入功能，实现步骤和 Setter 注入是一样的“套路”，先设计一个数据结构去解析表达 XML 配置文件里的信息，然后再使用这些解析好的数据结构做一些事情，比如这里的 Constructor 注入。话不多说，">
-<meta name="twitter:image" content="https://i.loli.net/2021/01/17/2RYuMe9CqGLgbNx.png">
+<meta name="twitter:description" content="前言本文是「如何实现一个简易版的 Spring」系列的第二篇，在 第一篇 介绍了如何实现一个基于 XML 的简单 Setter 注入，这篇来看看要如何去实现一个简单的 Constructor 注入功能，实现步骤和 Setter 注入是一样的“套路”，先设计一个数据结构去解析表达 XML 配置文件里的信息，然后再使用这些解析好的数据结构做一些事情，比如这里的 Constructor 注入。话不多说">
+<meta name="twitter:image" content="https://i.loli.net/2021/06/12/6gSsifO9GlI5rNL.jpg">
 
 
 
@@ -460,7 +461,8 @@
       
 
       
-        <h4 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h4><p>本文是「如何实现一个简易版的 Spring」系列的第二篇，在 <a href="https://www.mghio.cn/post/24cb2421.html">第一篇</a> 介绍了如何实现一个基于 <code>XML</code> 的简单 <code>Setter</code> 注入，这篇来看看要如何去实现一个简单的 <code>Constructor</code> 注入功能，实现步骤和 <code>Setter</code> 注入是一样的“套路”，先设计一个数据结构去解析表达 <code>XML</code> 配置文件里的信息，然后再使用这些解析好的数据结构做一些事情，比如这里的 <code>Constructor</code> 注入。话不多说，下面我们直接进入正题。</p>
+        <p><img src="https://i.loli.net/2021/06/12/6gSsifO9GlI5rNL.jpg" alt="cover.jpeg"></p>
+<h4 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h4><p>本文是「如何实现一个简易版的 Spring」系列的第二篇，在 <a href="https://www.mghio.cn/post/24cb2421.html">第一篇</a> 介绍了如何实现一个基于 <code>XML</code> 的简单 <code>Setter</code> 注入，这篇来看看要如何去实现一个简单的 <code>Constructor</code> 注入功能，实现步骤和 <code>Setter</code> 注入是一样的“套路”，先设计一个数据结构去解析表达 <code>XML</code> 配置文件里的信息，然后再使用这些解析好的数据结构做一些事情，比如这里的 <code>Constructor</code> 注入。话不多说，下面我们直接进入正题。</p>
 <a id="more"></a>
 <h4 id="数据结构设计"><a href="#数据结构设计" class="headerlink" title="数据结构设计"></a>数据结构设计</h4><p>使用 <code>Constructor</code> 注入方式的 <code>XML</code> 的一种配置如下所示：</p>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"orderService"</span> <span class="attr">class</span>=<span class="string">"cn.mghio.service.version3.OrderService"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">constructor-arg</span> <span class="attr">ref</span>=<span class="string">"stockService"</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">constructor-arg</span> <span class="attr">ref</span>=<span class="string">"tradeService"</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">constructor-arg</span> <span class="attr">type</span>=<span class="string">"java.lang.String"</span> <span class="attr">value</span>=<span class="string">"mghio"</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br></pre></td></tr></table></figure>

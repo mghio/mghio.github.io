@@ -102,16 +102,17 @@
 <meta property="og:site_name" content="mghio&#39;s Blog">
 <meta property="og:description" content="前言使用 Java 作为第一开发语言的朋友们，相信大家或多或少的都使用过 Spring 这个开发框架，可以说 Spring 框架真是我们 Java 程序员的春天，在 Spring 中 Bean 是其中最重要的概念之一，是学习其它高级知识的基础，Bean 本质上其实就是一个被 Spring 框架管理的对象，今天我们来看看 Bean 在 Spring 中是如何被造出来的。">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://i.loli.net/2021/06/12/3CglfV6vmWKBrO8.jpg">
 <meta property="og:image" content="https://i.loli.net/2020/09/13/XrgQn5FCYuzvBx2.jpg">
 <meta property="og:image" content="https://i.loli.net/2020/09/13/wTzyFQvsXd8qAnj.jpg">
 <meta property="og:image" content="https://i.loli.net/2020/09/13/tedJ51ApwlcsHCM.jpg">
 <meta property="og:image" content="https://i.loli.net/2020/09/13/V7eoDtFdXuvQSyz.png">
 <meta property="og:image" content="https://i.loli.net/2020/10/08/8PUkYIGbFoJxVSq.png">
-<meta property="og:updated_time" content="2020-10-08T07:31:37.322Z">
+<meta property="og:updated_time" content="2021-06-12T06:05:26.600Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Spring 是如何造出一个 Bean 的">
 <meta name="twitter:description" content="前言使用 Java 作为第一开发语言的朋友们，相信大家或多或少的都使用过 Spring 这个开发框架，可以说 Spring 框架真是我们 Java 程序员的春天，在 Spring 中 Bean 是其中最重要的概念之一，是学习其它高级知识的基础，Bean 本质上其实就是一个被 Spring 框架管理的对象，今天我们来看看 Bean 在 Spring 中是如何被造出来的。">
-<meta name="twitter:image" content="https://i.loli.net/2020/09/13/XrgQn5FCYuzvBx2.jpg">
+<meta name="twitter:image" content="https://i.loli.net/2021/06/12/3CglfV6vmWKBrO8.jpg">
 
 
 
@@ -464,7 +465,8 @@
       
 
       
-        <h4 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h4><p>使用 <code>Java</code> 作为第一开发语言的朋友们，相信大家或多或少的都使用过 <code>Spring</code> 这个开发框架，可以说 <code>Spring</code> 框架真是我们 <code>Java</code> 程序员的春天，在 <code>Spring</code> 中 <code>Bean</code> 是其中最重要的概念之一，是学习其它高级知识的基础，<code>Bean</code> 本质上其实就是一个被 <code>Spring</code> 框架管理的对象，今天我们来看看 <code>Bean</code> 在 <code>Spring</code> 中是如何被造出来的。</p>
+        <p><img src="https://i.loli.net/2021/06/12/3CglfV6vmWKBrO8.jpg" alt="cover.jpeg"></p>
+<h4 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h4><p>使用 <code>Java</code> 作为第一开发语言的朋友们，相信大家或多或少的都使用过 <code>Spring</code> 这个开发框架，可以说 <code>Spring</code> 框架真是我们 <code>Java</code> 程序员的春天，在 <code>Spring</code> 中 <code>Bean</code> 是其中最重要的概念之一，是学习其它高级知识的基础，<code>Bean</code> 本质上其实就是一个被 <code>Spring</code> 框架管理的对象，今天我们来看看 <code>Bean</code> 在 <code>Spring</code> 中是如何被造出来的。</p>
 <a id="more"></a>
 
 <h4 id="1-Bean-要如何定义"><a href="#1-Bean-要如何定义" class="headerlink" title="1. Bean 要如何定义"></a>1. Bean 要如何定义</h4><p>假如你有如下这样的一个 <code>Programmer</code> 类，这个程序员类有三个属性： <code>姓名(name)</code>、<code>年龄(age)</code>、<code>是否有女朋友(hasGirlFriend)</code>（P.S. 正常情况下 <code>hasGirlFriend</code> 属性应该都是 <code>false</code>），还有一个显示个人资料的方法 <code>showMaterial</code>。</p>

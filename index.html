@@ -1910,7 +1910,8 @@
 
       
         
-          <h4 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h4><p>本文是「如何实现一个简易版的 Spring」系列的第二篇，在 <a href="https://www.mghio.cn/post/24cb2421.html">第一篇</a> 介绍了如何实现一个基于 <code>XML</code> 的简单 <code>Setter</code> 注入，这篇来看看要如何去实现一个简单的 <code>Constructor</code> 注入功能，实现步骤和 <code>Setter</code> 注入是一样的“套路”，先设计一个数据结构去解析表达 <code>XML</code> 配置文件里的信息，然后再使用这些解析好的数据结构做一些事情，比如这里的 <code>Constructor</code> 注入。话不多说，下面我们直接进入正题。</p>
+          <p><img src="https://i.loli.net/2021/06/12/6gSsifO9GlI5rNL.jpg" alt="cover.jpeg"></p>
+<h4 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h4><p>本文是「如何实现一个简易版的 Spring」系列的第二篇，在 <a href="https://www.mghio.cn/post/24cb2421.html">第一篇</a> 介绍了如何实现一个基于 <code>XML</code> 的简单 <code>Setter</code> 注入，这篇来看看要如何去实现一个简单的 <code>Constructor</code> 注入功能，实现步骤和 <code>Setter</code> 注入是一样的“套路”，先设计一个数据结构去解析表达 <code>XML</code> 配置文件里的信息，然后再使用这些解析好的数据结构做一些事情，比如这里的 <code>Constructor</code> 注入。话不多说，下面我们直接进入正题。</p>
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/post/315ff4dc.html#more" rel="contents">
@@ -2112,7 +2113,8 @@
 
       
         
-          <h4 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h4><p>之前在 <a href="https://www.mghio.cn/post/558ca0bd.html">上篇</a> 提到过会实现一个简易版的 <code>IoC</code> 和 <code>AOP</code>，今天它终于来了。。。相信对于使用 <code>Java</code> 开发语言的朋友们都使用过或者听说过 <code>Spring</code> 这个开发框架，绝大部分的企业级开发中都离不开它，通过 <a href="https://spring.io" target="_blank" rel="noopener">官网</a> 可以了解到其生态非常庞大，针对不同方面的开发提供了一些解决方案，可以说 <code>Spring</code> 框架的诞生是对 <code>Java</code> 开发人员的一大福利，自 <code>2004</code> 年发布以来，<code>Spring</code> 为了解决一些企业开发中的痛点先后引入了很多的特性和功能，其中最重要的就是我们经常听到的 <code>IoC</code> 和 <code>AOP</code> 特性，由于涉及到的知识和细节比较多，会分为几篇文章来介绍，今天这篇（也是第一篇）我们来看看如何实现基于 <code>XML</code> 配置方式的 <strong>Setter 注入</strong>。</p>
+          <p><img src="https://i.loli.net/2021/06/12/jW1KskFCvHnxtf2.jpg" alt="cover.jpeg"></p>
+<h4 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h4><p>之前在 <a href="https://www.mghio.cn/post/558ca0bd.html">上篇</a> 提到过会实现一个简易版的 <code>IoC</code> 和 <code>AOP</code>，今天它终于来了。。。相信对于使用 <code>Java</code> 开发语言的朋友们都使用过或者听说过 <code>Spring</code> 这个开发框架，绝大部分的企业级开发中都离不开它，通过 <a href="https://spring.io" target="_blank" rel="noopener">官网</a> 可以了解到其生态非常庞大，针对不同方面的开发提供了一些解决方案，可以说 <code>Spring</code> 框架的诞生是对 <code>Java</code> 开发人员的一大福利，自 <code>2004</code> 年发布以来，<code>Spring</code> 为了解决一些企业开发中的痛点先后引入了很多的特性和功能，其中最重要的就是我们经常听到的 <code>IoC</code> 和 <code>AOP</code> 特性，由于涉及到的知识和细节比较多，会分为几篇文章来介绍，今天这篇（也是第一篇）我们来看看如何实现基于 <code>XML</code> 配置方式的 <strong>Setter 注入</strong>。</p>
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/post/24cb2421.html#more" rel="contents">
@@ -2314,7 +2316,8 @@
 
       
         
-          <h4 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h4><p>使用 <code>Java</code> 作为第一开发语言的朋友们，相信大家或多或少的都使用过 <code>Spring</code> 这个开发框架，可以说 <code>Spring</code> 框架真是我们 <code>Java</code> 程序员的春天，在 <code>Spring</code> 中 <code>Bean</code> 是其中最重要的概念之一，是学习其它高级知识的基础，<code>Bean</code> 本质上其实就是一个被 <code>Spring</code> 框架管理的对象，今天我们来看看 <code>Bean</code> 在 <code>Spring</code> 中是如何被造出来的。</p>
+          <p><img src="https://i.loli.net/2021/06/12/3CglfV6vmWKBrO8.jpg" alt="cover.jpeg"></p>
+<h4 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h4><p>使用 <code>Java</code> 作为第一开发语言的朋友们，相信大家或多或少的都使用过 <code>Spring</code> 这个开发框架，可以说 <code>Spring</code> 框架真是我们 <code>Java</code> 程序员的春天，在 <code>Spring</code> 中 <code>Bean</code> 是其中最重要的概念之一，是学习其它高级知识的基础，<code>Bean</code> 本质上其实就是一个被 <code>Spring</code> 框架管理的对象，今天我们来看看 <code>Bean</code> 在 <code>Spring</code> 中是如何被造出来的。</p>
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/post/558ca0bd.html#more" rel="contents">

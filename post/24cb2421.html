@@ -94,25 +94,26 @@
 
 
 
-<meta name="description" content="前言之前在 上篇 提到过会实现一个简易版的 IoC 和 AOP，今天它终于来了。。。相信对于使用 Java 开发语言的朋友们都使用过或者听说过 Spring 这个开发框架，绝大部分的企业级开发中都离不开它，通过 官网 可以了解到其生态非常庞大，针对不同方面的开发提供了一些解决方案，可以说 Spring 框架的诞生是对 Java 开发人员的一大福利，自 2004 年发布以来，Spring 为了解决一">
+<meta name="description" content="前言之前在 上篇 提到过会实现一个简易版的 IoC 和 AOP，今天它终于来了。。。相信对于使用 Java 开发语言的朋友们都使用过或者听说过 Spring 这个开发框架，绝大部分的企业级开发中都离不开它，通过 官网 可以了解到其生态非常庞大，针对不同方面的开发提供了一些解决方案，可以说 Spring 框架的诞生是对 Java 开发人员的一大福利，自 2004 年发布以来，Spring 为了解决">
 <meta name="keywords" content="Spring,IoC">
 <meta property="og:type" content="article">
 <meta property="og:title" content="如何实现一个简易版的 Spring - 如何实现 Setter 注入">
 <meta property="og:url" content="https://www.mghio.cn/post/24cb2421.html">
 <meta property="og:site_name" content="mghio&#39;s Blog">
-<meta property="og:description" content="前言之前在 上篇 提到过会实现一个简易版的 IoC 和 AOP，今天它终于来了。。。相信对于使用 Java 开发语言的朋友们都使用过或者听说过 Spring 这个开发框架，绝大部分的企业级开发中都离不开它，通过 官网 可以了解到其生态非常庞大，针对不同方面的开发提供了一些解决方案，可以说 Spring 框架的诞生是对 Java 开发人员的一大福利，自 2004 年发布以来，Spring 为了解决一">
+<meta property="og:description" content="前言之前在 上篇 提到过会实现一个简易版的 IoC 和 AOP，今天它终于来了。。。相信对于使用 Java 开发语言的朋友们都使用过或者听说过 Spring 这个开发框架，绝大部分的企业级开发中都离不开它，通过 官网 可以了解到其生态非常庞大，针对不同方面的开发提供了一些解决方案，可以说 Spring 框架的诞生是对 Java 开发人员的一大福利，自 2004 年发布以来，Spring 为了解决">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://i.loli.net/2021/06/12/jW1KskFCvHnxtf2.jpg">
 <meta property="og:image" content="https://i.loli.net/2020/11/28/1UGMFCPVfwgl3D7.png">
 <meta property="og:image" content="https://i.loli.net/2020/11/28/YnDv6MqHVNwTAg5.png">
 <meta property="og:image" content="https://i.loli.net/2020/11/29/GBP2M3aZLhbfcm5.png">
 <meta property="og:image" content="https://i.loli.net/2020/11/29/ux1cEOAGQoqD9h8.png">
 <meta property="og:image" content="https://i.loli.net/2020/11/29/wOijZNT8cAlMY1r.png">
 <meta property="og:image" content="https://i.loli.net/2020/11/29/CK8HgDEuWTIFU45.png">
-<meta property="og:updated_time" content="2021-01-16T12:52:41.291Z">
+<meta property="og:updated_time" content="2021-06-12T06:03:55.464Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="如何实现一个简易版的 Spring - 如何实现 Setter 注入">
-<meta name="twitter:description" content="前言之前在 上篇 提到过会实现一个简易版的 IoC 和 AOP，今天它终于来了。。。相信对于使用 Java 开发语言的朋友们都使用过或者听说过 Spring 这个开发框架，绝大部分的企业级开发中都离不开它，通过 官网 可以了解到其生态非常庞大，针对不同方面的开发提供了一些解决方案，可以说 Spring 框架的诞生是对 Java 开发人员的一大福利，自 2004 年发布以来，Spring 为了解决一">
-<meta name="twitter:image" content="https://i.loli.net/2020/11/28/1UGMFCPVfwgl3D7.png">
+<meta name="twitter:description" content="前言之前在 上篇 提到过会实现一个简易版的 IoC 和 AOP，今天它终于来了。。。相信对于使用 Java 开发语言的朋友们都使用过或者听说过 Spring 这个开发框架，绝大部分的企业级开发中都离不开它，通过 官网 可以了解到其生态非常庞大，针对不同方面的开发提供了一些解决方案，可以说 Spring 框架的诞生是对 Java 开发人员的一大福利，自 2004 年发布以来，Spring 为了解决">
+<meta name="twitter:image" content="https://i.loli.net/2021/06/12/jW1KskFCvHnxtf2.jpg">
 
 
 
@@ -465,7 +466,8 @@
       
 
       
-        <h4 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h4><p>之前在 <a href="https://www.mghio.cn/post/558ca0bd.html">上篇</a> 提到过会实现一个简易版的 <code>IoC</code> 和 <code>AOP</code>，今天它终于来了。。。相信对于使用 <code>Java</code> 开发语言的朋友们都使用过或者听说过 <code>Spring</code> 这个开发框架，绝大部分的企业级开发中都离不开它，通过 <a href="https://spring.io" target="_blank" rel="noopener">官网</a> 可以了解到其生态非常庞大，针对不同方面的开发提供了一些解决方案，可以说 <code>Spring</code> 框架的诞生是对 <code>Java</code> 开发人员的一大福利，自 <code>2004</code> 年发布以来，<code>Spring</code> 为了解决一些企业开发中的痛点先后引入了很多的特性和功能，其中最重要的就是我们经常听到的 <code>IoC</code> 和 <code>AOP</code> 特性，由于涉及到的知识和细节比较多，会分为几篇文章来介绍，今天这篇（也是第一篇）我们来看看如何实现基于 <code>XML</code> 配置方式的 <strong>Setter 注入</strong>。</p>
+        <p><img src="https://i.loli.net/2021/06/12/jW1KskFCvHnxtf2.jpg" alt="cover.jpeg"></p>
+<h4 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h4><p>之前在 <a href="https://www.mghio.cn/post/558ca0bd.html">上篇</a> 提到过会实现一个简易版的 <code>IoC</code> 和 <code>AOP</code>，今天它终于来了。。。相信对于使用 <code>Java</code> 开发语言的朋友们都使用过或者听说过 <code>Spring</code> 这个开发框架，绝大部分的企业级开发中都离不开它，通过 <a href="https://spring.io" target="_blank" rel="noopener">官网</a> 可以了解到其生态非常庞大，针对不同方面的开发提供了一些解决方案，可以说 <code>Spring</code> 框架的诞生是对 <code>Java</code> 开发人员的一大福利，自 <code>2004</code> 年发布以来，<code>Spring</code> 为了解决一些企业开发中的痛点先后引入了很多的特性和功能，其中最重要的就是我们经常听到的 <code>IoC</code> 和 <code>AOP</code> 特性，由于涉及到的知识和细节比较多，会分为几篇文章来介绍，今天这篇（也是第一篇）我们来看看如何实现基于 <code>XML</code> 配置方式的 <strong>Setter 注入</strong>。</p>
 <a id="more"></a>
 <h4 id="预备知识"><a href="#预备知识" class="headerlink" title="预备知识"></a>预备知识</h4><p>既然是通过 <code>XML</code> 配置文件的方式，首先第一件事就是要读取 <code>XML</code> 文件然后转换为我们需要的数据结构，解析 <code>XML</code> 文件有但不限于这些方式（<a href="http://www.jdom.org" target="_blank" rel="noopener">JDOM</a>、<a href="http://www.xom.nu" target="_blank" rel="noopener">XOM</a>、<a href="https://dom4j.github.io" target="_blank" rel="noopener">dom4j</a>），这里使用的是简单易上手的 <a href="https://dom4j.github.io" target="_blank" rel="noopener">dom4j</a>，所你得对其基础知识有一些简单了解，其实都是一些很简单的方法基础使用而已，第二个就是你要有一些 <code>Spring</code> 框架的使用经验，这里实现的简易版本质上是对 <code>Spring</code> 的一个精简后的核心部分的简单实现，是的，没错，你只需要有了这些基础预备知识就可以了。</p>
 <h4 id="基础数据结构抽象"><a href="#基础数据结构抽象" class="headerlink" title="基础数据结构抽象"></a>基础数据结构抽象</h4><p>在开始编码实现前先要做一些简单的构思和设计，首先在 <code>Spring</code> 中把一个被其管理的对象称之为 <code>Bean</code>，然后其它的操作都是围绕这个 <code>Bean</code> 来展开设计的，所以为了能在程序中统一并且规范的表示一个 <code>Bean</code> 的定义，于是第一个接口 <code>BeanDefinition</code> 就出来了，本次需要的一些基本信息包含 <code>Bean</code> 的名称、所属类名称、是否单例、作用域等，如下所示：</p>
