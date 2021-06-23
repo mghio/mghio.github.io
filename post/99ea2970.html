@@ -94,13 +94,13 @@
 
 
 
-<meta name="description" content="1.1 前言做过 java 开发的朋友们相信都很熟悉 HashMap 这个类，它是一个基于 hashing 原理用于存储 Key-Value 键值对的集合，其中的每一个键也叫做 Entry，这些键分别存储在一个数组当中，系统会根据 hash 方法来计算出 Key-Value 的存储位置，可以通过 key 快速存取 value。HashMap 基于 hashing 原理，当我们将一个键值对（Key-">
+<meta name="description" content="1.1 前言做过 Java 开发的朋友们相信都很熟悉 HashMap 这个类，它是一个基于 hashing 原理用于存储 Key-Value 键值对的集合，其中的每一个键也叫做 Entry，这些键分别存储在一个数组当中，系统会根据 hash 方法来计算出 Key-Value 的存储位置，可以通过 key 快速存取 value。HashMap 基于 hashing 原理，当我们将一个键值对（Key-">
 <meta name="keywords" content="Java, 原理">
 <meta property="og:type" content="article">
 <meta property="og:title" content="深挖 HashMap">
 <meta property="og:url" content="https://www.mghio.cn/post/99ea2970.html">
 <meta property="og:site_name" content="mghio&#39;s Blog">
-<meta property="og:description" content="1.1 前言做过 java 开发的朋友们相信都很熟悉 HashMap 这个类，它是一个基于 hashing 原理用于存储 Key-Value 键值对的集合，其中的每一个键也叫做 Entry，这些键分别存储在一个数组当中，系统会根据 hash 方法来计算出 Key-Value 的存储位置，可以通过 key 快速存取 value。HashMap 基于 hashing 原理，当我们将一个键值对（Key-">
+<meta property="og:description" content="1.1 前言做过 Java 开发的朋友们相信都很熟悉 HashMap 这个类，它是一个基于 hashing 原理用于存储 Key-Value 键值对的集合，其中的每一个键也叫做 Entry，这些键分别存储在一个数组当中，系统会根据 hash 方法来计算出 Key-Value 的存储位置，可以通过 key 快速存取 value。HashMap 基于 hashing 原理，当我们将一个键值对（Key-">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://i.loli.net/2019/11/14/MArIFaUlDchbvVG.png">
 <meta property="og:image" content="https://i.loli.net/2019/11/16/mCWoVrOeBY4zsuE.png">
@@ -114,10 +114,10 @@
 <meta property="og:image" content="https://i.loli.net/2019/11/16/ZYl6Hnf7cSxsJdk.png">
 <meta property="og:image" content="https://i.loli.net/2019/11/16/7hgSZaOXxyMbuj8.png">
 <meta property="og:image" content="https://i.loli.net/2019/11/16/EQ2aWPbKxYryDn8.png">
-<meta property="og:updated_time" content="2019-11-16T09:06:26.019Z">
+<meta property="og:updated_time" content="2021-06-23T14:57:11.202Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="深挖 HashMap">
-<meta name="twitter:description" content="1.1 前言做过 java 开发的朋友们相信都很熟悉 HashMap 这个类，它是一个基于 hashing 原理用于存储 Key-Value 键值对的集合，其中的每一个键也叫做 Entry，这些键分别存储在一个数组当中，系统会根据 hash 方法来计算出 Key-Value 的存储位置，可以通过 key 快速存取 value。HashMap 基于 hashing 原理，当我们将一个键值对（Key-">
+<meta name="twitter:description" content="1.1 前言做过 Java 开发的朋友们相信都很熟悉 HashMap 这个类，它是一个基于 hashing 原理用于存储 Key-Value 键值对的集合，其中的每一个键也叫做 Entry，这些键分别存储在一个数组当中，系统会根据 hash 方法来计算出 Key-Value 的存储位置，可以通过 key 快速存取 value。HashMap 基于 hashing 原理，当我们将一个键值对（Key-">
 <meta name="twitter:image" content="https://i.loli.net/2019/11/14/MArIFaUlDchbvVG.png">
 
 
@@ -471,7 +471,7 @@
       
 
       
-        <h4 id="1-1-前言"><a href="#1-1-前言" class="headerlink" title="1.1 前言"></a>1.1 前言</h4><p>做过 java 开发的朋友们相信都很熟悉 HashMap 这个类，它是一个基于 hashing 原理用于存储 Key-Value 键值对的集合，其中的每一个键也叫做 <code>Entry</code>，这些键分别存储在一个数组当中，系统会根据 <code>hash</code> 方法来计算出 Key-Value 的存储位置，可以通过 key 快速存取 value。<br>HashMap 基于 hashing 原理，当我们将一个键值对（Key-Value） 传入 <code>put</code> 方法时，它将调用这个 key 的  <code>hashcode</code> 方法计算出 key 的 hashcode 值，然后根据这个 hashcode 值来定位其存放数组的位置来存储对象（HashMap 使用链表来解决碰撞问题，当其发生碰撞了，对象将会存储在链表的下一个节点中，在链表的每个节点中存储 <code>Entry</code> 对象，在 JDK 1.8+ 中，当链表的节点个数超过一定值时会转为红黑树来进行存储），当通过 <code>get</code> 方法传入一个 key 来获取其对应的值时，也是先通过 key 的 <code>hashcode</code> 方法来定位其存储在数组的位置，然后通过键对象的 <code>eqauls</code> 方法找到对应的 value 值。接下来让我们看看其内部的一些实现细节。（<code>PS：以下代码分析都是基于 JDK 1.8</code>）</p>
+        <h4 id="1-1-前言"><a href="#1-1-前言" class="headerlink" title="1.1 前言"></a>1.1 前言</h4><p>做过 Java 开发的朋友们相信都很熟悉 HashMap 这个类，它是一个基于 hashing 原理用于存储 Key-Value 键值对的集合，其中的每一个键也叫做 <code>Entry</code>，这些键分别存储在一个数组当中，系统会根据 <code>hash</code> 方法来计算出 Key-Value 的存储位置，可以通过 key 快速存取 value。<br>HashMap 基于 hashing 原理，当我们将一个键值对（Key-Value） 传入 <code>put</code> 方法时，它将调用这个 key 的  <code>hashcode</code> 方法计算出 key 的 hashcode 值，然后根据这个 hashcode 值来定位其存放数组的位置来存储对象（HashMap 使用链表来解决碰撞问题，当其发生碰撞了，对象将会存储在链表的下一个节点中，在链表的每个节点中存储 <code>Entry</code> 对象，在 JDK 1.8+ 中，当链表的节点个数超过一定值时会转为红黑树来进行存储），当通过 <code>get</code> 方法传入一个 key 来获取其对应的值时，也是先通过 key 的 <code>hashcode</code> 方法来定位其存储在数组的位置，然后通过键对象的 <code>eqauls</code> 方法找到对应的 value 值。接下来让我们看看其内部的一些实现细节。（<code>PS：以下代码分析都是基于 JDK 1.8</code>）</p>
 <h4 id="1-2-为什么容量始终是-2-的整数次幂"><a href="#1-2-为什么容量始终是-2-的整数次幂" class="headerlink" title="1.2 为什么容量始终是 2 的整数次幂"></a>1.2 为什么容量始终是 2 的整数次幂</h4><p>因为获取 key 在数组中对应的下标是通过 key 的哈希值与数组的长度减一进行与运算来确定的（<code>tab[(n - 1) &amp; hash]</code>）。当数组的长度 n 为 2 的整数次幂，这样进行 n - 1 运算后，之前为 1 的位后面全是 1 ，这样就能保证 <code>(n - 1) &amp; hash</code> 后相应位的值既可能是 1 又可能是 0 ，这完全取决于 key 的哈希值，这样就能保证散列的均匀，同时与运算（位运算）效率高。如果数组的长度 n 不是 2 的整数次幂，会造成更多的 hash 冲突。HashMap 提供了如下四个重载的构造方法来满足不同的使用场景：</p>
 <ol>
 <li>无参构造：<code>HashMap()</code>，使用该方法表示全部使用 HashMap 的默认配置参数</li>
