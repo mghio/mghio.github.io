@@ -114,7 +114,7 @@
 <meta property="og:image" content="https://i.loli.net/2021/06/27/8OY3LnjhrNwR6Xx.png">
 <meta property="og:image" content="https://i.loli.net/2021/06/27/NtdFXq3pbl8E7fi.png">
 <meta property="og:image" content="https://i.loli.net/2021/06/27/VMAbsPCRy3jD7ch.png">
-<meta property="og:updated_time" content="2021-06-27T07:45:37.684Z">
+<meta property="og:updated_time" content="2021-06-28T00:55:33.577Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Dive into Feign">
 <meta name="twitter:description" content="What is FeignFeign 是⼀个 HTTP 请求的轻量级客户端框架。通过 接口 + 注解的方式发起 HTTP 请求调用，面向接口编程，而不是像 Java 中通过封装 HTTP 请求报文的方式直接调用。服务消费方拿到服务提供方的接⼝，然后像调⽤本地接⼝⽅法⼀样去调⽤，实际发出的是远程的请求。让我们更加便捷和优雅的去调⽤基于 HTTP 的 API，被⼴泛应⽤在 Spring Cloud">
@@ -498,7 +498,8 @@
 <p><img src="https://i.loli.net/2021/06/27/c9tbq1sYAVWCihg.png" alt="config-feign-client.png"></p>
 <p>通过定义接口，使用注解的方式描述接口的信息，就可以发起接口调用。最后请求结果如下：</p>
 <p><img src="https://i.loli.net/2021/06/27/QoiEMR7DwsmUYBb.png" alt="native-use-feign-result.png"></p>
-<h4 id="结合-Spring-Cloud-使用方式"><a href="#结合-Spring-Cloud-使用方式" class="headerlink" title="结合 Spring Cloud 使用方式"></a>结合 Spring Cloud 使用方式</h4><p>同样还是以获取 Feign 的 GitHub 开源项目的 Contributors 为例，结合 Spring Cloud 的使用方式有如下三步：<br><strong>第一步：</strong> 引入相关 starter 依赖：<code>org.springframework.cloud:spring-cloud-starter-openfeign</code><br>在项目的 <code>build.gradle</code> 文件的依赖声明处 <code>dependencies</code> 添加该依赖声明即可。</p>
+<h4 id="结合-Spring-Cloud-使用方式"><a href="#结合-Spring-Cloud-使用方式" class="headerlink" title="结合 Spring Cloud 使用方式"></a>结合 Spring Cloud 使用方式</h4><p>同样还是以获取 Feign 的 GitHub 开源项目的 Contributors 为例，结合 Spring Cloud 的使用方式有如下三步：</p>
+<p><strong>第一步：</strong> 引入相关 starter 依赖：<code>org.springframework.cloud:spring-cloud-starter-openfeign</code><br>在项目的 <code>build.gradle</code> 文件的依赖声明处 <code>dependencies</code> 添加该依赖声明即可。</p>
 <p><strong>第二步：</strong> 在项目的启动类 <code>XXXApplication</code> 上添加 <code>@EnableFeignClients</code> 注解启用 <code>Feign</code> 客户端功能。</p>
 <p><img src="https://i.loli.net/2021/06/27/HkDQcaWgm4piKdP.png" alt="feign-6.png"></p>
 <p><strong>第三步：</strong> 创建 HTTP 调用接口，并添加声明 <code>@FeignClient</code> 注解。<br>最后一步配置初始化客户端，这一步主要是设置请求地址（url）、编码（Encoder）、解码（Decoder）等，与原生使用方式不同的是，现在我们是通过 <code>@FeignClient</code> 注解配置的 <code>Feign</code> 客户端属性，同时请求的 URL 也是使用的 Spring MVC 提供的注解。</p>
@@ -508,7 +509,7 @@
 <p>运行结果如下：</p>
 <p><img src="https://i.loli.net/2021/06/27/xjn5COs6SAGV2PE.png" alt="feign-9.png"></p>
 <p>可以看到这里是通过 <code>@Autowired</code> 注入刚刚定义的接口的，然后就可以直接使用其来发起 HTTP 请求了，使用是不是很方便、简洁。</p>
-<h2 id="Dive-into-Feign"><a href="#Dive-into-Feign" class="headerlink" title="Dive into Feign"></a>Dive into Feign</h2><p>从上面第一个原生使用的例子可以看到，只是定了接口并没有具体的实现类，但是却可以在测试类中直接调用接口的方法来完成接口的调用，我们知道在 <code>Java</code> 里面接口是无法直接进行使用的，因此可以大胆猜测是 <code>Feign</code> 在背后默默生成了接口的代理实现类，也可以验证一下，只需在刚刚的测试类 <code>debug</code> 一下看看接口实际使用的是什么实现类：</p>
+<h2 id="Dive-into-Feign"><a href="#Dive-into-Feign" class="headerlink" title="Dive into Feign"></a>Dive into Feign</h2><p>从上面第一个原生使用的例子可以看到，只是定义接口并没有具体的实现类，但是却可以在测试类中直接调用接口的方法来完成接口的调用，我们知道在 <code>Java</code> 里面接口是无法直接进行使用的，因此可以大胆猜测是 <code>Feign</code> 在背后默默生成了接口的代理实现类，也可以验证一下，只需在刚刚的测试类 <code>debug</code> 一下看看接口实际使用的是什么实现类：</p>
 <p><img src="https://i.loli.net/2021/06/27/8OY3LnjhrNwR6Xx.png" alt="feign-11.png"></p>
 <p>从 <code>debug</code> 结果可知，框架生成了接口的代理实现类 <code>HardCodedTarget</code> 的对象 <code>$Proxy14</code> 来完成接口请求调用，和刚刚的猜测一致。<code>Feign</code> 主要是封装了 HTTP 请求调用，其整体架构如下：</p>
 <p><img src="https://i.loli.net/2021/06/27/NtdFXq3pbl8E7fi.png" alt="feign-10.png"></p>
