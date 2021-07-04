@@ -1,0 +1,1640 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+  <meta name="google-site-verification" content="IU4uoUf44pYguUI7ecCbIduQdIgrWXQKMRVyHFH26vc">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+  <link href="https://cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+  
+
+<link href="https://cdn.bootcss.com/font-awesome/4.6.2/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon-32x32-next.ico?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.ico?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.ico?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Java,Feign,Spring,">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="mghio's Blog" type="application/atom+xml">
+
+
+
+
+
+
+<meta name="description" content="前言在 上篇 介绍了 Feign 的核心实现原理，在文末也提到了会再介绍其和 Spring Cloud 的整合原理，Spring 具有很强的扩展性，会把一些常用的解决方案通过 starter 的方式开放给开发者使用，在引入官方提供的 starter 后通常只需要添加一些注解即可使用相关功能（通常是 @EnableXXX）。下面就一起来看看 Spring Cloud 到底是如何整合 Feign 的">
+<meta name="keywords" content="Java,Feign,Spring">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Spring Cloud 整合 Feign 的原理">
+<meta property="og:url" content="https://www.mghio.cn/post/28b95c42.html">
+<meta property="og:site_name" content="mghio&#39;s Blog">
+<meta property="og:description" content="前言在 上篇 介绍了 Feign 的核心实现原理，在文末也提到了会再介绍其和 Spring Cloud 的整合原理，Spring 具有很强的扩展性，会把一些常用的解决方案通过 starter 的方式开放给开发者使用，在引入官方提供的 starter 后通常只需要添加一些注解即可使用相关功能（通常是 @EnableXXX）。下面就一起来看看 Spring Cloud 到底是如何整合 Feign 的">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://i.loli.net/2021/07/04/Rh1fuymO8Dbewc2.jpg">
+<meta property="og:image" content="https://i.loli.net/2021/07/04/pEegIXqVMovGbCd.png">
+<meta property="og:image" content="https://i.loli.net/2021/07/04/OswIXcqPyjlBVME.png">
+<meta property="og:image" content="https://i.loli.net/2021/07/04/1bJ5PI2U3ANuDvq.png">
+<meta property="og:image" content="https://i.loli.net/2021/07/04/aY3C9T67qnAbLx5.png">
+<meta property="og:image" content="https://i.loli.net/2021/07/04/o9dhOBS4PQEs83C.png">
+<meta property="og:image" content="https://i.loli.net/2021/07/04/eoHI9PgkFOzR1Wq.png">
+<meta property="og:image" content="https://i.loli.net/2021/07/04/YDkedFGaugh5OyP.png">
+<meta property="og:image" content="https://i.loli.net/2021/07/04/93NYJuOwdRBiTXF.png">
+<meta property="og:image" content="https://i.loli.net/2021/07/04/evjCWpEgx2s4YA5.png">
+<meta property="og:updated_time" content="2021-07-04T12:58:58.446Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Spring Cloud 整合 Feign 的原理">
+<meta name="twitter:description" content="前言在 上篇 介绍了 Feign 的核心实现原理，在文末也提到了会再介绍其和 Spring Cloud 的整合原理，Spring 具有很强的扩展性，会把一些常用的解决方案通过 starter 的方式开放给开发者使用，在引入官方提供的 starter 后通常只需要添加一些注解即可使用相关功能（通常是 @EnableXXX）。下面就一起来看看 Spring Cloud 到底是如何整合 Feign 的">
+<meta name="twitter:image" content="https://i.loli.net/2021/07/04/Rh1fuymO8Dbewc2.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://www.mghio.cn/post/28b95c42.html">
+
+
+
+
+
+  <title>Spring Cloud 整合 Feign 的原理 | mghio's Blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">mghio's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description">Java 搬运工 & 终身学习者。</h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://www.mghio.cn/post/28b95c42.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="mghio">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="https://i.loli.net/2020/01/12/8qITJvhw2R9HN7M.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="mghio's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">Spring Cloud 整合 Feign 的原理</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2021-07-04T18:19:39+08:00">
+                2021-07-04
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/Feign/" itemprop="url" rel="index">
+                    <span itemprop="name">Feign</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/Feign/Spring/" itemprop="url" rel="index">
+                    <span itemprop="name">Spring</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/post/28b95c42.html#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/post/28b95c42.html" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-eye"></i>  本文总阅读量
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>次
+            </span>
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  2.5k 字
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  9 分钟
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><img src="https://i.loli.net/2021/07/04/Rh1fuymO8Dbewc2.jpg" alt="cover.jpeg"></p>
+<h4 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h4><p>在 <a href="https://www.mghio.cn/post/6e436292.html">上篇</a> 介绍了 <code>Feign</code> 的核心实现原理，在文末也提到了会再介绍其和 <code>Spring Cloud</code> 的整合原理，<code>Spring</code> 具有很强的扩展性，会把一些常用的解决方案通过 <code>starter</code> 的方式开放给开发者使用，在引入官方提供的 <code>starter</code> 后通常只需要添加一些注解即可使用相关功能（通常是 <code>@EnableXXX</code>）。下面就一起来看看 <code>Spring Cloud</code> 到底是如何整合 <code>Feign</code> 的。</p>
+<a id="more"></a>
+<h4 id="整合原理浅析"><a href="#整合原理浅析" class="headerlink" title="整合原理浅析"></a>整合原理浅析</h4><p>在 <code>Spring</code> 中一切都是围绕 <code>Bean</code> 来展开的工作，而所有的 <code>Bean</code> 都是基于 <code>BeanDefinition</code> 来生成的，可以说 <code>BeanDefinition</code> 是整个 <code>Spring</code> 帝国的基石，这个整合的关键也就是要如何生成 <code>Feign</code> 对应的 <code>BeanDefinition</code>。</p>
+<p>要分析其整合原理，我们首先要从哪里入手呢？如果你看过 <a href="https://www.mghio.cn/post/6e436292.html">上篇</a> 的话，在介绍<code>结合 Spring Cloud 使用方式</code>的例子时，第二步就是要在项目的 <code>XXXApplication</code> 上加添加 <code>@EnableFeignClients</code> 注解，我们可以从这里作为切入点，一步步深入分析其实现原理（通常相当一部分的 <code>starter</code> 一般都是在启动类中添加了开启相关功能的注解）。</p>
+<p><img src="https://i.loli.net/2021/07/04/pEegIXqVMovGbCd.png" alt="feign-1.png"></p>
+<p>进入 <code>@EnableFeignClients</code> 注解中，其源码如下：</p>
+<p><img src="https://i.loli.net/2021/07/04/OswIXcqPyjlBVME.png" alt="feign-2.png"></p>
+<p>从注解的源码可以发现，该注解除了定义几个参数（<code>basePackages</code>、<code>defaultConfiguration</code>、<code>clients</code> 等）外，还通过 <code>@Import</code> 引入了 <code>FeignClientsRegistrar</code> 类，一般 <code>@Import</code> 注解有如下功能（具体功能可见 <a href="https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/context/annotation/Import.html" target="_blank" rel="noopener">官方 Java Doc</a>）：</p>
+<ul>
+<li>声明一个 <code>Bean</code></li>
+<li>导入 <code>@Configuration</code> 注解的配置类</li>
+<li>导入 <code>ImportSelector</code> 的实现类</li>
+<li>导入 <code>ImportBeanDefinitionRegistrar</code> 的实现类（<strong>这里使用这个功能</strong>）</li>
+</ul>
+<p>到这里不难看出，整合实现的主要流程就在 <code>FeignClientsRegistrar</code> 类中了，让我们继续深入到类 <code>FeignClientsRegistrar</code> 的源码，</p>
+<p><img src="https://i.loli.net/2021/07/04/1bJ5PI2U3ANuDvq.png" alt="feign-3.png"></p>
+<p>通过源码可知 <code>FeignClientsRegistrar</code> 实现 <code>ImportBeanDefinitionRegistrar</code> 接口，该接口从名字也不难看出其主要功能就是将所需要初始化的 <code>BeanDefinition</code> 注入到容器中，接口定义两个方法功能都是用来注入给定的 <code>BeanDefinition</code> 的，一个可自定义 <code>beanName</code>（通过实现 <code>BeanNameGenerator</code> 接口自定义生成 <code>beanName</code> 的逻辑），另一个使用默认的规则生成 <code>beanName</code>（类名首字母小写格式）。接口源码如下所示：</p>
+<p><img src="https://i.loli.net/2021/07/04/aY3C9T67qnAbLx5.png" alt="feign-4.png"></p>
+<p>对 <code>Spring</code> 有一些了解的朋友们都知道，<code>Spring</code> 会在容器启动的过程中根据 <code>BeanDefinition</code> 的属性信息完成对类的初始化，并注入到容器中。所以这里 <code>FeignClientsRegistrar</code> 的终极目标就是<strong>将生成的代理类注入到 <code>Spring</code> 容器中。</strong><br>虽然 <code>FeignClientsRegistrar</code> 这个类的源码看起来比较多，但是从其终结目标来看，我们主要是看如何生成 <code>BeanDefinition</code> 的，通过源码可以发现其实现了 <code>ImportBeanDefinitionRegistrar</code> 接口，并且重写了 <code>registerBeanDefinitions(AnnotationMetadata, BeanDefinitionRegistry)</code> 方法，在这个方法里完成了一些 <code>BeanDefinition</code> 的生成和注册工作。源码如下：</p>
+<p><img src="https://i.loli.net/2021/07/04/o9dhOBS4PQEs83C.png" alt="feign-5.png"></p>
+<p>整个过程主要分为如下两个步骤：</p>
+<ol>
+<li>给 <code>@EnableFeignClients</code> 的全局默认配置（注解的 <code>defaultConfiguration</code> 属性）创建 <code>BeanDefinition</code> 对象并注入到容器中（对应上图中的第 ① 步）</li>
+<li>给标有了 <code>@FeignClient</code> 的类创建 <code>BeanDefinition</code> 对象并注入到容器中（对应上图中的第 ② 步）</li>
+</ol>
+<p>下面分别深入方法源码实现来看其具体实现原理，首先来看看第一步的方法 <code>registerDefaultConfiguration(AnnotationMetadata, BeanDefinitionRegistry)</code>，源码如下：</p>
+<p><img src="https://i.loli.net/2021/07/04/eoHI9PgkFOzR1Wq.png" alt="feign-6.png"></p>
+<p>可以看到这里只是获取一下注解 <code>@EnableFeignClients</code> 的默认配置属性 <code>defaultConfiguration</code> 的值，最终的功能实现交给了 <code>registerClientConfiguration(BeanDefinitionRegistry, Object, Object)</code> 方法来完成，继续跟进深入该方法，其源码如下：</p>
+<p><img src="https://i.loli.net/2021/07/04/YDkedFGaugh5OyP.png" alt="feign-7.png"></p>
+<p>可以看到，全局默认配置的 <code>BeanClazz</code> 都是 <code>FeignClientSpecification</code>，然后这里将全局默认配置 <code>configuration</code> 设置为 <code>BeanDefinition</code> 构造器的输入参数，然后当调用构造器实例化时将这个参数传进去。到这里就已经把 <code>@EnableFeignClients</code> 的全局默认配置（注解的 <code>defaultConfiguration</code> 属性）创建出 <code>BeanDefinition</code> 对象并注入到容器中了，第一步到此完成，整体还是比较简单的。</p>
+<p>下面再来看看第二步 <strong>给标有了 @FeignClient 的类创建 BeanDefinition 对象并注入到容器中</strong> 是如何实现的。深入第二步的方法 <code>registerFeignClients(AnnotationMetadata, BeanDefinitionRegistry)</code> 实现中，由于方法实现代码较多，使用截图会比较分散，所以用贴出源代码并在相关位置添加必要注释的方式进行：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">registerFeignClients</span><span class="params">(AnnotationMetadata metadata, BeanDefinitionRegistry registry)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 最终获取到有 @FeignClient 注解类的集合</span></span><br><span class="line">    LinkedHashSet&lt;BeanDefinition&gt; candidateComponents = <span class="keyword">new</span> LinkedHashSet&lt;&gt;();</span><br><span class="line">    <span class="comment">// 获取 @EnableFeignClients 注解的属性 map</span></span><br><span class="line">    Map&lt;String, Object&gt; attrs = metadata.getAnnotationAttributes(EnableFeignClients.class.getName());</span><br><span class="line">    <span class="comment">// 获取 @EnableFeignClients 注解的 clients 属性</span></span><br><span class="line">    <span class="keyword">final</span> Class&lt;?&gt;[] clients = attrs == <span class="keyword">null</span> ? <span class="keyword">null</span> : (Class&lt;?&gt;[]) attrs.get(<span class="string">"clients"</span>);</span><br><span class="line">    <span class="keyword">if</span> (clients == <span class="keyword">null</span> || clients.length == <span class="number">0</span>) &#123;  </span><br><span class="line">        <span class="comment">// 如果 @EnableFeignClients 注解未指定 clients 属性则扫描添加（扫描过滤条件为：标注有 @FeignClient 的类）</span></span><br><span class="line">        ClassPathScanningCandidateComponentProvider scanner = getScanner();</span><br><span class="line">        scanner.setResourceLoader(<span class="keyword">this</span>.resourceLoader);</span><br><span class="line">        scanner.addIncludeFilter(<span class="keyword">new</span> AnnotationTypeFilter(FeignClient.class));</span><br><span class="line">        Set&lt;String&gt; basePackages = getBasePackages(metadata);</span><br><span class="line">        <span class="keyword">for</span> (String basePackage : basePackages) &#123;</span><br><span class="line">            candidateComponents.addAll(scanner.findCandidateComponents(basePackage));</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="comment">// 如果 @EnableFeignClients 注解已指定 clients 属性，则直接添加，不再扫描（从这里可以看出，为了加快容器启动速度，建议都指定 clients 属性）</span></span><br><span class="line">        <span class="keyword">for</span> (Class&lt;?&gt; clazz : clients) &#123;</span><br><span class="line">            candidateComponents.add(<span class="keyword">new</span> AnnotatedGenericBeanDefinition(clazz));</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 遍历最终获取到的 @FeignClient 注解类的集合</span></span><br><span class="line">    <span class="keyword">for</span> (BeanDefinition candidateComponent : candidateComponents) &#123;</span><br><span class="line">        <span class="keyword">if</span> (candidateComponent <span class="keyword">instanceof</span> AnnotatedBeanDefinition) &#123;</span><br><span class="line">            <span class="comment">// verify annotated class is an interface</span></span><br><span class="line">            <span class="comment">// 验证带注释的类必须是接口，不是接口则直接抛出异常（大家可以想一想为什么只能是接口？）</span></span><br><span class="line">            AnnotatedBeanDefinition beanDefinition = (AnnotatedBeanDefinition) candidateComponent;</span><br><span class="line">            AnnotationMetadata annotationMetadata = beanDefinition.getMetadata();</span><br><span class="line">            Assert.isTrue(annotationMetadata.isInterface(), <span class="string">"@FeignClient can only be specified on an interface"</span>);</span><br><span class="line">            <span class="comment">// 获取 @FeignClient 注解的属性值</span></span><br><span class="line">            Map&lt;String, Object&gt; attributes = annotationMetadata</span><br><span class="line">                    .getAnnotationAttributes(FeignClient.class.getCanonicalName());</span><br><span class="line">            <span class="comment">// 获取 clientName 的值，也就是在构造器的参数值（具体获取逻辑可以参见 getClientName(Map&lt;String, Object&gt;) 方法      </span></span><br><span class="line">            String name = getClientName(attributes);</span><br><span class="line">            <span class="comment">// 同上文第一步最后调用的方法，注入 @FeignClient 注解的配置对象到容器中</span></span><br><span class="line">            registerClientConfiguration(registry, name, attributes.get(<span class="string">"configuration"</span>));</span><br><span class="line">            <span class="comment">// 注入 @FeignClient 对象，该对象可以在其它类中通过 `@Autowired` 直接引入（e.g. XXXService）</span></span><br><span class="line">            registerFeignClient(registry, annotationMetadata, attributes);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>通过源码可以看到最后是通过方法 <code>registerFeignClient(BeanDefinitionRegistry, AnnotationMetadata, Map&lt;String, Object&gt;)</code> 注入的 <code>@FeignClient</code> 对象，继续深入该方法，源码如下：</p>
+<p><img src="https://i.loli.net/2021/07/04/93NYJuOwdRBiTXF.png" alt="feign-8.png"></p>
+<p>方法实现比较长，最终目标是构造出 <code>BeanDefinition</code> 对象，然后通过 <code>BeanDefinitionReaderUtils.registerBeanDefinition(BeanDefinitionHolder, BeanDefinitionRegistry)</code> 注入到容器中。其中关键的一步是从 <code>@FeignClient</code> 注解中获取信息并设置到 <code>BeanDefinitionBuilder</code> 中，<code>BeanDefinitionBuilder</code> 中注册的类是 <code>FeignClientFactoryBean</code>，这个类的功能正如它的名字一样是用来创建出 <code>FeignClient</code> 的 <code>Bean</code> 的，然后 <code>Spring</code> 会根据 <code>FeignClientFactoryBean</code> 生成对象并注入到容器中。</p>
+<p>需要明确的一点是，实际上这里最终注入到容器当中的是 <code>FeignClientFactoryBean</code> 这个类，<code>Spring</code> 会在类初始化的时候会根据这个类来生成实例对象，就是调用 <code>FeignClientFactoryBean.getObject()</code> 方法，这个生成的对象就是我们实际使用的代理对象。下面再进入到类 <code>FeignClientFactoryBean</code> 的 <code>getObject()</code> 这个⽅法，源码如下：</p>
+<p><img src="https://i.loli.net/2021/07/04/evjCWpEgx2s4YA5.png" alt="feign-9.png"></p>
+<p>可以看到这个方法是直接调用的类中的另一个方法 <code>getTarget()</code> 的，在继续跟进该方法，由于该方法实现代码较多，使用截图会比较分散，所以用贴出源代码并在相关位置添加必要注释的方式进行：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">  * <span class="doctag">@param</span> &lt;T&gt; the target type of the Feign client</span></span><br><span class="line"><span class="comment">  * <span class="doctag">@return</span> a &#123;<span class="doctag">@link</span> Feign&#125; client created with the specified data and the context</span></span><br><span class="line"><span class="comment">  * information</span></span><br><span class="line"><span class="comment">  */</span></span><br><span class="line">&lt;T&gt; <span class="function">T <span class="title">getTarget</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 从 Spring 容器中获取 FeignContext Bean</span></span><br><span class="line">    FeignContext context = beanFactory != <span class="keyword">null</span> ? beanFactory.getBean(FeignContext.class)</span><br><span class="line">            : applicationContext.getBean(FeignContext.class);</span><br><span class="line">    <span class="comment">// 根据获取到的 FeignContext 构建出 Feign.Builder         </span></span><br><span class="line">    Feign.Builder builder = feign(context);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 注解 @FeignClient 未指定 url 属性 </span></span><br><span class="line">    <span class="keyword">if</span> (!StringUtils.hasText(url)) &#123;</span><br><span class="line">        <span class="comment">// url 属性是固定访问某一个实例地址，如果未指定协议则拼接 http 请求协议</span></span><br><span class="line">        <span class="keyword">if</span> (!name.startsWith(<span class="string">"http"</span>)) &#123;</span><br><span class="line">            url = <span class="string">"http://"</span> + name;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> &#123;</span><br><span class="line">            url = name;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 格式化 url</span></span><br><span class="line">        url += cleanPath();</span><br><span class="line">        <span class="comment">// 生成代理和我们之前的代理一样，注解 @FeignClient 未指定 url 属性则返回一个带有负载均衡功能的客户端对象</span></span><br><span class="line">        <span class="keyword">return</span> (T) loadBalance(builder, context, <span class="keyword">new</span> HardCodedTarget&lt;&gt;(type, name, url));</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 注解 @FeignClient 已指定 url 属性 </span></span><br><span class="line">    <span class="keyword">if</span> (StringUtils.hasText(url) &amp;&amp; !url.startsWith(<span class="string">"http"</span>)) &#123;</span><br><span class="line">        url = <span class="string">"http://"</span> + url;</span><br><span class="line">    &#125;</span><br><span class="line">    String url = <span class="keyword">this</span>.url + cleanPath();</span><br><span class="line">    <span class="comment">// 获取一个 client</span></span><br><span class="line">    Client client = getOptional(context, Client.class);</span><br><span class="line">    <span class="keyword">if</span> (client != <span class="keyword">null</span>) &#123;</span><br><span class="line">        <span class="keyword">if</span> (client <span class="keyword">instanceof</span> FeignBlockingLoadBalancerClient) &#123;</span><br><span class="line">            <span class="comment">// not load balancing because we have a url,</span></span><br><span class="line">            <span class="comment">// but Spring Cloud LoadBalancer is on the classpath, so unwrap</span></span><br><span class="line">            <span class="comment">// 这里没有负载是因为我们有指定了 url </span></span><br><span class="line">            client = ((FeignBlockingLoadBalancerClient) client).getDelegate();</span><br><span class="line">        &#125;</span><br><span class="line">        builder.client(client);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 生成代理和我们之前的代理一样，最后被注入到 Spring 容器中</span></span><br><span class="line">    Targeter targeter = get(context, Targeter.class);</span><br><span class="line">    <span class="keyword">return</span> (T) targeter.target(<span class="keyword">this</span>, builder, context, <span class="keyword">new</span> HardCodedTarget&lt;&gt;(type, name, url));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>通过源码得知 <code>FeignClientFactoryBean</code> 继承了 <code>FactoryBean</code>，其方法 <code>FactoryBean.getObject</code> 返回的就是 <code>Feign</code> 的代理对象，最后这个代理对象被注入到 <code>Spring</code> 容器中，我们就通过 <code>@Autowired</code> 可以直接注入使用了。同时还可以发现上面的代码分支最终都会走到如下代码：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Targeter targeter = get(context, Targeter.class);</span><br><span class="line"><span class="keyword">return</span> targeter.target(<span class="keyword">this</span>, builder, context, target);</span><br></pre></td></tr></table></figure>
+
+<p>点进去深入 <code>targeter.target</code> 的源码，可以看到实际上这里创建的就是一个代理对象，也就是说在容器启动的时候，会为每个 <code>@FeignClient</code> 创建了一个代理对象。至此，<code>Spring Cloud</code> 和 <code>Feign</code> 整合原理的核心实现介绍完毕。</p>
+<h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><p>本文主要介绍了 <code>Spring Cloud</code> 整合 <code>Feign</code> 的原理。通过上文介绍，你已经知道 <code>Srpring</code> 会我们的标注的 <code>@FeignClient</code> 的接口创建了一个代理对象，那么有了这个代理对象我们就可以做<strong>增强</strong>处理（e.g. 前置增强、后置增强），那么你知道是如何实现的吗？感兴趣的朋友可以再翻翻源码寻找答案（温馨提示：增强逻辑在 <code>InvocationHandler</code> 中）。还有 <code>Feign</code> 与 <code>Ribbon</code> 和 <code>Hystrix</code> 等组件的协作，感兴趣的朋友可以自行下载源码学习了解。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+      <div>
+          <div>  <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-smile-o"></i>感谢您的阅读-------------</div>  </div>
+      </div>
+    
+
+    
+      <div>
+        <div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="https://i.loli.net/2020/01/12/tXKpok8JAqQZ7ER.jpg" alt="mghio wechat" style="width: 200px; max-width: 100%;">
+    <div>微信公众号「mghio」</div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>赏作者☕️</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="https://i.loli.net/2020/01/12/jznfu23QkaIXgTt.jpg" alt="mghio 微信打赏">
+        <p>微信打赏</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="https://i.loli.net/2020/01/12/ihvqOG2TMjkItyU.jpg" alt="mghio 支付宝打赏">
+        <p>支付宝打赏</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    mghio  |  微信公众号「mghio」
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://www.mghio.cn/post/28b95c42.html" title="Spring Cloud 整合 Feign 的原理">https://www.mghio.cn/post/28b95c42.html</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Java/" rel="tag"># Java</a>
+          
+            <a href="/tags/Feign/" rel="tag"># Feign</a>
+          
+            <a href="/tags/Spring/" rel="tag"># Spring</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/post/6e436292.html" rel="next" title="Dive into Feign">
+                <i class="fa fa-chevron-left"></i> Dive into Feign
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="https://i.loli.net/2020/01/12/8qITJvhw2R9HN7M.png" alt="mghio">
+            
+              <p class="site-author-name" itemprop="name">mghio</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">45</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">44</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">40</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/mghio" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://segmentfault.com/u/mghio" target="_blank" title="思否">
+                      
+                        <i class="fa fa-fw fa-skype"></i>思否</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.jianshu.com/u/c08ba86593ce" target="_blank" title="简书">
+                      
+                        <i class="fa fa-fw fa-book"></i>简书</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://juejin.im/user/5bbccb4b6fb9a05ce95c7a81" target="_blank" title="掘金">
+                      
+                        <i class="fa fa-fw fa-bookmark"></i>掘金</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.cnblogs.com/mghio" target="_blank" title="博客园">
+                      
+                        <i class="fa fa-fw fa-vk"></i>博客园</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:mghio.dev@gmail.com" target="_blank" title="Mail">
+                      
+                        <i class="fa fa-fw fa-google"></i>Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                友情链接
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.debuginn.cn" title="Debug 客栈" target="_blank">Debug 客栈</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.bigfool.cn" title="大笨蛋程序员" target="_blank">大笨蛋程序员</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.i121.net" title="气象万千" target="_blank">气象万千</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.dute.org" title="独特工具箱" target="_blank">独特工具箱</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.xiaorongmao.com" title="小绒毛的足迹" target="_blank">小绒毛的足迹</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://xiaojun1994.top" title="xiaojun's blog" target="_blank">xiaojun's blog</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://httpsauthor.cn" title="Https Author" target="_blank">Https Author</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://p00q.cn" title="淡白记忆博客" target="_blank">淡白记忆博客</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://blog.searchinfogo.com" title="Junhua's blog" target="_blank">Junhua's blog</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://g-lab.xyz" title="G-lab" target="_blank">G-lab</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://v2c.tech" title="木頭" target="_blank">木頭</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://orxing.top" title="OURONGXING" target="_blank">OURONGXING</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.cnitdog.com" title="IT运维狗" target="_blank">IT运维狗</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.anyuhanfei.com" title="暗语寒飞 blog" target="_blank">暗语寒飞 blog</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.tbfeng.com" title="天边风" target="_blank">天边风</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://too.pub" title="TooPub" target="_blank">TooPub</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.qiezipig.top:8090" title="White water" target="_blank">White water</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://log.zvz.im" title="Z" target="_blank">Z</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://eindex.me" title="EINDEX's Blog" target="_blank">EINDEX's Blog</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.liuershuang.com" title="土鱼笔记" target="_blank">土鱼笔记</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://toc.lieme.cn" title="故事胶片" target="_blank">故事胶片</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://cmsblogs.com" title="Java 技术驿站" target="_blank">Java 技术驿站</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.fishmaple.cn" title="鱼鱼的小站" target="_blank">鱼鱼的小站</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.tigerbook.cn" title="虎书博客" target="_blank">虎书博客</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.netcore.pub" title="开源netcore" target="_blank">开源netcore</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://xerrors.coding.me" title="Angor" target="_blank">Angor</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://clawhub.club" title="ClawHub的博客" target="_blank">ClawHub的博客</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://13blog.site" title="13blog" target="_blank">13blog</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://zhang0peter.com" title="zhang0peter的博客" target="_blank">zhang0peter的博客</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://crossoverjie.top" title="crossoverJie" target="_blank">crossoverJie</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://zebinh.github.io" title="黄泽彬个人站" target="_blank">黄泽彬个人站</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://guanqr.com" title="荷戟独彷徨" target="_blank">荷戟独彷徨</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.mmzsblog.cn" title="程序员阿淼" target="_blank">程序员阿淼</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://yuzhouwan.com" title="宇宙湾" target="_blank">宇宙湾</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://morcat.cn" title="Morcat Blog" target="_blank">Morcat Blog</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://atjason.com" title="Jason" target="_blank">Jason</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://ericfu.me" title="Coding Husky" target="_blank">Coding Husky</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://gee.cs.oswego.edu" title="Doug Lea" target="_blank">Doug Lea</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#整合原理浅析"><span class="nav-number">2.</span> <span class="nav-text">整合原理浅析</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#总结"><span class="nav-number">3.</span> <span class="nav-text">总结</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; 2019 &mdash; <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">mghio</span>
+  <div class="BbeiAn-info">
+    <!--这里将图标作为了背景，以使得能和后面的文字在同一行-->
+    <a target="_blank" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=43312302000074" style="color:#f72b07;border-bottom:none;padding-left:22px;background:url(https://i.loli.net/2021/05/12/98xuD4Z5boyKrR3.png) no-repeat left center" rel="nofollow">湘公网安备43312302000074号</a>
+     ·
+    <a target="_blank" href="http://beian.miit.gov.cn/" style="color:#f72b07;border-bottom:none;" rel="nofollow">湘ICP备2021001218号-1</a> <!--a标签中增加nofollow属性，避免爬虫出站。-->
+  </div>
+  
+  
+</div>
+
+
+
+
+
+
+
+
+
+
+  <div class="footer-custom">本网站由 <a href="https://www.upyun.com/?utm_source=lianmeng&utm_medium=referral" style="border-bottom:none;" target="_blank"><img src="https://i.bmp.ovh/temp/1810/db95808e6d8d196d.png" style="width:59px;height:30px;display:inline-block;margin-bottom:-10px;" draggable="false"></a> 提供 CDN 加速/云存储服务</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      访客数
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      人
+    </span>
+  
+
+  
+    <span class="site-pv">
+      总访问量
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      次
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="https://cdn.bootcss.com/jquery/2.1.3/jquery.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="https://cdn.bootcss.com/jquery_lazyload/1.9.7/jquery.lazyload.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="https://cdn.bootcss.com/velocity/1.2.1/velocity.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="https://cdn.bootcss.com/velocity/1.2.1/velocity.ui.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="https://cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.js"></script>
+  
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  <!--<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>-->
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item=>{
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: true,
+        appId: 'XAoPxrNuHkaW6gukStUPwKsL-gzGzoHsz',
+        appKey: 'F9iycH0hDlUkFbDRVI5noq0u',
+        placeholder: '等你评论，等你“一鸣惊人”',
+        avatar:'monsterid',
+        guest_info:guest,
+        pageSize:'10' || 10,
+    });
+  </script>
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+  <style>
+    .copy-btn {
+      display: inline-block;
+      padding: 6px 12px;
+      font-size: 13px;
+      font-weight: 700;
+      line-height: 20px;
+      color: #333;
+      white-space: nowrap;
+      vertical-align: middle;
+      cursor: pointer;
+      background-color: #eee;
+      background-image: linear-gradient(#fcfcfc, #eee);
+      border: 1px solid #d5d5d5;
+      border-radius: 3px;
+      user-select: none;
+      outline: 0;
+    }
+
+    .highlight-wrap .copy-btn {
+      transition: opacity .3s ease-in-out;
+      opacity: 0;
+      padding: 2px 6px;
+      position: absolute;
+      right: 4px;
+      top: 8px;
+      z-index: 999;
+    }
+
+    .highlight-wrap:hover .copy-btn,
+    .highlight-wrap .copy-btn:focus {
+      opacity: 1
+    }
+
+    .highlight-wrap {
+      position: relative;
+    }
+  </style>
+  
+  <script>
+    $('.highlight').each(function (i, e) {
+      var $wrap = $('<div>').addClass('highlight-wrap')
+      $(e).after($wrap)
+      $wrap.append($('<button>').addClass('copy-btn').append('复制').on('click', function (e) {
+        var code = $(this).parent().find('.code').find('.line').map(function (i, e) {
+          return $(e).text()
+        }).toArray().join('\n')
+        var ta = document.createElement('textarea')
+        document.body.appendChild(ta)
+        ta.style.position = 'absolute'
+        ta.style.top = '0px'
+        ta.style.left = '0px'
+        ta.value = code
+        ta.select()
+        ta.focus()
+        var result = document.execCommand('copy')
+        document.body.removeChild(ta)
+        
+          if(result)$(this).text('复制成功')
+          else $(this).text('复制失败')
+        
+        $(this).blur()
+      })).on('mouseleave', function (e) {
+        var $b = $(this).find('.copy-btn')
+        setTimeout(function () {
+          $b.text('复制')
+        }, 300)
+      }).append(e)
+    })
+  </script>
+
+</body>
+</html>
