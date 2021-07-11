@@ -112,7 +112,7 @@
 <meta property="og:image" content="https://i.loli.net/2021/07/04/YDkedFGaugh5OyP.png">
 <meta property="og:image" content="https://i.loli.net/2021/07/04/93NYJuOwdRBiTXF.png">
 <meta property="og:image" content="https://i.loli.net/2021/07/04/evjCWpEgx2s4YA5.png">
-<meta property="og:updated_time" content="2021-07-11T01:46:13.957Z">
+<meta property="og:updated_time" content="2021-07-11T02:30:51.544Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Spring Cloud 整合 Feign 的原理">
 <meta name="twitter:description" content="前言在 上篇 介绍了 Feign 的核心实现原理，在文末也提到了会再介绍其和 Spring Cloud 的整合原理，Spring 具有很强的扩展性，会把一些常用的解决方案通过 starter 的方式开放给开发者使用，在引入官方提供的 starter 后通常只需要添加一些注解即可使用相关功能（通常是 @EnableXXX）。下面就一起来看看 Spring Cloud 到底是如何整合 Feign 的">
@@ -526,7 +526,7 @@
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Targeter targeter = get(context, Targeter.class);</span><br><span class="line"><span class="keyword">return</span> targeter.target(<span class="keyword">this</span>, builder, context, target);</span><br></pre></td></tr></table></figure>
 
 <p>点进去深入 <code>targeter.target</code> 的源码，可以看到实际上这里创建的就是一个代理对象，也就是说在容器启动的时候，会为每个 <code>@FeignClient</code> 创建了一个代理对象。至此，<code>Spring Cloud</code> 和 <code>Feign</code> 整合原理的核心实现介绍完毕。</p>
-<h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><p>本文主要介绍了 <code>Spring Cloud</code> 整合 <code>Feign</code> 的原理。通过上文介绍，你已经知道 <code>Srpring</code> 会我们的标注的 <code>@FeignClient</code> 的接口创建了一个代理对象，那么有了这个代理对象我们就可以做<strong>增强</strong>处理（e.g. 前置增强、后置增强），那么你知道是如何实现的吗？感兴趣的朋友可以再翻翻源码寻找答案（温馨提示：增强逻辑在 <code>InvocationHandler</code> 中）。还有 <code>Feign</code> 与 <code>Ribbon</code> 和 <code>Hystrix</code> 等组件的协作，感兴趣的朋友可以自行下载源码学习了解。</p>
+<h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><p>本文主要介绍了 <code>Spring Cloud</code> 整合 <code>Feign</code> 的原理。通过上文介绍，你已经知道 <code>Spring</code> 会给标注了 <code>@FeignClient</code> 的接口创建了一个代理对象，那么有了这个代理对象我们就可以做<strong>增强</strong>处理（e.g. 前置增强、后置增强），那么你知道是如何实现的吗？感兴趣的朋友可以再翻翻源码寻找答案（温馨提示：增强逻辑在 <code>InvocationHandler</code> 中）。还有 <code>Feign</code> 与 <code>Ribbon</code> 和 <code>Hystrix</code> 等组件的协作，感兴趣的朋友可以自行下载源码学习了解。</p>
 
       
     </div>
