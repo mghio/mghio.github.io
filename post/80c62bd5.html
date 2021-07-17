@@ -81,7 +81,7 @@
 
 
 
-  <meta name="keywords" content="Java,JVM,">
+  <meta name="keywords" content="Java,Spring,">
 
 
 
@@ -94,28 +94,33 @@
 
 
 
-<meta name="description" content="前言做过 Java 开发的同学都知道，JVM（Java 虚拟机） 是 Java 实现的基础，虽然在平时工作中真正运用到的时候可能并不多，但是一个程序员想要上升到高级层次，那就必须知道 Java 到底是怎么运行的，这就有必要去学习了解 JVM 的相关知识了。学习 JVM 可以能更深入的理解 Java 这门语言，可以清楚知道Java程序是如何执行的以及为未来排查线上问题打下坚实的基础。接下来我们看看">
-<meta name="keywords" content="Java,JVM">
+<meta name="description" content="什么是循环依赖什么是循环依赖呢？可以把它拆分成循环和依赖两个部分来看，循环是指计算机领域中的循环，执行流程形成闭合回路；依赖就是完成这个动作的前提准备条件，和我们平常说的依赖大体上含义一致。放到 Spring 中来看就一个或多个 Bean 实例之间存在直接或间接的依赖关系，构成循环调用，循环依赖可以分为直接循环依赖和间接循环依赖，直接循环依赖的简单依赖场景：Bean A 依赖于 Bean B，然">
+<meta name="keywords" content="Java,Spring">
 <meta property="og:type" content="article">
-<meta property="og:title" content="2020 年 JVM 生态报告解读">
-<meta property="og:url" content="https://www.mghio.cn/post/e09f0428.html">
+<meta property="og:title" content="Spring 的循环依赖问题">
+<meta property="og:url" content="https://www.mghio.cn/post/80c62bd5.html">
 <meta property="og:site_name" content="mghio&#39;s Blog">
-<meta property="og:description" content="前言做过 Java 开发的同学都知道，JVM（Java 虚拟机） 是 Java 实现的基础，虽然在平时工作中真正运用到的时候可能并不多，但是一个程序员想要上升到高级层次，那就必须知道 Java 到底是怎么运行的，这就有必要去学习了解 JVM 的相关知识了。学习 JVM 可以能更深入的理解 Java 这门语言，可以清楚知道Java程序是如何执行的以及为未来排查线上问题打下坚实的基础。接下来我们看看">
+<meta property="og:description" content="什么是循环依赖什么是循环依赖呢？可以把它拆分成循环和依赖两个部分来看，循环是指计算机领域中的循环，执行流程形成闭合回路；依赖就是完成这个动作的前提准备条件，和我们平常说的依赖大体上含义一致。放到 Spring 中来看就一个或多个 Bean 实例之间存在直接或间接的依赖关系，构成循环调用，循环依赖可以分为直接循环依赖和间接循环依赖，直接循环依赖的简单依赖场景：Bean A 依赖于 Bean B，然">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https://i.loli.net/2020/03/04/YZDLa9Be6H1kOpW.png">
-<meta property="og:image" content="https://i.loli.net/2020/03/04/z5iKXwyclG48ZPF.png">
-<meta property="og:image" content="https://i.loli.net/2020/03/04/ma1sHtEYzVOPU4v.png">
-<meta property="og:image" content="https://i.loli.net/2020/03/04/KiqruXYm9AG6Nw2.png">
-<meta property="og:image" content="https://i.loli.net/2020/03/04/Xwg1GLW9jNl6YTv.png">
-<meta property="og:image" content="https://i.loli.net/2020/03/04/UEJbGHIgz6YLsFa.png">
-<meta property="og:image" content="https://i.loli.net/2020/03/04/nUVkcPDbW3zKoI1.png">
-<meta property="og:image" content="https://i.loli.net/2020/03/04/Cst4LldU9Zz1G8B.png">
-<meta property="og:image" content="https://i.loli.net/2020/03/05/SRBTX6NVA4WJsyd.png">
-<meta property="og:updated_time" content="2020-03-06T05:56:29.111Z">
+<meta property="og:image" content="https://i.loli.net/2021/07/17/lw3qMrmSkIRfOGp.jpg">
+<meta property="og:image" content="https://i.loli.net/2021/07/17/LGgVfXmPKU3EwcS.png">
+<meta property="og:image" content="https://i.loli.net/2021/07/17/yNlpDUtmQT2RXnu.png">
+<meta property="og:image" content="https://i.loli.net/2021/07/17/OH3JobWDSPqrYZE.png">
+<meta property="og:image" content="https://i.loli.net/2021/07/17/qu4Y6s8nBi1NvRa.png">
+<meta property="og:image" content="https://i.loli.net/2021/07/17/jPUQ6Sfs8mpBtLg.png">
+<meta property="og:image" content="https://i.loli.net/2021/07/17/ribwoNKSgs7L3Jn.png">
+<meta property="og:image" content="https://i.loli.net/2021/07/17/jO3nk4vrZ9yhXSi.png">
+<meta property="og:image" content="https://i.loli.net/2021/07/17/MDVst5Er2UXCRzm.png">
+<meta property="og:image" content="https://i.loli.net/2021/07/17/UMEi1GCOo3FDmKB.png">
+<meta property="og:image" content="https://i.loli.net/2021/07/17/685tnVsEjD7aqWh.png">
+<meta property="og:image" content="https://i.loli.net/2021/07/17/k3f7VgNIyQjnUwG.png">
+<meta property="og:image" content="https://i.loli.net/2021/07/17/DdnyNJAe15rpkjZ.png">
+<meta property="og:image" content="https://i.loli.net/2021/07/17/KTIwXJSUYdNMOuW.png">
+<meta property="og:updated_time" content="2021-07-17T09:07:42.929Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="2020 年 JVM 生态报告解读">
-<meta name="twitter:description" content="前言做过 Java 开发的同学都知道，JVM（Java 虚拟机） 是 Java 实现的基础，虽然在平时工作中真正运用到的时候可能并不多，但是一个程序员想要上升到高级层次，那就必须知道 Java 到底是怎么运行的，这就有必要去学习了解 JVM 的相关知识了。学习 JVM 可以能更深入的理解 Java 这门语言，可以清楚知道Java程序是如何执行的以及为未来排查线上问题打下坚实的基础。接下来我们看看">
-<meta name="twitter:image" content="https://i.loli.net/2020/03/04/YZDLa9Be6H1kOpW.png">
+<meta name="twitter:title" content="Spring 的循环依赖问题">
+<meta name="twitter:description" content="什么是循环依赖什么是循环依赖呢？可以把它拆分成循环和依赖两个部分来看，循环是指计算机领域中的循环，执行流程形成闭合回路；依赖就是完成这个动作的前提准备条件，和我们平常说的依赖大体上含义一致。放到 Spring 中来看就一个或多个 Bean 实例之间存在直接或间接的依赖关系，构成循环调用，循环依赖可以分为直接循环依赖和间接循环依赖，直接循环依赖的简单依赖场景：Bean A 依赖于 Bean B，然">
+<meta name="twitter:image" content="https://i.loli.net/2021/07/17/lw3qMrmSkIRfOGp.jpg">
 
 
 
@@ -145,13 +150,13 @@
 
 
 
-  <link rel="canonical" href="https://www.mghio.cn/post/e09f0428.html">
+  <link rel="canonical" href="https://www.mghio.cn/post/80c62bd5.html">
 
 
 
 
 
-  <title>2020 年 JVM 生态报告解读 | mghio's Blog</title>
+  <title>Spring 的循环依赖问题 | mghio's Blog</title>
   
 
 
@@ -320,7 +325,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://www.mghio.cn/post/e09f0428.html">
+    <link itemprop="mainEntityOfPage" href="https://www.mghio.cn/post/80c62bd5.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="mghio">
@@ -337,7 +342,7 @@
 
         
         
-          <h2 class="post-title" itemprop="name headline">2020 年 JVM 生态报告解读</h2>
+          <h2 class="post-title" itemprop="name headline">Spring 的循环依赖问题</h2>
         
 
         <div class="post-meta">
@@ -349,8 +354,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-03-04T09:47:56+08:00">
-                2020-03-04
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2021-07-17T11:11:22+08:00">
+                2021-07-17
               </time>
             
 
@@ -383,8 +388,8 @@
                 
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Java/JVM/" itemprop="url" rel="index">
-                    <span itemprop="name">JVM</span>
+                  <a href="/categories/Java/Spring/" itemprop="url" rel="index">
+                    <span itemprop="name">Spring</span>
                   </a>
                 </span>
 
@@ -401,8 +406,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/post/e09f0428.html#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/post/e09f0428.html" itemprop="commentCount"></span>
+                <a href="/post/80c62bd5.html#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/post/80c62bd5.html" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -429,7 +434,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  1.7k 字
+                  2.5k 字
                 </span>
               
 
@@ -445,7 +450,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  6 分钟
+                  9 分钟
                 </span>
               
             </div>
@@ -468,29 +473,76 @@
       
 
       
-        <h4 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h4><p>做过 <code>Java</code> 开发的同学都知道，<code>JVM（Java 虚拟机）</code> 是 <code>Java</code> 实现的基础，虽然在平时工作中真正运用到的时候可能并不多，但是一个程序员想要上升到高级层次，那就必须知道 <code>Java</code> 到底是怎么运行的，这就有必要去学习了解 <code>JVM</code> 的相关知识了。学习 <code>JVM</code> 可以能更深入的理解 <code>Java</code> 这门语言，可以清楚知道Java程序是如何执行的以及为未来排查线上问题打下坚实的基础。接下来我们看看 2020 年的 <code>JVM</code> 生态报告和最新趋势，值得我们每个 <code>Java</code> 开发者去关注了解。</p>
-<h4 id="JDK-厂商占比"><a href="#JDK-厂商占比" class="headerlink" title="JDK 厂商占比"></a>JDK 厂商占比</h4><p><code>Oracle JDK</code> 和 <code>Open JDK</code> 加起来占比将近 <code>60%</code>，其中 <code>Oracle JDK</code> 占比略多一些，<code>Oracle JDK</code> 和 <code>Open JDK</code> 都是市场上的热门选择，我们看看二者之间的一些差异。<code>Oracle JDK</code> 更多的关注稳定性，更适合企业级用户，而 <code>Open JDK</code> 相对而言没有那么稳定，它会经常发布一些新特性。<code>Oracle JDK</code> 支持长期发布的更改，而 <code>Open JDK</code> 仅支持计划和完成下一个发行版，还有一个就是 <code>Oracle JDK</code> 是根据 <a href="https://zh.wikipedia.org/wiki/Zlib%E6%8E%88%E6%9D%83%E6%9D%A1%E6%AC%BE" target="_blank" rel="noopener">二进制代码许可协议</a> 获得许可，而 <code>Open JDK</code> 是根据 <a href="https://zh.wikipedia.org/wiki/GNU%E9%80%9A%E7%94%A8%E5%85%AC%E5%85%B1%E8%AE%B8%E5%8F%AF%E8%AF%81" target="_blank" rel="noopener">GPL v2</a> 许可获得许可。使用 <code>Oracle</code> 平台时会产生一些许可影响。如 <code>Oracle</code> 宣布的那样，在没有商业许可的情况下，在 2019 年 1 月之后发布的 <code>Oracle Java SE 8</code> 的公开更新将无法用于商业，商业或生产用途。但是，<code>Open JDK</code> 是完全开源的，可以自由使用。</p>
+        <p><img src="https://i.loli.net/2021/07/17/lw3qMrmSkIRfOGp.jpg" alt="cover.jpeg"></p>
+<h4 id="什么是循环依赖"><a href="#什么是循环依赖" class="headerlink" title="什么是循环依赖"></a>什么是循环依赖</h4><p>什么是<code>循环依赖</code>呢？可以把它拆分成<code>循环</code>和<code>依赖</code>两个部分来看，<strong>循环</strong>是指计算机领域中的循环，执行流程形成闭合回路；<strong>依赖</strong>就是完成这个动作的前提准备条件，和我们平常说的依赖大体上含义一致。放到 <code>Spring</code> 中来看就一个或多个 <code>Bean</code> 实例之间存在直接或间接的依赖关系，构成循环调用，循环依赖可以分为<code>直接循环依赖</code>和<code>间接循环依赖</code>，直接循环依赖的简单依赖场景：<code>Bean A</code> 依赖于 <code>Bean B</code>，然后 <code>Bean B</code> 又反过来依赖于 <code>Bean A</code>（<code>Bean A -&gt; Bean B -&gt; Bean A</code>），间接循环依赖的一个依赖场景：<code>Bean A</code> 依赖于 <code>Bean B</code>，<code>Bean B</code> 依赖于 <code>Bean C</code>，<code>Bean C</code> 依赖于 <code>Bean A</code>，中间多了一层，但是最终还是形成循环（<code>Bean A -&gt; Bean B -&gt; Bean C -&gt; Bean A</code>）。</p>
 <a id="more"></a>
-<p><img src="https://i.loli.net/2020/03/04/YZDLa9Be6H1kOpW.png" alt="which-java-vendor-use.png"></p>
-<h4 id="愿意付费用户占比很少"><a href="#愿意付费用户占比很少" class="headerlink" title="愿意付费用户占比很少"></a>愿意付费用户占比很少</h4><p>只有 <code>9%</code> 的用户表示愿意为 <code>JDK</code> 支付费用，还有 <code>86%</code> 的用户表示并不想为 <code>JDK</code> 支付费用，可以看出大部分用户其实对 <code>JDK</code> 的付费使用还是不赞同的，目前来看，如果要真正实行付费模式还是有点难。不过人们选择为 <code>JDK</code> 支付费用时，<code>Oracle</code> 还是当之无愧的大赢家的。自从 <code>JDK9</code> 发布之后，以后每年的 3 月和 9 月都会发布一个新的版本，这个发布节奏的改变，这个对许多用户的版本更新策略还是有一定的影响。调查结果显示这个发布节奏的变更影响了三分之一的开发者们是否决定为其支付费用。</p>
-<p><img src="https://i.loli.net/2020/03/04/z5iKXwyclG48ZPF.png" alt="paying-for-jdk-support.png"></p>
-<h4 id="Java-8-仍然是主流版本"><a href="#Java-8-仍然是主流版本" class="headerlink" title="Java 8 仍然是主流版本"></a>Java 8 仍然是主流版本</h4><p>从 <code>Java 9</code> 之后对 <code>JDK</code> 的结构做了很大的调整，这也是影响人们升级的原因之一，根据报告结果来看 <code>Java 8</code> 仍然是大家使用最多的版本，但是在 2018 年 9 月发布了第一个 <code>LTS(长期支持)</code> 版的 <code>Java 11</code> 之后，有四分之一的开发者在生产环境中使用了 <code>Java 11</code>。因为发布节奏的原因，大部分开发者还是不愿意每 6 个月就对版本进行一次更新，版本迁移成本其实也不低，还有新版本在生产环境的稳定性也是其中的一个考虑因素。</p>
-<p><img src="https://i.loli.net/2020/03/04/ma1sHtEYzVOPU4v.png" alt="java-version-use-production.png"></p>
-<h4 id="Kotlin-在-JVM-类语言中占比第二"><a href="#Kotlin-在-JVM-类语言中占比第二" class="headerlink" title="Kotlin 在 JVM 类语言中占比第二"></a>Kotlin 在 JVM 类语言中占比第二</h4><p>在 <code>JVM</code> 类语言语言中 <code>Java</code> 占比 <code>86.9%</code> 稳居第一，除了 <code>Java</code> 语言之外，<code>Kotlin</code> 语言在 <code>JVM</code> 类语言占比第二占比 <code>5.5%</code>，<code>Kotlin</code> 从去年的 <code>2.4%</code> 增加到今年的 <code>5.5%</code>，<code>JVM</code> 类语言的用户中 <code>Kotlin</code> 使用率的增长，因为它可以与 <code>Java</code> 无缝集成也不足为奇，像在 <code>Spring Boot</code> 框架中使用 <code>Kotlin</code> 进行开发也很容易。<code>Kotlin</code> 也一直在创新，积极拥抱 <code>Java</code> 的大腿，在 <code>Java</code> 的新版本中也在试图整合一些 <code>Kotlin</code> 的概念。</p>
-<p><img src="https://i.loli.net/2020/03/04/KiqruXYm9AG6Nw2.png" alt="jvm-language-use.png"></p>
-<h4 id="Spring-依然是-Java-框架中的王者"><a href="#Spring-依然是-Java-框架中的王者" class="headerlink" title="Spring 依然是 Java 框架中的王者"></a>Spring 依然是 Java 框架中的王者</h4><p>有十分之六的开发者依赖 <code>Spring</code> 框架来构建他们的程序，这对于众多的第三方开源框架来说，这是一个很高的占比，<code>Spring Framework</code> 依然是 <code>Java</code> 开发框架中的王者，<code>Spring</code> 框架已经发布了很长一段时间了，通过长时间的改进和创新，无疑 <code>Spring</code> 现在已经成为 <code>Java</code> 生态系统中的最重要的框架。在众多的使用者中有将近三分之二的用户使用 <code>Spring 5</code>，可见大家对 <code>Spring</code> 框架的新版使用率还是很高的。</p>
-<p><img src="https://i.loli.net/2020/03/04/Xwg1GLW9jNl6YTv.png" alt="spring-version-use.png"></p>
-<h4 id="Spring-Boot-是主流的服务器端-Web-框架"><a href="#Spring-Boot-是主流的服务器端-Web-框架" class="headerlink" title="Spring Boot 是主流的服务器端 Web 框架"></a>Spring Boot 是主流的服务器端 Web 框架</h4><p>服务器端依然是 <code>Spring</code> 的天下，其中有一半的人使用的是 <code>Spring Boot</code> 框架，还有将近的三分之一的人使用的是 <code>Spring MVC</code> 框架，前几年比较火的 <code>Struts</code> 框架已经开始没落了，这个占比和现在市场上比较流行微服务架构是分不开，因为 <code>Spring Boot</code> 框架天生就是为微服务而生的，它可以快速实现微服务。使用基于 <code>Spring Boot</code> 的 <code>Spring Cloud</code> 框架可以快速搭建一个分布式的服务或应用。</p>
-<p><img src="https://i.loli.net/2020/03/04/UEJbGHIgz6YLsFa.png" alt="server-side-web-framework.png"></p>
-<h4 id="IntelliJ-IDEA-是主流的开发工具"><a href="#IntelliJ-IDEA-是主流的开发工具" class="headerlink" title="IntelliJ IDEA 是主流的开发工具"></a>IntelliJ IDEA 是主流的开发工具</h4><p><code>IntelliJ IDEA</code> 是 <code>Java</code> 开发者们使用最广泛的开发工具，调查结果显示有 <code>62%</code> 的开发人员使用社区免费版和付费终极版。<code>Apache NetBeans</code> 以 <code>10%</code> 的市场份额保持在第三位，和去年的调查结果一致。可以发现被业界广泛称赞的 <code>VS Code</code> 神级编辑器在 <code>Java</code> 开发人员中并没有想象的那么受欢迎。</p>
-<p><img src="https://i.loli.net/2020/03/04/nUVkcPDbW3zKoI1.png" alt="which-ide-use.png"></p>
-<h4 id="Maven-是主流的项目构建管理工具"><a href="#Maven-是主流的项目构建管理工具" class="headerlink" title="Maven 是主流的项目构建管理工具"></a>Maven 是主流的项目构建管理工具</h4><p><code>Maven</code> 是一个软件项目管理和自动构建的工具，由 <code>Apache 基金会</code> 维护。它基于项目对象模型(POM)概念，<code>Maven</code> 利用一个中央信息片断能管理一个项目的构建、报告和文档等步骤。调查结果显示它在排名仍是第一，一直都是主流的项目构建工具，排名第二的 <code>Gradle</code> 一直保持着增长的趋势，在 2019 年占比达到四分之一，而在 2012 年占比高达 <code>40%</code> 的老牌的构建工具 <code>Ant</code> 将逐渐退出舞台，到 2019 年占比不到 <code>10%</code>。可以明确的是，构建工具之间的竞争从不会停止，能否及时更新发布一些可以解决使用者痛点的工具是大家选择的因素之一。</p>
-<p><img src="https://i.loli.net/2020/03/04/Cst4LldU9Zz1G8B.png" alt="which-build-tool-use.png"></p>
-<h4 id="Jenkins-仍然是持续集成工具中的王者"><a href="#Jenkins-仍然是持续集成工具中的王者" class="headerlink" title="Jenkins 仍然是持续集成工具中的王者"></a>Jenkins 仍然是持续集成工具中的王者</h4><p>和我们大多数 <code>Java</code> 开发人员的期望一致，<code>Jenkins</code> 以高达 <code>58%</code> 的占比排名稳居第一，排名第二的 <code>GitLab</code> 占比仅为 <code>6%</code>，有趣的是没有使用工具的也高达 <code>12%</code>，虽然不适用工具的人数占比比去年低了很多，但是这个占比还是让人有点儿惊讶。</p>
-<p><img src="https://i.loli.net/2020/03/05/SRBTX6NVA4WJsyd.png" alt="which-CI-server-use.png"></p>
+<h4 id="循环依赖的类型"><a href="#循环依赖的类型" class="headerlink" title="循环依赖的类型"></a>循环依赖的类型</h4><p>第一种是<strong>自依赖</strong>，自己依赖自己从而形成循环依赖，一般情况下不会发生这种循环依赖，因为它很容易被我们发现。</p>
+<p><img src="https://i.loli.net/2021/07/17/LGgVfXmPKU3EwcS.png" alt="1.png"></p>
+<p>第二种是<strong>直接依赖</strong>，发生在两个对象之间，比如：<code>Bean A</code> 依赖于 <code>Bean B</code>，然后 <code>Bean B</code> 又反过来依赖于 <code>Bean A</code>，如果比较细心的话肉眼也不难发现。</p>
+<p><img src="https://i.loli.net/2021/07/17/yNlpDUtmQT2RXnu.png" alt="2.png"></p>
+<p>第三种是<strong>间接依赖</strong>，这种依赖类型发生在 3 个或者以上的对象依赖的场景，间接依赖最简单的场景：<code>Bean A</code> 依赖于 <code>Bean B</code>，<code>Bean B</code> 依赖于 <code>Bean C</code>，<code>Bean C</code> 依赖于 <code>Bean A</code>，可以想象当中间依赖的对象很多时，是很难发现这种循环依赖的，一般都是借助一些工具排查。</p>
+<p><img src="https://i.loli.net/2021/07/17/OH3JobWDSPqrYZE.png" alt="3.png"></p>
+<h4 id="Spring-对几种循环依赖场景支持情况"><a href="#Spring-对几种循环依赖场景支持情况" class="headerlink" title="Spring 对几种循环依赖场景支持情况"></a>Spring 对几种循环依赖场景支持情况</h4><p>在介绍 Spring 对几种循环依赖场景的处理方式之前，先来看看在 Spring 中循环依赖会有哪些场景，大部分常见的场景总结如下图所示：</p>
+<p><img src="https://i.loli.net/2021/07/17/qu4Y6s8nBi1NvRa.png" alt="4.png"></p>
+<p>有句话说得好，<code>源码之下无秘密</code>，下面就通过源码探究这些场景 <code>Spring</code> 是否支持，以及支持的原因或者不支持的原因，话不多说，下面进入正题。</p>
+<h5 id="第-①-种场景——单例-Bean-的-setter-注入"><a href="#第-①-种场景——单例-Bean-的-setter-注入" class="headerlink" title="第 ① 种场景——单例 Bean 的 setter 注入"></a>第 ① 种场景——单例 Bean 的 setter 注入</h5><p>这种使用方式也是最常用的方式之一，假设有两个 <code>Service</code> 分别为 <code>OrderService</code>（订单相关业务逻辑）和 <code>TradeService</code>（交易相关业务逻辑），代码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> mghio</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@since</span> 2021-07-17</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Service</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">OrderService</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@Autowired</span></span><br><span class="line">  <span class="keyword">private</span> TradeService tradeService;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testCreateOrder</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="comment">// omit business logic ...</span></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> mghio</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@since</span> 2021-07-17</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Service</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TradeService</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@Autowired</span></span><br><span class="line">  <span class="keyword">private</span> OrderService orderService;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testCreateTrade</span><span class="params">()</span> </span>&#123; </span><br><span class="line">    <span class="comment">// omit business logic ...</span></span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这种循环依赖场景，程序是可以正常运行的，从代码上看确实是有循环依赖了，也就是说 <code>Spring</code> 是支持这种循环依赖场景的，这里我们察觉不到循环依赖的原因是 <code>Spring</code> 已经默默地解决了。</p>
+<p>假设没有做任何处理，按照正常的创建逻辑来执行的话，流程是这样的：容器先创建 <code>OrderService</code>，发现依赖于 <code>TradeService</code>，再创建 <code>OrderService</code>，又发现依赖于 <code>TradeService</code> … ，发生无限死循环，最后发生栈溢出错误，程序停止。为了支持这种常见的循环依赖场景，<code>Spring</code> 将创建对象分为如下几个步骤：</p>
+<ol>
+<li>实例化一个新对象（在堆中），但此时尚未给对象属性赋值</li>
+<li>给对象赋值</li>
+<li>调用 <code>BeanPostProcessor</code> 的一些实现类的方法，在这个阶段，<code>Bean</code> 已经创建并赋值属性完成。这时候容器中所有实现 <code>BeanPostProcessor</code> 接口的类都会被调用（e.g. <code>AOP</code>）</li>
+<li>初始化（如果实现了 <code>InitializingBean</code>，就会调用这个类的方法来完成类的初始化）</li>
+<li>返回创建出来的实例</li>
+</ol>
+<p>为此，<code>Spring</code> 引入了三级缓存来处理这个问题（三级缓存定义在 <code>org.springframework.beans.factory.support.DefaultSingletonBeanRegistry</code> 中），第一级缓存 <code>singletonObjects</code> 用于存放完全初始化好的 <code>Bean</code>，从该缓存中取出的 <code>Bean</code> 可以直接使用，第二级缓存 <code>earlySingletonObjects</code> 用于存放提前暴露的单例对象的缓存，存放原始的 <code>Bean</code> 对象（属性尚未赋值），用于解决循环依赖，第三级缓存 <code>singletonFactories</code> 用于存放单例对象工厂的缓存，存放 <code>Bean</code> 工厂对象，用于解决循环依赖。上述实例使用三级缓存的处理流程如下所示：</p>
+<p><img src="https://i.loli.net/2021/07/17/jPUQ6Sfs8mpBtLg.png" alt="5.png"></p>
+<p>如果你看过三级缓存的定义源码的话，可能也有这样的疑问：为什么第三级的缓存的要定义成 <code>Map&lt;String, ObjectFactory&lt;?&gt;&gt;</code>，不能直接缓存对象吗？这里不能直接保存对象实例，因为这样就无法对其做增强处理了。详情可见类 <code>org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory#doCreateBean</code> 方法部分源码如下：</p>
+<p><img src="https://i.loli.net/2021/07/17/ribwoNKSgs7L3Jn.png" alt="6.png"></p>
 <hr>
-<p>生态报告来源：<a href="https://snyk.io/blog/jvm-ecosystem-report-2020" target="_blank" rel="noopener">https://snyk.io/blog/jvm-ecosystem-report-2020</a></p>
-<p>PS：关注公众号「mghio」，回复关键字 <code>JVM</code> 获取 2020 年 <code>JVM</code> 生态报告 <code>PDF</code> 版原文。 </p>
+<h5 id="第-②-种场景——多例-Bean-的-setter-注入"><a href="#第-②-种场景——多例-Bean-的-setter-注入" class="headerlink" title="第 ② 种场景——多例 Bean 的 setter 注入"></a>第 ② 种场景——多例 Bean 的 setter 注入</h5><p>这种方式平常使用得相对较少，还是使用前文的两个 <code>Service</code> 作为示例，唯一不同的地方是现在都声明为<code>多例</code>了，示例代码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> mghio</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@since</span> 2021-07-17</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Service</span></span><br><span class="line"><span class="meta">@Scope</span>(ConfigurableBeanFactory.SCOPE_PROTOTYPE)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">OrderService</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@Autowired</span></span><br><span class="line">  <span class="keyword">private</span> TradeService tradeService;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testCreateOrder</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="comment">// omit business logic ...</span></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> mghio</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@since</span> 2021-07-17</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Service</span></span><br><span class="line"><span class="meta">@Scope</span>(ConfigurableBeanFactory.SCOPE_PROTOTYPE)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TradeService</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@Autowired</span></span><br><span class="line">  <span class="keyword">private</span> OrderService orderService;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testCreateTrade</span><span class="params">()</span> </span>&#123; </span><br><span class="line">    <span class="comment">// omit business logic ...</span></span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>如果你在 <code>Spring</code> 中运行以上代码，是可以正常启动成功的，原因是在类 <code>org.springframework.beans.factory.support.DefaultListableBeanFactory</code> 的 <code>preInstantiateSingletons()</code> 方法预实例化处理时，过滤掉了多例类型的 <code>Bean</code>，方法部分代码如下：</p>
+<p><img src="https://i.loli.net/2021/07/17/jO3nk4vrZ9yhXSi.png" alt="7.png"></p>
+<p>但是如果此时有其它单例类型的 <code>Bean</code> 依赖到这些多例类型的 <code>Bean</code> 的时候，就会报如下所示的循环依赖错误了。</p>
+<p><img src="https://i.loli.net/2021/07/17/MDVst5Er2UXCRzm.png" alt="8.png"></p>
+<hr>
+<h5 id="第-③-种场景——代理对象的-setter-注入"><a href="#第-③-种场景——代理对象的-setter-注入" class="headerlink" title="第 ③ 种场景——代理对象的 setter 注入"></a>第 ③ 种场景——代理对象的 setter 注入</h5><p>这种场景也会经常碰到，有时候为了实现异步调用会在 <code>XXXXService</code> 类的方法上添加 <code>@Async</code> 注解，让方法对外部变成异步调用（前提要是要在启用类上添加启用注解哦 <code>@EnableAsync</code>），示例代码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> mghio</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@since</span> 2021-07-17</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@EnableAsync</span></span><br><span class="line"><span class="meta">@SpringBootApplication</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">BlogMghioCodeApplication</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">    SpringApplication.run(BlogMghioCodeApplication.class, args);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> mghio</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@since</span> 2021-07-17</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Service</span></span><br><span class="line"><span class="meta">@Scope</span>(ConfigurableBeanFactory.SCOPE_PROTOTYPE)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">OrderService</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@Autowired</span></span><br><span class="line">  <span class="keyword">private</span> TradeService tradeService;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@Async</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testCreateOrder</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="comment">// omit business logic ...</span></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> mghio</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@since</span> 2021-07-17</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Service</span></span><br><span class="line"><span class="meta">@Scope</span>(ConfigurableBeanFactory.SCOPE_PROTOTYPE)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TradeService</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@Autowired</span></span><br><span class="line">  <span class="keyword">private</span> OrderService orderService;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testCreateTrade</span><span class="params">()</span> </span>&#123; </span><br><span class="line">    <span class="comment">// omit business logic ...</span></span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在标有 <code>@Async</code> 注解的场景下，在添加启用异步注解（<code>@EnableAsync</code>）后，代理对象会通过 <code>AOP</code> 自动生成。以上代码运行会抛出 <code>BeanCurrentlyInCreationException</code> 异常。运行的大致流程如下图所示：</p>
+<p><img src="https://i.loli.net/2021/07/17/UMEi1GCOo3FDmKB.png" alt="9.png"></p>
+<p>源码在 <code>org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory</code> 类的方法 <code>doCreateBean</code> 中，会判断第二级缓存 <code>earlySingletonObjects</code> 中的对象是否等于原始对象，方法判断部分的源码如下：</p>
+<p><img src="https://i.loli.net/2021/07/17/685tnVsEjD7aqWh.png" alt="10.png"></p>
+<p>二级缓存存放的对象是 <code>AOP</code> 生成出来的代理对象，和原始对象不相等，所以抛出了循环依赖错误。如果细看源码的话，会发现如果二级缓存是空的话会直接返回（因为比较的对象都没有，根本无法校验了），就不会报循环依赖的错误了，默认情况下，<code>Spring</code> 是按照文件全路径递归搜索，按<code>路径</code> + <code>文件名</code> 排序，排序靠前先加载，所以我们只要调整这两个类名称，让方法标有 <code>@Async</code> 注解的类排序在后面即可。</p>
+<hr>
+<h5 id="第-④-种场景——构造器注入"><a href="#第-④-种场景——构造器注入" class="headerlink" title="第 ④ 种场景——构造器注入"></a>第 ④ 种场景——构造器注入</h5><p>构造器注入的场景很少，到目前为止我所接触过的公司项目和开源项目中还没遇到使用构造器注入的，虽然用得不多，但是需要知道 <code>Spring</code> 为什么不支持这种场景的循环依赖，构造器注入的示例代码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> mghio</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@since</span> 2021-07-17</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Service</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">OrderService</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">private</span> TradeService tradeService;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="title">OrderService</span><span class="params">(TradeService tradeService)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.tradeService = tradeService;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testCreateOrder</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="comment">// omit business logic ...</span></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> mghio</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@since</span> 2021-07-17</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Service</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TradeService</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">private</span> OrderService orderService;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="title">TradeService</span><span class="params">(OrderService orderService)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.orderService = orderService;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testCreateTrade</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="comment">// omit business logic ...</span></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>构造器注入无法加入到第三级缓存当中，<code>Spring</code> 框架中的三级缓存在此场景下无用武之地，所以只能抛出异常，整体流程如下（虚线表示无法执行，为了直观也把下一步画出来了）:</p>
+<p><img src="https://i.loli.net/2021/07/17/k3f7VgNIyQjnUwG.png" alt="11.png"></p>
+<hr>
+<h5 id="第-⑤-种场景——DependsOn-循环依赖"><a href="#第-⑤-种场景——DependsOn-循环依赖" class="headerlink" title="第 ⑤ 种场景——DependsOn 循环依赖"></a>第 ⑤ 种场景——DependsOn 循环依赖</h5><p>这种 <code>DependsOn</code> 循环依赖场景很少，一般情况下不怎么使用，了解一下会导致循环依赖的问题即可，<code>@DependsOn</code> 注解主要是用来指定实例化顺序的，示例代码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> mghio</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@since</span> 2021-07-17</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Service</span></span><br><span class="line"><span class="meta">@DependsOn</span>(<span class="string">"tradeService"</span>)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">OrderService</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@Autowired</span></span><br><span class="line">  <span class="keyword">private</span> TradeService tradeService;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testCreateOrder</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="comment">// omit business logic ...</span></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> mghio</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@since</span> 2021-07-17</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Service</span></span><br><span class="line"><span class="meta">@DependsOn</span>(<span class="string">"orderService"</span>)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TradeService</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@Autowired</span></span><br><span class="line">  <span class="keyword">private</span> OrderService orderService;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testCreateTrade</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="comment">// omit business logic ...</span></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>通过上文，我们知道，如果这里的类没有标注 <code>@DependsOn</code> 注解的话是可以正常运行的，因为 <code>Spring</code> 支持单例 <code>setter</code> 注入，但是加了示例代码的 <code>@DependsOn</code> 注解后会报循环依赖错误，原因是在类 <code>org.springframework.beans.factory.support.AbstractBeanFactory</code> 的方法 <code>doGetBean()</code> 中检查了 <code>dependsOn</code> 的实例是否有循环依赖，如果有循环依赖则抛出循环依赖异常，方法判断部分代码如下：</p>
+<p><img src="https://i.loli.net/2021/07/17/DdnyNJAe15rpkjZ.png" alt="12.png"></p>
+<h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><p>本文主要介绍了什么是循环依赖以及 <code>Spring</code> 对各种循环依赖场景的处理，文中只列出了部分涉及到的源码，都标了所在源码中的位置，感兴趣的朋友可以去看看完整源码，最后 <code>Spring</code> 对各种循环依赖场景的支持情况如下图所示（P.S. <code>Spring</code> 版本：5.1.9.RELEASE）：<br><img src="https://i.loli.net/2021/07/17/KTIwXJSUYdNMOuW.png" alt="13.png"></p>
 
       
     </div>
@@ -554,7 +606,7 @@
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="https://www.mghio.cn/post/e09f0428.html" title="2020 年 JVM 生态报告解读">https://www.mghio.cn/post/e09f0428.html</a>
+    <a href="https://www.mghio.cn/post/80c62bd5.html" title="Spring 的循环依赖问题">https://www.mghio.cn/post/80c62bd5.html</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>
@@ -570,7 +622,7 @@
           
             <a href="/tags/Java/" rel="tag"># Java</a>
           
-            <a href="/tags/JVM/" rel="tag"># JVM</a>
+            <a href="/tags/Spring/" rel="tag"># Spring</a>
           
         </div>
       
@@ -583,8 +635,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/post/11cb7677.html" rel="next" title="分布式系统之 — CAP 定理">
-                <i class="fa fa-chevron-left"></i> 分布式系统之 — CAP 定理
+              <a href="/post/28b95c42.html" rel="next" title="Spring Cloud 整合 Feign 的原理">
+                <i class="fa fa-chevron-left"></i> Spring Cloud 整合 Feign 的原理
               </a>
             
           </div>
@@ -592,10 +644,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/post/710bd10b.html" rel="prev" title="服务发现组件之 — Eureka">
-                服务发现组件之 — Eureka <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -941,7 +989,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#JDK-厂商占比"><span class="nav-number">2.</span> <span class="nav-text">JDK 厂商占比</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#愿意付费用户占比很少"><span class="nav-number">3.</span> <span class="nav-text">愿意付费用户占比很少</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Java-8-仍然是主流版本"><span class="nav-number">4.</span> <span class="nav-text">Java 8 仍然是主流版本</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Kotlin-在-JVM-类语言中占比第二"><span class="nav-number">5.</span> <span class="nav-text">Kotlin 在 JVM 类语言中占比第二</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Spring-依然是-Java-框架中的王者"><span class="nav-number">6.</span> <span class="nav-text">Spring 依然是 Java 框架中的王者</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Spring-Boot-是主流的服务器端-Web-框架"><span class="nav-number">7.</span> <span class="nav-text">Spring Boot 是主流的服务器端 Web 框架</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#IntelliJ-IDEA-是主流的开发工具"><span class="nav-number">8.</span> <span class="nav-text">IntelliJ IDEA 是主流的开发工具</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Maven-是主流的项目构建管理工具"><span class="nav-number">9.</span> <span class="nav-text">Maven 是主流的项目构建管理工具</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Jenkins-仍然是持续集成工具中的王者"><span class="nav-number">10.</span> <span class="nav-text">Jenkins 仍然是持续集成工具中的王者</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#什么是循环依赖"><span class="nav-number">1.</span> <span class="nav-text">什么是循环依赖</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#循环依赖的类型"><span class="nav-number">2.</span> <span class="nav-text">循环依赖的类型</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Spring-对几种循环依赖场景支持情况"><span class="nav-number">3.</span> <span class="nav-text">Spring 对几种循环依赖场景支持情况</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#第-①-种场景——单例-Bean-的-setter-注入"><span class="nav-number">3.1.</span> <span class="nav-text">第 ① 种场景——单例 Bean 的 setter 注入</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#第-②-种场景——多例-Bean-的-setter-注入"><span class="nav-number">3.2.</span> <span class="nav-text">第 ② 种场景——多例 Bean 的 setter 注入</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#第-③-种场景——代理对象的-setter-注入"><span class="nav-number">3.3.</span> <span class="nav-text">第 ③ 种场景——代理对象的 setter 注入</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#第-④-种场景——构造器注入"><span class="nav-number">3.4.</span> <span class="nav-text">第 ④ 种场景——构造器注入</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#第-⑤-种场景——DependsOn-循环依赖"><span class="nav-number">3.5.</span> <span class="nav-text">第 ⑤ 种场景——DependsOn 循环依赖</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#总结"><span class="nav-number">4.</span> <span class="nav-text">总结</span></a></li></ol></div>
             
 
           </div>
