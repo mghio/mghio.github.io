@@ -1,0 +1,1574 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+  <meta name="google-site-verification" content="IU4uoUf44pYguUI7ecCbIduQdIgrWXQKMRVyHFH26vc">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+  <link href="https://cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+  
+
+<link href="https://cdn.bootcss.com/font-awesome/4.6.2/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon-32x32-next.ico?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.ico?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.ico?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Java,Spring,">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="mghio" type="application/atom+xml">
+
+
+
+
+
+
+<meta name="description" content="前言前面两篇文章（如何实现一个简易版的 Spring - 如何实现 Setter 注入、如何实现一个简易版的 Spring - 如何实现 Constructor 注入）介绍的都是基于 XML 配置文件方式的实现，从 JDK 5 版本开始 Java 引入了注解支持，带来了极大的便利，Sprinng 也从 2.5 版本开始支持注解方式，使用注解方式我们只需加上相应的注解即可，不再需要去编写繁琐的 X">
+<meta name="keywords" content="Java,Spring">
+<meta property="og:type" content="article">
+<meta property="og:title" content="如何实现一个简易版的 Spring - 如何实现 @Component 注解">
+<meta property="og:url" content="https://www.mghio.cn/post/6775e26e.html">
+<meta property="og:site_name" content="mghio">
+<meta property="og:description" content="前言前面两篇文章（如何实现一个简易版的 Spring - 如何实现 Setter 注入、如何实现一个简易版的 Spring - 如何实现 Constructor 注入）介绍的都是基于 XML 配置文件方式的实现，从 JDK 5 版本开始 Java 引入了注解支持，带来了极大的便利，Sprinng 也从 2.5 版本开始支持注解方式，使用注解方式我们只需加上相应的注解即可，不再需要去编写繁琐的 X">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://i.loli.net/2021/06/12/ZaBY1LuEdOXKV3k.jpg">
+<meta property="og:image" content="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/a47a511bba614227939e529ceecf6d1e~tplv-k3u1fbpfcp-zoom-1.image">
+<meta property="og:image" content="https://i.loli.net/2021/02/14/AWDROochqdkHxEv.png">
+<meta property="og:image" content="https://i.loli.net/2021/02/14/TAdV8sbhznel7KU.png">
+<meta property="og:image" content="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/1bed841068764e038a07b11fefffc32d~tplv-k3u1fbpfcp-zoom-1.image">
+<meta property="og:updated_time" content="2022-11-05T07:43:07.083Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="如何实现一个简易版的 Spring - 如何实现 @Component 注解">
+<meta name="twitter:description" content="前言前面两篇文章（如何实现一个简易版的 Spring - 如何实现 Setter 注入、如何实现一个简易版的 Spring - 如何实现 Constructor 注入）介绍的都是基于 XML 配置文件方式的实现，从 JDK 5 版本开始 Java 引入了注解支持，带来了极大的便利，Sprinng 也从 2.5 版本开始支持注解方式，使用注解方式我们只需加上相应的注解即可，不再需要去编写繁琐的 X">
+<meta name="twitter:image" content="https://i.loli.net/2021/06/12/ZaBY1LuEdOXKV3k.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://www.mghio.cn/post/6775e26e.html">
+
+
+
+
+
+  <title>如何实现一个简易版的 Spring - 如何实现 @Component 注解 | mghio</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">mghio</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description">Java 搬运工 & 终身学习者。</h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://www.mghio.cn/post/6775e26e.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="mghio">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="https://i.loli.net/2020/01/12/8qITJvhw2R9HN7M.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="mghio">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">如何实现一个简易版的 Spring - 如何实现 @Component 注解</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2021-02-14T15:39:19+08:00">
+                2021-02-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/Spring/" itemprop="url" rel="index">
+                    <span itemprop="name">Spring</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/post/6775e26e.html#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="post/6775e26e.html" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-eye"></i>  本文总阅读量
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>次
+            </span>
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  4k 字
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  17 分钟
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><img src="https://i.loli.net/2021/06/12/ZaBY1LuEdOXKV3k.jpg" alt="cover.jpg"></p>
+<h4 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h4><p>前面两篇文章（<a href="https://www.mghio.cn/post/5731122e.html">如何实现一个简易版的 Spring - 如何实现 Setter 注入</a>、<a href="https://www.mghio.cn/post/315ff4dc.html">如何实现一个简易版的 Spring - 如何实现 Constructor 注入</a>）介绍的都是基于 <code>XML</code> 配置文件方式的实现，从 <code>JDK 5</code> 版本开始 <code>Java</code> 引入了注解支持，带来了极大的便利，<code>Sprinng</code> 也从 <code>2.5</code> 版本开始支持注解方式，使用注解方式我们只需加上相应的注解即可，不再需要去编写繁琐的 <code>XML</code> 配置文件，深受广大 <code>Java</code> 编程人员的喜爱。接下来一起看看如何实现 <code>Spring</code> 框架中最常用的两个注解（<code>@Component</code>、<code>@Autowired</code>），由于涉及到的内容比较多，会分为两篇文章进行介绍，本文先来介绍上半部分 — <strong>如何实现 <code>@Component</code> 注解</strong>。</p>
+<a id="more"></a>
+<h4 id="实现步骤拆分"><a href="#实现步骤拆分" class="headerlink" title="实现步骤拆分"></a>实现步骤拆分</h4><p>本文实现的注解虽然说不用再配置 <code>XML</code> 文件，但是有点需要明确的是指定扫描 <code>Bean</code> 的包还使用 <code>XML</code> 文件的方式配置的，只是指定 <code>Bean</code> 不再使用配置文件的方式。有前面两篇文章的基础后实现 <code>@Component</code> 注解主要分成以下几个步骤：</p>
+<ol>
+<li>读取 <code>XML</code> 配置文件，解析出需要扫描的包路径</li>
+<li>对解析后的包路径进行扫描然后读取标有 <code>@Component</code> 注解的类，创建出对应的 <code>BeanDefinition</code></li>
+<li>根据创建出来的 <code>BeanDefinition</code> 创建对应的 <code>Bean</code> 实例</li>
+</ol>
+<p>下面我们一步步来实现这几个步骤，最后去实现 <code>@Component</code> 注解：</p>
+<h4 id="读取-XML-配置文件，解析出需要扫描的包路径"><a href="#读取-XML-配置文件，解析出需要扫描的包路径" class="headerlink" title="读取 XML 配置文件，解析出需要扫描的包路径"></a>读取 <code>XML</code> 配置文件，解析出需要扫描的包路径</h4><p>假设有如下的 <code>XML</code> 配置文件：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version="1.0" encoding="UTF-8" ?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">beans</span> <span class="attr">xmlns</span>=<span class="string">"http://www.springframework.org/schema/beans"</span></span></span><br><span class="line"><span class="tag">       <span class="attr">xmlns:xsi</span>=<span class="string">"http://www.e3.org/2001/XMLSchema-instance"</span></span></span><br><span class="line"><span class="tag">       <span class="attr">xmlns:context</span>=<span class="string">"http://www.springframework.org/schema/context"</span></span></span><br><span class="line"><span class="tag">       <span class="attr">xsi:schemaLocation</span>=<span class="string">"http://www.springframework.org/schema/beans</span></span></span><br><span class="line"><span class="tag"><span class="string">           http://www.springframework.org/schema/beans/spring-beans.xsd</span></span></span><br><span class="line"><span class="tag"><span class="string">           http://www.springframework.org/schema/context</span></span></span><br><span class="line"><span class="tag"><span class="string">           http://www.springframework.org/schema/beans/spring-context.xsd"</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">context:scann-package</span> <span class="attr">base-package</span>=<span class="string">"cn.mghio.service.version4,cn.mghio.dao.version4"</span> /&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">beans</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>我们期望的结果是解析出来的扫描包路径为： <code>cn.mghio.service.version4</code>、<code>cn.mghio.dao.version4</code> 。如果有仔细有了前面的文章后，这个其实就比较简单了，只需要修改读取 <code>XML</code> 配置文件的类 <code>XmlBeanDefinitionReader</code> 中的 <code>loadBeanDefinition(Resource resource)</code> 方法，判断当前的 <code>namespace</code> 是否为 <code>context</code> 即可，修改该方法如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">loadBeanDefinition</span><span class="params">(Resource resource)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">try</span> (InputStream is = resource.getInputStream()) &#123;</span><br><span class="line">    SAXReader saxReader = <span class="keyword">new</span> SAXReader();</span><br><span class="line">    Document document = saxReader.read(is);</span><br><span class="line">    Element root = document.getRootElement();  <span class="comment">// &lt;beans&gt;</span></span><br><span class="line">    Iterator&lt;Element&gt; iterator = root.elementIterator();</span><br><span class="line">    <span class="keyword">while</span> (iterator.hasNext()) &#123;</span><br><span class="line">      Element element = iterator.next();</span><br><span class="line">      String namespaceUri = element.getNamespaceURI();</span><br><span class="line">      <span class="keyword">if</span> (<span class="keyword">this</span>.isDefaultNamespace(namespaceUri)) &#123;  <span class="comment">// beans</span></span><br><span class="line">        parseDefaultElement(element);</span><br><span class="line">      &#125; <span class="keyword">else</span> <span class="keyword">if</span> (<span class="keyword">this</span>.isContextNamespace(namespaceUri)) &#123;  <span class="comment">// context</span></span><br><span class="line">        parseComponentElement(element);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125; <span class="keyword">catch</span> (DocumentException | IOException e) &#123;</span><br><span class="line">    <span class="keyword">throw</span> <span class="keyword">new</span> BeanDefinitionException(<span class="string">"IOException parsing XML document:"</span> + resource, e);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">parseComponentElement</span><span class="params">(Element element)</span> </span>&#123;</span><br><span class="line">  <span class="comment">// 1. 从 XML 配置文件中获取需要的扫描的包路径</span></span><br><span class="line">  String basePackages = element.attributeValue(BASE_PACKAGE_ATTRIBUTE);</span><br><span class="line">  <span class="comment">// TODO 2. 对包路径进行扫描然后读取标有 `@Component` 注解的类，创建出对应的 `BeanDefinition`</span></span><br><span class="line">  ...</span><br><span class="line">    </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">boolean</span> <span class="title">isContextNamespace</span><span class="params">(String namespaceUri)</span> </span>&#123;</span><br><span class="line">  <span class="comment">// CONTEXT_NAMESPACE_URI = http://www.springframework.org/schema/context</span></span><br><span class="line">  <span class="keyword">return</span> (StringUtils.hasLength(namespaceUri) &amp;&amp; CONTEXT_NAMESPACE_URI.equals(namespaceUri));</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">boolean</span> <span class="title">isDefaultNamespace</span><span class="params">(String namespaceUri)</span> </span>&#123;</span><br><span class="line">  <span class="comment">// BEAN_NAMESPACE_URI = http://www.springframework.org/schema/beans</span></span><br><span class="line">  <span class="keyword">return</span> (StringUtils.hasLength(namespaceUri) &amp;&amp; BEAN_NAMESPACE_URI.equals(namespaceUri));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>第一个步骤就已经完成了，其实相对来说还是比较简单的，接下来看看第二步要如何实现。</p>
+<h4 id="对解析后的包路径进行扫描然后读取标有-Component-注解的类，创建出对应的-BeanDefinition"><a href="#对解析后的包路径进行扫描然后读取标有-Component-注解的类，创建出对应的-BeanDefinition" class="headerlink" title="对解析后的包路径进行扫描然后读取标有 @Component 注解的类，创建出对应的 BeanDefinition"></a>对解析后的包路径进行扫描然后读取标有 <code>@Component</code> 注解的类，创建出对应的 <code>BeanDefinition</code></h4><p>第二步是整个实现步骤中最为复杂和比较麻烦的一步，当面对一个任务比较复杂而且比较大时，可以对其进行适当的拆分为几个小步骤分别去实现，这里可以其再次拆分为如下几个小步骤：</p>
+<ol>
+<li>扫描包路径下的字节码（<code>.class</code> ）文件并转换为一个个 <code>Resource</code> 对象（其对于 <code>Spring</code> 框架来说是一种资源，在 <code>Spring</code> 中资源统一抽象为 <code>Resource</code> ，这里的字节码文件具体为 <code>FileSystemResource</code>）</li>
+<li>读取转换好的 <code>Resource</code> 中的 <code>@Component</code> 注解</li>
+<li>根据读取到的 <code>@Component</code> 注解信息创建出对应的 <code>BeanDefintion</code></li>
+</ol>
+<h5 id="①-扫描包路径下的字节码（-class-）文件并转换为一个个-Resource-对象（其对于-Spring-框架来说是一种资源，在-Spring-中资源统一抽象为-Resource-，这里的字节码文件具体为-FileSystemResource）"><a href="#①-扫描包路径下的字节码（-class-）文件并转换为一个个-Resource-对象（其对于-Spring-框架来说是一种资源，在-Spring-中资源统一抽象为-Resource-，这里的字节码文件具体为-FileSystemResource）" class="headerlink" title="① 扫描包路径下的字节码（.class ）文件并转换为一个个 Resource 对象（其对于 Spring 框架来说是一种资源，在 Spring 中资源统一抽象为 Resource ，这里的字节码文件具体为 FileSystemResource）"></a>① 扫描包路径下的字节码（<code>.class</code> ）文件并转换为一个个 <code>Resource</code> 对象（其对于 <code>Spring</code> 框架来说是一种资源，在 <code>Spring</code> 中资源统一抽象为 <code>Resource</code> ，这里的字节码文件具体为 <code>FileSystemResource</code>）</h5><p>第一小步主要是实现从一个指定的包路径下获取该包路径下对应的字节码文件并将其转化为 <code>Resource</code> 对象，将该类命名为 <code>PackageResourceLoader</code>，其提供一个主要方法是 <code>Resource[] getResources(String basePackage)</code> 用来将一个给定的包路径下的字节码文件转换为 <code>Resource</code> 数组，实现如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">PackageResourceLoader</span> </span>&#123;</span><br><span class="line">  </span><br><span class="line">    ...</span><br><span class="line">  </span><br><span class="line">    <span class="keyword">public</span> Resource[] getResources(String basePackage) &#123;</span><br><span class="line">        Assert.notNull(basePackage, <span class="string">"basePackage must not be null"</span>);</span><br><span class="line">        String location = ClassUtils.convertClassNameToResourcePath(basePackage);</span><br><span class="line">        ClassLoader classLoader = getClassLoader();</span><br><span class="line">        URL url = classLoader.getResource(location);</span><br><span class="line">        Assert.notNull(url, <span class="string">"URL must not be null"</span>);</span><br><span class="line">        File rootDir = <span class="keyword">new</span> File(url.getFile());</span><br><span class="line"></span><br><span class="line">        Set&lt;File&gt; matchingFile = retrieveMatchingFiles(rootDir);</span><br><span class="line">        Resource[] result = <span class="keyword">new</span> Resource[matchingFile.size()];</span><br><span class="line">        <span class="keyword">int</span> i = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (File file : matchingFile) &#123;</span><br><span class="line">            result[i++] = <span class="keyword">new</span> FileSystemResource(file);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> result;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> Set&lt;File&gt; <span class="title">retrieveMatchingFiles</span><span class="params">(File rootDir)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (!rootDir.exists() || !rootDir.isDirectory() || !rootDir.canRead()) &#123;</span><br><span class="line">            <span class="keyword">return</span> Collections.emptySet();</span><br><span class="line">        &#125;</span><br><span class="line">        Set&lt;File&gt; result = <span class="keyword">new</span> LinkedHashSet&lt;&gt;(<span class="number">8</span>);</span><br><span class="line">        doRetrieveMatchingFiles(rootDir, result);</span><br><span class="line">        <span class="keyword">return</span> result;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">doRetrieveMatchingFiles</span><span class="params">(File dir, Set&lt;File&gt; result)</span> </span>&#123;</span><br><span class="line">        File[] dirContents = dir.listFiles();</span><br><span class="line">        <span class="keyword">if</span> (dirContents == <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> (File content : dirContents) &#123;</span><br><span class="line">            <span class="keyword">if</span> (!content.isDirectory()) &#123;</span><br><span class="line">                result.add(content);</span><br><span class="line">                <span class="keyword">continue</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> (content.canRead()) &#123;</span><br><span class="line">                doRetrieveMatchingFiles(content, result);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  </span><br><span class="line">  ...</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>上面的第一小步至此已经完成了，下面继续看第二小步。</p>
+<h5 id="②-读取转换好的-Resource-中的-Component-注解"><a href="#②-读取转换好的-Resource-中的-Component-注解" class="headerlink" title="② 读取转换好的 Resource 中的 @Component 注解"></a>② 读取转换好的 <code>Resource</code> 中的 <code>@Component</code> 注解</h5><p>要实现第二小步（读取转换好的 <code>Resource</code> 中的 <code>@Component</code> 注解），首先面临的第一个问题是：<code>如何读取字节码？</code>，熟悉字节结构的朋友可以字节解析读取，但是难度相对比较大，而且也比较容易出错，这里读取字节码的操作我们使用著名的字节码操作框架 <a href="https://asm.ow2.io" target="_blank" rel="noopener">ASM</a> 来完成底层的操作，官网对其的描述入下：</p>
+<blockquote>
+<p><strong>ASM</strong> is an all purpose Java bytecode manipulation and analysis framework. </p>
+</blockquote>
+<p>其描述就是：<code>ASM</code> 是一个通用的 <code>Java</code> 字节码操作和分析框架。其实不管是在工作或者日常学习中，我们对于一些比较基础的库和框架，如果有成熟的开源框架使用其实没有从零开发（当然，本身就是想要研究其源码的除外），这样可以减少不必要的开发成本和精力。<code>ASM</code> 基于 <code>Visitor</code> 模式可以方便的读取和修改字节码，目前我们只需要使用其读取字节码的功能。</p>
+<p><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/a47a511bba614227939e529ceecf6d1e~tplv-k3u1fbpfcp-zoom-1.image" alt="asm-sequence-diagram.png"></p>
+<p><code>ASM</code> 框架中分别提供了 <code>ClassVisitor</code> 和 <code>AnnotationVisitor</code> 两个抽象类来访问类和注解的字节码，我们可以使用这两个类来获取类和注解的相关信息。很明显我们需要继承这两个类然后覆盖其中的方法增加自己的逻辑去完成信息的获取，要如何去描述一个类呢？其实比较简单无非就是 <code>类名</code>、<code>是否是接口</code>、<code>是否是抽象类</code>、<code>父类的类名</code>、<code>实现的接口列表</code> 等这几项。</p>
+<p>但是一个注解要如何去描述它呢？注解其实我们主要关注注解的类型和其所包含的属性，类型就是一个 <code>包名 + 注解名</code> 的字符串表达式，而属性本质上是一种 <code>K-V</code> 的映射，值类型可能为 <code>数字</code>、<code>布尔</code>、<code>字符串</code> 以及 <code>数组</code> 等，为了方便使用可以继承自 <code>LinkedHashMap&lt;String, Object&gt;</code> 封装一些方便的获取属性值的方法，读取注解部分的相关类图设计如下：</p>
+<p><img src="https://i.loli.net/2021/02/14/AWDROochqdkHxEv.png" alt="spring-annotation-reading.png"></p>
+<p>其中绿色背景的 <code>ClassVisitor</code> 和 <code>AnnotationVisitor</code> 是 <code>ASM</code> 框架提供的类，<code>ClassMetadata</code> 是类相关的元数据接口，<code>AnnotationMetadata</code> 是注解相关的元数据接口继承自 <code>ClassMetadata</code>，<code>AnnotationAttributes</code> 是对注解属性的描述，继承自 <code>LinkedHashMap</code> 主要是封装了获取指定类型 <code>value</code> 的方法，还有三个自定义的 <code>Visitor</code> 类是本次实现的关键，第一个类 <code>ClassMetadataReadingVisitor</code> 实现了 <code>ClassVisitor</code> 抽象类，用来获取字节码文件中类相关属性的提取，其代码实现如下所示：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> mghio</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@since</span> 2021-02-14</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ClassMetadataReadingVisitor</span> <span class="keyword">extends</span> <span class="title">ClassVisitor</span> <span class="keyword">implements</span> <span class="title">ClassMetadata</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> String className;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> Boolean isInterface;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> Boolean isAbstract;</span><br><span class="line"></span><br><span class="line">    ...</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">ClassMetadataReadingVisitor</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>(Opcodes.ASM7);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">visit</span><span class="params">(<span class="keyword">int</span> version, <span class="keyword">int</span> access, String name, String signature, String superName, String[] interfaces)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.className = ClassUtils.convertResourcePathToClassName(name);</span><br><span class="line">        <span class="keyword">this</span>.isInterface = ((access &amp; Opcodes.ACC_INTERFACE) != <span class="number">0</span>);</span><br><span class="line">        <span class="keyword">this</span>.isAbstract = ((access &amp; Opcodes.ACC_ABSTRACT) != <span class="number">0</span>);</span><br><span class="line">        ...</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getClassName</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">this</span>.className;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isInterface</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">this</span>.isInterface;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isAbstract</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">this</span>.isAbstract;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    ...</span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>第二个类 <code>AnnotationMetadataReadingVisitor</code> 用来获取注解的类型，然后通过构造方法传给 <code>AnnotataionAttributesVisitor</code>，为获取注解属性做准备，代码实现如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> mghio</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@since</span> 2021-02-14</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">AnnotationMetadataReadingVisitor</span> <span class="keyword">extends</span> <span class="title">ClassMetadataReadingVisitor</span> <span class="keyword">implements</span> <span class="title">AnnotationMetadata</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> Set&lt;String&gt; annotationSet = <span class="keyword">new</span> LinkedHashSet&lt;&gt;(<span class="number">8</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> Map&lt;String, AnnotationAttributes&gt; attributesMap = <span class="keyword">new</span> LinkedHashMap&lt;&gt;(<span class="number">8</span>);</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> AnnotationVisitor <span class="title">visitAnnotation</span><span class="params">(String descriptor, <span class="keyword">boolean</span> visible)</span> </span>&#123;</span><br><span class="line">        String className = Type.getType(descriptor).getClassName();</span><br><span class="line">        <span class="keyword">this</span>.annotationSet.add(className);</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> AnnotationAttributesReadingVisitor(className, <span class="keyword">this</span>.attributesMap);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">hasSuperClass</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> StringUtils.hasText(getSuperClassName());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Set&lt;String&gt; <span class="title">getAnnotationTypes</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">this</span>.annotationSet;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">hasAnnotation</span><span class="params">(String annotationType)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">this</span>.annotationSet.contains(annotationType);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> AnnotationAttributes <span class="title">getAnnotationAttributes</span><span class="params">(String annotationType)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">this</span>.attributesMap.get(annotationType);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>第三个类 <code>AnnotationAttributesReadingVisitor</code> 根据类 <code>AnnotationMetadataReadingVisitor</code> 传入的注解类型和属性集合，获取并填充注解对应的属性，代码实现如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> mghio</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@since</span> 2021-02-14</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">AnnotationAttributesReadingVisitor</span> <span class="keyword">extends</span> <span class="title">AnnotationVisitor</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> String annotationType;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> Map&lt;String, AnnotationAttributes&gt; attributesMap;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> AnnotationAttributes attributes = <span class="keyword">new</span> AnnotationAttributes();</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">AnnotationAttributesReadingVisitor</span><span class="params">(String annotationType,</span></span></span><br><span class="line"><span class="function"><span class="params">                                              Map&lt;String, AnnotationAttributes&gt; attributesMap)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>(Opcodes.ASM7);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">this</span>.annotationType = annotationType;</span><br><span class="line">        <span class="keyword">this</span>.attributesMap = attributesMap;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">visit</span><span class="params">(String attributeName, Object attributeValue)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.attributes.put(attributeName, attributeValue);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">visitEnd</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.attributesMap.put(<span class="keyword">this</span>.annotationType, <span class="keyword">this</span>.attributes);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>该类做的使用比较简单，就是当每访问当前注解的一个属性时，将其保存下来，最后当访问完成时以 <code>K-V</code> （<code>key</code> 为注解类型全名称，value 为注解对应的属性集合）的形式存入到 <code>Map</code> 中，比如，当我访问如下的类时：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> mghio</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@since</span> 2021-02-14</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Component</span>(value = <span class="string">"orderService"</span>)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">OrderService</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    ...</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>此时 <code>AnnotationAttributesReadingVisitor</code> 类的 <code>visit(String, Object)</code> 方法的参数即为当前注解的属性和属性的取值如下：</p>
+<p><img src="https://i.loli.net/2021/02/14/TAdV8sbhznel7KU.png" alt="annotatoin-attributes-reading.png"></p>
+<p>至此我们已经完成了第二步中的前半部分的扫描指定包路径下的类并读取注解，虽然功能已经实现了，但是对应使用者来说还是不够友好，还需要关心一大堆相关的 <code>Visitor</code> 类，这里能不能再做一些封装呢？此时相信爱思考的你脑海里应该已经浮现了一句计算机科学界的名言：</p>
+<blockquote>
+<p>计算机科学的任何一个问题，都可以通过增加一个中间层来解决。</p>
+</blockquote>
+<p>仔细观察可以发现，以上读取类和注解相关信息的本质是元数据的读取，上文提到的 <code>Resource</code> 其实也是一中元数据，提供信息读取来源，将该接口命名为 <code>MetadataReader</code>，如下所示：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> mghio</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@since</span> 2021-02-14</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">MetadataReader</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function">Resource <span class="title">getResource</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="function">ClassMetadata <span class="title">getClassMetadata</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="function">AnnotationMetadata <span class="title">getAnnotationMetadata</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>还需要提供该接口的实现，我们期望的最终结果是只要面向 <code>MetadataReader</code> 接口编程即可，只要传入 <code>Resource</code>  就可以获取 <code>ClassMetadata</code> 和 <code>AnnotationMetadata</code> 等信息，无需关心那些 <code>visitor</code>，将该实现类命名为 <code>SimpleMetadataReader</code>，其代码实现如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> mghio</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@since</span> 2021-02-14</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SimpleMetadataReader</span> <span class="keyword">implements</span> <span class="title">MetadataReader</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> Resource resource;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> ClassMetadata classMetadata;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> AnnotationMetadata annotationMetadata;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">SimpleMetadataReader</span><span class="params">(Resource resource)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">        ClassReader classReader;</span><br><span class="line">        <span class="keyword">try</span> (InputStream is = <span class="keyword">new</span> BufferedInputStream(resource.getInputStream())) &#123;</span><br><span class="line">            classReader = <span class="keyword">new</span> ClassReader(is);</span><br><span class="line">        &#125;</span><br><span class="line">        AnnotationMetadataReadingVisitor visitor = <span class="keyword">new</span> AnnotationMetadataReadingVisitor();</span><br><span class="line">        classReader.accept(visitor, ClassReader.SKIP_DEBUG);</span><br><span class="line">        <span class="keyword">this</span>.resource = resource;</span><br><span class="line">        <span class="keyword">this</span>.classMetadata = visitor;</span><br><span class="line">        <span class="keyword">this</span>.annotationMetadata = visitor;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Resource <span class="title">getResource</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">this</span>.resource;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> ClassMetadata <span class="title">getClassMetadata</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">this</span>.classMetadata;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> AnnotationMetadata <span class="title">getAnnotationMetadata</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">this</span>.annotationMetadata;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在使用时只需要在构造 <code>SimpleMetadataReader</code> 传入对应的 <code>Resource</code> 即可，如下所示：</p>
+<p><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/1bed841068764e038a07b11fefffc32d~tplv-k3u1fbpfcp-zoom-1.image" alt="metadata-reader.png"></p>
+<p>到这里第二小步从字节码中读取注解的步骤已经完成了。</p>
+<h5 id="③-根据读取到的-Component-注解信息创建出对应的-BeanDefintion"><a href="#③-根据读取到的-Component-注解信息创建出对应的-BeanDefintion" class="headerlink" title="③ 根据读取到的 @Component 注解信息创建出对应的 BeanDefintion"></a>③ 根据读取到的 <code>@Component</code> 注解信息创建出对应的 <code>BeanDefintion</code></h5><p>为了使之前定义好的 <code>BeanDefinition</code> 结构保持纯粹不被破坏，这里我们再增加一个针对注解的 <code>AnnotatedBeanDefinition</code> 接口继承自   <code>BeanDefinition</code> 接口，接口比较简单只有一个获取注解元数据的方法，定义如下所示：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> mghio</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@since</span> 2021-02-14</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">AnnotatedBeanDefinition</span> <span class="keyword">extends</span> <span class="title">BeanDefinition</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function">AnnotationMetadata <span class="title">getMetadata</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>同时增加一个该接口的实现类，表示从扫描注解生成的 <code>BeanDefinition</code>，将其命名为 <code>ScannedGenericBeanDefinition</code>，代码实现如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> mghio</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@since</span> 2021-02-14</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ScannedGenericBeanDefinition</span> <span class="keyword">extends</span> <span class="title">GenericBeanDefinition</span> <span class="keyword">implements</span> <span class="title">AnnotatedBeanDefinition</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> AnnotationMetadata metadata;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">ScannedGenericBeanDefinition</span><span class="params">(AnnotationMetadata metadata)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>();</span><br><span class="line">        <span class="keyword">this</span>.metadata = metadata;</span><br><span class="line">        setBeanClassName(<span class="keyword">this</span>.metadata.getClassName());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> AnnotationMetadata <span class="title">getMetadata</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">this</span>.metadata;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>还有一个问题就是使用注解的方式时该如何生成 <code>Bean</code> 的名字，这里我们采用和 <code>Spring</code> 一样的策略，当在注解指定 <code>Bean</code> 的名字时使用指定的值为 <code>Bean</code> 的名字，否则使用类名的首字母小写为生成 <code>Bean</code> 的名字， 很明显这只是其中的一种默认实现策略，因此需要提供一个生成 <code>Baen</code> 名称的接口供后续灵活替换生成策略，接口命名为 <code>BeanNameGenerator</code> ，接口只有一个生成 <code>Bean</code> 名称的方法，其定义如下：</p>
+ <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> mghio</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@since</span> 2021-02-14</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">BeanNameGenerator</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function">String <span class="title">generateBeanName</span><span class="params">(BeanDefinition bd, BeanDefinitionRegistry registry)</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>其默认的生成策略实现如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> mghio</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@since</span> 2021-02-14</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">AnnotationBeanNameGenerator</span> <span class="keyword">implements</span> <span class="title">BeanNameGenerator</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">generateBeanName</span><span class="params">(BeanDefinition definition, BeanDefinitionRegistry registry)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (definition <span class="keyword">instanceof</span> AnnotatedBeanDefinition) &#123;</span><br><span class="line">            String beanName = determineBeanNameFromAnnotation((AnnotatedBeanDefinition) definition);</span><br><span class="line">            <span class="keyword">if</span> (StringUtils.hasText(beanName)) &#123;</span><br><span class="line">                <span class="keyword">return</span> beanName;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> buildDefaultBeanName(definition);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> String <span class="title">buildDefaultBeanName</span><span class="params">(BeanDefinition definition)</span> </span>&#123;</span><br><span class="line">        String shortClassName = ClassUtils.getShortName(definition.getBeanClassName());</span><br><span class="line">        <span class="keyword">return</span> Introspector.decapitalize(shortClassName);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> String <span class="title">determineBeanNameFromAnnotation</span><span class="params">(AnnotatedBeanDefinition definition)</span> </span>&#123;</span><br><span class="line">        AnnotationMetadata metadata = definition.getMetadata();</span><br><span class="line">        Set&lt;String&gt; types = metadata.getAnnotationTypes();</span><br><span class="line">        String beanName = <span class="keyword">null</span>;</span><br><span class="line">        <span class="keyword">for</span> (String type : types) &#123;</span><br><span class="line">            AnnotationAttributes attributes = metadata.getAnnotationAttributes(type);</span><br><span class="line">            <span class="keyword">if</span> (attributes.get(<span class="string">"value"</span>) != <span class="keyword">null</span>) &#123;</span><br><span class="line">                Object value = attributes.get(<span class="string">"value"</span>);</span><br><span class="line">                <span class="keyword">if</span> (value <span class="keyword">instanceof</span> String) &#123;</span><br><span class="line">                    String stringVal = (String) value;</span><br><span class="line">                    <span class="keyword">if</span> (StringUtils.hasLength(stringVal)) &#123;</span><br><span class="line">                        beanName = stringVal;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> beanName;</span><br><span class="line">    &#125;</span><br><span class="line">  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>最后我们再定义一个扫描器类组合以上的功能提供一个将包路径下的类读取并转换为对应的 <code>BeanDefinition</code>  方法，将该类命名为 <code>ClassPathBeanDefinitionScanner</code>，其代码实现如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> mghio</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@since</span> 2021-02-14</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ClassPathBeanDefinitionScanner</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> String SEMICOLON_SEPARATOR = <span class="string">","</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> BeanDefinitionRegistry registry;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> PackageResourceLoader resourceLoader = <span class="keyword">new</span> PackageResourceLoader();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> BeanNameGenerator beanNameGenerator = <span class="keyword">new</span> AnnotationBeanNameGenerator();</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">ClassPathBeanDefinitionScanner</span><span class="params">(BeanDefinitionRegistry registry)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.registry = registry;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Set&lt;BeanDefinition&gt; <span class="title">doScanAndRegistry</span><span class="params">(String packageToScan)</span> </span>&#123;</span><br><span class="line">        String[] basePackages = StringUtils.tokenizeToStringArray(packageToScan, SEMICOLON_SEPARATOR);</span><br><span class="line"></span><br><span class="line">        Set&lt;BeanDefinition&gt; beanDefinitions = <span class="keyword">new</span> HashSet&lt;&gt;();</span><br><span class="line">        <span class="keyword">for</span> (String basePackage : basePackages) &#123;</span><br><span class="line">            Set&lt;BeanDefinition&gt; candidates = findCandidateComponents(basePackage);</span><br><span class="line">            <span class="keyword">for</span> (BeanDefinition candidate : candidates) &#123;</span><br><span class="line">                beanDefinitions.add(candidate);</span><br><span class="line">                registry.registerBeanDefinition(candidate.getId(), candidate);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> beanDefinitions;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> Set&lt;BeanDefinition&gt; <span class="title">findCandidateComponents</span><span class="params">(String basePackage)</span> </span>&#123;</span><br><span class="line">        Set&lt;BeanDefinition&gt; candidates = <span class="keyword">new</span> HashSet&lt;&gt;();</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            Resource[] resources = <span class="keyword">this</span>.resourceLoader.getResources(basePackage);</span><br><span class="line">            <span class="keyword">for</span> (Resource resource : resources) &#123;</span><br><span class="line">                MetadataReader metadataReader = <span class="keyword">new</span> SimpleMetadataReader(resource);</span><br><span class="line">                <span class="keyword">if</span> (metadataReader.getAnnotationMetadata().hasAnnotation(Component.class.getName())) &#123;</span><br><span class="line">                    ScannedGenericBeanDefinition sbd = <span class="keyword">new</span> ScannedGenericBeanDefinition(metadataReader.getAnnotationMetadata());</span><br><span class="line">                    String beanName = <span class="keyword">this</span>.beanNameGenerator.generateBeanName(sbd, registry);</span><br><span class="line">                    sbd.setId(beanName);</span><br><span class="line">                    candidates.add(sbd);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">catch</span> (IOException ex) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> BeanDefinitionStoreException(<span class="string">"I/O failure during classpath scanning"</span>, ex);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> candidates;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>到这里就已经把读取到的 <code>@Component</code> 注解信息转换为 <code>BeanDefinition</code> 了。</p>
+<h4 id="根据创建出来的-BeanDefinition-创建对应的-Bean-实例"><a href="#根据创建出来的-BeanDefinition-创建对应的-Bean-实例" class="headerlink" title="根据创建出来的 BeanDefinition 创建对应的 Bean 实例"></a>根据创建出来的 <code>BeanDefinition</code> 创建对应的 <code>Bean</code> 实例</h4><p>这一步其实并不需要再修改创建 <code>Bean</code> 的代码了，创建的逻辑都是一样的，只需要将之前读取 <code>XML</code> 配置文件那里使用上文提到的扫描器 <code>ClassPathBeanDefinitionScanner</code> 扫描并注册到 <code>BeanFactory</code> 中即可，读取配置文件的 <code>XmlBeanDefinitionReader</code> 类的读取解析配置文件的方法修改如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">loadBeanDefinition</span><span class="params">(Resource resource)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">try</span> (InputStream is = resource.getInputStream()) &#123;</span><br><span class="line">    SAXReader saxReader = <span class="keyword">new</span> SAXReader();</span><br><span class="line">    Document document = saxReader.read(is);</span><br><span class="line">    Element root = document.getRootElement();  <span class="comment">// &lt;beans&gt;</span></span><br><span class="line">    Iterator&lt;Element&gt; iterator = root.elementIterator();</span><br><span class="line">    <span class="keyword">while</span> (iterator.hasNext()) &#123;</span><br><span class="line">      Element element = iterator.next();</span><br><span class="line">      String namespaceUri = element.getNamespaceURI();</span><br><span class="line">      <span class="keyword">if</span> (<span class="keyword">this</span>.isDefaultNamespace(namespaceUri)) &#123;</span><br><span class="line">        parseDefaultElement(element);</span><br><span class="line">      &#125; <span class="keyword">else</span> <span class="keyword">if</span> (<span class="keyword">this</span>.isContextNamespace(namespaceUri)) &#123;</span><br><span class="line">        parseComponentElement(element);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125; <span class="keyword">catch</span> (DocumentException | IOException e) &#123;</span><br><span class="line">    <span class="keyword">throw</span> <span class="keyword">new</span> BeanDefinitionException(<span class="string">"IOException parsing XML document:"</span> + resource, e);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">parseComponentElement</span><span class="params">(Element element)</span> </span>&#123;</span><br><span class="line">  String basePackages = element.attributeValue(BASE_PACKAGE_ATTRIBUTE);</span><br><span class="line">  <span class="comment">// 读取指定包路径下的类转换为 BeanDefinition 并注册到  BeanFactory 中</span></span><br><span class="line">  ClassPathBeanDefinitionScanner scanner = <span class="keyword">new</span> ClassPathBeanDefinitionScanner(registry);</span><br><span class="line">  scanner.doScanAndRegistry(basePackages);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>到这里实现 <code>@Component</code> 注解的主要流程已经介绍完毕，完整代码已上传至仓库 <a href="https://github.com/mghio/mghio-spring" target="_blank" rel="noopener">GitHub </a>。</p>
+<h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><p>本文主要介绍了实现 <code>@Component</code> 注解的主要流程，以上只是实现的最简单的功能，但是基本原理都是类似的，有问题欢迎留言讨论。下篇预告：<strong>如何实现 <code>@Autowried</code> 注解</strong>。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+      <div>
+          <div>  <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-smile-o"></i>感谢您的阅读-------------</div>  </div>
+      </div>
+    
+
+    
+      <div>
+        <div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="https://i.loli.net/2020/01/12/tXKpok8JAqQZ7ER.jpg" alt="mghio wechat" style="width: 200px; max-width: 100%;">
+    <div>微信公众号「mghio」</div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>请我吃🍗</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="https://i.loli.net/2020/01/12/jznfu23QkaIXgTt.jpg" alt="mghio 微信打赏">
+        <p>微信打赏</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="https://i.loli.net/2020/01/12/ihvqOG2TMjkItyU.jpg" alt="mghio 支付宝打赏">
+        <p>支付宝打赏</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    mghio  |  微信公众号「mghio」
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://www.mghio.cn/post/6775e26e.html" title="如何实现一个简易版的 Spring - 如何实现 @Component 注解">https://www.mghio.cn/post/6775e26e.html</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Java/" rel="tag"># Java</a>
+          
+            <a href="/tags/Spring/" rel="tag"># Spring</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/post/315ff4dc.html" rel="next" title="如何实现一个简易版的 Spring - 如何实现 Constructor 注入">
+                <i class="fa fa-chevron-left"></i> 如何实现一个简易版的 Spring - 如何实现 Constructor 注入
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/post/80982e71.html" rel="prev" title="如何实现一个简易版的 Spring - 如何实现 @Autowired 注解">
+                如何实现一个简易版的 Spring - 如何实现 @Autowired 注解 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="https://i.loli.net/2020/01/12/8qITJvhw2R9HN7M.png" alt="mghio">
+            
+              <p class="site-author-name" itemprop="name">mghio</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">52</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">52</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">45</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/mghio" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://segmentfault.com/u/mghio" target="_blank" title="思否">
+                      
+                        <i class="fa fa-fw fa-skype"></i>思否</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.jianshu.com/u/c08ba86593ce" target="_blank" title="简书">
+                      
+                        <i class="fa fa-fw fa-book"></i>简书</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://juejin.im/user/5bbccb4b6fb9a05ce95c7a81" target="_blank" title="掘金">
+                      
+                        <i class="fa fa-fw fa-bookmark"></i>掘金</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:mghio.dev@gmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.cnblogs.com/mghio" target="_blank" title="博客园">
+                      
+                        <i class="fa fa-fw fa-vk"></i>博客园</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                友情链接
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.i121.net" title="气象万千" target="_blank">气象万千</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://p00q.cn" title="淡白记忆博客" target="_blank">淡白记忆博客</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://blog.searchinfogo.com" title="Junhua's blog" target="_blank">Junhua's blog</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://v2c.tech" title="木頭" target="_blank">木頭</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://orxing.top" title="OURONGXING" target="_blank">OURONGXING</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.cnitdog.com" title="IT运维狗" target="_blank">IT运维狗</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.tbfeng.com" title="天边风" target="_blank">天边风</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://log.zvz.im" title="Z" target="_blank">Z</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.fishmaple.cn" title="鱼鱼的小站" target="_blank">鱼鱼的小站</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://13blog.site" title="13blog" target="_blank">13blog</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://zhang0peter.com" title="浮云的博客" target="_blank">浮云的博客</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://zebinh.github.io" title="黄泽彬个人站" target="_blank">黄泽彬个人站</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://guanqr.com" title="荷戟独彷徨" target="_blank">荷戟独彷徨</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.mmzsblog.cn" title="Java学习之道" target="_blank">Java学习之道</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://yuzhouwan.com" title="宇宙湾" target="_blank">宇宙湾</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://morcat.cn" title="Morcat Blog" target="_blank">Morcat Blog</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://atjason.com" title="Jason" target="_blank">Jason</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#实现步骤拆分"><span class="nav-number">2.</span> <span class="nav-text">实现步骤拆分</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#读取-XML-配置文件，解析出需要扫描的包路径"><span class="nav-number">3.</span> <span class="nav-text">读取 XML 配置文件，解析出需要扫描的包路径</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#对解析后的包路径进行扫描然后读取标有-Component-注解的类，创建出对应的-BeanDefinition"><span class="nav-number">4.</span> <span class="nav-text">对解析后的包路径进行扫描然后读取标有 @Component 注解的类，创建出对应的 BeanDefinition</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#①-扫描包路径下的字节码（-class-）文件并转换为一个个-Resource-对象（其对于-Spring-框架来说是一种资源，在-Spring-中资源统一抽象为-Resource-，这里的字节码文件具体为-FileSystemResource）"><span class="nav-number">4.1.</span> <span class="nav-text">① 扫描包路径下的字节码（.class ）文件并转换为一个个 Resource 对象（其对于 Spring 框架来说是一种资源，在 Spring 中资源统一抽象为 Resource ，这里的字节码文件具体为 FileSystemResource）</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#②-读取转换好的-Resource-中的-Component-注解"><span class="nav-number">4.2.</span> <span class="nav-text">② 读取转换好的 Resource 中的 @Component 注解</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#③-根据读取到的-Component-注解信息创建出对应的-BeanDefintion"><span class="nav-number">4.3.</span> <span class="nav-text">③ 根据读取到的 @Component 注解信息创建出对应的 BeanDefintion</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#根据创建出来的-BeanDefinition-创建对应的-Bean-实例"><span class="nav-number">5.</span> <span class="nav-text">根据创建出来的 BeanDefinition 创建对应的 Bean 实例</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#总结"><span class="nav-number">6.</span> <span class="nav-text">总结</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; 2019 &mdash; <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">mghio</span>
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      访客数
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      人
+    </span>
+  
+
+  
+    <span class="site-pv">
+      总访问量
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      次
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="https://cdn.bootcss.com/jquery/2.1.3/jquery.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="https://cdn.bootcss.com/jquery_lazyload/1.9.7/jquery.lazyload.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="https://cdn.bootcss.com/velocity/1.2.1/velocity.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="https://cdn.bootcss.com/velocity/1.2.1/velocity.ui.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="https://cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://mghio.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'https://www.mghio.cn/post/6775e26e.html';
+          this.page.identifier = 'post/6775e26e.html';
+          this.page.title = '如何实现一个简易版的 Spring - 如何实现 @Component 注解';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://mghio.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+  <style>
+    .copy-btn {
+      display: inline-block;
+      padding: 6px 12px;
+      font-size: 13px;
+      font-weight: 700;
+      line-height: 20px;
+      color: #333;
+      white-space: nowrap;
+      vertical-align: middle;
+      cursor: pointer;
+      background-color: #eee;
+      background-image: linear-gradient(#fcfcfc, #eee);
+      border: 1px solid #d5d5d5;
+      border-radius: 3px;
+      user-select: none;
+      outline: 0;
+    }
+
+    .highlight-wrap .copy-btn {
+      transition: opacity .3s ease-in-out;
+      opacity: 0;
+      padding: 2px 6px;
+      position: absolute;
+      right: 4px;
+      top: 8px;
+      z-index: 999;
+    }
+
+    .highlight-wrap:hover .copy-btn,
+    .highlight-wrap .copy-btn:focus {
+      opacity: 1
+    }
+
+    .highlight-wrap {
+      position: relative;
+    }
+  </style>
+  
+  <script>
+    $('.highlight').each(function (i, e) {
+      var $wrap = $('<div>').addClass('highlight-wrap')
+      $(e).after($wrap)
+      $wrap.append($('<button>').addClass('copy-btn').append('复制').on('click', function (e) {
+        var code = $(this).parent().find('.code').find('.line').map(function (i, e) {
+          return $(e).text()
+        }).toArray().join('\n')
+        var ta = document.createElement('textarea')
+        document.body.appendChild(ta)
+        ta.style.position = 'absolute'
+        ta.style.top = '0px'
+        ta.style.left = '0px'
+        ta.value = code
+        ta.select()
+        ta.focus()
+        var result = document.execCommand('copy')
+        document.body.removeChild(ta)
+        
+          if(result)$(this).text('复制成功')
+          else $(this).text('复制失败')
+        
+        $(this).blur()
+      })).on('mouseleave', function (e) {
+        var $b = $(this).find('.copy-btn')
+        setTimeout(function () {
+          $b.text('复制')
+        }, 300)
+      }).append(e)
+    })
+  </script>
+
+</body>
+</html>

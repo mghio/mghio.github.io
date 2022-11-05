@@ -1,0 +1,1535 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+  <meta name="google-site-verification" content="IU4uoUf44pYguUI7ecCbIduQdIgrWXQKMRVyHFH26vc">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+  <link href="https://cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+  
+
+<link href="https://cdn.bootcss.com/font-awesome/4.6.2/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon-32x32-next.ico?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.ico?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.ico?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Java,RabbitMQ,">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="mghio" type="application/atom+xml">
+
+
+
+
+
+
+<meta name="description" content="上一篇 RabbitMQ 入门之基础概念 介绍了 RabbitMQ 的一些基础概念，本文再来介绍其中的一些细节和其它的进阶的概念。 一、消息生产者发送的消息不可达时如何处理RabbitMQ 提供了消息在传递过程中无法发送到一个队列（比如根据自己的类型和路由键没有找到匹配的队列）时将消息回传给消息发送方的功能，使用 RabbitMQ 的客户端提供 channel.basicPublish 方法的两个">
+<meta name="keywords" content="Java,RabbitMQ">
+<meta property="og:type" content="article">
+<meta property="og:title" content="RabbitMQ 基础概念进阶">
+<meta property="og:url" content="https://www.mghio.cn/post/f92758d8.html">
+<meta property="og:site_name" content="mghio">
+<meta property="og:description" content="上一篇 RabbitMQ 入门之基础概念 介绍了 RabbitMQ 的一些基础概念，本文再来介绍其中的一些细节和其它的进阶的概念。 一、消息生产者发送的消息不可达时如何处理RabbitMQ 提供了消息在传递过程中无法发送到一个队列（比如根据自己的类型和路由键没有找到匹配的队列）时将消息回传给消息发送方的功能，使用 RabbitMQ 的客户端提供 channel.basicPublish 方法的两个">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2020/png/285197/1596951158125-92bb7700-9683-4e36-9371-0956c4826543.png?x-oss-process=image%2Fresize%2Cw_1500">
+<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2020/png/285197/1596951781392-2e9ef76c-245d-4ee7-9d1d-424fddcc0e1e.png?x-oss-process=image%2Fresize%2Cw_1500">
+<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2020/png/285197/1596954750827-31b1d289-6298-485c-815d-bb5009b3b6a8.png?x-oss-process=image%2Fresize%2Cw_1500">
+<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2020/png/285197/1596959789003-ce754810-a501-4c82-a468-317d23fc5fea.png?x-oss-process=image%2Fresize%2Cw_1500">
+<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2020/png/285197/1596961384667-34a7e51a-5ecd-4d32-bfe2-e46ba173f91c.png?x-oss-process=image%2Fresize%2Cw_1500">
+<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2020/png/285197/1596962590228-f7da6c9d-ef06-4284-8873-7cffa6351329.png?x-oss-process=image%2Fresize%2Cw_1500">
+<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2020/png/285197/1596962992744-3a29bab4-484c-4af3-ab0c-9c34d579cd56.png?x-oss-process=image%2Fresize%2Cw_1500">
+<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2020/png/285197/1596964785505-925cb926-2429-4ccd-ac92-a6ebc49afc5e.png">
+<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2020/png/285197/1596967322834-b928971a-3a22-4df4-8dae-eacd1d1db3b4.png?x-oss-process=image%2Fresize%2Cw_1500">
+<meta property="og:updated_time" content="2022-11-05T07:21:28.956Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="RabbitMQ 基础概念进阶">
+<meta name="twitter:description" content="上一篇 RabbitMQ 入门之基础概念 介绍了 RabbitMQ 的一些基础概念，本文再来介绍其中的一些细节和其它的进阶的概念。 一、消息生产者发送的消息不可达时如何处理RabbitMQ 提供了消息在传递过程中无法发送到一个队列（比如根据自己的类型和路由键没有找到匹配的队列）时将消息回传给消息发送方的功能，使用 RabbitMQ 的客户端提供 channel.basicPublish 方法的两个">
+<meta name="twitter:image" content="https://cdn.nlark.com/yuque/0/2020/png/285197/1596951158125-92bb7700-9683-4e36-9371-0956c4826543.png?x-oss-process=image%2Fresize%2Cw_1500">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://www.mghio.cn/post/f92758d8.html">
+
+
+
+
+
+  <title>RabbitMQ 基础概念进阶 | mghio</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">mghio</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description">Java 搬运工 & 终身学习者。</h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://www.mghio.cn/post/f92758d8.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="mghio">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="https://i.loli.net/2020/01/12/8qITJvhw2R9HN7M.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="mghio">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">RabbitMQ 基础概念进阶</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-08-09T15:19:57+08:00">
+                2020-08-09
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/RabbitMQ/" itemprop="url" rel="index">
+                    <span itemprop="name">RabbitMQ</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/post/f92758d8.html#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="post/f92758d8.html" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-eye"></i>  本文总阅读量
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>次
+            </span>
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  3k 字
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  10 分钟
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>上一篇 <a href="https://segmentfault.com/a/1190000023286256" target="_blank" rel="noopener">RabbitMQ 入门之基础概念</a> 介绍了 RabbitMQ 的一些基础概念，本文再来介绍其中的一些细节和其它的进阶的概念。</p>
+<h4 id="一、消息生产者发送的消息不可达时如何处理"><a href="#一、消息生产者发送的消息不可达时如何处理" class="headerlink" title="一、消息生产者发送的消息不可达时如何处理"></a>一、消息生产者发送的消息不可达时如何处理</h4><p>RabbitMQ 提供了消息在传递过程中无法发送到一个队列（比如根据自己的类型和路由键没有找到匹配的队列）时将消息回传给消息发送方的功能，使用 RabbitMQ 的客户端提供 <code>channel.basicPublish</code> 方法的两个参数 <code>mandatory</code> 和 <code>immediate</code> (RabbitMQ 3.0 以下版本)，除此之外还提供了一个备份交换器可以将无法发送的消息存储起来处理，不用重新传回给发送方。</p>
+<a id="more"></a>
+
+<h5 id="1-1-mandatory-参数"><a href="#1-1-mandatory-参数" class="headerlink" title="1.1 mandatory 参数"></a>1.1 mandatory 参数</h5><p>mandatory 被定义在 RabbitMQ 提供的客户端的 <code>channel.basicPublish</code> 方法中，如下所示：</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2020/png/285197/1596951158125-92bb7700-9683-4e36-9371-0956c4826543.png?x-oss-process=image%2Fresize%2Cw_1500" alt="image.png" title="image.png"></p>
+<p>当把方法的 mandatory 参数设置为 <code>true</code> 时，那么会在交换器无法根据自身的类型和路由键找到一个符合要求的队列时，RabbitMQ 会自动调用 <code>Basic.Return</code> 把该消息回传给发送方也就是我们的消息生产者。反之，如果设置为 <code>false</code> 的话，消息就会被直接丢弃掉。那么问题来了，我们要如何去获取这些没有被发送出去的消息呢？RabbitMQ 给我们提供了事件监听机制来获取这种消息，可以通过 <code>addReturnListener</code> 方法添加一个 <code>ReturnListener</code> 来获取这种未发送到队列的消息，如下所示：</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2020/png/285197/1596951781392-2e9ef76c-245d-4ee7-9d1d-424fddcc0e1e.png?x-oss-process=image%2Fresize%2Cw_1500" alt="image.png" title="image.png"></p>
+<p>通过查看 ReturnListener 接口的源码可以看到，该接口只有一个方法，如果是 JDK8+ 的版本的话可以使用 Lambda 表达式来简化一些代码。</p>
+<p>可以看出，当设置了 mandatory 参数时，还必须为生产者同时添加 ReturnListener 监听器的编程逻辑，这样就会使得生产者的代码变得更加复杂了，为了处理这种情况，RabbitMQ 提供了 `备份交换器` 来将没有成功路由出去的消息存储起来，当我们需要的时候再去处理即可。</p>
+<h5 id="1-2-immediate-参数"><a href="#1-2-immediate-参数" class="headerlink" title="1.2 immediate 参数"></a>1.2 immediate 参数</h5><p>该的参数同样也是在<code>channel.basicPublish</code> 方法中定义的，其官方描述如下：</p>
+<blockquote>
+<p>This flag tells the server how to react if the message cannot be routed to a queue consumer immediately. If this flag is set, the server will return an undeliverable message with a Return method. If this flag is zero, the server will queue the message, but with no guarantee that it will ever be consumed.</p>
+</blockquote>
+<p>当把 immediate 参数设置为 true 时，如果交换器根据其类型和路由键找到符合要求的队列时，发现所有队列上没有任何消费者，则该消息并不会存入到队列中，会通过 Basic.Return 命令把消息回传给生产者。简而言之也就是说，当设置了 immediate 参数时，该消息关联的队列上存在消费者时，会立即发送消息到该队列中，反之如果匹配的队列上不存在任何消费者，则直接把消息回传给生产者。这里有一点需要注意的是：从 RabbitMQ 3.0 + 已经去除了该参数。</p>
+<h4 id="二、如何对消息和队列设置过期时间-（TTL）"><a href="#二、如何对消息和队列设置过期时间-（TTL）" class="headerlink" title="二、如何对消息和队列设置过期时间 （TTL）"></a>二、如何对消息和队列设置过期时间 （TTL）</h4><p>TTL 是 time to live 首字母的简称，RabbitMQ 中可以设置消息和队列的过期时间，我们先来看看要如何设置消息的过期时间。</p>
+<h5 id="1-1-消息-TTL-设置"><a href="#1-1-消息-TTL-设置" class="headerlink" title="1.1 消息 TTL 设置"></a>1.1 消息 TTL 设置</h5><p>RabbitMQ 提供了两种设置消息的过期时间，第一种是通过队列的属性设置，该方式的特点就是队列中所有消息的过期时间都一致。还有一种是更小粒度的设置，就是对每条消息单独设置过期时间，这种方式更加灵活，每条消息的过期时间都可以不一样。这是你可能会问，如果同时设置了队列的过期属性和消息本身的过期属性，最终以哪个为准呢？结果是 RabbitMQ 会比较这两个 TTL 的值大小，以较小的那个为准。很容易想到，通过队列的属性的方式设置过期时间的话是在声明队列的时候指定，对应到客户端就是其提供的 <code>channel.queueDeclare</code> 方法的参数 arguments 指定，示例代码如下：</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2020/png/285197/1596954750827-31b1d289-6298-485c-815d-bb5009b3b6a8.png?x-oss-process=image%2Fresize%2Cw_1500" alt="image.png" title="image.png"></p>
+<p>需要注意的是 <code>x-message-ttl</code> 参数的单位是毫秒。如果不设置 TLL，则表示该消息不会过期，如果将 TTL 设置为 0，表示除非此时可以把消息直接发送投递到消费者端去，否则就会直接丢弃该消息。</p>
+<p>准对每条消息设置 TTL 的方法是在发送消息的时候设置的，对应到客户端方法是 <code>channel.basicPublish</code> 的 expiration 属性参数，具体设置代码如下：</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2020/png/285197/1596959789003-ce754810-a501-4c82-a468-317d23fc5fea.png?x-oss-process=image%2Fresize%2Cw_1500" alt="image.png" title="image.png"></p>
+<p>这种设置方式，即使队列过期也不会立即从队列中移除，因为每条消息是否过期的判定是在发送到消费者是才进行的，如果此时发现已经过期才会删除消息。而对于第一种方式则会把已经过期的消息移到队列头部，然后 RabbitMQ 只要定期的从头开始扫描是否存在过期的消息即可。</p>
+<h5 id="1-2-队列-TTL-设置"><a href="#1-2-队列-TTL-设置" class="headerlink" title="1.2 队列 TTL 设置"></a>1.2 队列 TTL 设置</h5><p>设置队列的过期时间使用的是客户端的 <code>channel.queueDeclare</code> 方法参数中的 <code>x-expires</code> 参数，其单位同样也是毫秒，不过需要注意的是它不能设置为 0。设置队列过期的代码如下所示：</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2020/png/285197/1596961384667-34a7e51a-5ecd-4d32-bfe2-e46ba173f91c.png?x-oss-process=image%2Fresize%2Cw_1500" alt="image.png" title="image.png"></p>
+<p>上面代码创建了一个过期时间为 15 分钟的队列。</p>
+<h4 id><a href="#" class="headerlink" title=" "></a> </h4><h4 id="三、死信队列介绍"><a href="#三、死信队列介绍" class="headerlink" title="三、死信队列介绍"></a>三、死信队列介绍</h4><p>死信交换器（DLX）的全称是 <code>Dead-Letter-Exchange</code> ，也称之为死信邮箱。简单来说就是当一个消息由于 <code>消息被拒绝</code> 、 <code>消息过期</code> 、 <code>队列达到最大长度</code> 时，变成死信（dead message）之后，会被重新发送到一个交换器中，这个交换器就是死信交换器，绑定在这个交换器上的队列就称之为死信队列。死信交换器实际上就是平常的交换器，可以在任何队列上指定，当在一个队列上设置死信交换器后，如果该队列出现死信时就会被 RabbitMQ 把死信消息重新发送到死信交换器上去，然后路由到死信队列中，我们可以监听这个队列来处理那些死信消息。为一个队列设置死信交换器是在生产者的声明队列的方法中设置 <code>x-dead-letter-message</code> 参数来实现的，如下所示：</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2020/png/285197/1596962590228-f7da6c9d-ef06-4284-8873-7cffa6351329.png?x-oss-process=image%2Fresize%2Cw_1500" alt="image.png" title="image.png"></p>
+<p>同时也可以通过 <code>x-dead-letter-routing-key</code> 参数设置死信交互器的路由键，不设置默认使用原始度列的路由键。可以到 RabbitMQ 的后台管理界面，有 <code>DLX</code> 标志的就是死信队列。</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2020/png/285197/1596962992744-3a29bab4-484c-4af3-ab0c-9c34d579cd56.png?x-oss-process=image%2Fresize%2Cw_1500" alt="image.png" title="image.png"></p>
+<p>RabbitMQ 提供的 DLX 是个比较实用的功能特性，它可以在我们消息不能被消费者正确消费的情况下放入到死信队列，后续我们可以通过这个死信队列的内容来查看异常情况来改造和优化系统。</p>
+<h4 id="-1"><a href="#-1" class="headerlink" title=" "></a> </h4><h4 id="四、延迟队列介绍"><a href="#四、延迟队列介绍" class="headerlink" title="四、延迟队列介绍"></a>四、延迟队列介绍</h4><p>顾名思义，延迟队列存储的是哪些需要等待指定时间后才能拿到的延迟消息，一个比较典型的场景就是订单 30 分钟后未支付取消订单。这里需要注意的是，在 RabbitMQ 中并没有直接提供延迟队列的功能，而是需要通过上面介绍的过期时间（TTL）和死信队列一起来实现，比如超时取消订单这个场景，我们可以让消费者订阅死信队列，设置正常的那个队列的超时时间为 30 分钟并绑定到该死信队列上，当消息超过 30 分钟未被处理后消息就会把发送到死信队列中，然后死信队列的消费者就可以在 30 分钟后成功的消费到该消息了。</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2020/png/285197/1596964785505-925cb926-2429-4ccd-ac92-a6ebc49afc5e.png" alt="image.png" title="image.png"></p>
+<p>同时当我们有其它的超时配置需求时也很方便扩展，比如可以在生产者发送消息的时候通过设置不同的路由键，通过路由键来将消息发送到与交换器绑定的不同队列中，然后这些队列分别设置不同的过期时间和与之相对应的死信队列，当消息过期时就会被 RabbitMQ 转发到相应的死信队列中，这样就可以去订阅相应的死信队列即可。</p>
+<h4 id="五、交换器、消息和队列持久化"><a href="#五、交换器、消息和队列持久化" class="headerlink" title="五、交换器、消息和队列持久化"></a>五、交换器、消息和队列持久化</h4><p>持久化可以提高可靠性，可以防止宕机或者重启等异常下数据的丢失，RabbitMQ 的持久化从组成结构上可以分为三个部分，即交换器持久化、消息持久化和队列持久化。</p>
+<h5 id="1-1-交换器持久化"><a href="#1-1-交换器持久化" class="headerlink" title="1.1 交换器持久化"></a>1.1 交换器持久化</h5><p>交换器持久化是在声明交换器时将 durable 参数设置为 true 来实现的。如果不设置持久化属性的话，当 RabbitMQ 服务重启后交换器的数据就会丢失，需要注意的是，是交换器的数据丢失，消息不会丢失，只是不能将消息发送到这个交换器中了，一般生产环境使用都会把该属性设置为持久化。</p>
+<h5 id="1-2-消息持久化"><a href="#1-2-消息持久化" class="headerlink" title="1.2 消息持久化"></a>1.2 消息持久化</h5><p>交换器的持久化仅仅只是保证了交换器本身的元数据不会丢失，无法保证其存储的消息不会丢失，如果需要其内部存储的消息不丢失，则需要设置消息的持久化，通过将消息的投递模式(deliveryMode)设置为 2 即可实现消息的持久化，如下所示：</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2020/png/285197/1596967322834-b928971a-3a22-4df4-8dae-eacd1d1db3b4.png?x-oss-process=image%2Fresize%2Cw_1500" alt="image.png" title="image.png"></p>
+<p>需要消息持久化的前提是其所在的队列也要设置持久化，假如仅仅只设置消息的持久化的话，RabbitMQ 重启之后队列消失，然后消息也会丢失。这里有点需要注意一下，虽然持久化可以提高可靠性，但是持久化是将数据存储到硬盘上，比直接操作内存要慢很多，所以对于哪些可靠性要求不高的业务不需要进行持久化。</p>
+<h5 id="1-3-队列持久化"><a href="#1-3-队列持久化" class="headerlink" title="1.3 队列持久化"></a>1.3 队列持久化</h5><p>队列的持久化的设置和交换器持久化类似，同样也是在声明的时候通过 durable 参数设置为 true 实现的，如果不设置，当 RabbitMQ 重启后，相关的队列元数据也会丢失，相应的其存储的消息也会随之丢失掉。</p>
+<p>将交换器、队列、消息都设置了持久化之后就能百分之百保证数据不丢失了吗？其实无法保证百分之百数据不丢失。比如消费者在订阅消费队列时将自动应答（autoAck）参数设置为 true 的话，在接收到消息后还没来得及处理就挂了，这时需要把自动应答设置 false，进行手动 ack 应答即可。还有一个就是由于不是实时持久化存盘，当消息存盘的过程中 RabbitMQ 宕机了，此时也会发生数据丢失，此时需要通过 RabbitMQ 的 <code>镜像队列机制</code> 来处理了。</p>
+<h4 id="六、总结"><a href="#六、总结" class="headerlink" title="六、总结"></a>六、总结</h4><p>本文主要介绍了一些参数具体使用时的设置细节和死信队列、延迟队列以及持久化等，还有一些比较重要的点没有涉及到，比如消息确认机制。“纸上得来终觉浅，绝知此事要躬行”，在了解一些基础的概念之后还是需要通过具体编码实践才能对其更加理解深刻。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+      <div>
+          <div>  <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-smile-o"></i>感谢您的阅读-------------</div>  </div>
+      </div>
+    
+
+    
+      <div>
+        <div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="https://i.loli.net/2020/01/12/tXKpok8JAqQZ7ER.jpg" alt="mghio wechat" style="width: 200px; max-width: 100%;">
+    <div>微信公众号「mghio」</div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>请我吃🍗</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="https://i.loli.net/2020/01/12/jznfu23QkaIXgTt.jpg" alt="mghio 微信打赏">
+        <p>微信打赏</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="https://i.loli.net/2020/01/12/ihvqOG2TMjkItyU.jpg" alt="mghio 支付宝打赏">
+        <p>支付宝打赏</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    mghio  |  微信公众号「mghio」
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://www.mghio.cn/post/f92758d8.html" title="RabbitMQ 基础概念进阶">https://www.mghio.cn/post/f92758d8.html</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Java/" rel="tag"># Java</a>
+          
+            <a href="/tags/RabbitMQ/" rel="tag"># RabbitMQ</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/post/f3f86c01.html" rel="next" title="RabbitMQ 入门之基础概念">
+                <i class="fa fa-chevron-left"></i> RabbitMQ 入门之基础概念
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/post/d7d0fc76.html" rel="prev" title="Java 集合类 List 的那些坑">
+                Java 集合类 List 的那些坑 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="https://i.loli.net/2020/01/12/8qITJvhw2R9HN7M.png" alt="mghio">
+            
+              <p class="site-author-name" itemprop="name">mghio</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">52</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">52</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">45</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/mghio" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://segmentfault.com/u/mghio" target="_blank" title="思否">
+                      
+                        <i class="fa fa-fw fa-skype"></i>思否</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.jianshu.com/u/c08ba86593ce" target="_blank" title="简书">
+                      
+                        <i class="fa fa-fw fa-book"></i>简书</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://juejin.im/user/5bbccb4b6fb9a05ce95c7a81" target="_blank" title="掘金">
+                      
+                        <i class="fa fa-fw fa-bookmark"></i>掘金</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:mghio.dev@gmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.cnblogs.com/mghio" target="_blank" title="博客园">
+                      
+                        <i class="fa fa-fw fa-vk"></i>博客园</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                友情链接
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.i121.net" title="气象万千" target="_blank">气象万千</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://p00q.cn" title="淡白记忆博客" target="_blank">淡白记忆博客</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://blog.searchinfogo.com" title="Junhua's blog" target="_blank">Junhua's blog</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://v2c.tech" title="木頭" target="_blank">木頭</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://orxing.top" title="OURONGXING" target="_blank">OURONGXING</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.cnitdog.com" title="IT运维狗" target="_blank">IT运维狗</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.tbfeng.com" title="天边风" target="_blank">天边风</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://log.zvz.im" title="Z" target="_blank">Z</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.fishmaple.cn" title="鱼鱼的小站" target="_blank">鱼鱼的小站</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://13blog.site" title="13blog" target="_blank">13blog</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://zhang0peter.com" title="浮云的博客" target="_blank">浮云的博客</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://zebinh.github.io" title="黄泽彬个人站" target="_blank">黄泽彬个人站</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://guanqr.com" title="荷戟独彷徨" target="_blank">荷戟独彷徨</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.mmzsblog.cn" title="Java学习之道" target="_blank">Java学习之道</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://yuzhouwan.com" title="宇宙湾" target="_blank">宇宙湾</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://morcat.cn" title="Morcat Blog" target="_blank">Morcat Blog</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://atjason.com" title="Jason" target="_blank">Jason</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#一、消息生产者发送的消息不可达时如何处理"><span class="nav-number">1.</span> <span class="nav-text">一、消息生产者发送的消息不可达时如何处理</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-1-mandatory-参数"><span class="nav-number">1.1.</span> <span class="nav-text">1.1 mandatory 参数</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#1-2-immediate-参数"><span class="nav-number">1.2.</span> <span class="nav-text">1.2 immediate 参数</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#二、如何对消息和队列设置过期时间-（TTL）"><span class="nav-number">2.</span> <span class="nav-text">二、如何对消息和队列设置过期时间 （TTL）</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-1-消息-TTL-设置"><span class="nav-number">2.1.</span> <span class="nav-text">1.1 消息 TTL 设置</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#1-2-队列-TTL-设置"><span class="nav-number">2.2.</span> <span class="nav-text">1.2 队列 TTL 设置</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#null"><span class="nav-number">3.</span> <span class="nav-text"> </span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#三、死信队列介绍"><span class="nav-number">4.</span> <span class="nav-text">三、死信队列介绍</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#-1"><span class="nav-number">5.</span> <span class="nav-text"> </span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#四、延迟队列介绍"><span class="nav-number">6.</span> <span class="nav-text">四、延迟队列介绍</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#五、交换器、消息和队列持久化"><span class="nav-number">7.</span> <span class="nav-text">五、交换器、消息和队列持久化</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-1-交换器持久化"><span class="nav-number">7.1.</span> <span class="nav-text">1.1 交换器持久化</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#1-2-消息持久化"><span class="nav-number">7.2.</span> <span class="nav-text">1.2 消息持久化</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#1-3-队列持久化"><span class="nav-number">7.3.</span> <span class="nav-text">1.3 队列持久化</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#六、总结"><span class="nav-number">8.</span> <span class="nav-text">六、总结</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; 2019 &mdash; <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">mghio</span>
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      访客数
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      人
+    </span>
+  
+
+  
+    <span class="site-pv">
+      总访问量
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      次
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="https://cdn.bootcss.com/jquery/2.1.3/jquery.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="https://cdn.bootcss.com/jquery_lazyload/1.9.7/jquery.lazyload.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="https://cdn.bootcss.com/velocity/1.2.1/velocity.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="https://cdn.bootcss.com/velocity/1.2.1/velocity.ui.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="https://cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://mghio.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'https://www.mghio.cn/post/f92758d8.html';
+          this.page.identifier = 'post/f92758d8.html';
+          this.page.title = 'RabbitMQ 基础概念进阶';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://mghio.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+  <style>
+    .copy-btn {
+      display: inline-block;
+      padding: 6px 12px;
+      font-size: 13px;
+      font-weight: 700;
+      line-height: 20px;
+      color: #333;
+      white-space: nowrap;
+      vertical-align: middle;
+      cursor: pointer;
+      background-color: #eee;
+      background-image: linear-gradient(#fcfcfc, #eee);
+      border: 1px solid #d5d5d5;
+      border-radius: 3px;
+      user-select: none;
+      outline: 0;
+    }
+
+    .highlight-wrap .copy-btn {
+      transition: opacity .3s ease-in-out;
+      opacity: 0;
+      padding: 2px 6px;
+      position: absolute;
+      right: 4px;
+      top: 8px;
+      z-index: 999;
+    }
+
+    .highlight-wrap:hover .copy-btn,
+    .highlight-wrap .copy-btn:focus {
+      opacity: 1
+    }
+
+    .highlight-wrap {
+      position: relative;
+    }
+  </style>
+  
+  <script>
+    $('.highlight').each(function (i, e) {
+      var $wrap = $('<div>').addClass('highlight-wrap')
+      $(e).after($wrap)
+      $wrap.append($('<button>').addClass('copy-btn').append('复制').on('click', function (e) {
+        var code = $(this).parent().find('.code').find('.line').map(function (i, e) {
+          return $(e).text()
+        }).toArray().join('\n')
+        var ta = document.createElement('textarea')
+        document.body.appendChild(ta)
+        ta.style.position = 'absolute'
+        ta.style.top = '0px'
+        ta.style.left = '0px'
+        ta.value = code
+        ta.select()
+        ta.focus()
+        var result = document.execCommand('copy')
+        document.body.removeChild(ta)
+        
+          if(result)$(this).text('复制成功')
+          else $(this).text('复制失败')
+        
+        $(this).blur()
+      })).on('mouseleave', function (e) {
+        var $b = $(this).find('.copy-btn')
+        setTimeout(function () {
+          $b.text('复制')
+        }, 300)
+      }).append(e)
+    })
+  </script>
+
+</body>
+</html>

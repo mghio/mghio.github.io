@@ -310,7 +310,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://www.mghio.cn/post/11cb7677.html">
+    <link itemprop="mainEntityOfPage" href="https://www.mghio.cn/post/4219480f.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="mghio">
@@ -329,7 +329,7 @@
         
           <h2 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/post/11cb7677.html" itemprop="url">分布式系统之 — CAP 定理</a></h2>
+                <a class="post-title-link" href="/post/4219480f.html" itemprop="url">分享几个好用的 Google 搜索技巧</a></h2>
         
 
         <div class="post-meta">
@@ -341,8 +341,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-02-29T09:12:06+08:00">
-                2020-02-29
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2021-08-15T16:03:47+08:00">
+                2021-08-15
               </time>
             
 
@@ -364,8 +364,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/分布式系统/" itemprop="url" rel="index">
-                    <span itemprop="name">分布式系统</span>
+                  <a href="/categories/Google/" itemprop="url" rel="index">
+                    <span itemprop="name">Google</span>
                   </a>
                 </span>
 
@@ -375,8 +375,19 @@
                 
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/分布式系统/CAP定理/" itemprop="url" rel="index">
-                    <span itemprop="name">CAP定理</span>
+                  <a href="/categories/Google/Search/" itemprop="url" rel="index">
+                    <span itemprop="name">Search</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Google/Search/Tips/" itemprop="url" rel="index">
+                    <span itemprop="name">Tips</span>
                   </a>
                 </span>
 
@@ -393,8 +404,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/post/11cb7677.html#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="post/11cb7677.html" itemprop="commentCount"></span>
+                <a href="/post/4219480f.html#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="post/4219480f.html" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -416,224 +427,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  2.1k 字
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  7 分钟
-                </span>
-              
-            </div>
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h4 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h4><p>在互联网时代，我们的应用都是分布式系统，部署在 N 台机器上。说到分布式系统我们就不得不说分布式系统的祖先——集中式系统。它和分布式系统是两个完全相反的概念，集中式系统就是把所有的程序和功能都放到一台主机上，从而对外提供服务。集中式系统的优点就是容易理解、维护方便，它的的弊端也很明显，如果这个主机出故障了那么整个系统就崩溃了。著名投资家巴菲特有个关于投资的名言：</p>
-<blockquote>
-<p>不要把鸡蛋放在一个篮子里</p>
-</blockquote>
-<p>对于我们的系统而言也是如此，我们不可能保证主机永远不坏、也无法保证自己的程序永远不会出 <code>bug</code>，所以问题是无法避免的，我们只能把“鸡蛋”分散到不同的“篮子”里，降低系统出故障的风险，这就是我们为什么需要分布式系统的原因之一。使用分布式系统的另一个理由就是扩展性，毕竟单台主机都会有性能的极限，分布式系统可以通过增加主机数量来实现横向水平性能的扩展。接下来我们看看分布式系统中的一个基本定理——<code>CAP定理</code>。</p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/post/11cb7677.html#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://www.mghio.cn/post/f440d00b.html">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="mghio">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="https://i.loli.net/2020/01/12/8qITJvhw2R9HN7M.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="mghio">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/post/f440d00b.html" itemprop="url">IDEA 最新版（2019.3）激活教程</a></h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-01-12T08:28:07+08:00">
-                2020-01-12
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Java/" itemprop="url" rel="index">
-                    <span itemprop="name">Java</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Java/IDEA/" itemprop="url" rel="index">
-                    <span itemprop="name">IDEA</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Java/IDEA/工具/" itemprop="url" rel="index">
-                    <span itemprop="name">工具</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/post/f440d00b.html#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="post/f440d00b.html" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  829 字
+                  891 字
                 </span>
               
 
@@ -673,11 +467,11 @@
 
       
         
-          <h4 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h4><p>相信做 <code>Java</code> 开发的朋友们绝大部分人应该都是用 <a href="https://www.jetbrains.com/idea" target="_blank" rel="noopener">IntelliJ IDEA</a> 作为开发工具，没用过的朋友们建议将你的开发工具换成这个，关于它的优点可以去 <code>Google</code> 一下，我之前都是用 <a href="https://www.eclipse.org" target="_blank" rel="noopener">Eclipse</a> 作为开发工具，自从用过一次 <code>IDEA</code> 之后就再也回不去了。。。今天早上<del>更新</del>（作死）了一下 <code>IDEA</code> 到最新版（<code>2019.3.1</code>），安装完毕之后进入就提示说之前的激活码失效了，经过一顿搜索之后终于成功激活了，在此记录一下激活过程。</p>
-<p><img src="https://i.loli.net/2020/01/12/mFe5thxWnykXUY6.png" alt="start_welcome.png"></p>
+          <p><img src="https://i.loli.net/2021/06/12/pzf8mEDUoWbxF6J.jpg" alt="cover.jpg"></p>
+<p>搜索能力是被绝大多数人低估一项基本素质，绝大部分做编程技术相关的朋友应该都知道如何使用 <code>Google</code>，但是并不知道如何利用它的潜力。其实不管是 <code>Google</code> 还是 <code>百度</code>，会搜索的人一样都可以查找到需要的东西，不会搜索的人用什么都不好使。下面介绍一些 <code>Google</code> 常用的搜索技巧以及搜索快捷方式，可以帮助你更快，更准确地找到结果。<code>Google</code> 是世界上功能最强大的搜索引擎，它已经改变了我们查找信息的方式。</p>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/post/f440d00b.html#more" rel="contents">
+            <a class="btn" href="/post/4219480f.html#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -730,7 +524,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://www.mghio.cn/post/7528c810.html">
+    <link itemprop="mainEntityOfPage" href="https://www.mghio.cn/post/a328bfd.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="mghio">
@@ -749,7 +543,7 @@
         
           <h2 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/post/7528c810.html" itemprop="url">Java 反射机制（二）</a></h2>
+                <a class="post-title-link" href="/post/a328bfd.html" itemprop="url">论基础理论知识的重要性</a></h2>
         
 
         <div class="post-meta">
@@ -761,8 +555,211 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-01-04T16:51:05+08:00">
-                2020-01-04
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2021-07-05T16:00:25+08:00">
+                2021-07-05
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/基础知识/" itemprop="url" rel="index">
+                    <span itemprop="name">基础知识</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/基础知识/思考/" itemprop="url" rel="index">
+                    <span itemprop="name">思考</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/post/a328bfd.html#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="post/a328bfd.html" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  1.1k 字
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  3 分钟
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p><img src="https://i.loli.net/2021/06/12/9gD8NzcjWSMO2a3.jpg" alt="cover.jpg"></p>
+<h4 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h4><p>在计算机行业工作的人们，最大的感触就是这个行业里总是会出现很多的新东西，各种技术、框架等等，变化无处不在，有很大一部分人都比较焦虑。在一些论坛或者社区里面总是有人在问如何学习一门新技术？怎样才能跟上技术的潮流？我想说是，我们应该<strong>打牢基础，应对变化，以不变应万变</strong>。</p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/post/a328bfd.html#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://www.mghio.cn/post/bd7ad750.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="mghio">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="https://i.loli.net/2020/01/12/8qITJvhw2R9HN7M.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="mghio">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/post/bd7ad750.html" itemprop="url"> 如何实现一个简易版的 Spring - 如何实现 AOP（终结篇）</a></h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2021-06-13T15:57:09+08:00">
+                2021-06-13
               </time>
             
 
@@ -795,203 +792,8 @@
                 
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Java/反射/" itemprop="url" rel="index">
-                    <span itemprop="name">反射</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/post/7528c810.html#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="post/7528c810.html" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  2.6k 字
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  10 分钟
-                </span>
-              
-            </div>
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h4 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h4><p>在上篇 <a href="http://www.mghio.cn/post/102cd3d9.html">Java 反射机制（一）</a> 介绍了一些 <code>Java</code> 反射相关的常用 API ，在知道了如何去使用反射之后，作为一个合格的工程师，下一步肯定是要去了解它的如何实现的，我们今天就来看看在 <code>JDK</code> 源码中是如何去实现反射的(<code>PS:以下源码分析基于 JDK1.8</code>)。</p>
-<h4 id="Field-类-set-方法的实现"><a href="#Field-类-set-方法的实现" class="headerlink" title="Field 类 set 方法的实现"></a>Field 类 set 方法的实现</h4><p><code>Field</code> 类的 <code>set</code> 方法是在运行时用来动态修改一个类的属性的值，进入到 <code>Field</code> 类的 <code>set</code> 方法的源码如下：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">set</span><span class="params">(Object obj, Object value)</span></span></span><br><span class="line"><span class="function">        <span class="keyword">throws</span> IllegalArgumentException, IllegalAccessException</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (!override) &#123;</span><br><span class="line">        <span class="keyword">if</span> (!Reflection.quickCheckMemberAccess(clazz, modifiers)) &#123;</span><br><span class="line">            Class&lt;?&gt; caller = Reflection.getCallerClass();</span><br><span class="line">            checkAccess(caller, clazz, obj, modifiers);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    getFieldAccessor(obj).set(obj, value);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>首先根据 <code>override</code> 判断是否需要检查字段的访问权限，然后通过 <code>getFieldAccessor</code> 方法获得一个 <code>FieldAccessor</code> 字段访问者对象，最后调用的是 <code>FieldAccessor</code> 类的 <code>set</code> 方法进行下一步操作的，<code>FieldAccessor</code> 是一个接口，定义了对字段的一些操作，该接口有如下一些实现类：</p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/post/7528c810.html#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://www.mghio.cn/post/102cd3d9.html">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="mghio">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="https://i.loli.net/2020/01/12/8qITJvhw2R9HN7M.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="mghio">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/post/102cd3d9.html" itemprop="url">Java 反射机制（一）</a></h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-12-29T14:00:29+08:00">
-                2019-12-29
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Java/" itemprop="url" rel="index">
-                    <span itemprop="name">Java</span>
+                  <a href="/categories/Java/Spring/" itemprop="url" rel="index">
+                    <span itemprop="name">Spring</span>
                   </a>
                 </span>
 
@@ -1001,8 +803,8 @@
                 
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Java/反射/" itemprop="url" rel="index">
-                    <span itemprop="name">反射</span>
+                  <a href="/categories/Java/Spring/AOP/" itemprop="url" rel="index">
+                    <span itemprop="name">AOP</span>
                   </a>
                 </span>
 
@@ -1019,8 +821,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/post/102cd3d9.html#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="post/102cd3d9.html" itemprop="commentCount"></span>
+                <a href="/post/bd7ad750.html#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="post/bd7ad750.html" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -1042,641 +844,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  3.6k 字
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  15 分钟
-                </span>
-              
-            </div>
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h4 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h4><p>在 <code>Java</code> 中有两种方式可以让我们在运行时识别对象和类的信息。一种是 <code>RTTI</code>（运行时类型识别：Run-Time Type Identification），它假定了我们在编译时已经知道了所有的类型；另一种是我们本文要说的<code>反射机制</code>，它允许我们在运行时获取和使用类的信息。无论是 <code>RTTI</code> 还是<code>反射</code>，其本质都是一样的，都是去动态的获取类的信息。它们唯一不同的是，<code>RTTI</code> 在编译时期知道要解析的类型，而<code>反射</code>是在运行时才知道要解析的类型。</p>
-<h4 id="反射概述"><a href="#反射概述" class="headerlink" title="反射概述"></a>反射概述</h4><p>反射就是把 <code>Java</code> 类中的各个部分（属性、方法、构造方法等）映射成一个个对象。<code>Class</code> 类与 <code>java.lang.reflect</code> 类库一起对反射的概念提供了支持，类库中包含了 <code>Field</code>、<code>Method</code> 及 <code>Constructor</code> 类，每个类都实现了 <code>Member</code> 接口。这些类型的对象都是由 <code>JVM</code> 运行时创建的，用来表示未知类里对应的成员。这样我们就可以使用 <code>Constructor</code> 创建新的对象，用 <code>get</code> 和 <code>set</code> 方法读取和修改类中与 <code>Field</code> 对象关联的字段，用 <code>invoke</code> 方法调用类中与 <code>Method</code> 对象关联的方法等。<br><code>Java</code> 反射机制是在运行状态中的，对于任意一个类我们可以通过反射获取这个类的所有属性和方法；对于任意一个对象，都能够调用它的任意一个方法和属性。重要的是，要认识到反射机制并没有什么特别之处，当我们通过反射和一个未知类型的对象打交道时，<code>JVM</code> 只是简单的对这个对象做检查，看它属于哪个类，在用它做其它事情之前必须先加载那个类 <code>Class</code> 对象。所以那个类的字节码文件对象对于 <code>JVM</code> 来说必须是可获取的，要么在本地机器上，要么通过网络获取。</p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/post/102cd3d9.html#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://www.mghio.cn/post/817c7d82.html">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="mghio">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="https://i.loli.net/2020/01/12/8qITJvhw2R9HN7M.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="mghio">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/post/817c7d82.html" itemprop="url">Linux 常用命令</a></h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-12-21T12:00:49+08:00">
-                2019-12-21
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Linux笔记/" itemprop="url" rel="index">
-                    <span itemprop="name">Linux笔记</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/post/817c7d82.html#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="post/817c7d82.html" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  4.5k 字
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  17 分钟
-                </span>
-              
-            </div>
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h4 id="1-1-前言"><a href="#1-1-前言" class="headerlink" title="1.1 前言"></a>1.1 前言</h4><p>作为 <code>Java</code> 后端开发的我们，开发的项目绝大部分都是部署在 <code>Linux</code> 系统上的，因此熟练使用一些常用的 <code>Linux</code> 命令不管是对于日常开发、服务部署或者查找问题都非常有用。以下整理了一些常用的 <code>Linux</code> 常用命令。</p>
-<h4 id="1-2-文件管理"><a href="#1-2-文件管理" class="headerlink" title="1.2 文件管理"></a>1.2 文件管理</h4><h5 id="1-2-1-ls-命令"><a href="#1-2-1-ls-命令" class="headerlink" title="1.2.1 ls 命令"></a>1.2.1 ls 命令</h5><p><code>ls</code> 命令是 <code>Linux</code> 最常用的命令之一，其功能是列出指定目录下的内容及其相关属性信息。默认状态下，<code>ls</code> 命令会列出当前目录的内容，它也可以带上一些参数来实现更多的功能。<br><strong>语法格式</strong>：ls [选项] [文件]<br><strong>常用参数</strong></p>
-<table>
-<thead>
-<tr>
-<th align="center">参数</th>
-<th align="center">描述</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center">-a</td>
-<td align="center">显示所有文件及目录（包括以 <code>.</code> 开头的隐藏文件）</td>
-</tr>
-<tr>
-<td align="center">-l</td>
-<td align="center">使用长格式列出文件及目录</td>
-</tr>
-<tr>
-<td align="center">-r</td>
-<td align="center">将文件以相反次序显示（默认按照英文字母次序）</td>
-</tr>
-<tr>
-<td align="center">-t</td>
-<td align="center">根据最后的修改时间排序</td>
-</tr>
-<tr>
-<td align="center">-A</td>
-<td align="center">同 <code>-a</code>，但是不列出 <code>.</code>（当前目录）以及 <code>..</code>（父级目录）</td>
-</tr>
-<tr>
-<td align="center">-S</td>
-<td align="center">根据文件大小排序</td>
-</tr>
-<tr>
-<td align="center">-R</td>
-<td align="center">递归列出所有子目录</td>
-</tr>
-</tbody></table>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/post/817c7d82.html#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://www.mghio.cn/post/4ea48fa7.html">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="mghio">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="https://i.loli.net/2020/01/12/8qITJvhw2R9HN7M.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="mghio">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/post/4ea48fa7.html" itemprop="url">Java 多线程基础（二）</a></h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-12-14T16:32:14+08:00">
-                2019-12-14
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Java/" itemprop="url" rel="index">
-                    <span itemprop="name">Java</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Java/多线程/" itemprop="url" rel="index">
-                    <span itemprop="name">多线程</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/post/4ea48fa7.html#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="post/4ea48fa7.html" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  2.3k 字
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  10 分钟
-                </span>
-              
-            </div>
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h4 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h4><p>在上篇 <a href="https://www.mghio.cn/post/7eb2637f.html">Java 多线程基础（一）</a> 我们提到了一些线程的常用方法，这篇我们具体看看其中一些方法的使用以及方法的区别，让我们在工作中更好的使用。</p>
-<h4 id="wait-方法与-notify-方法"><a href="#wait-方法与-notify-方法" class="headerlink" title="wait 方法与 notify 方法"></a>wait 方法与 notify 方法</h4><p>在 <code>Object</code> 类中定义了 <code>wait</code> 方法和 <code>notify</code> 方法，<code>wait</code> 方法的作用是让当前线程进入等待状态，将当前线程置入 <code>预执行队列</code>，会在 <code>wait</code> 方法所在代码处停止执行，直到被通知或者被中断，在调用 <code>wait</code> 方法之前，线程必须获取该对象的锁，因此只能在<code>同步方法</code>或者<code>同步代码块</code>中调用 <code>wait</code> 方法，并且该方法会释放当前线程锁持有的锁。<code>notify</code> 方法是唤醒在当前对象上等待的<code>单个线程</code>，如果有多个线程等待，那么线程调度器会挑出一个 <code>wait</code> 的线程，对其发出 <code>notify</code> ，并使它等待获取该对象的对象锁，这意味着，即使收到了通知，线程也不会立即获取到对象锁，必须等待 <code>notify</code> 方法的线程释放锁才可以。和 <code>wait</code> 方法一样，<code>notify</code> 方法也只能在<code>同步方法</code>或者<code>同步代码块</code>中调用。它还有个相似的方法 <code>notifyAll</code>，它的作用是唤醒在当前对象上等待的<code>所有线程</code>。</p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/post/4ea48fa7.html#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://www.mghio.cn/post/7eb2637f.html">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="mghio">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="https://i.loli.net/2020/01/12/8qITJvhw2R9HN7M.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="mghio">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/post/7eb2637f.html" itemprop="url">Java 多线程基础（一）</a></h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-12-07T21:56:55+08:00">
-                2019-12-07
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Java/" itemprop="url" rel="index">
-                    <span itemprop="name">Java</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Java/多线程/" itemprop="url" rel="index">
-                    <span itemprop="name">多线程</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/post/7eb2637f.html#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="post/7eb2637f.html" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  3.3k 字
+                  2.5k 字
                 </span>
               
 
@@ -1716,12 +884,11 @@
 
       
         
-          <h4 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h4><p>在接触<code>多线程</code>之前，在我们程序中在任意时刻都只能执行一个步骤，称之为<code>单线程</code>。在单线程开发的程序中所有的程序路径都是顺序执行的，前面的必须先执行，后面的才会执行。单线程的优点也很明显，相对于多线程来说更加稳定、扩展性更强、程序开发相对比较容易。但是由于每次都要等上一个任务执行完成后才能开始新的任务，导致其效率比多线程低，甚至有时候应用程序会出现假死的现象。使用多线程有利于充分发挥多处理器的功能。通过创建多线程进程，每个线程在一个处理器上运行，从而实现应用程序的并发性，使每个处理器都得到充分运行。多线程是 Java 学习的非常重要的方面，是每个 Java 程序员必须掌握的基本技能。本文是有关 Java 多线程的一些基础知识总结。</p>
-<h4 id="进程与线程的区别"><a href="#进程与线程的区别" class="headerlink" title="进程与线程的区别"></a>进程与线程的区别</h4><h5 id="进程"><a href="#进程" class="headerlink" title="进程"></a>进程</h5><p>进程是<code>操作系统资源分配</code>的基本单位，它是操作系统的基础，是一个程序及其数据在处理机上顺序执行时所发生的活动。一个程序进入内存运行，即变成一个进程。进程是处于运行过程中的程序，并且具有一定独立功能。进程的实质就是程序在操作系统中的一次执行过程，它是动态产生的、动态销毁的，拥有自己的生命周期和各种不同的运行状态。同时，进程还具有并发性，它可以同其他进程一起并发执行，按各自独立的、不可预知的速度向前推进（<code>PS：并发性和并行性是不同的概念，并行指的是同一时刻，两个及两个以上的指令在多个处理器上同时执行。而并发指的是同一时刻只有一条指令执行，但是多个进程可以被 CPU 快速交换执行，给我们感觉好像是多个执行在同时执行一样</code>）。　</p>
-<h5 id="线程"><a href="#线程" class="headerlink" title="线程"></a>线程</h5><p>线程是<code>任务调度和执行</code>的基本单位，也被称为<code>轻量级进程</code>，线程由线程 ID，当前指令指针(PC），寄存器集合和堆栈组成。线程不拥有系统资源，它只会拥有一点儿在运行时必不可少的资源，但是它可以与同属于同一进程的线程共享该进程所拥有的所有资源。一个线程只能属于一个进程，而一个进程可以有多个线程，但至少有一个线程。</p>
+          <p><img src="https://i.loli.net/2021/06/13/42YRj7pdfJkK3wN.jpg" alt="cover.jpg"></p>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>在 <a href="https://www.mghio.cn/post/2a28641b.html">上篇</a> 实现了 判断一个类的方式是符合配置的 pointcut 表达式、根据一个 Bean 的名称和方法名，获取 Method 对象、实现了 BeforeAdvice、AfterReturningAdvice 以及 AfterThrowingAdvice并按照指定次序调用 等功能，这篇再来看看剩下的 <strong>代理对象如何生成</strong>、<strong>根据 XML 配置文件生成 BeanDefintion</strong>以及<strong>如何将生成的代理对象放入到容器中</strong> 等功能，话不多说，下面进入主题。</p>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/post/7eb2637f.html#more" rel="contents">
+            <a class="btn" href="/post/bd7ad750.html#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1774,7 +941,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://www.mghio.cn/post/ab706eb5.html">
+    <link itemprop="mainEntityOfPage" href="https://www.mghio.cn/post/2a28641b.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="mghio">
@@ -1793,7 +960,7 @@
         
           <h2 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/post/ab706eb5.html" itemprop="url">Java 线程池（二）</a></h2>
+                <a class="post-title-link" href="/post/2a28641b.html" itemprop="url">如何实现一个简易版的 Spring - 如何实现 AOP（下）</a></h2>
         
 
         <div class="post-meta">
@@ -1805,8 +972,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-11-30T16:07:14+08:00">
-                2019-11-30
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2021-06-06T15:54:32+08:00">
+                2021-06-06
               </time>
             
 
@@ -1839,8 +1006,19 @@
                 
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Java/线程池/" itemprop="url" rel="index">
-                    <span itemprop="name">线程池</span>
+                  <a href="/categories/Java/Spring/" itemprop="url" rel="index">
+                    <span itemprop="name">Spring</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/Spring/AOP/" itemprop="url" rel="index">
+                    <span itemprop="name">AOP</span>
                   </a>
                 </span>
 
@@ -1857,8 +1035,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/post/ab706eb5.html#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="post/ab706eb5.html" itemprop="commentCount"></span>
+                <a href="/post/2a28641b.html#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="post/2a28641b.html" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -1880,7 +1058,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  4.3k 字
+                  2.5k 字
                 </span>
               
 
@@ -1896,7 +1074,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  16 分钟
+                  11 分钟
                 </span>
               
             </div>
@@ -1920,12 +1098,11 @@
 
       
         
-          <h4 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h4><p>在上篇 <a href="http://www.mghio.cn/post/bc557e1a.html">Java 线程池（一）</a> 我们介绍了线程池中一些的重要参数和具体含义，这篇我们看一看在 Java 中是如何去实现<code>线程池</code>的，要想用好线程池，只知其然是远远不够的，我们需要深入实现源码去了解线程池的具体实现细节，这样才能更好的使用到我们的工作中，当出现问题时能快速找到问题根源所在。</p>
-<h4 id="线程池如何处理提交的任务"><a href="#线程池如何处理提交的任务" class="headerlink" title="线程池如何处理提交的任务"></a>线程池如何处理提交的任务</h4><p>我们向线程池提交任务有两种方式，分别是通过 <code>submit</code> 方法提交和通过 <code>execute</code> 方法提交，这两种方式的区别为 <code>execute</code> 只能提交 <code>Runnable</code> 类型的任务并且没有返回值，而 <code>submit</code> 既能提交 <code>Runnable</code> 类型的任务也能提交 <code>Callable</code>（JDK 1.5+）类型的任务并且会有一个类型 <code>Future</code> 的返回值，我们知道 <code>Runnable</code> 是没有返回值的，所以只有当提交 <code>Callable</code> 类型的任务时才会有返回值，而提交 <code>Runnable</code> 的返回值是 <code>null</code>。 <code>execute</code> 执行任务时，如果此时遇到异常会直接抛出，而 <code>submit</code> 不会直接抛出，只有在使用 <code>Future</code> 的 <code>get</code> 方法获取任务的返回结果时，才会抛出异常。<br>通过查看 <code>ThreadPoolExecutor</code> 的源码我们发现，其 <code>submit</code> 方法是继承自其抽象父类 <code>AbstractExecutorService</code> 而来的，有三个重载的方法，分别可以提交 <code>Runnable</code> 类型和 <code>Callable</code> 类型的任务。无论是哪个 <code>submit</code> 方法最终还是调用了 <code>execute</code> 方法来实现的。方法源码如下：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> Future&lt;?&gt; submit(Runnable task) &#123;</span><br><span class="line">    <span class="keyword">if</span> (task == <span class="keyword">null</span>) <span class="keyword">throw</span> <span class="keyword">new</span> NullPointerException();</span><br><span class="line">    RunnableFuture&lt;Void&gt; ftask = newTaskFor(task, <span class="keyword">null</span>);</span><br><span class="line">    execute(ftask);</span><br><span class="line">    <span class="keyword">return</span> ftask;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> &lt;T&gt; <span class="function">Future&lt;T&gt; <span class="title">submit</span><span class="params">(Runnable task, T result)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (task == <span class="keyword">null</span>) <span class="keyword">throw</span> <span class="keyword">new</span> NullPointerException();</span><br><span class="line">    RunnableFuture&lt;T&gt; ftask = newTaskFor(task, result);</span><br><span class="line">    execute(ftask);</span><br><span class="line">    <span class="keyword">return</span> ftask;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> &lt;T&gt; <span class="function">Future&lt;T&gt; <span class="title">submit</span><span class="params">(Callable&lt;T&gt; task)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (task == <span class="keyword">null</span>) <span class="keyword">throw</span> <span class="keyword">new</span> NullPointerException();</span><br><span class="line">    RunnableFuture&lt;T&gt; ftask = newTaskFor(task);</span><br><span class="line">    execute(ftask);</span><br><span class="line">    <span class="keyword">return</span> ftask;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+          <p><img src="https://i.loli.net/2021/06/10/lOLEuXIUreJkNgM.jpg" alt="cover.jpg"></p>
+<h4 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h4><p>前面两篇 <a href="https://www.mghio.cn/post/9294037e.html">如何实现 AOP（上）</a>、<a href="https://www.mghio.cn/post/af7194f9.html">如何实现 AOP（中）</a> 做了一些 <code>AOP</code> 的核心基础知识简要介绍，本文进入到了实战环节了，去实现一个基于 <code>XML</code> 配置的简易版 <code>AOP</code>，虽然是简易版的但是<code>麻雀虽小五脏俱全</code>，一些核心的功能都会实现，通过实现这个简易版的 <code>AOP</code>，相信你会对 <code>AOP</code> 有深入的理解，不止知其然，还能知其所以然。<code>AOP</code> 的顶层接口规范和底层依赖基础组件都是由一个叫 <a href="http://aopalliance.sourceforge.net" target="_blank" rel="noopener">AOP Alliance</a> 的组织制定的，我们经常听到的 <code>AspectJ</code>、<code>ASM</code>、<code>CGLIB</code> 就是其中被管理的一些项目，需要明确的一点是，在 <code>Spring</code> 中只是使用了 <code>AspectJ</code> 的核心概念和核心类，并不是像 <code>AspectJ</code> 那样在编译期实现的 <code>AOP</code>，而是在<strong>运行期</strong>。话不多说，下面开始进入主题。</p>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/post/ab706eb5.html#more" rel="contents">
+            <a class="btn" href="/post/2a28641b.html#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1978,7 +1155,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://www.mghio.cn/post/bc557e1a.html">
+    <link itemprop="mainEntityOfPage" href="https://www.mghio.cn/post/af7194f9.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="mghio">
@@ -1997,7 +1174,7 @@
         
           <h2 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/post/bc557e1a.html" itemprop="url">Java 线程池（一）</a></h2>
+                <a class="post-title-link" href="/post/af7194f9.html" itemprop="url">如何实现一个简易版的 Spring - 如何实现 AOP（中）</a></h2>
         
 
         <div class="post-meta">
@@ -2009,8 +1186,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-11-23T18:35:30+08:00">
-                2019-11-23
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2021-05-30T15:51:39+08:00">
+                2021-05-30
               </time>
             
 
@@ -2043,8 +1220,19 @@
                 
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Java/线程池/" itemprop="url" rel="index">
-                    <span itemprop="name">线程池</span>
+                  <a href="/categories/Java/Spring/" itemprop="url" rel="index">
+                    <span itemprop="name">Spring</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/Spring/AOP/" itemprop="url" rel="index">
+                    <span itemprop="name">AOP</span>
                   </a>
                 </span>
 
@@ -2061,8 +1249,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/post/bc557e1a.html#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="post/bc557e1a.html" itemprop="commentCount"></span>
+                <a href="/post/af7194f9.html#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="post/af7194f9.html" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -2084,7 +1272,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  3.9k 字
+                  2.7k 字
                 </span>
               
 
@@ -2100,7 +1288,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  13 分钟
+                  10 分钟
                 </span>
               
             </div>
@@ -2124,17 +1312,11 @@
 
       
         
-          <h4 id="线程池简介"><a href="#线程池简介" class="headerlink" title="线程池简介"></a>线程池简介</h4><p>使用线程池可以很好的提高性能，线程池在运行之初就会创建一定数量的空闲线程，我们将一个任务提交给线程池，线程池就会使用一个空闲的线程来执行这个任务，该任务执行完后，该线程不会死亡，<code>而是再次变成空闲状态返回线程池，等待下一个任务的到来</code>。在使用线程池时，我们把要执行的任务提交给整个线程池，而不是提交给某个线程，线程池拿到提交的任务后，会在内部寻找是否还有空闲的线程，如果有，就将这个任务提交给某个空闲的线程，虽然一个线程同一时刻只能执行一个任务，但是我们可以向线程池提交多个任务。合理使用线程池有以下几个优点：<br>① <strong>降低资源消耗</strong> 多线程运行期间，系统不断的启动和关闭新线程，成本高，会过度消耗系统资源，通过<code>重用</code>存在的线程，减少对象创建、消亡的开销<br>② <strong>提高响应速度</strong> 当有任务到达时，任务可以不需要等待线程的创建，可以直接从线程池中取出空闲的线程来执行任务<br>③ <strong>方便线程管理</strong> 线程对计算机来说是很稀缺的资源，如果让他无限制创建，它不仅消耗系统的资源，还会降低系统的稳定性，我们使用线程池后可以统一进行分配和监控<br>谈到线程池就会想到<code>池化</code>技术，核心思想就是<code>把宝贵的资源放到一个池子中</code>，每次要使用都从池子里面取，用完之后又放回池子让别人用。那么线程池在 Java 中是如何实现的呢？</p>
-<h4 id="Java-四种线程池"><a href="#Java-四种线程池" class="headerlink" title="Java 四种线程池"></a>Java 四种线程池</h4><p>在 Java 中 Executors 工具类给我们提供了四种不同使用场景的线程池的创建方法，分别为：</p>
-<ol>
-<li><code>newSingleThreadExecutor</code> 只有一个线程来执行任务，适用于有顺序的任务的应用场景。如果这个唯一的线程因为异常结束，那么会有一个新的线程来替代它，它可以保证任务按照指定顺序（FIFO，LIFO）执行，它还有可以指定线程工厂（<code>ThreadFactory</code>）的重载方法，可以自定义线程的创建行为</li>
-<li><code>newFixedThreadPool</code> 固定线程数的线程池，只有核心线程，核心线程的即为最大的线程数量，没有非核心线程。每次提交一个任务就创建一个线程，直到达到线程池的最大大小。线程池一旦达到最大值就会保持不变，如果当中的某个线程因为异常而结束，那么线程池会新建一个线程加入到线程池中。它还可以控制线程的最大并发数，超出的线程会在阻塞队列（<code>LinkedBlockingQueue</code>）中等待，同样它也有可以指定线程工厂（<code>ThreadFactory</code>）的重载方法，可以自定义线程的创建行为。</li>
-<li><code>newCachedThreadPool</code> 创建一个可缓存线程池，最大的线程个数为 <code>2^31 - 1（Integer.MAX_VALUE）</code>，可以认为是无限大，若无可回收，则新建线程，如果线程池的大小超出了处理任务所需要的线程，那么就会回收部分空闲（60s 不执行任务）的线程。</li>
-<li><code>newScheduledThreadPool</code> 周期性执行任务的线程池，按照某种特定的计划执行线程中的任务，有核心线程，但也有非核心线程，非核心线程的大小也为无限大（<code>Integer.MAX_VALUE：2^31 - 1</code>），适用于执行周期性的任务。</li>
-</ol>
+          <p><img src="https://i.loli.net/2021/06/10/zDpSiZX6ThBjLyC.jpg" alt="cover.jpg"></p>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>在上篇 <a href="https://www.mghio.cn/post/9294037e.html">如何实现 AOP（上）</a> 介绍了 <code>AOP</code> 技术出现的原因和一些重要的概念，在我们自己实现之前有必要先了解一下 <code>AOP</code> 底层到底是如何运作的，所以这篇再来看看 <code>AOP</code> 实现所依赖的一些核心基础技术。<code>AOP</code> 是使用<code>动态代理</code>和<code>字节码生成技术</code>来实现的，在<strong>运行期</strong>（注意：不是编译期！）为目标对象生成代理对象，然后将横切逻辑织入到生成的代理对象中，最后系统使用的是带有横切逻辑的代理对象，而不是被代理对象，由代理对象转发到被代理对象。</p>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/post/bc557e1a.html#more" rel="contents">
+            <a class="btn" href="/post/af7194f9.html#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -2187,7 +1369,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://www.mghio.cn/post/99ea2970.html">
+    <link itemprop="mainEntityOfPage" href="https://www.mghio.cn/post/9294037e.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="mghio">
@@ -2206,7 +1388,7 @@
         
           <h2 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/post/99ea2970.html" itemprop="url">深挖 HashMap</a></h2>
+                <a class="post-title-link" href="/post/9294037e.html" itemprop="url">如何实现一个简易版的 Spring - 如何实现 AOP（上）</a></h2>
         
 
         <div class="post-meta">
@@ -2218,8 +1400,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-11-14T21:23:23+08:00">
-                2019-11-14
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2021-05-22T15:47:46+08:00">
+                2021-05-22
               </time>
             
 
@@ -2252,8 +1434,19 @@
                 
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Java/原理/" itemprop="url" rel="index">
-                    <span itemprop="name">原理</span>
+                  <a href="/categories/Java/Spring/" itemprop="url" rel="index">
+                    <span itemprop="name">Spring</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/Spring/AOP/" itemprop="url" rel="index">
+                    <span itemprop="name">AOP</span>
                   </a>
                 </span>
 
@@ -2270,8 +1463,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/post/99ea2970.html#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="post/99ea2970.html" itemprop="commentCount"></span>
+                <a href="/post/9294037e.html#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="post/9294037e.html" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -2293,7 +1486,210 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  2.6k 字
+                  3.2k 字
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  12 分钟
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p><img src="https://i.loli.net/2021/06/10/Pw2T431Dy6hJSUg.jpg" alt="cover.jpg"></p>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>本文是「如何实现一个简易版的 Spring 系列」的第五篇，在之前介绍了 Spring 中的核心技术之一 IoC，从这篇开始我们再来看看 Spring 的另一个重要的技术——<a href="https://en.wikipedia.org/wiki/Aspect-oriented_programming" target="_blank" rel="noopener">AOP</a>。用过 Spring 框架进行开发的朋友们相信或多或少应该接触过 AOP，用中文描述就是面向<strong>切面</strong>编程。学习一个新技术了解其产生的背景是至关重要的，在刚开始接触 AOP 时不知道你有没有想过这个问题，既然在面向对象的语言中已经有了 <a href="https://en.wikipedia.org/wiki/Object-oriented_programming" target="_blank" rel="noopener">OOP</a> 了，为什么还需要 AOP 呢？换个问法也就是说在 OOP 中有哪些场景其实处理得并不优雅，需要重新寻找一种新的技术去解决处理？（P.S. 这里建议暂停十秒钟，自己先想一想…）</p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/post/9294037e.html#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://www.mghio.cn/post/80982e71.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="mghio">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="https://i.loli.net/2020/01/12/8qITJvhw2R9HN7M.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="mghio">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/post/80982e71.html" itemprop="url">如何实现一个简易版的 Spring - 如何实现 @Autowired 注解</a></h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2021-03-07T15:44:29+08:00">
+                2021-03-07
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/Spring/" itemprop="url" rel="index">
+                    <span itemprop="name">Spring</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/post/80982e71.html#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="post/80982e71.html" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  2.2k 字
                 </span>
               
 
@@ -2333,23 +1729,627 @@
 
       
         
-          <h4 id="1-1-前言"><a href="#1-1-前言" class="headerlink" title="1.1 前言"></a>1.1 前言</h4><p>做过 java 开发的朋友们相信都很熟悉 HashMap 这个类，它是一个基于 hashing 原理用于存储 Key-Value 键值对的集合，其中的每一个键也叫做 <code>Entry</code>，这些键分别存储在一个数组当中，系统会根据 <code>hash</code> 方法来计算出 Key-Value 的存储位置，可以通过 key 快速存取 value。<br>HashMap 基于 hashing 原理，当我们将一个键值对（Key-Value） 传入 <code>put</code> 方法时，它将调用这个 key 的  <code>hashcode</code> 方法计算出 key 的 hashcode 值，然后根据这个 hashcode 值来定位其存放数组的位置来存储对象（HashMap 使用链表来解决碰撞问题，当其发生碰撞了，对象将会存储在链表的下一个节点中，在链表的每个节点中存储 <code>Entry</code> 对象，在 JDK 1.8+ 中，当链表的节点个数超过一定值时会转为红黑树来进行存储），当通过 <code>get</code> 方法传入一个 key 来获取其对应的值时，也是先通过 key 的 <code>hashcode</code> 方法来定位其存储在数组的位置，然后通过键对象的 <code>eqauls</code> 方法找到对应的 value 值。接下来让我们看看其内部的一些实现细节。（<code>PS：以下代码分析都是基于 JDK 1.8</code>）</p>
-<h4 id="1-2-为什么容量始终是-2-的整数次幂"><a href="#1-2-为什么容量始终是-2-的整数次幂" class="headerlink" title="1.2 为什么容量始终是 2 的整数次幂"></a>1.2 为什么容量始终是 2 的整数次幂</h4><p>因为获取 key 在数组中对应的下标是通过 key 的哈希值与数组的长度减一进行与运算来确定的（<code>tab[(n - 1) &amp; hash]</code>）。当数组的长度 n 为 2 的整数次幂，这样进行 n - 1 运算后，之前为 1 的位后面全是 1 ，这样就能保证 <code>(n - 1) &amp; hash</code> 后相应位的值既可能是 1 又可能是 0 ，这完全取决于 key 的哈希值，这样就能保证散列的均匀，同时与运算（位运算）效率高。如果数组的长度 n 不是 2 的整数次幂，会造成更多的 hash 冲突。HashMap 提供了如下四个重载的构造方法来满足不同的使用场景：</p>
-<ol>
-<li>无参构造：<code>HashMap()</code>，使用该方法表示全部使用 HashMap 的默认配置参数</li>
-<li>指定容量初始值构造：<code>HashMap(int initialCapacity)</code>，在初始化 HashMap 时指定其容量大小</li>
-<li>指定容量初始值和扩容因子构造：<code>HashMap(int initialCapacity, float loadFactor)</code>，使用自定义初始化容量和扩容因子</li>
-<li>通过 <code>Map</code> 来构造 HashMap：<code>HashMap(Map&lt;? extends K, ? extends V&gt; m)</code>，使用默认的扩容因子，其容量大小有传入的 <code>Map</code> 大小来决定
+          <p><img src="https://i.loli.net/2021/06/12/xwcrdv6a7CHq5T8.jpg" alt="cover.jpg"></p>
+<h4 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h4><p>本文是 <code>如何实现一个简易版的 Spring</code> 系列第四篇，在 <a href="https://www.mghio.cn/post/6775e26e.html">上篇</a> 介绍了 <code>@Component</code> 注解的实现，这篇再来看看在使用 <code>Spring</code> 框架开发中常用的 <code>@Autowired</code> 注入要如何实现，大家用过 <code>Spring</code> 都知道，该注解可以用在<code>字段</code>、<code>构造函数</code>以及<code>setter 方法</code>上，限于篇幅原因我们主要讨论用在字段的方式实现，其它的使用方式大体思路是相同的，不同的只是解析和注入方式有所区别，话不多说，下面进入我们今天的正题—<code>如何实现一个简易版的 Spring - 如何实现 @Autowired 注解</code>。</p>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/post/99ea2970.html#more" rel="contents">
+            <a class="btn" href="/post/80982e71.html#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
           <!--/noindex-->
         
       
-    </li></ol></div>
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://www.mghio.cn/post/6775e26e.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="mghio">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="https://i.loli.net/2020/01/12/8qITJvhw2R9HN7M.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="mghio">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/post/6775e26e.html" itemprop="url">如何实现一个简易版的 Spring - 如何实现 @Component 注解</a></h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2021-02-14T15:39:19+08:00">
+                2021-02-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/Spring/" itemprop="url" rel="index">
+                    <span itemprop="name">Spring</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/post/6775e26e.html#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="post/6775e26e.html" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  4k 字
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  17 分钟
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p><img src="https://i.loli.net/2021/06/12/ZaBY1LuEdOXKV3k.jpg" alt="cover.jpg"></p>
+<h4 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h4><p>前面两篇文章（<a href="https://www.mghio.cn/post/5731122e.html">如何实现一个简易版的 Spring - 如何实现 Setter 注入</a>、<a href="https://www.mghio.cn/post/315ff4dc.html">如何实现一个简易版的 Spring - 如何实现 Constructor 注入</a>）介绍的都是基于 <code>XML</code> 配置文件方式的实现，从 <code>JDK 5</code> 版本开始 <code>Java</code> 引入了注解支持，带来了极大的便利，<code>Sprinng</code> 也从 <code>2.5</code> 版本开始支持注解方式，使用注解方式我们只需加上相应的注解即可，不再需要去编写繁琐的 <code>XML</code> 配置文件，深受广大 <code>Java</code> 编程人员的喜爱。接下来一起看看如何实现 <code>Spring</code> 框架中最常用的两个注解（<code>@Component</code>、<code>@Autowired</code>），由于涉及到的内容比较多，会分为两篇文章进行介绍，本文先来介绍上半部分 — <strong>如何实现 <code>@Component</code> 注解</strong>。</p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/post/6775e26e.html#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://www.mghio.cn/post/315ff4dc.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="mghio">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="https://i.loli.net/2020/01/12/8qITJvhw2R9HN7M.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="mghio">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/post/315ff4dc.html" itemprop="url">如何实现一个简易版的 Spring - 如何实现 Constructor 注入</a></h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2021-01-16T15:36:22+08:00">
+                2021-01-16
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/Spring/" itemprop="url" rel="index">
+                    <span itemprop="name">Spring</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/post/315ff4dc.html#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="post/315ff4dc.html" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  1.8k 字
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  8 分钟
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p><img src="https://i.loli.net/2021/06/12/6gSsifO9GlI5rNL.jpg" alt="cover.jpg"></p>
+<h4 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h4><p>本文是「如何实现一个简易版的 Spring」系列的第二篇，在 <a href="https://www.mghio.cn/post/5731122e.html">第一篇</a> 介绍了如何实现一个基于 <code>XML</code> 的简单 <code>Setter</code> 注入，这篇来看看要如何去实现一个简单的 <code>Constructor</code> 注入功能，实现步骤和 <code>Setter</code> 注入是一样的“套路”，先设计一个数据结构去解析表达 <code>XML</code> 配置文件里的信息，然后再使用这些解析好的数据结构做一些事情，比如这里的 <code>Constructor</code> 注入。话不多说，下面我们直接进入正题。</p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/post/315ff4dc.html#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://www.mghio.cn/post/5731122e.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="mghio">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="https://i.loli.net/2020/01/12/8qITJvhw2R9HN7M.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="mghio">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/post/5731122e.html" itemprop="url">如何实现一个简易版的 Spring - 如何实现 Setter 注入</a></h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-11-28T15:33:26+08:00">
+                2020-11-28
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/Spring/" itemprop="url" rel="index">
+                    <span itemprop="name">Spring</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/post/5731122e.html#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="post/5731122e.html" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  2.9k 字
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  12 分钟
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p><img src="https://i.loli.net/2021/06/12/jW1KskFCvHnxtf2.jpg" alt="cover.jpg"></p>
+<h4 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h4><p>之前在 <a href="https://www.mghio.cn/post/558ca0bd.html">上篇</a> 提到过会实现一个简易版的 <code>IoC</code> 和 <code>AOP</code>，今天它终于来了。。。相信对于使用 <code>Java</code> 开发语言的朋友们都使用过或者听说过 <code>Spring</code> 这个开发框架，绝大部分的企业级开发中都离不开它，通过 <a href="https://spring.io" target="_blank" rel="noopener">官网</a> 可以了解到其生态非常庞大，针对不同方面的开发提供了一些解决方案，可以说 <code>Spring</code> 框架的诞生是对 <code>Java</code> 开发人员的一大福利，自 <code>2004</code> 年发布以来，<code>Spring</code> 为了解决一些企业开发中的痛点先后引入了很多的特性和功能，其中最重要的就是我们经常听到的 <code>IoC</code> 和 <code>AOP</code> 特性，由于涉及到的知识和细节比较多，会分为几篇文章来介绍，今天这篇（也是第一篇）我们来看看如何实现基于 <code>XML</code> 配置方式的 <strong>Setter 注入</strong>。</p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/post/5731122e.html#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
     
     
     
@@ -2386,7 +2386,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -2434,7 +2434,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">26</span>
+                  <span class="site-state-item-count">52</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -2445,7 +2445,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">26</span>
+                  <span class="site-state-item-count">52</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -2456,7 +2456,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">25</span>
+                  <span class="site-state-item-count">45</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -2501,9 +2501,15 @@
                   </span>
                 
                   <span class="links-of-author-item">
-                    <a href="https://twitter.com/immghio" target="_blank" title="Twitter">
+                    <a href="mailto:mghio.dev@gmail.com" target="_blank" title="E-Mail">
                       
-                        <i class="fa fa-fw fa-twitter"></i>Twitter</a>
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.cnblogs.com/mghio" target="_blank" title="博客园">
+                      
+                        <i class="fa fa-fw fa-vk"></i>博客园</a>
                   </span>
                 
             </div>
@@ -2522,31 +2528,7 @@
               <ul class="links-of-blogroll-list">
                 
                   <li class="links-of-blogroll-item">
-                    <a href="https://www.debuginn.cn" title="Debug 客栈" target="_blank">Debug 客栈</a>
-                  </li>
-                
-                  <li class="links-of-blogroll-item">
-                    <a href="https://www.bigfool.cn" title="大笨蛋程序员" target="_blank">大笨蛋程序员</a>
-                  </li>
-                
-                  <li class="links-of-blogroll-item">
                     <a href="http://www.i121.net" title="气象万千" target="_blank">气象万千</a>
-                  </li>
-                
-                  <li class="links-of-blogroll-item">
-                    <a href="https://www.dute.org" title="独特工具箱" target="_blank">独特工具箱</a>
-                  </li>
-                
-                  <li class="links-of-blogroll-item">
-                    <a href="https://www.xiaorongmao.com" title="小绒毛的足迹" target="_blank">小绒毛的足迹</a>
-                  </li>
-                
-                  <li class="links-of-blogroll-item">
-                    <a href="https://xiaojun1994.top" title="xiaojun's blog" target="_blank">xiaojun's blog</a>
-                  </li>
-                
-                  <li class="links-of-blogroll-item">
-                    <a href="https://httpsauthor.cn" title="Https Author" target="_blank">Https Author</a>
                   </li>
                 
                   <li class="links-of-blogroll-item">
@@ -2555,10 +2537,6 @@
                 
                   <li class="links-of-blogroll-item">
                     <a href="https://blog.searchinfogo.com" title="Junhua's blog" target="_blank">Junhua's blog</a>
-                  </li>
-                
-                  <li class="links-of-blogroll-item">
-                    <a href="https://g-lab.xyz" title="G-lab" target="_blank">G-lab</a>
                   </li>
                 
                   <li class="links-of-blogroll-item">
@@ -2574,19 +2552,7 @@
                   </li>
                 
                   <li class="links-of-blogroll-item">
-                    <a href="http://www.anyuhanfei.com" title="暗语寒飞 blog" target="_blank">暗语寒飞 blog</a>
-                  </li>
-                
-                  <li class="links-of-blogroll-item">
                     <a href="https://www.tbfeng.com" title="天边风" target="_blank">天边风</a>
-                  </li>
-                
-                  <li class="links-of-blogroll-item">
-                    <a href="https://too.pub" title="TooPub" target="_blank">TooPub</a>
-                  </li>
-                
-                  <li class="links-of-blogroll-item">
-                    <a href="http://www.qiezipig.top:8090" title="White water" target="_blank">White water</a>
                   </li>
                 
                   <li class="links-of-blogroll-item">
@@ -2594,43 +2560,7 @@
                   </li>
                 
                   <li class="links-of-blogroll-item">
-                    <a href="https://eindex.me" title="EINDEX's Blog" target="_blank">EINDEX's Blog</a>
-                  </li>
-                
-                  <li class="links-of-blogroll-item">
-                    <a href="https://www.liuershuang.com" title="土鱼笔记" target="_blank">土鱼笔记</a>
-                  </li>
-                
-                  <li class="links-of-blogroll-item">
-                    <a href="http://toc.lieme.cn" title="故事胶片" target="_blank">故事胶片</a>
-                  </li>
-                
-                  <li class="links-of-blogroll-item">
-                    <a href="http://cmsblogs.com" title="Java 技术驿站" target="_blank">Java 技术驿站</a>
-                  </li>
-                
-                  <li class="links-of-blogroll-item">
                     <a href="https://www.fishmaple.cn" title="鱼鱼的小站" target="_blank">鱼鱼的小站</a>
-                  </li>
-                
-                  <li class="links-of-blogroll-item">
-                    <a href="http://www.tigerbook.cn" title="虎书博客" target="_blank">虎书博客</a>
-                  </li>
-                
-                  <li class="links-of-blogroll-item">
-                    <a href="https://www.liangzl.com" title="梁钟霖个人博客" target="_blank">梁钟霖个人博客</a>
-                  </li>
-                
-                  <li class="links-of-blogroll-item">
-                    <a href="https://www.netcore.pub" title="开源netcore" target="_blank">开源netcore</a>
-                  </li>
-                
-                  <li class="links-of-blogroll-item">
-                    <a href="https://xerrors.coding.me" title="Angor" target="_blank">Angor</a>
-                  </li>
-                
-                  <li class="links-of-blogroll-item">
-                    <a href="https://clawhub.club" title="ClawHub的博客" target="_blank">ClawHub的博客</a>
                   </li>
                 
                   <li class="links-of-blogroll-item">
@@ -2638,11 +2568,7 @@
                   </li>
                 
                   <li class="links-of-blogroll-item">
-                    <a href="https://zhang0peter.com" title="zhang0peter的博客" target="_blank">zhang0peter的博客</a>
-                  </li>
-                
-                  <li class="links-of-blogroll-item">
-                    <a href="https://crossoverjie.top" title="crossoverJie" target="_blank">crossoverJie</a>
+                    <a href="https://zhang0peter.com" title="浮云的博客" target="_blank">浮云的博客</a>
                   </li>
                 
                   <li class="links-of-blogroll-item">
@@ -2650,11 +2576,23 @@
                   </li>
                 
                   <li class="links-of-blogroll-item">
-                    <a href="https://88250.b3log.org" title="D 的个人博客" target="_blank">D 的个人博客</a>
+                    <a href="https://guanqr.com" title="荷戟独彷徨" target="_blank">荷戟独彷徨</a>
                   </li>
                 
                   <li class="links-of-blogroll-item">
-                    <a href="https://guanqr.com" title="荷戟独彷徨" target="_blank">荷戟独彷徨</a>
+                    <a href="https://www.mmzsblog.cn" title="Java学习之道" target="_blank">Java学习之道</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://yuzhouwan.com" title="宇宙湾" target="_blank">宇宙湾</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://morcat.cn" title="Morcat Blog" target="_blank">Morcat Blog</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://atjason.com" title="Jason" target="_blank">Jason</a>
                   </li>
                 
               </ul>
@@ -2681,7 +2619,7 @@
     <footer id="footer" class="footer">
       <div class="footer-inner">
         <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-<div class="copyright">&copy; 2019 &mdash; <span itemprop="copyrightYear">2020</span>
+<div class="copyright">&copy; 2019 &mdash; <span itemprop="copyrightYear">2022</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
