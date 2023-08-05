@@ -112,7 +112,7 @@
 <meta property="og:image" content="http://pic.cnw.me/imgs/2020/05/b28c67cf63ad28cb.png">
 <meta property="og:image" content="http://pic.cnw.me/imgs/2020/05/c37973b5619d90a3.png">
 <meta property="og:image" content="http://pic.cnw.me/imgs/2020/05/6d3fb2245c19ecf2.png">
-<meta property="og:updated_time" content="2020-05-17T09:42:06.000Z">
+<meta property="og:updated_time" content="2023-08-05T06:31:50.823Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="如何在一台计算机上安装多个 JDK 版本">
 <meta name="twitter:description" content="前言对于使用 Java 语言开发的朋友可能会遇到这种情况，有时想学习和探索 Java 的最新版本提供的一些新特性，比如 Java 11，但你无法将其安装在自己的计算机上，因为你的团队正在使用比这个旧的版本（我们目前用的 Java 8)，你并不想影响目前的项目。或者你目前是在维护和开发多个项目，而这些不同的项目使用的 JDK 版本不一样，比如那些维护的老项目使用的是 JDK 8，而新项目你打算使用比">
@@ -480,11 +480,11 @@
       
 
       
-        <h4 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h4><p>对于使用 <code>Java</code> 语言开发的朋友可能会遇到这种情况，有时想学习和探索 <code>Java</code> 的最新版本提供的一些新特性，比如 <code>Java 11</code>，但你无法将其安装在自己的计算机上，因为你的团队正在使用比这个旧的版本（我们目前用的 <code>Java 8</code>)，你并不想影响目前的项目。或者你目前是在维护和开发多个项目，而这些不同的项目使用的 <code>JDK</code> 版本不一样，比如那些维护的老项目使用的是 <code>JDK 8</code>，而新项目你打算使用比较新的版本 <code>JDK 11</code>，以上这些情况都需要在计算机上安装多个 <code>JDK</code>，并且应该能够在多个版本之间方便快速的切换。今天要介绍的主角 <a href="https://sdkman.io" target="_blank" rel="noopener">SDKMAN</a> 可以很好的解决上面这种问题，它提供了在同一台计算机上对多个版本的开发工具包管理。需要注意的是：这个工具只适用于类 <code>Unix</code> 的系统（比如：Mac OSX、Linux、Cygwin、Solaris、FreeBSD 等）。</p>
+        <h4 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h4><p>对于使用 <code>Java</code> 语言开发的朋友可能会遇到这种情况，有时想学习和探索 <code>Java</code> 的最新版本提供的一些新特性，比如 <code>Java 11</code>，但你无法将其安装在自己的计算机上，因为你的团队正在使用比这个旧的版本（我们目前用的 <code>Java 8</code>)，你并不想影响目前的项目。或者你目前是在维护和开发多个项目，而这些不同的项目使用的 <code>JDK</code> 版本不一样，比如那些维护的老项目使用的是 <code>JDK 8</code>，而新项目你打算使用比较新的版本 <code>JDK 11</code>，以上这些情况都需要在计算机上安装多个 <code>JDK</code>，并且应该能够在多个版本之间方便快速的切换。今天要介绍的主角 <a href="https://sdkman.io" target="_blank" rel="noopener">SDKMAN</a> 可以很好的解决上面这种问题，它提供了在同一台计算机上对多个版本的开发工具包管理。需要注意的是：这个工具只适用于类 <code>UNIX</code> 的系统（比如：Mac OSX、Linux、Cygwin、Solaris、FreeBSD 等）。</p>
 <a id="more"></a>
 <h4 id="SDKMan-简介"><a href="#SDKMan-简介" class="headerlink" title="SDKMan 简介"></a>SDKMan 简介</h4><p>直接引用 <a href="https://sdkman.io" target="_blank" rel="noopener">SDKMan</a> 官网上的介绍如下：</p>
 <blockquote>
-<p>SDKMAN! is a tool for managing parallel versions of multiple Software Development Kits on most Unix based systems. It provides a convenient Command Line Interface (CLI) and API for installing, switching, removing and listing Candidates.</p>
+<p>SDKMAN! is a tool for managing parallel versions of multiple Software Development Kits on most UNIX based systems. It provides a convenient Command Line Interface (CLI) and API for installing, switching, removing and listing Candidates.</p>
 </blockquote>
 <p>简单来说就是其提供了管理多个版本开发工具包的能力，同时也提供了一些命令行接口让我们方便安装、版本切换、版本移除和显示版本列表。关于 <code>SDKMan</code> 还有几个要点如下：</p>
 <ol>
@@ -493,7 +493,7 @@
 <li><code>SDKMan</code> 可以为 <code>JVM</code> 安装大约 29 个软件开发包，比如 <code>Java</code>、<code>Groovy</code>、<code>Scala</code>、<code>Kotlin</code>、<code>Gradle</code>、<code>Maven</code>、<code>Spark</code>、<code>Spring Boot</code> 等。</li>
 <li><code>SDKMan</code> 可以自动处理帮我们配置 <code>*_HOME(e.g.:JAVA_HOME)</code> 和 <code>PATH</code> 环境变量，因此我们不需要担心切换版本后这些环境变量的设置。</li>
 </ol>
-<h4 id="安装-SDKMan"><a href="#安装-SDKMan" class="headerlink" title="安装 SDKMan"></a>安装 SDKMan</h4><p><code>SDKMan</code> 可以运行在任何类 <code>Unix</code> 系统上，我们只需要在命令行输入以下命令即可安装：</p>
+<h4 id="安装-SDKMan"><a href="#安装-SDKMan" class="headerlink" title="安装 SDKMan"></a>安装 SDKMan</h4><p><code>SDKMan</code> 可以运行在任何类 <code>UNIX</code> 系统上，我们只需要在命令行输入以下命令即可安装：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -s <span class="string">"https://get.sdkman.io"</span> | bash</span><br></pre></td></tr></table></figure>
 
 <p><img src="https://i.loli.net/2020/05/16/ZKIvQfl4syq5S7J.png" alt="install-sdkman.png"></p>
@@ -726,7 +726,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">55</span>
+                  <span class="site-state-item-count">56</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -737,7 +737,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">58</span>
+                  <span class="site-state-item-count">59</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -748,7 +748,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">51</span>
+                  <span class="site-state-item-count">52</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>

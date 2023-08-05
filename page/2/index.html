@@ -310,6 +310,220 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://www.mghio.cn/post/f7a05eb0.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="mghio">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="https://s2.loli.net/2023/07/16/OZMcxdjbSDpwNiP.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="mghio">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/post/f7a05eb0.html" itemprop="url">Spring 的循环依赖问题</a></h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2021-12-05T16:16:39+08:00">
+                2021-12-05
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/Spring/" itemprop="url" rel="index">
+                    <span itemprop="name">Spring</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/Spring/循环依赖/" itemprop="url" rel="index">
+                    <span itemprop="name">循环依赖</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/post/f7a05eb0.html#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="post/f7a05eb0.html" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  2.5k 字
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  9 分钟
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p><img src="https://i.loli.net/2021/07/17/lw3qMrmSkIRfOGp.jpg" alt="cover.jpg"></p>
+<h4 id="什么是循环依赖"><a href="#什么是循环依赖" class="headerlink" title="什么是循环依赖"></a>什么是循环依赖</h4><p>什么是<code>循环依赖</code>呢？可以把它拆分成<code>循环</code>和<code>依赖</code>两个部分来看，<strong>循环</strong>是指计算机领域中的循环，执行流程形成闭合回路；<strong>依赖</strong>就是完成这个动作的前提准备条件，和我们平常说的依赖大体上含义一致。放到 <code>Spring</code> 中来看就一个或多个 <code>Bean</code> 实例之间存在直接或间接的依赖关系，构成循环调用，循环依赖可以分为<code>直接循环依赖</code>和<code>间接循环依赖</code>，直接循环依赖的简单依赖场景：<code>Bean A</code> 依赖于 <code>Bean B</code>，然后 <code>Bean B</code> 又反过来依赖于 <code>Bean A</code>（<code>Bean A -&gt; Bean B -&gt; Bean A</code>），间接循环依赖的一个依赖场景：<code>Bean A</code> 依赖于 <code>Bean B</code>，<code>Bean B</code> 依赖于 <code>Bean C</code>，<code>Bean C</code> 依赖于 <code>Bean A</code>，中间多了一层，但是最终还是形成循环（<code>Bean A -&gt; Bean B -&gt; Bean C -&gt; Bean A</code>）。</p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/post/f7a05eb0.html#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://www.mghio.cn/post/1d4949a7.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2206,209 +2420,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://www.mghio.cn/post/80982e71.html">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="mghio">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="https://s2.loli.net/2023/07/16/OZMcxdjbSDpwNiP.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="mghio">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/post/80982e71.html" itemprop="url">如何实现一个简易版的 Spring - 如何实现 @Autowired 注解</a></h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2021-03-07T15:44:29+08:00">
-                2021-03-07
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Java/" itemprop="url" rel="index">
-                    <span itemprop="name">Java</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Java/Spring/" itemprop="url" rel="index">
-                    <span itemprop="name">Spring</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/post/80982e71.html#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="post/80982e71.html" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  2.2k 字
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  9 分钟
-                </span>
-              
-            </div>
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p><img src="https://i.loli.net/2021/06/12/xwcrdv6a7CHq5T8.jpg" alt="cover.jpg"></p>
-<h4 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h4><p>本文是 <code>如何实现一个简易版的 Spring</code> 系列第四篇，在 <a href="https://www.mghio.cn/post/6775e26e.html">上篇</a> 介绍了 <code>@Component</code> 注解的实现，这篇再来看看在使用 <code>Spring</code> 框架开发中常用的 <code>@Autowired</code> 注入要如何实现，大家用过 <code>Spring</code> 都知道，该注解可以用在<code>字段</code>、<code>构造函数</code>以及<code>setter 方法</code>上，限于篇幅原因我们主要讨论用在字段的方式实现，其它的使用方式大体思路是相同的，不同的只是解析和注入方式有所区别，话不多说，下面进入我们今天的正题—<code>如何实现一个简易版的 Spring - 如何实现 @Autowired 注解</code>。</p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/post/80982e71.html#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2461,7 +2472,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">55</span>
+                  <span class="site-state-item-count">56</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -2472,7 +2483,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">58</span>
+                  <span class="site-state-item-count">59</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -2483,7 +2494,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">51</span>
+                  <span class="site-state-item-count">52</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
