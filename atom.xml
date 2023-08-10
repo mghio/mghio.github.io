@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://www.mghio.cn/"/>
-  <updated>2023-08-05T07:23:07.389Z</updated>
+  <updated>2023-08-05T07:24:55.500Z</updated>
   <id>https://www.mghio.cn/</id>
   
   <author>
@@ -21,9 +21,9 @@
     <link href="https://www.mghio.cn/post/43d24671.html"/>
     <id>https://www.mghio.cn/post/43d24671.html</id>
     <published>2023-08-05T06:25:43.000Z</published>
-    <updated>2023-08-05T07:23:07.389Z</updated>
+    <updated>2023-08-05T07:24:55.500Z</updated>
     
-    <content type="html"><![CDATA[<p><img src="https://s2.loli.net/2023/08/05/RsGxkFc5UWJM6eq.jpg" alt="UNIX-A-History-and-a-Memoir.jpg"></p><p><a href="https://book.douban.com/subject/35292726" target="_blank" rel="noopener">《UNIX 传奇：历史与回忆》</a> 是 bwk（<a href="https://en.wikipedia.org/wiki/Brian_Kernighan" target="_blank" rel="noopener">Brian W. Kernighan</a>）2019 年的新作，回忆了 UNIX 在大半个世纪的风雨历程，是一本引人入胜的书籍。通过对 UNIX 操作系统的历史和发展进行详细的叙述和回顾，让我对这个操作系统有了更深入的了解。读完这本书，我不仅对 UNIX 的技术细节有了更清晰的认识，也对 UNIX 的影响力和价值有了更深刻的体会。</p><a id="more"></a><p>书中首先回顾了 UNIX 的诞生和发展过程，从贝尔实验室的研究项目到成为世界上最重要的操作系统没有之一，UNIX 经历了漫长而曲折的发展历程。作者通过详细的叙述和丰富的历史资料，将 UNIX 的发展与当时的技术环境和社会背景相结合，深入分析了 UNIX 的成功原因和对计算机科学的影响。</p><p>在书里，作者还介绍了 UNIX 的设计原则和哲学思想，如<strong>小即是美</strong>、<strong>一切皆文件</strong>等，这些原则不仅体现了 UNIX 的简洁和灵活性，也影响了后来的操作系统设计。通过对 UNIX 设计原则的解读，我对 UNIX 的设计理念有了更深入的理解，也对软件设计和开发有了新的思考。</p><p><img src="https://s2.loli.net/2023/08/05/9nXyrTvW7ubxLqt.jpg" alt="ken-and-den.jpg"></p><p>上图（<a href="https://www.bell-labs.com/usr/dmr/www/picture.html" target="_blank" rel="noopener">来源</a>）中站着的是 dmr（<a href="https://en.wikipedia.org/wiki/Dennis_Ritchie" target="_blank" rel="noopener">Dennis MacAlistair Ritchie</a>）、坐着打字的是 Ken（<a href="https://en.wikipedia.org/wiki/Ken_Thompson" target="_blank" rel="noopener">Ken Thompson</a>） 和几台 <a href="https://en.wikipedia.org/wiki/PDP-11" target="_blank" rel="noopener">PDP-11</a>。此外，本书还详细介绍了 UNIX 的核心组件和功能，如文件系统、进程管理、网络通信等等。通过对这些功能的解析，会 UNIX 的内部机制有了更深入的了解，也对操作系统的工作原理有了更全面的认识。同时，书中还介绍了 UNIX 的各种衍生版本和相关技术，如 <a href="https://github.com/torvalds/linux" target="_blank" rel="noopener">Linux</a>、BSD（加州大学伯克利分校维护的版本）等，这些衍生版本不仅丰富了 UNIX 的功能和应用领域，也推动了开源软件的发展。</p><p>书中除了对 UNIX 技术的介绍，还涉及了 UNIX 社区的发展和文化。UNIX 社区以其<strong>开放、自由</strong>的精神吸引了众多开发者和用户，形成了独特的文化氛围。通过对 UNIX 社区的描述和分析，我对 UNIX 社区的运作方式和价值观有了更深入的了解。UNIX 社区以其开放的开发模式和共享的文化，促进了知识和经验的交流，推动了技术的不断进步。在 UNIX 社区中，人们通过邮件列表、论坛和会议等形式进行交流和合作，共同解决问题、改进软件，形成了一种合作共赢的氛围。</p><p>此外，作者还介绍了 UNIX 在商业领域的应用和发展。UNIX 不仅在学术界和科研领域得到广泛应用，也在商业领域取得了巨大成功。通过对 UNIX 商业化的历史和案例的介绍，对 UNIX 在商业环境中的优势和挑战有了更深入的认识。UNIX 的开放性和灵活性使其成为企业 IT 系统的首选，而 UNIX 商业公司的崛起也推动了 UNIX 的发展和推广。</p><p><img src="https://s2.loli.net/2023/08/05/3jtaLZYGwNgnxBD.jpg" alt="Linux-declaration.jpg"></p><p>上图是 1991 年 8 月 <a href="https://en.wikipedia.org/wiki/Linus_Torvalds" target="_blank" rel="noopener">林纳斯·托瓦兹</a> 的 Linux宣告（<a href="https://www.cs.cmu.edu/~awb/linux.history.html" target="_blank" rel="noopener">图片来源</a>）。在读《UNIX 传奇：历史与回忆》之后，对 UNIX 的重要性和影响力有了更深刻的认识。UNIX 不仅是一种操作系统，更是一种<strong>思想和理念的体现</strong>。UNIX 的设计原则和开放的开发模式影响了整个计算机科学领域，推动了软件工程的发展。UNIX 的成功不仅在于其技术实力，更在于其背后的开放和合作精神。</p><p>然后，本书还通过对 UNIX 历史的回顾和个人经历的叙述，让我感受到了 UNIX 社区的热情和活力。UNIX 社区的成员们对技术的热爱和追求，以及对自由和开放的坚持，让我深受启发。作为一名从事软件开发的人，我深深地感受到了 UNIX 所传递的价值观和精神，这将对我的工作和职业发展产生积极的影响。</p><p>读完《UNIX 传奇：历史与回忆》后，我深受感动和启发。这本书不仅让我了解了 UNIX 的历史和技术，也让我感受到了 UNIX 的精神和价值。UNIX 的开放性、灵活性和合作精神，都是我在工作和生活中需要学习和借鉴的地方。</p><p>UNIX 的设计哲学「小即是美」，让我明白了在解决问题时，简洁的解决方案往往是最好的。在软件开发中，我们应该尽量避免复杂性，追求简洁和高效。同时，UNIX 的「一切皆文件」原则，也让我明白了抽象和统一的重要性。通过把所有资源都视为文件，UNIX 简化了操作和管理的复杂性，提高了效率和可用性。</p><p><img src="https://s2.loli.net/2023/08/05/viIaA1S4hkmtD9Z.png" alt="Unix_history.png"></p><p>上图是从 1969 年 UNIX 和类 UNIX 系统的演变历史（<a href="https://en.wikipedia.org/wiki/Unix-like" target="_blank" rel="noopener">图片来源</a>）。UNIX 开放源代码和开发模式，也让我认识到了开放和共享的价值。在今天的互联网时代，开放和共享是推动技术和知识进步的重要力量。我们应该积极参与开源社区，共享我们的知识和经验，共同推动技术的发展。</p><p>此外，UNIX 社区的活力和热情，也让我深受感动。在 UNIX 社区中，人们无私地分享知识，热情地帮助他人，共同解决问题，这种精神是我需要学习和倡导的。</p><p>总的来说，《UNIX 传奇：历史与回忆》是一本非常值得一读的书。它不仅让我了解了 UNIX 的历史和技术，也让我感受到了 UNIX 的精神和价值。</p><p>这本书对我来说，既是一次知识的旅行，也是一次精神的洗礼。我相信，这本书对任何对计算机科学和软件开发感兴趣的人，都会有所启发和帮助<del>~</del></p>]]></content>
+    <content type="html"><![CDATA[<p><img src="https://s2.loli.net/2023/08/05/RsGxkFc5UWJM6eq.jpg" alt="UNIX-A-History-and-a-Memoir.jpg"></p><p><a href="https://book.douban.com/subject/35292726" target="_blank" rel="noopener">《UNIX 传奇：历史与回忆》</a> 是 bwk（<a href="https://en.wikipedia.org/wiki/Brian_Kernighan" target="_blank" rel="noopener">Brian W. Kernighan</a>）2019 年的新作，回忆了 UNIX 在大半个世纪的风雨历程，是一本引人入胜的书籍。通过对 UNIX 操作系统的历史和发展进行详细的叙述和回顾，让我对这个操作系统有了更深入的了解。读完这本书，我不仅对 UNIX 的技术细节有了更清晰的认识，也对 UNIX 的影响力和价值有了更深刻的体会。</p><a id="more"></a><p>书中首先回顾了 UNIX 的诞生和发展过程，从贝尔实验室的研究项目到成为世界上最重要的操作系统没有之一，UNIX 经历了漫长而曲折的发展历程。作者通过详细的叙述和丰富的历史资料，将 UNIX 的发展与当时的技术环境和社会背景相结合，深入分析了 UNIX 的成功原因和对计算机科学的影响。</p><p>在书里，作者还介绍了 UNIX 的设计原则和哲学思想，如<strong>小即是美</strong>、<strong>一切皆文件</strong>等，这些原则不仅体现了 UNIX 的简洁和灵活性，也影响了后来的操作系统设计。通过对 UNIX 设计原则的解读，我对 UNIX 的设计理念有了更深入的理解，也对软件设计和开发有了新的思考。</p><p><img src="https://s2.loli.net/2023/08/05/9nXyrTvW7ubxLqt.jpg" alt="ken-and-den.jpg"></p><p>上图（<a href="https://www.bell-labs.com/usr/dmr/www/picture.html" target="_blank" rel="noopener">来源</a>）中站着的是 dmr（<a href="https://en.wikipedia.org/wiki/Dennis_Ritchie" target="_blank" rel="noopener">Dennis MacAlistair Ritchie</a>）、坐着打字的是 Ken（<a href="https://en.wikipedia.org/wiki/Ken_Thompson" target="_blank" rel="noopener">Ken Thompson</a>） 和几台 <a href="https://en.wikipedia.org/wiki/PDP-11" target="_blank" rel="noopener">PDP-11</a>。此外，本书还详细介绍了 UNIX 的核心组件和功能，如文件系统、进程管理、网络通信等等。通过对这些功能的解析，会 UNIX 的内部机制有了更深入的了解，也对操作系统的工作原理有了更全面的认识。同时，书中还介绍了 UNIX 的各种衍生版本和相关技术，如 <a href="https://github.com/torvalds/linux" target="_blank" rel="noopener">Linux</a>、BSD（加州大学伯克利分校维护的版本）等，这些衍生版本不仅丰富了 UNIX 的功能和应用领域，也推动了开源软件的发展。</p><p>书中除了对 UNIX 技术的介绍，还涉及了 UNIX 社区的发展和文化。UNIX 社区以其<strong>开放、自由</strong>的精神吸引了众多开发者和用户，形成了独特的文化氛围。通过对 UNIX 社区的描述和分析，我对 UNIX 社区的运作方式和价值观有了更深入的了解。UNIX 社区以其开放的开发模式和共享的文化，促进了知识和经验的交流，推动了技术的不断进步。在 UNIX 社区中，人们通过邮件列表、论坛和会议等形式进行交流和合作，共同解决问题、改进软件，形成了一种合作共赢的氛围。</p><p>此外，作者还介绍了 UNIX 在商业领域的应用和发展。UNIX 不仅在学术界和科研领域得到广泛应用，也在商业领域取得了巨大成功。通过对 UNIX 商业化的历史和案例的介绍，对 UNIX 在商业环境中的优势和挑战有了更深入的认识。UNIX 的开放性和灵活性使其成为企业 IT 系统的首选，而 UNIX 商业公司的崛起也推动了 UNIX 的发展和推广。</p><p><img src="https://s2.loli.net/2023/08/05/3jtaLZYGwNgnxBD.jpg" alt="Linux-declaration.jpg"></p><p>上图是 1991 年 8 月 <a href="https://en.wikipedia.org/wiki/Linus_Torvalds" target="_blank" rel="noopener">林纳斯·托瓦兹</a> 的 Linux宣告（<a href="https://www.cs.cmu.edu/~awb/linux.history.html" target="_blank" rel="noopener">图片来源</a>）。在读《UNIX 传奇：历史与回忆》之后，对 UNIX 的重要性和影响力有了更深刻的认识。UNIX 不仅是一种操作系统，更是一种<strong>思想和理念的体现</strong>。UNIX 的设计原则和开放的开发模式影响了整个计算机科学领域，推动了软件工程的发展。UNIX 的成功不仅在于其技术实力，更在于其背后的开放和合作精神。</p><p>然后，本书还通过对 UNIX 历史的回顾和个人经历的叙述，让我感受到了 UNIX 社区的热情和活力。UNIX 社区的成员们对技术的热爱和追求，以及对自由和开放的坚持，让我深受启发。作为一名从事软件开发的人，我深深地感受到了 UNIX 所传递的价值观和精神，这将对我的工作和职业发展产生积极的影响。</p><p>读完《UNIX 传奇：历史与回忆》后，我深受感动和启发。这本书不仅让我了解了 UNIX 的历史和技术，也让我感受到了 UNIX 的精神和价值。UNIX 的开放性、灵活性和合作精神，都是我在工作和生活中需要学习和借鉴的地方。</p><p>UNIX 的设计哲学「小即是美」，让我明白了在解决问题时，简洁的解决方案往往是最好的。在软件开发中，我们应该尽量避免复杂性，追求简洁和高效。同时，UNIX 的「一切皆文件」原则，也让我明白了抽象和统一的重要性。通过把所有资源都视为文件，UNIX 简化了操作和管理的复杂性，提高了效率和可用性。</p><p><img src="https://s2.loli.net/2023/08/05/viIaA1S4hkmtD9Z.png" alt="Unix_history.png"></p><p>上图是自 1969 年以来 UNIX 和类 UNIX 系统的演变历史（<a href="https://en.wikipedia.org/wiki/Unix-like" target="_blank" rel="noopener">图片来源</a>）。UNIX 开放源代码和开发模式，也让我认识到了开放和共享的价值。在今天的互联网时代，开放和共享是推动技术和知识进步的重要力量。我们应该积极参与开源社区，共享我们的知识和经验，共同推动技术的发展。</p><p>此外，UNIX 社区的活力和热情，也让我深受感动。在 UNIX 社区中，人们无私地分享知识，热情地帮助他人，共同解决问题，这种精神是我需要学习和倡导的。</p><p>总的来说，《UNIX 传奇：历史与回忆》是一本非常值得一读的书。它不仅让我了解了 UNIX 的历史和技术，也让我感受到了 UNIX 的精神和价值。</p><p>这本书对我来说，既是一次知识的旅行，也是一次精神的洗礼。我相信，这本书对任何对计算机科学和软件开发感兴趣的人，都会有所启发和帮助<del>~</del></p>]]></content>
     
     <summary type="html">
     
@@ -149,11 +149,11 @@
       <category term="实现原理" scheme="https://www.mghio.cn/categories/Spring/Java/%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86/"/>
     
     
-      <category term="Java" scheme="https://www.mghio.cn/tags/Java/"/>
-    
       <category term="实现原理" scheme="https://www.mghio.cn/tags/%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86/"/>
     
       <category term="Spring" scheme="https://www.mghio.cn/tags/Spring/"/>
+    
+      <category term="Java" scheme="https://www.mghio.cn/tags/Java/"/>
     
   </entry>
   
@@ -327,9 +327,9 @@
       <category term="循环依赖" scheme="https://www.mghio.cn/categories/Java/Spring/%E5%BE%AA%E7%8E%AF%E4%BE%9D%E8%B5%96/"/>
     
     
-      <category term="Java" scheme="https://www.mghio.cn/tags/Java/"/>
-    
       <category term="Spring" scheme="https://www.mghio.cn/tags/Spring/"/>
+    
+      <category term="Java" scheme="https://www.mghio.cn/tags/Java/"/>
     
       <category term="循环依赖" scheme="https://www.mghio.cn/tags/%E5%BE%AA%E7%8E%AF%E4%BE%9D%E8%B5%96/"/>
     
@@ -516,9 +516,9 @@
       <category term="AOP" scheme="https://www.mghio.cn/categories/Java/Spring/AOP/"/>
     
     
-      <category term="Java" scheme="https://www.mghio.cn/tags/Java/"/>
-    
       <category term="Spring" scheme="https://www.mghio.cn/tags/Spring/"/>
+    
+      <category term="Java" scheme="https://www.mghio.cn/tags/Java/"/>
     
       <category term="AOP" scheme="https://www.mghio.cn/tags/AOP/"/>
     
@@ -548,9 +548,9 @@
       <category term="AOP" scheme="https://www.mghio.cn/categories/Java/Spring/AOP/"/>
     
     
-      <category term="Java" scheme="https://www.mghio.cn/tags/Java/"/>
-    
       <category term="Spring" scheme="https://www.mghio.cn/tags/Spring/"/>
+    
+      <category term="Java" scheme="https://www.mghio.cn/tags/Java/"/>
     
       <category term="AOP" scheme="https://www.mghio.cn/tags/AOP/"/>
     
@@ -580,9 +580,9 @@
       <category term="AOP" scheme="https://www.mghio.cn/categories/Java/Spring/AOP/"/>
     
     
-      <category term="Java" scheme="https://www.mghio.cn/tags/Java/"/>
-    
       <category term="Spring" scheme="https://www.mghio.cn/tags/Spring/"/>
+    
+      <category term="Java" scheme="https://www.mghio.cn/tags/Java/"/>
     
       <category term="AOP" scheme="https://www.mghio.cn/tags/AOP/"/>
     
@@ -612,9 +612,9 @@
       <category term="AOP" scheme="https://www.mghio.cn/categories/Java/Spring/AOP/"/>
     
     
-      <category term="Java" scheme="https://www.mghio.cn/tags/Java/"/>
-    
       <category term="Spring" scheme="https://www.mghio.cn/tags/Spring/"/>
+    
+      <category term="Java" scheme="https://www.mghio.cn/tags/Java/"/>
     
       <category term="AOP" scheme="https://www.mghio.cn/tags/AOP/"/>
     
