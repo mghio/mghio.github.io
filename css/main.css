@@ -186,7 +186,7 @@ th {
 body {
   position: relative;
   font-family: 'Lato', "PingFang SC", "Microsoft YaHei", sans-serif;
-  font-size: 1.125em;
+  font-size: 14px;
   line-height: 2;
   color: #555;
   background: #eee;
@@ -1285,7 +1285,6 @@ pre .javascript .function {
 }
 .post-body {
   font-family: 'Lato', "PingFang SC", "Microsoft YaHei", sans-serif;
-  font-size: 1.125em;
 }
 @media (max-width: 767px) {
   .post-body {
@@ -1354,7 +1353,6 @@ pre .javascript .function {
 @media (min-width: 992px) {
   .posts-expand .post-body {
     text-align: justify;
-    font-size: 1.125em;
   }
 }
 .posts-expand .post-body h2,
@@ -2002,7 +2000,7 @@ pre .javascript .function {
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: #beff05;
+  background: #d78659;
 }
 .links-of-blogroll {
   font-size: 13px;

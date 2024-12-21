@@ -1,0 +1,1532 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+  <meta name="google-site-verification" content="IU4uoUf44pYguUI7ecCbIduQdIgrWXQKMRVyHFH26vc">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+  <link href="https://cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+  
+
+<link href="https://cdn.bootcss.com/font-awesome/4.6.2/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/blog-icon_next_32x32.ico?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/blog-icon_next_32x32.ico?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/blog-icon_next_16x16.ico?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Go,并发模型,">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="mghio" type="application/atom+xml">
+
+
+
+
+
+
+<meta name="description" content="前言Goroutines 是 Go 语言主要的并发原语。它看起来非常像线程，但是相比于线程它的创建和管理成本很低。Go 在运行时将 goroutine 有效地调度到真实的线程上，以避免浪费资源，因此您可以轻松地创建大量的 goroutine（例如每个请求一个 goroutine），并且您可以编写简单的，命令式的阻塞代码。因此，Go 的网络代码往往比其它语言中的等效代码更直接，更容易理解（这点从下">
+<meta name="keywords" content="Go,并发模型">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Go 并发模型—Goroutines">
+<meta property="og:url" content="https://www.mghio.cn/post/ba5cf393.html">
+<meta property="og:site_name" content="mghio">
+<meta property="og:description" content="前言Goroutines 是 Go 语言主要的并发原语。它看起来非常像线程，但是相比于线程它的创建和管理成本很低。Go 在运行时将 goroutine 有效地调度到真实的线程上，以避免浪费资源，因此您可以轻松地创建大量的 goroutine（例如每个请求一个 goroutine），并且您可以编写简单的，命令式的阻塞代码。因此，Go 的网络代码往往比其它语言中的等效代码更直接，更容易理解（这点从下">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://s2.loli.net/2023/07/09/rDYw1tPJydqOCp5.png">
+<meta property="og:image" content="https://s2.loli.net/2023/07/09/c4g8HaVGtLY5Qw1.jpg">
+<meta property="og:image" content="https://s2.loli.net/2023/07/09/ZNvAcjpRnlG69YC.png">
+<meta property="og:image" content="https://s2.loli.net/2023/07/09/5pqmnA4Mwv6dHbS.jpg">
+<meta property="og:image" content="https://s2.loli.net/2023/07/09/1TFslYDnSNv3pfC.png">
+<meta property="og:updated_time" content="2024-12-21T06:19:05.818Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Go 并发模型—Goroutines">
+<meta name="twitter:description" content="前言Goroutines 是 Go 语言主要的并发原语。它看起来非常像线程，但是相比于线程它的创建和管理成本很低。Go 在运行时将 goroutine 有效地调度到真实的线程上，以避免浪费资源，因此您可以轻松地创建大量的 goroutine（例如每个请求一个 goroutine），并且您可以编写简单的，命令式的阻塞代码。因此，Go 的网络代码往往比其它语言中的等效代码更直接，更容易理解（这点从下">
+<meta name="twitter:image" content="https://s2.loli.net/2023/07/09/rDYw1tPJydqOCp5.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://www.mghio.cn/post/ba5cf393.html">
+
+
+
+
+
+  <title>Go 并发模型—Goroutines | mghio</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">mghio</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description">Java 搬运工 & 终身学习者</h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://www.mghio.cn/post/ba5cf393.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="mghio">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/blog_mghio_avator.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="mghio">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">Go 并发模型—Goroutines</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-12-21T14:10:49+08:00">
+                2024-12-21
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Go/" itemprop="url" rel="index">
+                    <span itemprop="name">Go</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Go/并发模型/" itemprop="url" rel="index">
+                    <span itemprop="name">并发模型</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/post/ba5cf393.html#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="post/ba5cf393.html" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-eye"></i>  本文总阅读量
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>次
+            </span>
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  3.3k 字
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  12 分钟
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><img src="https://s2.loli.net/2023/07/09/rDYw1tPJydqOCp5.png" alt="Concurrency_in_Go.png"></p>
+<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a><a href="#前言" title="前言"></a>前言</h3><p>Goroutines 是 <a href="https://go.dev/" target="_blank" rel="noopener">Go</a> 语言主要的并发原语。它看起来非常像线程，但是相比于线程它的<strong>创建和管理成本很低</strong>。Go 在运行时将 goroutine 有效地调度到真实的线程上，以避免浪费资源，因此您可以轻松地创建大量的 goroutine（例如每个请求一个 goroutine），并且您可以编写简单的，命令式的阻塞代码。因此，Go 的网络代码往往比其它语言中的等效代码更直接，更容易理解（这点从下文中的示例代码可以看出）。</p>
+<p>对我来说，goroutine 是将 Go 这门语言与其它语言区分开来的一个主要特征。这就是为什么大家更喜欢用 Go 来编写需要并发的代码。在下面讨论更多关于 goroutine 之前，我们先了解一些历史，这样你就能理解为什么你想要它们了。</p>
+<a id="more"></a>
+<h3 id="基于-fork-和线程"><a href="#基于-fork-和线程" class="headerlink" title="基于 fork 和线程"></a><a href="#基于-fork-和线程" title="基于 fork 和线程"></a>基于 fork 和线程</h3><p><img src="https://s2.loli.net/2023/07/09/c4g8HaVGtLY5Qw1.jpg" alt="fork_thread.jpeg"></p>
+<p>高性能服务器需要同时处理来自多个客户端的请求。有很多方法可以设计一个服务端架构来处理这个问题。最容易想到的就是让一个主进程在循环中调用 accept，然后调用 fork 来创建一个处理请求的子进程。这篇 <a href="https://beej.us/guide/bgnet/html" target="_blank" rel="noopener">Beej’s Guide to Network Programming</a> 指南中提到了这种方式。</p>
+<p>在网络编程中，fork 是一个很好的模式，因为你可以专注于网络而不是服务器架构。但是它很难按照这种模式编写出一个高效的服务器，现在应该没有人在实践中使用这种方式了。</p>
+<p>fork 同时也存在很多问题，首先第一个是<strong>成本</strong>: Linux 上的 fork 调用看起来很快，但它会将你所有的内存标记为 <a href="https://en.wikipedia.org/wiki/Copy-on-write" target="_blank" rel="noopener">copy-on-write</a>。每次写入 copy-on-write 页面都会导致一个小的页面错误，这是一个很难测量的小延迟，进程之间的上下文切换也很昂贵。</p>
+<p>另一个问题是<strong>规模</strong>: 很难在大量子进程中协调共享资源（如 CPU、内存、数据库连接等）的使用。如果流量激增，并且创建了太多进程，那么它们将相互争夺 CPU。但是如果限制创建的进程数量，那么在 CPU 空闲时，大量缓慢的客户端可能会阻塞每个人的正常使用，这时使用超时机制会有所帮助（无论服务器架构如何，超时设置都是很必要的）。</p>
+<p>通过使用线程而不是进程，上面这些问题在一定程度上能得到缓解。创建线程比创建进程更“便宜”，因为它共享内存和大多数其它资源。在共享地址空间中，线程之间的通信也相对容易，使用信号量和其它结构来管理共享资源，然而，线程仍然有很大的成本，如果你为每个连接创建一个新线程，你会遇到<strong>扩展问题</strong>。与进程一样，你此时需要限制正在运行的线程的数量，以避免严重的 CPU 争用，并且需要使慢速请求超时。创建一个新线程仍然需要时间，尽管可以通过使用线程池在请求之间回收线程来缓解这一问题。</p>
+<p>无论你是使用进程还是线程，你仍然有一个难以回答的问题: <strong>你应该创建多少个线程？</strong>如果您允许无限数量的线程，客户端可能会用完所有的内存和 CPU，而流量会出现小幅激增。如果你限制服务器的最大线程数，那么一堆缓慢的客户端就会阻塞你的服务器。虽然超时是有帮助的，但它仍然很难有效地使用你的硬件资源。</p>
+<h3 id="基于事件驱动"><a href="#基于事件驱动" class="headerlink" title="基于事件驱动"></a><a href="#基于事件驱动" title="基于事件驱动"></a>基于事件驱动</h3><p><img src="https://s2.loli.net/2023/07/09/ZNvAcjpRnlG69YC.png" alt="event-driven.png"></p>
+<p>那么既然无法轻易预测出需要多少线程，当如果尝试将请求与线程<strong>解耦</strong>时会发生什么呢？如果我们只有一个线程专门用于应用程序逻辑（或者可能是一个小的、固定数量的线程），然后在后台使用异步系统调用处理所有的网络流量，会怎么样？这就是一种 <a href="https://en.wikipedia.org/wiki/Event-driven_architecture" target="_blank" rel="noopener">事件驱动</a> 的服务端架构。</p>
+<p>事件驱动架构模式是围绕 <a href="https://manpages.debian.org/unstable/manpages-dev/select.2.en.html" target="_blank" rel="noopener">select</a> 系统调用设计的。后来像 <a href="https://manpages.debian.org/bookworm/manpages-dev/poll.2.en.html" target="_blank" rel="noopener">poll</a> 这样的机制已经取代了 select，但是 select 是广为人知的，它们在这里都服务于相同的概念和目的。select 接受一个文件描述符列表（通常是套接字），并返回哪些是准备好读写的。如果所有文件描述符都没有准备好，则选择阻塞，直到<strong>至少有一个准备好</strong>。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/select.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;poll.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">select</span><span class="params">(<span class="keyword">int</span> nfds, </span></span></span><br><span class="line"><span class="function"><span class="params">           fd_set *<span class="keyword">restrict</span> readfds, </span></span></span><br><span class="line"><span class="function"><span class="params">           fd_set *<span class="keyword">restrict</span> writefds, </span></span></span><br><span class="line"><span class="function"><span class="params">           fd_set *<span class="keyword">restrict</span> exceptfds, </span></span></span><br><span class="line"><span class="function"><span class="params">           struct timeval *<span class="keyword">restrict</span> timeout)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">poll</span><span class="params">(struct pollfd *fds, </span></span></span><br><span class="line"><span class="function"><span class="params">         <span class="keyword">nfds_t</span> nfds, </span></span></span><br><span class="line"><span class="function"><span class="params">         <span class="keyword">int</span> timeout)</span></span>;</span><br></pre></td></tr></table></figure>
+
+<p>为了实现一个事件驱动的服务器，你需要跟踪一个 socket 和网络上被阻塞的每个请求的一些状态。在服务器上有一个单一的主事件循环，它调用 select 来处理所有被阻塞的套接字。当 select 返回时，服务器知道哪些请求可以进行了，因此对于每个请求，它调用应用程序逻辑中的存储状态。当应用程序需要再次使用网络时，它会将套接字连同新状态一起添加回“阻塞”池中。这里的状态可以是应用程序恢复它正在做的事情所需的任何东西: 一个要回调的 closure，或者一个 Promise。</p>
+<p>从技术上讲，这些其实都可以用一个线程实现。这里不能谈论任何特定实现的细节，但是像 JavaScript<br>这样缺乏线程的语言也很好的遵循了这个模型。Node.js 更是将自己描述为“an event-driven JavaScript runtime, designed to build scalable network applications.”</p>
+<p>事件驱动的服务器通常比纯粹基于 fork 或线程的服务器更好地利用 CPU 和内存。你可以为每个核心生成一个应用程序线程来并行处理请求。线程不会相互争夺 CPU，因为<strong>线程的数量等于内核的数量</strong>。当有请求可以进行时，线程永远不会空闲，非常高效。效率如此之高，以至于现在大家都使用这种方式来编写服务端代码。</p>
+<p>从理论上讲，这听起来不错，但是如果你编写这样的应用程序代码，就会发现这是一场噩梦。。。具体是什么样的噩梦，取决于你所使用的语言和框架。在 JavaScript 中，异步函数通常返回一个 Promise，你给它附加回调。在 Java gRPC 中，你要处理的是 StreamObserver。如果你不小心，你最终会得到很多深度嵌套的“箭头代码”函数。如果你很小心，你就把函数和类分开了，混淆了你的控制流。不管怎样，你都是在 <a href="https://stackoverflow.com/questions/25098066/what-is-callback-hell-and-how-and-why-does-rx-solve-it" target="_blank" rel="noopener">callback hell</a> 里。</p>
+<p>下面是一个 <a href="https://grpc.io/docs/languages/java/basics/#bidirectional-streaming-rpc-1" target="_blank" rel="noopener">Java gRPC 官方教程</a> 中的一个示例：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">routeChat</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">  info(<span class="string">"*** RoutChat"</span>);</span><br><span class="line">  <span class="keyword">final</span> CountDownLatch finishLatch = <span class="keyword">new</span> CountDownLatch(<span class="number">1</span>);</span><br><span class="line">  StreamObserver&lt;RouteNote&gt; requestObserver =</span><br><span class="line">      asyncStub.routeChat(<span class="keyword">new</span> StreamObserver&lt;RouteNote&gt;() &#123;</span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onNext</span><span class="params">(RouteNote note)</span> </span>&#123;</span><br><span class="line">          info(<span class="string">"Got message \"&#123;0&#125;\" at &#123;1&#125;, &#123;2&#125;"</span>, note.getMessage(), note.getLocation()</span><br><span class="line">              .getLatitude(), note.getLocation().getLongitude());</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onError</span><span class="params">(Throwable t)</span> </span>&#123;</span><br><span class="line">          Status status = Status.fromThrowable(t);</span><br><span class="line">          logger.log(Level.WARNING, <span class="string">"RouteChat Failed: &#123;0&#125;"</span>, status);</span><br><span class="line">          finishLatch.countDown();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onCompleted</span><span class="params">()</span> </span>&#123;</span><br><span class="line">          info(<span class="string">"Finished RouteChat"</span>);</span><br><span class="line">          finishLatch.countDown();</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">try</span> &#123;</span><br><span class="line">    RouteNote[] requests =</span><br><span class="line">        &#123;newNote(<span class="string">"First message"</span>, <span class="number">0</span>, <span class="number">0</span>), newNote(<span class="string">"Second message"</span>, <span class="number">0</span>, <span class="number">1</span>),</span><br><span class="line">            newNote(<span class="string">"Third message"</span>, <span class="number">1</span>, <span class="number">0</span>), newNote(<span class="string">"Fourth message"</span>, <span class="number">1</span>, <span class="number">1</span>)&#125;;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (RouteNote request : requests) &#123;</span><br><span class="line">      info(<span class="string">"Sending message \"&#123;0&#125;\" at &#123;1&#125;, &#123;2&#125;"</span>, request.getMessage(), request.getLocation()</span><br><span class="line">          .getLatitude(), request.getLocation().getLongitude());</span><br><span class="line">      requestObserver.onNext(request);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125; <span class="keyword">catch</span> (RuntimeException e) &#123;</span><br><span class="line">    <span class="comment">// Cancel RPC</span></span><br><span class="line">    requestObserver.onError(e);</span><br><span class="line">    <span class="keyword">throw</span> e;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// Mark the end of requests</span></span><br><span class="line">  requestObserver.onCompleted();</span><br><span class="line"></span><br><span class="line">  <span class="comment">// Receiving happens asynchronously</span></span><br><span class="line">  finishLatch.await(<span class="number">1</span>, TimeUnit.MINUTES);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>上面代码官方的初学者教程，它不是一个完整的例子，发送代码是同步的，而接收代码是异步的。在 Java 中，你可能会为你的 HTTP 服务器、gRPC、数据库和其它任何东西处理不同的异步类型，你需要在所有这些服务器之间使用适配器，这很快就会变得一团糟。</p>
+<p>同时这里如果使用锁也很危险，你需要小心跨网络调用持有锁。锁和回调也很容易犯错误。例如，如果一个同步方法调用一个返回 ListenableFuture 的函数，然后附加一个内联回调，那么这个回调也需要一个同步块，即使它嵌套在父方法内部。</p>
+<h3 id="Goroutines"><a href="#Goroutines" class="headerlink" title="Goroutines"></a><a href="#Goroutines" title="Goroutines"></a>Goroutines</h3><p><img src="https://s2.loli.net/2023/07/09/5pqmnA4Mwv6dHbS.jpg" alt="goroutine.jpg"></p>
+<p>终于到了我们的主角——goroutines。它是 Go 语言版本的线程。像它语言（比如：Java）中的线程一样，每个 gooutine 都有自己的堆栈。goroutine 可以与其它 goroutine 并行执行。与线程不同，goroutine 的创建成本非常低:<strong>它不绑定到 OS 线程上，它的堆栈开始非常小（初始只有 2 K），但可以根据需要增长。当你创建一个 goroutine 时，你实际上是在分配一个 closure，并在运行时将其添加到队列中。</strong></p>
+<p>在内部实现中，Go 的运行时有一组执行程序的 OS 线程（通常每个内核一个线程）。当一个线程可用并且一个 goroutine 准备运行时，运行时将这个 goroutine 调度到线程上，执行应用程序逻辑。如果一个运行例程阻塞了像 mutex 或 channel 这样的东西时，运行时将它添加到阻塞的运行 goroutine 集合中，然后将下一个就绪的运行例程调度到同一个 OS 线程上。</p>
+<p>这也适用于网络:当一个线程程序在未准备好的套接字上发送或接收数据时，它将其 OS 线程交给调度器。这听起来是不是很熟悉？Go 的调度器很像事件驱动服务器中的主循环。除了仅仅依赖于 select 和专注于文件描述符之外，调度器处理语言中可能阻塞的所有内容。</p>
+<p>你不再需要避免阻塞调用，因为调度程序可以有效地利用 CPU。可以自由地生成许多 goroutine（可以每个请求一个!），因为创建它们的成本很低，而且不会争夺 CPU，你不需要担心线程池和执行器服务，因为运行时实际上有一个大的线程池。</p>
+<p>简而言之，你可以用干净的命令式风格编写简单的阻塞应用程序代码，就像在编写一个基于线程的服务器一样，但你保留了事件驱动服务器的所有效率优势，两全其美。这类代码可以很好地跨框架组合。你不需要 streamobserver 和 ListenableFutures 之间的这类适配器。</p>
+<p>下面让我们看一下来自 <a href="https://grpc.io/docs/languages/go/basics/#bidirectional-streaming-rpc-1" target="_blank" rel="noopener">Go gRPC 官方教程</a> 的相同示例。可以发现这里的控制流比 Java 示例中的更容易理<br>解，因为<strong>发送和接收代码都是同步的</strong>。在这两个 goroutines 中，我们都可以在一个 for 循环中调用 stream.Recv 和stream.Send。不再需要回调、子类或执行器这些东西了。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">stream, err := client.RouteChat(context.Background())</span><br><span class="line">waitc := <span class="built_in">make</span>(<span class="keyword">chan</span> <span class="keyword">struct</span>&#123;&#125;)</span><br><span class="line"><span class="keyword">go</span> <span class="function"><span class="keyword">func</span><span class="params">()</span></span> &#123;</span><br><span class="line">  <span class="keyword">for</span> &#123;</span><br><span class="line">    in, err := stream.Recv()</span><br><span class="line">    <span class="keyword">if</span> err == io.EOF &#123;</span><br><span class="line">      <span class="comment">// read done.</span></span><br><span class="line">      <span class="built_in">close</span>(waitc)</span><br><span class="line">      <span class="keyword">return</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">      log.Fatalf(<span class="string">"Failed to receive a note : %v"</span>, err)</span><br><span class="line">    &#125;</span><br><span class="line">    log.Printf(<span class="string">"Got message %s at point(%d, %d)"</span>, in.Message, in.Location.Latitude, in.Location.Longitude)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;()</span><br><span class="line"><span class="keyword">for</span> _, note := <span class="keyword">range</span> notes &#123;</span><br><span class="line">  <span class="keyword">if</span> err := stream.Send(note); err != <span class="literal">nil</span> &#123;</span><br><span class="line">    log.Fatalf(<span class="string">"Failed to send a note: %v"</span>, err)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">stream.CloseSend()</span><br><span class="line">&lt;-waitc</span><br></pre></td></tr></table></figure>
+
+<h3 id="虚拟线程"><a href="#虚拟线程" class="headerlink" title="虚拟线程"></a><a href="#虚拟线程" title="虚拟线程"></a>虚拟线程</h3><p><img src="https://s2.loli.net/2023/07/09/1TFslYDnSNv3pfC.png" alt="virtual_threads.png"></p>
+<p>如何你使用 Java 这门语言，到目前为止，你要么必须生成数量不合理的线程，要么必须处理 Java 特有的回调地狱。令人高兴的是，<a href="https://openjdk.org/jeps/444" target="_blank" rel="noopener">JEP 444</a> 中增加了 <a href="https://blog.rockthejvm.com/ultimate-guide-to-java-virtual-threads" target="_blank" rel="noopener">virtual threads</a>，这看起来很像 Go 语言中的 goroutine。</p>
+<p>创建虚拟线程的成本很低。JVM 将它们调度到平台线程（platform threads，内核中的真实线程）上。平台线程的数量是固定的，一般每个内核一个平台线程。当一个虚拟线程执行阻塞操作时，它会释放它的平台线程，JVM<br>可能会将另一个虚拟线程调度到它上面。与 gooutine 不同，虚拟线程调度是协作的: <strong>虚拟线程在执行阻塞操作之前不会服从于调度程序。这意味着紧循环可以无限期地保持线程</strong>。目前不清楚这是实现限制还是有更深层次的问题。Go 以前也有这个问题，直到 1.14 才实现了完全抢占式调度（可见 <a href="https://www.youtube.com/watch?v=wQpC99Xu1U4" target="_blank" rel="noopener">GopherCon 2021</a>）。</p>
+<p>Java 的虚拟线程现在可以预览，预计在 <a href="https://openjdk.org/projects/jdk/21" target="_blank" rel="noopener">JDK 21</a> 中成为 stable（官方消息是预计 2023 年 9 月发布）状态。哈哈，很期待到时候能删除大量的 ListenableFutures。每当引入一种新的语言或运行时特性时，都会有一个漫长的迁移过渡期，个人认为 Java 生态系统在这方面还是过于保守了。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+      <div>
+          <div>  <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-smile-o"></i>感谢您的阅读-------------</div>  </div>
+      </div>
+    
+
+    
+      <div>
+        <div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="/images/wechat_subscriber.jpg" alt="mghio wechat" style="width: 200px; max-width: 100%;">
+    <div>微信公众号「mghio」</div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>请我吃🍗</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.jpg" alt="mghio 微信打赏">
+        <p>微信打赏</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.jpg" alt="mghio 支付宝打赏">
+        <p>支付宝打赏</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    mghio  |  微信公众号「mghio」
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://www.mghio.cn/post/ba5cf393.html" title="Go 并发模型—Goroutines">https://www.mghio.cn/post/ba5cf393.html</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Go/" rel="tag"># Go</a>
+          
+            <a href="/tags/并发模型/" rel="tag"># 并发模型</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/post/204a5428.html" rel="next" title="InnoDB 是如何解决幻读的">
+                <i class="fa fa-chevron-left"></i> InnoDB 是如何解决幻读的
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/post/43d24671.html" rel="prev" title="《UNIX 传奇：历史与回忆》读后感">
+                《UNIX 传奇：历史与回忆》读后感 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/blog_mghio_avator.png" alt="mghio">
+            
+              <p class="site-author-name" itemprop="name">mghio</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">57</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">61</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">54</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/mghio" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://segmentfault.com/u/mghio" target="_blank" title="思否">
+                      
+                        <i class="fa fa-fw fa-skype"></i>思否</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.jianshu.com/u/c08ba86593ce" target="_blank" title="简书">
+                      
+                        <i class="fa fa-fw fa-book"></i>简书</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://juejin.im/user/5bbccb4b6fb9a05ce95c7a81" target="_blank" title="掘金">
+                      
+                        <i class="fa fa-fw fa-bookmark"></i>掘金</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:mghio.dev@gmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.cnblogs.com/mghio" target="_blank" title="博客园">
+                      
+                        <i class="fa fa-fw fa-vk"></i>博客园</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                友情链接
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.i121.net" title="气象万千" target="_blank">气象万千</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://p00q.cn" title="淡白记忆博客" target="_blank">淡白记忆博客</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://blog.searchinfogo.com" title="Junhua's blog" target="_blank">Junhua's blog</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://v2c.tech" title="木頭" target="_blank">木頭</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://orxing.top" title="OURONGXING" target="_blank">OURONGXING</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.cnitdog.com" title="IT运维狗" target="_blank">IT运维狗</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.tbfeng.com" title="天边风" target="_blank">天边风</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://log.zvz.im" title="Z" target="_blank">Z</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://13blog.site" title="13blog" target="_blank">13blog</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://zhang0peter.com" title="浮云的博客" target="_blank">浮云的博客</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://zebinh.github.io" title="黄泽彬个人站" target="_blank">黄泽彬个人站</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://guanqr.com" title="荷戟独彷徨" target="_blank">荷戟独彷徨</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.mmzsblog.cn" title="Java学习之道" target="_blank">Java学习之道</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://yuzhouwan.com" title="宇宙湾" target="_blank">宇宙湾</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://morcat.cn" title="Morcat Blog" target="_blank">Morcat Blog</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://atjason.com" title="Jason" target="_blank">Jason</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#基于-fork-和线程"><span class="nav-number">2.</span> <span class="nav-text">基于 fork 和线程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#基于事件驱动"><span class="nav-number">3.</span> <span class="nav-text">基于事件驱动</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Goroutines"><span class="nav-number">4.</span> <span class="nav-text">Goroutines</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#虚拟线程"><span class="nav-number">5.</span> <span class="nav-text">虚拟线程</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; 2019 &mdash; <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">mghio</span>
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+
+
+<div class="beian-info">
+  <a target="_blank" href="https://beian.miit.gov.cn" style="text-decoration:none;border-bottom:none;" rel="nofollow">湘 ICP 备 2021001218 号-1</a> <!--a标签中增加nofollow属性，避免爬虫出站。--> · 
+	<a target="_blank" href="https://www.beian.gov.cn/portal/registerSystemInfo?recordcode=43312302000074" style="text-decoration:none;border-bottom:none;padding-left:22px;background:url(https://s1.ax1x.com/2022/11/06/xXDdk8.png) no-repeat left center" rel="nofollow">湘公网安备 43312302000074</a> <!--这里将图标作为了背景，以使得能和后面的文字在同一行-->
+</div>
+
+<div class="upyun-info">
+  <a target="_blank" href="https://www.upyun.com/?utm_source=lianmeng&utm_medium=referral" style="text-decoration:none;border-bottom:none;" rel="nofollow">本网站由<img src="https://s1.ax1x.com/2022/11/06/xXDHn1.png" style="display:inline-block;height: 24px;vertical-align: middle;margin: 0 10ox !important;padding: 16p;margin-left: 6px;margin-right: 6px;">提供 CDN 加速服务</a> <!--这里将图标作为了背景，以使得能和后面的文字在同一行-->
+</div>
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      访客数
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      人
+    </span>
+  
+
+  
+    <span class="site-pv">
+      总访问量
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      次
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="https://cdn.bootcss.com/jquery/2.1.3/jquery.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="https://cdn.bootcss.com/jquery_lazyload/1.9.7/jquery.lazyload.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="https://cdn.bootcss.com/velocity/1.2.1/velocity.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="https://cdn.bootcss.com/velocity/1.2.1/velocity.ui.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="https://cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://mghio.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'https://www.mghio.cn/post/ba5cf393.html';
+          this.page.identifier = 'post/ba5cf393.html';
+          this.page.title = 'Go 并发模型—Goroutines';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://mghio.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+  <style>
+    .copy-btn {
+      display: inline-block;
+      padding: 6px 12px;
+      font-size: 13px;
+      font-weight: 700;
+      line-height: 20px;
+      color: #333;
+      white-space: nowrap;
+      vertical-align: middle;
+      cursor: pointer;
+      background-color: #eee;
+      background-image: linear-gradient(#fcfcfc, #eee);
+      border: 1px solid #d5d5d5;
+      border-radius: 3px;
+      user-select: none;
+      outline: 0;
+    }
+
+    .highlight-wrap .copy-btn {
+      transition: opacity .3s ease-in-out;
+      opacity: 0;
+      padding: 2px 6px;
+      position: absolute;
+      right: 4px;
+      top: 8px;
+      z-index: 999;
+    }
+
+    .highlight-wrap:hover .copy-btn,
+    .highlight-wrap .copy-btn:focus {
+      opacity: 1
+    }
+
+    .highlight-wrap {
+      position: relative;
+    }
+  </style>
+  
+  <script>
+    $('.highlight').each(function (i, e) {
+      var $wrap = $('<div>').addClass('highlight-wrap')
+      $(e).after($wrap)
+      $wrap.append($('<button>').addClass('copy-btn').append('复制').on('click', function (e) {
+        var code = $(this).parent().find('.code').find('.line').map(function (i, e) {
+          return $(e).text()
+        }).toArray().join('\n')
+        var ta = document.createElement('textarea')
+        document.body.appendChild(ta)
+        ta.style.position = 'absolute'
+        ta.style.top = '0px'
+        ta.style.left = '0px'
+        ta.value = code
+        ta.select()
+        ta.focus()
+        var result = document.execCommand('copy')
+        document.body.removeChild(ta)
+        
+          if(result)$(this).text('复制成功')
+          else $(this).text('复制失败')
+        
+        $(this).blur()
+      })).on('mouseleave', function (e) {
+        var $b = $(this).find('.copy-btn')
+        setTimeout(function () {
+          $b.text('复制')
+        }, 300)
+      }).append(e)
+    })
+  </script>
+
+</body>
+</html>

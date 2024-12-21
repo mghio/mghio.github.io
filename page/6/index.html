@@ -66,13 +66,13 @@
 <link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
 
 
-  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon-32x32-next.ico?v=5.1.4">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/blog-icon_next_32x32.ico?v=5.1.4">
 
 
-  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.ico?v=5.1.4">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/blog-icon_next_32x32.ico?v=5.1.4">
 
 
-  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.ico?v=5.1.4">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/blog-icon_next_16x16.ico?v=5.1.4">
 
 
   <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
@@ -94,17 +94,17 @@
 
 
 
-<meta name="description" content="Java 搬运工&amp;终身学习者。">
+<meta name="description" content="Java 搬运工&amp;终身学习者">
 <meta name="keywords" content="Java,后端博客,Spring">
 <meta property="og:type" content="website">
 <meta property="og:title" content="mghio">
 <meta property="og:url" content="https://www.mghio.cn/page/6/index.html">
 <meta property="og:site_name" content="mghio">
-<meta property="og:description" content="Java 搬运工&amp;终身学习者。">
+<meta property="og:description" content="Java 搬运工&amp;终身学习者">
 <meta property="og:locale" content="zh-Hans">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="mghio">
-<meta name="twitter:description" content="Java 搬运工&amp;终身学习者。">
+<meta name="twitter:description" content="Java 搬运工&amp;终身学习者">
 
 
 
@@ -176,7 +176,7 @@
       </a>
     </div>
       
-        <h1 class="site-subtitle" itemprop="description">Java 搬运工 & 终身学习者。</h1>
+        <h1 class="site-subtitle" itemprop="description">Java 搬运工 & 终身学习者</h1>
       
   </div>
 
@@ -310,12 +310,864 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://www.mghio.cn/post/99ea2970.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="mghio">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/blog_mghio_avator.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="mghio">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/post/99ea2970.html" itemprop="url">深挖 HashMap</a></h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-11-14T21:23:23+08:00">
+                2019-11-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/原理/" itemprop="url" rel="index">
+                    <span itemprop="name">原理</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/post/99ea2970.html#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="post/99ea2970.html" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  2.6k 字
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  9 分钟
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h4 id="1-1-前言"><a href="#1-1-前言" class="headerlink" title="1.1 前言"></a>1.1 前言</h4><p>做过 java 开发的朋友们相信都很熟悉 HashMap 这个类，它是一个基于 hashing 原理用于存储 Key-Value 键值对的集合，其中的每一个键也叫做 <code>Entry</code>，这些键分别存储在一个数组当中，系统会根据 <code>hash</code> 方法来计算出 Key-Value 的存储位置，可以通过 key 快速存取 value。<br>HashMap 基于 hashing 原理，当我们将一个键值对（Key-Value） 传入 <code>put</code> 方法时，它将调用这个 key 的  <code>hashcode</code> 方法计算出 key 的 hashcode 值，然后根据这个 hashcode 值来定位其存放数组的位置来存储对象（HashMap 使用链表来解决碰撞问题，当其发生碰撞了，对象将会存储在链表的下一个节点中，在链表的每个节点中存储 <code>Entry</code> 对象，在 JDK 1.8+ 中，当链表的节点个数超过一定值时会转为红黑树来进行存储），当通过 <code>get</code> 方法传入一个 key 来获取其对应的值时，也是先通过 key 的 <code>hashcode</code> 方法来定位其存储在数组的位置，然后通过键对象的 <code>eqauls</code> 方法找到对应的 value 值。接下来让我们看看其内部的一些实现细节。（<code>PS：以下代码分析都是基于 JDK 1.8</code>）</p>
+<h4 id="1-2-为什么容量始终是-2-的整数次幂"><a href="#1-2-为什么容量始终是-2-的整数次幂" class="headerlink" title="1.2 为什么容量始终是 2 的整数次幂"></a>1.2 为什么容量始终是 2 的整数次幂</h4><p>因为获取 key 在数组中对应的下标是通过 key 的哈希值与数组的长度减一进行与运算来确定的（<code>tab[(n - 1) &amp; hash]</code>）。当数组的长度 n 为 2 的整数次幂，这样进行 n - 1 运算后，之前为 1 的位后面全是 1 ，这样就能保证 <code>(n - 1) &amp; hash</code> 后相应位的值既可能是 1 又可能是 0 ，这完全取决于 key 的哈希值，这样就能保证散列的均匀，同时与运算（位运算）效率高。如果数组的长度 n 不是 2 的整数次幂，会造成更多的 hash 冲突。HashMap 提供了如下四个重载的构造方法来满足不同的使用场景：</p>
+<ol>
+<li>无参构造：<code>HashMap()</code>，使用该方法表示全部使用 HashMap 的默认配置参数</li>
+<li>指定容量初始值构造：<code>HashMap(int initialCapacity)</code>，在初始化 HashMap 时指定其容量大小</li>
+<li>指定容量初始值和扩容因子构造：<code>HashMap(int initialCapacity, float loadFactor)</code>，使用自定义初始化容量和扩容因子</li>
+<li>通过 <code>Map</code> 来构造 HashMap：<code>HashMap(Map&lt;? extends K, ? extends V&gt; m)</code>，使用默认的扩容因子，其容量大小有传入的 <code>Map</code> 大小来决定
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/post/99ea2970.html#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </li></ol></div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://www.mghio.cn/post/ee27c07f.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="mghio">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/blog_mghio_avator.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="mghio">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/post/ee27c07f.html" itemprop="url">同步工具类</a></h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-11-03T20:35:02+08:00">
+                2019-11-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/并发/" itemprop="url" rel="index">
+                    <span itemprop="name">并发</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/post/ee27c07f.html#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="post/ee27c07f.html" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  3.4k 字
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  12 分钟
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h4 id="1-1-前言"><a href="#1-1-前言" class="headerlink" title="1.1 前言"></a>1.1 前言</h4><p>同步工具类可以是任何一个对象，只要它根据其自身的状态来协调线程的控制流。在容器中，有些也可以作为同步工具类，其它类型的同步工具类还包括闭锁（Latch）、信号量（Semaphore）以及栅栏（Barrier）。阻塞队列（eg: BlockQueue）是一种独特的类：它们不仅能作为保存对象的容器，还能协调生产者和消费者之间的控制流，因为它提供的 <code>take</code> 和 <code>put</code> 等方法将会阻塞，直到队列达到期望的状态。所有的同步工具类都包含一些特定的属性：它们封装了一些状态，这些状态将决定同步工具类的线程是继续执行还是等待，此外还提供了一些方法对其状态进行操作，以及另一些方法用于高效地等待同步工具类进入到预期状态。</p>
+<h4 id="1-2-闭锁"><a href="#1-2-闭锁" class="headerlink" title="1.2 闭锁"></a>1.2 闭锁</h4><p>闭锁是一种同步工具类，可以延迟线程的进度直到其到达终止状态。闭锁的作用相当于一扇门：在闭锁到达结束状态之前，这扇门一直是关闭的，并且没有任何线程能通过，当到达结束状态时，这扇门会打开并允许所有线程通过。当闭锁到达结束状态后，将不会再次改变状态，因此这扇门将永远保持打开状态。闭锁可以用来确保某些活动直到其它活动都完成后才继续执行。比如：</p>
+<ul>
+<li>确保某个计算机在其需要的所有资源初始化后才能继续执行。</li>
+<li>确保某个服务在其依赖的所有服务都已经启动后才启动。</li>
+<li>等待直到某个操作的所有参与者都就绪后再继续执行。
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/post/ee27c07f.html#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </li></ul></div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://www.mghio.cn/post/8a061473.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="mghio">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/blog_mghio_avator.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="mghio">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/post/8a061473.html" itemprop="url">Java 运行时数据区域</a></h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-10-26T22:10:10+08:00">
+                2019-10-26
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/JVM/" itemprop="url" rel="index">
+                    <span itemprop="name">JVM</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/post/8a061473.html#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="post/8a061473.html" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  4.9k 字
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  17 分钟
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h4 id="1-1-为什么要进行内存区域划分"><a href="#1-1-为什么要进行内存区域划分" class="headerlink" title="1.1 为什么要进行内存区域划分"></a>1.1 为什么要进行内存区域划分</h4><p><a href="https://docs.oracle.com/javase/specs/jvms/se8/html/" target="_blank" rel="noopener">JVM规范</a> 规定，JVM 在执行 Java 程序的过程中会把它所管理的内存划分为若干个不同的数据区域。这些区域都有各自的用途。以及创建和销毁的时间，有的区域随着虚拟机进程的启动就存在了，而有些区域则依赖用户线程的启动和结束而建立和销毁。JVM 规范对 JVM 定义了运行时统一的内存划分规范，统一了标准，类似于 JDBC 规范一样。JVM 也有许多厂商的不同产品。比如下面的这些：</p>
+<table>
+<thead>
+<tr>
+<th align="center">厂商</th>
+<th align="left">JVM</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">Oracle-SUN</td>
+<td align="left">Hotspot</td>
+</tr>
+<tr>
+<td align="center">Oracle</td>
+<td align="left">JRocket</td>
+</tr>
+<tr>
+<td align="center">IBM</td>
+<td align="left">J9 JVM</td>
+</tr>
+<tr>
+<td align="center">阿里</td>
+<td align="left">Taobao JVM</td>
+</tr>
+</tbody></table>
+<p>其内存区域划分规范对于 JVM 的含义类似于我们 Java 中的接口，都是起到了规范的作用，JVM 是一台可以运行 Java 应用程序的抽象的计算机。在 JVM 中存在三个重要的概念：</p>
+<ul>
+<li>JVM 规范：它定义了虚拟机运行的规范，但是由 Oracle（SUN）或者其它厂商实现</li>
+<li>Java 运行时环境(JRE：Java Runtime Environment)：它是 JVM 规范的具体实现</li>
+<li>JVM 实例：编写好 Java 代码之后，运行 Java 程序，此时就会创建 JMV 实例</li>
+</ul>
+<p>对于 Java 程序员来说，在虚拟机自动内存管理机制的帮助下，不再需要为每一个对象去编写内存释放的代码，不要像 C 或者 C++ 要时刻注意着内存泄漏和内存溢出的问题，这种由虚拟机去管理一切看起来都很美好。不过，也正是因为 Java 设计者把内存控制全部交给了 JVM，一旦出现了内存泄漏和溢出方面的问题，如果不了解虚拟机是怎么分配运行时内存的，那么排查错误将是一项非常艰难的工作。</p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/post/8a061473.html#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://www.mghio.cn/post/bfcdfeaf.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="mghio">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/blog_mghio_avator.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="mghio">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/post/bfcdfeaf.html" itemprop="url">Java 并发之 ThreadLocal</a></h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-10-19T22:14:50+08:00">
+                2019-10-19
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/并发/" itemprop="url" rel="index">
+                    <span itemprop="name">并发</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/post/bfcdfeaf.html#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="post/bfcdfeaf.html" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  3.1k 字
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  12 分钟
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h4 id="1-1-什么是-ThreadLocal"><a href="#1-1-什么是-ThreadLocal" class="headerlink" title="1.1 什么是 ThreadLocal"></a>1.1 什么是 ThreadLocal</h4><p>ThreadLocal 简单理解 <code>Thread</code> 即线程，<code>Local</code> 即本地，结合起来理解就是 <code>每个线程都是本地独有的</code>。在早期的计算机中不包含操作系统，从头到尾只执行一个程序，并且这个程序能访问计算中的所有资源，这对于计算机资源来说是一种浪费。要想充分发挥多处理器的强大计算能力，最简单的方式就是使用多线程。与串行程序相比，在并发程序中存在更多容易出错的地方。当访问共享数据时，通常需要使用同步来控制并发程序的访问。一种避免使用同步的方式就是让这部分共享数据变成不共享的，试想一下，如果只是在单个线程内对数据进行访问，那么就可以不用同步了，这种技术称为<code>线程封闭（Thread Confinement）</code>，它是实现线程安全最简单的方式之一。<br>当某个对象封闭在一个单个线程中时，这种用法会自动实现了线程安全，因为只有一个线程访问数据，从根本上避免了共享数据的线程安全问题，即使被封闭的对象本身不是线程安全的。要保证线程安全，并不是一定就需要同步，两者没有因果关系，同步只是保证共享数据征用时正确性的手段，如果一个方法本来就不涉及共享数据，那它就不需要任何同步措施去保证正确性。而维持线程封闭的一种规范用法就是使用 <strong>ThreadLoal</strong>，这个类能使当前线程中的某个值与保存的值关联起来。ThreadLocal 提供了 <code>get()</code> 与 <code>set(T value)</code> 等方法，<code>set</code> 方法为每个使用了该变量的线程都存有一份独立的副本，因此当我们调用 <code>get</code> 方法时总是返回由当前线程在调用 <code>set</code> 方法的时候设置的最新值。</p>
+<h4 id="1-2-ThreadLocal-的用法"><a href="#1-2-ThreadLocal-的用法" class="headerlink" title="1.2 ThreadLocal 的用法"></a>1.2 ThreadLocal 的用法</h4><p>接下来通过一个示例代码说明 ThreadLocal 的使用方式，该示例使用了三个不同的线程 <code>Main Thread</code>、<code>Thread-1</code> 和 <code>Thread-2</code> 分别对同一个 ThreadLocal 对象中存储副本。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> mghio</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@date</span>: 2019-10-20</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@version</span>: 1.0</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@description</span>: Java 并发之 ThreadLocal</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@since</span> JDK 1.8</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ThreadLocalDemoTests</span> </span>&#123;</span><br><span class="line">  <span class="keyword">private</span> ThreadLocal&lt;String&gt; boolThreadLocal = ThreadLocal.withInitial(() -&gt; <span class="string">""</span>);</span><br><span class="line"></span><br><span class="line">  <span class="meta">@Test</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testUseCase</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    boolThreadLocal.set(<span class="string">"main-thread-set"</span>);</span><br><span class="line">    System.out.printf(<span class="string">"Main Thread: %s\n"</span>, boolThreadLocal.get());</span><br><span class="line"></span><br><span class="line">    <span class="keyword">new</span> Thread(<span class="string">"Thread-1"</span>) &#123;</span><br><span class="line">      <span class="meta">@Override</span></span><br><span class="line">      <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        boolThreadLocal.set(<span class="string">"thread-1-set"</span>);</span><br><span class="line">        System.out.printf(<span class="string">"Thread-1: %s\n"</span>, boolThreadLocal.get());</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;.start();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">new</span> Thread(<span class="string">"Thread-2"</span>) &#123;</span><br><span class="line">      <span class="meta">@Override</span></span><br><span class="line">      <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.printf(<span class="string">"Thread-2: %s\n"</span>, boolThreadLocal.get());</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;.start();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/post/bfcdfeaf.html#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://www.mghio.cn/post/8bd965a0.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="mghio">
       <meta itemprop="description" content>
-      <meta itemprop="image" content="https://i.loli.net/2020/01/12/8qITJvhw2R9HN7M.png">
+      <meta itemprop="image" content="/images/blog_mghio_avator.png">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -508,7 +1360,7 @@
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="mghio">
       <meta itemprop="description" content>
-      <meta itemprop="image" content="https://i.loli.net/2020/01/12/8qITJvhw2R9HN7M.png">
+      <meta itemprop="image" content="/images/blog_mghio_avator.png">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -699,7 +1551,7 @@
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="mghio">
       <meta itemprop="description" content>
-      <meta itemprop="image" content="https://i.loli.net/2020/01/12/8qITJvhw2R9HN7M.png">
+      <meta itemprop="image" content="/images/blog_mghio_avator.png">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -911,7 +1763,7 @@
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
-              <img class="site-author-image" itemprop="image" src="https://i.loli.net/2020/01/12/8qITJvhw2R9HN7M.png" alt="mghio">
+              <img class="site-author-image" itemprop="image" src="/images/blog_mghio_avator.png" alt="mghio">
             
               <p class="site-author-name" itemprop="name">mghio</p>
               <p class="site-description motion-element" itemprop="description"></p>
@@ -924,7 +1776,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">53</span>
+                  <span class="site-state-item-count">57</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -935,7 +1787,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">54</span>
+                  <span class="site-state-item-count">61</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -946,7 +1798,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">47</span>
+                  <span class="site-state-item-count">54</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -1105,7 +1957,7 @@
     <footer id="footer" class="footer">
       <div class="footer-inner">
         <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-<div class="copyright">&copy; 2019 &mdash; <span itemprop="copyrightYear">2022</span>
+<div class="copyright">&copy; 2019 &mdash; <span itemprop="copyrightYear">2024</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
