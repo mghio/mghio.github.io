@@ -310,6 +310,215 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://www.mghio.cn/post/bc557e1a.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="mghio">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/blog_mghio_avator.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="mghio">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/post/bc557e1a.html" itemprop="url">Java 线程池（一）</a></h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-11-23T18:35:30+08:00">
+                2019-11-23
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/线程池/" itemprop="url" rel="index">
+                    <span itemprop="name">线程池</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/post/bc557e1a.html#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/post/bc557e1a.html" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  3.9k 字
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  13 分钟
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h4 id="线程池简介"><a href="#线程池简介" class="headerlink" title="线程池简介"></a>线程池简介</h4><p>使用线程池可以很好的提高性能，线程池在运行之初就会创建一定数量的空闲线程，我们将一个任务提交给线程池，线程池就会使用一个空闲的线程来执行这个任务，该任务执行完后，该线程不会死亡，<code>而是再次变成空闲状态返回线程池，等待下一个任务的到来</code>。在使用线程池时，我们把要执行的任务提交给整个线程池，而不是提交给某个线程，线程池拿到提交的任务后，会在内部寻找是否还有空闲的线程，如果有，就将这个任务提交给某个空闲的线程，虽然一个线程同一时刻只能执行一个任务，但是我们可以向线程池提交多个任务。合理使用线程池有以下几个优点：<br>① <strong>降低资源消耗</strong> 多线程运行期间，系统不断的启动和关闭新线程，成本高，会过度消耗系统资源，通过<code>重用</code>存在的线程，减少对象创建、消亡的开销<br>② <strong>提高响应速度</strong> 当有任务到达时，任务可以不需要等待线程的创建，可以直接从线程池中取出空闲的线程来执行任务<br>③ <strong>方便线程管理</strong> 线程对计算机来说是很稀缺的资源，如果让他无限制创建，它不仅消耗系统的资源，还会降低系统的稳定性，我们使用线程池后可以统一进行分配和监控<br>谈到线程池就会想到<code>池化</code>技术，核心思想就是<code>把宝贵的资源放到一个池子中</code>，每次要使用都从池子里面取，用完之后又放回池子让别人用。那么线程池在 Java 中是如何实现的呢？</p>
+<h4 id="Java-四种线程池"><a href="#Java-四种线程池" class="headerlink" title="Java 四种线程池"></a>Java 四种线程池</h4><p>在 Java 中 Executors 工具类给我们提供了四种不同使用场景的线程池的创建方法，分别为：</p>
+<ol>
+<li><code>newSingleThreadExecutor</code> 只有一个线程来执行任务，适用于有顺序的任务的应用场景。如果这个唯一的线程因为异常结束，那么会有一个新的线程来替代它，它可以保证任务按照指定顺序（FIFO，LIFO）执行，它还有可以指定线程工厂（<code>ThreadFactory</code>）的重载方法，可以自定义线程的创建行为</li>
+<li><code>newFixedThreadPool</code> 固定线程数的线程池，只有核心线程，核心线程的即为最大的线程数量，没有非核心线程。每次提交一个任务就创建一个线程，直到达到线程池的最大大小。线程池一旦达到最大值就会保持不变，如果当中的某个线程因为异常而结束，那么线程池会新建一个线程加入到线程池中。它还可以控制线程的最大并发数，超出的线程会在阻塞队列（<code>LinkedBlockingQueue</code>）中等待，同样它也有可以指定线程工厂（<code>ThreadFactory</code>）的重载方法，可以自定义线程的创建行为。</li>
+<li><code>newCachedThreadPool</code> 创建一个可缓存线程池，最大的线程个数为 <code>2^31 - 1（Integer.MAX_VALUE）</code>，可以认为是无限大，若无可回收，则新建线程，如果线程池的大小超出了处理任务所需要的线程，那么就会回收部分空闲（60s 不执行任务）的线程。</li>
+<li><code>newScheduledThreadPool</code> 周期性执行任务的线程池，按照某种特定的计划执行线程中的任务，有核心线程，但也有非核心线程，非核心线程的大小也为无限大（<code>Integer.MAX_VALUE：2^31 - 1</code>），适用于执行周期性的任务。</li>
+</ol>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/post/bc557e1a.html#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://www.mghio.cn/post/99ea2970.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1776,7 +1985,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">57</span>
+                  <span class="site-state-item-count">58</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -1787,7 +1996,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">61</span>
+                  <span class="site-state-item-count">63</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -1798,7 +2007,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">54</span>
+                  <span class="site-state-item-count">57</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
